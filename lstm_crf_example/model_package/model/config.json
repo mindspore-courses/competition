@@ -1,0 +1,46 @@
+{
+     "model_algorithm": "semantic_segmentation",
+     "model_type": "MindSpore",
+     "runtime": "mindspore_1.10.0-cann_6.0.1-py_3.7-euler_2.8.3-aarch64",
+     "apis": [{
+             "procotol": "https",
+             "url": "/",
+             "method": "post",
+             "request": {
+                 "Content-type": "multipart/form-data",
+                 "data": {
+                     "type": "object",
+                     "properties": {
+                         "images": {
+                             "type": "file"
+                         }
+                     }
+                 }
+             },
+             "response": {
+                 "Content-type": "applicaton/json",
+                 "data": {
+                     "type": "object",
+                     "properties": {
+                         "result": {
+                             "type": "array"
+                         }
+                     }
+                 }
+             }
+         }
+     ],
+     "metrics": {
+         "MIoU": 0.761577
+     },
+    "dependencies": [
+       {
+    "installer": "pip",
+    "packages": [
+        {
+            "package_name": "mindnlp-0.1.1-py3-none-any.whl"
+        }
+        ]
+      }
+    ]
+ }
