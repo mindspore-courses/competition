@@ -1,0 +1,17 @@
+{
+    "binFileName":"te_memset_15d1612e09c0f0cbd8430a640e1f3dc09a000485b582fd8cbd193b4fe924914b_1",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "coreType":"VectorCore",
+    "deterministic":"ignore",
+    "intercoreSync":0,
+    "kernelName":"te_memset_15d1612e09c0f0cbd8430a640e1f3dc09a000485b582fd8cbd193b4fe924914b_1__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF_AIVEC",
+    "memoryStamping":[],
+    "opParaSize":0,
+    "parameters":[
+        null,
+        null
+    ],
+    "sha256":"cf4dbcd5675150667d6a245cb8b887fd0511e320b771097ada6897f4ea500cd6"
+}
