@@ -125,9 +125,9 @@ plt.show()
 ```
 下面是结果对比：
 
-![iamge_faster1]()
+![iamge_faster1](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/faster-1.png)
 
-![iamge_faster1]()
+![iamge_faster1](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/faster-2.png)
 
 可以看出最新的优化方法在两方面的耗时都大大改善。
 
