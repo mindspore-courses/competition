@@ -159,18 +159,191 @@ def do_post_sampling(self, outputs_np, outputs_shm, output_logprob_shm,decode_in
 
 原始 后处理耗时：
 
+```
+
+argmax model time is 1.8422603607177734
+argmax_model time is 1.566171646118164 
+argmax model time is 1.5742778778076172 
+argmax model time is 1.5418529510498047c
+argmax model time is 1.5556812286376953 
+argmax model time is 1.5604496002197266 
+argmax model time is 1.5561580657958984
+argmax_model time is 1.5518665313720703 
+argmax model time is 1.5592575073242188
+argmax model time is 1.5444755554199219c
+argmax model time is 1.581430435180664
+argmax model time is 1.5611648559570312
+argmax_model time is 1.5447139739990234
+argmax model time is 1.54876708984375
+argmax model time is 1.567840576171875
+argmax model time is 1.6522407531738281
+argmax model time is 1.5442371368408203 
+argmax model time is 1.560211181640625
+argmax_model time is 1.5490055084228516 
+argmax model time is 1.5635490417480469
+argmax_model time is 1.7533302307128906
+argmax model time is 1.603841781616211
+argmax model time is 1.5835762023925781 
+argmax model time is 1.5740394592285156c
+argmax model time is 1.5702247619628906
+argmax model time is 1.6927719116210938
+argmax_model time is 1.6138553619384766
+```
+
+改进后耗时：
+
+```
+argmax model time is 0.5939006805419922
+argmax_model time is 0.5891323089599609
+argmax_model time is 0.6508827209472656
+argmax model time is 0.7717609405517578
+argmax model time is 0.6158351898193359
+argmax model time is 0.5974769592285156
+argmax model time is 0.5955696105957031
+argmax_model time is 0.6136894226074219
+argmax_model time is 0.5974769592285156
+argmax_model time is 0.6153583526611328
+argmax_model time is 0.5946159362792969
+argmax_model time is 0.5936622619628906
+argmax_model time is 0.6301403045654297
+argmax_model time is 0.5931854248046875 
+argmax_model time is 0.5967617034912109
+argmax model time is 0.6160736083984375 
+argmax_model time is 0.6017684936523438
+argmax_model time is 0.5929470062255859
+argmax model time is 9.6163120269775391
+argmax model time is 0.6613731384277344 
+argmax model time is 0.6325244903564453 
+argmax_model time is 0.6570816040039062
+argmax model time is 0.5934238433837891 
+argmax_model time is 0.5998611450195312
+argmax_model time is 0.5922317504882812
+argmax model time is 0.5967617034912109
+argmax model time is 0.6792545318603516 
+argmax model time is 0.7989406585693359
+argmax_model time is 0.6437301635742188 
+argmax_model time is 0.6518363952636719
+argmax_model time is 0.6122589111328125
+
+```
+
+后处理耗时由原来的1.6s降低至目前0.6s
+
+原始实现耗时原因分析：对32000个浮点数求最大值的操作是memory bound类型的，推理过程中对于显存带宽的压力本身就很大，再将数据输入到NPU中进行比较，导致耗时严重。
+
+先将output数据转为numpy类型，直接使用CPU进行求解最大值的操作，合理重叠了NPU运算和数据传输的过程，求解出词表中概率的最大值。
+
+这个改进在单batch推理下可以得出正确答案，但是在多batch推理中，会有一些问题，导致推理结果错乱，所以目前还存在bug，后续看情况修复一下。由于并不完善后续的测速方案中并没有使用这个优化方法进行测速。
+
+### seq_len调整
+
+根据观察，请求的输出字段长度并没有特别长，大部分在100-500之间。在日志中找到1个较长的输出，
+例如：
+
+```
+2024-07-29 16:14:17,842 - test_llama.log - INFO - {'input': 'Generate a list of
+elements in a periodic table.', 'resp_text': '\nGenerate a list of elements in a
+periodic table. The elements are sorted by atomic number.\nThe elements are
+sorted by atomic number.\nThe elements are sorted by atomic number. The elements
+are sorted by atomic number.\nThe elements are sorted by atomic number. The
+elements are sorted by atomic number. The elements are sorted by atomic
+number.\nThe elements are sorted by atomic number. The elements are sorted by
+atomic number. The elements are sorted by atomic number. The elements are sorted
+by atomic number. The elements are sorted by atomic number. The elements are
+sorted by atomic number. The elements are sorted by atomic number. The elements
+are sorted by atomic number. The elements are sorted by atomic number. The
+elements are sorted by atomic number. The elements are sorted by atomic number.
+The elements are sorted by atomic number. The elements are sorted by atomic
+number. The elements are sorted by atomic number. The elements are sorted by
+atomic number. The elements are sorted by atomic number. The elements are sorted
+by atomic number. The elements are sorted by atomic number. The elements are
+sorted by atomic number. The elements are sorted by atomic number. The elements
+are sorted by atomic number. The elements are sorted by atomic number. The
+elements are sorted by atomic number. The elements are sorted by atomic number.
+The elements are sorted by atomic number. The elements are sorted by atomic
+number. The elements are sorted by atomic number. The elements are sorted by
+atomic number. The elements are sorted by atomic number. The elements are sorted
+by atomic number. The elements are sorted by atomic number. The elements are
+sorted by atomic number. The elements are sorted by atomic number. The elements
+are sorted by atomic number. The elements are sorted by atomic number. The
+elements are sorted by atomic number. The elements are sorted by atomic number.
+The elements are sorted by atomic number. The elements are sorted by atomic
+number. The', 'res_time': 421.4911723136902, 'first_token_time':
+303.11994767189026}
+
+```
+
+这个句子的输出是比较长的，可以调用tokenizer分词查看句子的长度，或者直接通过huggingface在线的分词器来看这个句子的分词结果由图可知，整个json字段的token数才不到五百，所以将推理的句子长度配置设置为600，必然能保证全部推理任务的正常进行，减少句子长度还会节约大量的显存占用。
 
 
+![image]()
+
+修改句子输出长度可以提升推理系统的吞吐量，但是会导致词表概率发生一些变化，无法通过校验，所以没办法使用这种策略。
+
+## 超参配置介绍
+
+```
+model_config:
+    model_name: 'llama_7b'
+    max_generate_length: 4096
+    end_token: 2
+    seq_length: [4096]
+    vocab_size: 32000
+    prefill_batch_size: [1]
+    decode_batch_size: [128]
+    zactivate_len: [4096]
+    model_type: 'dyn'
+    seq_type: 'static'
+    batch_waiting_time: 0.0
+    decode_batch_waiting_time: 0.0
+    batching_strategy: 'continuous'
+    current_index: False
+    page_attention: True
+    model_dtype: "DataType.FLOAT32"
+    pad_token_id: 0
+    backend: 'kbk' # 'ge'
+    model_cfg_path: '/home/ma-user/work/mindformers/configs/llama2/predict_llama2_7b.yaml'
+
+serving_config:
+    agent_ports: [16002]
+    start_device_id: 0
+    server_ip: '127.0.0.1'
+    server_port: 8835
+
+pa_config:
+    num_blocks: 1024
+    block_size: 16
+    decode_seq_length: 4096
+
+tokenizer:
+    type: LlamaTokenizer
+    vocab_file: '/home/ma-user/work/checkpoint_download/llama2/tokenizer.model'
+
+basic_inputs:
+    type: LlamaBasicInputs
+
+extra_inputs:
+    type: LlamaExtraInputs
+
+warmup_inputs:
+    type: LlamaWarmupInputs
+```
+
+```
+python test_serving_performance.py -X 10 -P 8835 -O "./" -T 150
+```
+
+在llm-serving启动完毕后，先执行单条或者多条推理请求预热，后续测速结果更加稳定。
 
 
+## 提交推理的日志、配置文件
+test_performance_2024-07-31-00_20.log
 
+OBS：https://mooninfer.obs.cn-southwest-2.myhuaweicloud.com/moon.zip
 
+## 源码包
 
-
-
-
-
-
+OBS：https://mooninfer.obs.cn-southwest-2.myhuaweicloud.com/moon.zip
 
 
 
