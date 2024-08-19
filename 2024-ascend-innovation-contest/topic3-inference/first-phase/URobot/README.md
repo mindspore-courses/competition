@@ -1,4 +1,4 @@
-## Mindspore-track3 URobot 推理优化加速技术报告
+## MindSpore-track3 URobot 推理优化加速技术报告
 在本次比赛中，我们系统的学习调研了
 LLM system 目前的优化方式 ; 我们基于对于 Ascend
 代码的理解 , 提出超参数的调整，数据的前处理等方式；我们对所尝试的策略从速度和精
@@ -17,31 +17,33 @@ qps 为 5 的情况下，我们实现了 410s 的推理耗时，尽管没
 我们提供的文件下载信息如下：
 
 1. 日志信息： 包含精度速度测试相关的日志信息
-https://llmsys.obs.cn-southwest 2.myhuaweicloud.com/submission/main_files.zip
+
+https://llmsys.obs.cn-southwest-2.myhuaweicloud.com/submission/main_files.zip
 
 最快速度参考章节 2.1.2所对应的日志 ,未通过精度测试，但是 log 结果正常。
 
-test_performance_2024-07 30 22_36_batch64_qps5.log
+test_performance_2024-07-30-22_36_batch64_qps5.log
 
 精度测试所生成的日志（batch 为 1, 其他参数进行调优，并通过精度测试）
-test_performance_2024-07 31 06_25_batch1.log
+test_performance_2024-07-31-06_25_batch1.log
 
 对应生成的 logit 文件
 file_npy
 
 最快速度并且通过精度测试对应的日志
-test_performance_2024-07 31 07_04_batch_64.log
+test_performance_2024-07-31-07_04_batch_64.log
 
 2. 源代码
 
 其中，我们主要通过添加了针对performance_serving 中数据的前处理 位于
 test_serving_performance.py 中
 
-https://llmsys.obs.cn-southwest 2.myhuaweicloud.com/submission/llm_serving.zip
-https://llmsys.obs.cn-southwest 2.myhuaweicloud.com/submission/performance_serving.zip
+https://llmsys.obs.cn-southwest-2.myhuaweicloud.com/submission/llm_serving.zip
+
+https://llmsys.obs.cn-southwest-2.myhuaweicloud.com/submission/performance_serving.zip
 
 
-## 业界推理优化算法调研业界推理优化算法调研
+## 业界推理优化算法调研
 
 近两年来，随着大模型的兴起，人们也开始从性能优化的角度更深刻的认识transformer，我们，我们也看到了相关的算法和开源项目层出不穷。从也看到了相关的算法和开源项目层出不穷。从LLM systemLLM system的角度，我们列举出有影响力的相的角度，我们列举出有影响力的相关工作关工作
 
@@ -154,7 +156,7 @@ batch size 的增加 ( 可以显著减少处理的总时间。此外，
 | 1          | 3551.925s  | 795s     |   -       | -         |  
 | 16         |    -    |     958s      |  930s        |  Invalid        |  
 | 32         |   -     |    865s      | 836s     | 836s     |  
-| 64         |            |   795s       |791s  | 791s     |
+| 64         |   -     |   795s       |791s  | 791s     |
 
 表1
 
@@ -182,9 +184,10 @@ decode_seq_length max_generate_length 为 1024 在此参数下， qps 为 5 时�
 | 64        |  526s    |   421s   | 410s      | 
 
 
-![image]()
+![image](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/URobot-1.png)
 
-![image]()
+
+![image](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/URobot-2.png)
 
 
 但是经过测试，在调整该参数后，模型的精度验证无法通过。如下图
@@ -247,8 +250,9 @@ serving等代码和相关资料阅读和理解上。在阅读过程中，我们�
 alpaca_521.json 文件展开，按照不同 qps ，进行 150 条数据的推理，因为数据
 数量小于正式性能评估的实际要求，仅供参考和前期调研使用。
 The OCR output is a bit disorganized. I'll clean up and reformat the data to represent it as a table:
+
 | TestName | X / T | batch | Tput(req/s) | Total time |
-|------||-----||-------||----|----|
+|------|-----|-------|----|----|
 | 1.0 | 0.5/300| 1 | 0.38 | 391 |
 | 1.1 | 0.5/300| 2 | 0.48 | 311 |
 | 1.2 |1/150 | 2 | 0.625 | 240 |
@@ -273,6 +277,6 @@ batch size 从 32 开始依次成倍增加，记录推理时间。 QPS 从 15 �
 |------------|------------|----------|----------|----------|  ----------| 
 | 1          | 3551.925s  | -    |   -       | -         |   -         |
 | 32         |   -     |    712.655s      | -    | -    |   -         |
-|64     | -  |   713.666s  |  654.298s |   638.847s  |  624.119s|
+|64            | -  |   713.666s  |  654.298s |   638.847s  |  624.119s|
 
 
