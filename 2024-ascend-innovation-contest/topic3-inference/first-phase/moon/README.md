@@ -22,6 +22,75 @@ PagedAttention 通过将键值缓存分割成固定大小的块，并允许这�
 2. 资源利用率提高：通过消除将输入和输出填充到相同长度的需求，持续批处理更有效地利用GPU资源，提高整体吞吐量 ([ar5iv](https://ar5iv.labs.arxiv.org/html/2309.06180))。
 3. 更高的吞吐量：这种方法允许请求的动态高效批处理，这对于在高需求场景中保持高吞吐量至关重要 ([GitHub](https://github.com/vllm-project/vllm))。
 
-比赛排名第一
+## 本作品使用的推理优化算法介绍
+### 后处理耗时优化方案：
+由于后处理统一使用贪婪搜素策略，即求32000词表中的最大值的id，baseline做法用的是调用ms的ops.Argmax算子：
+
+```
+class ArgmaxPost(nn.Cell):
+    def __init__(self):
+        super(ArgmaxPost, self).__init__()
+        self.argmax = ops.Argmax(output_type=ms.int32)
+        # self.reshape = ops.reshape()
+    def construct(self, x):
+        x = ops.reshape(x, (x.shape[0], x.shape[-1]))
+        output = self.argmax(x)
+        return output
+```
+耗时测量：
+
+首先在do_post_sampling函数位置，使用time函数计算执行计算的耗时。计时区间为进行argmax计算的全过程，包括后面转为numpy类型的时间。
+
+```
+
+start_time = time.time()  
+logging.info("do_post_sampling outputs_np type is f, value is {}".format(outputs_np.dtype, outputs_np))  
+  
+do_sample = self.get_consistent_batch(decode_index)  
+  
+if self.config.model_config.backend == "ge":  
+    if self.config.serving_config.enable_host_post_sampling:  
+        if not do_sample:  
+            target = self._post_sampling_argmax_host(outputs_np)  
+            target = target.reshape((self.current_batch_size,))  
+            target = np.squeeze(target, axis=1)  
+        else:  
+            target = self._post_sampling_topk_host(outputs_np, decode_index, prefill) 
+    else:  
+        if not do_sample:  
+            target = self._post_sampling_argmax_npu(outputs_np)  
+        else:  
+            target = self._post_sampling_topk_npu(outputs_np, decode_index, prefill)  
+else:  
+    if not do_sample:  
+        self.targets.clear()  
+        target = self.argmax_model(outputs_np)  
+    else:  
+        target = self._post_sampling_topk_kbk(outputs_np, decode_index) 
+
+    if isinstance(target, Tensor):  
+        target = target.asnumpy()
+    output_info = outputs_np.asnumpy()
+  
+logging.info('argmax_model time is {} '.format((time.time() - start_time) * 1000)) 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
