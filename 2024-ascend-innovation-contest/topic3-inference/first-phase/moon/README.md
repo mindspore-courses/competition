@@ -276,7 +276,7 @@ number. The', 'res_time': 421.4911723136902, 'first_token_time':
 这个句子的输出是比较长的，可以调用tokenizer分词查看句子的长度，或者直接通过huggingface在线的分词器来看这个句子的分词结果由图可知，整个json字段的token数才不到五百，所以将推理的句子长度配置设置为600，必然能保证全部推理任务的正常进行，减少句子长度还会节约大量的显存占用。
 
 
-![image]()
+![image](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/11.png)
 
 修改句子输出长度可以提升推理系统的吞吐量，但是会导致词表概率发生一些变化，无法通过校验，所以没办法使用这种策略。
 
