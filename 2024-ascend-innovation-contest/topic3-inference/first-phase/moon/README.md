@@ -76,6 +76,89 @@ logging.info('argmax_model time is {} '.format((time.time() - start_time) * 1000
 
 ```
 
+改进：后处理耗时太长，改写算法，直接用numpy实现：
+
+```
+# 新的 ArgmaxPost 类（使用 numpy 实现）
+class ArgmaxPost:
+    def __init__(self):
+        pass
+    def construct(self, x):
+        x = x.reshape((x.shape[0], x.shape[-1]))
+        output = np.argmax(x, axis=-1)
+        return output
+
+self.argmax_model = ArgmaxPost()
+
+def do_post_sampling(self, outputs_np, outputs_shm, output_logprob_shm,decode_index, prefill=True):
+    start_time = time.time()
+    # 确保 outputs_np 是 numpy 数组
+    if isinstance(outputs_np, Tensor):
+        outputs_np = outputs_np.asnumpy()
+    logging.info("do_post_sampling outputs_np shape is {}, value is{}".format(outputs_np.shape, outputs_np))
+    do_sample = self.get_consistent_batch(decode_index)
+    if self.config.model_config.backend == "ge":
+        if self.config.serving_config.enable_host_post_sampling:
+            if not do_sample:
+                target = self._post_sampling_argmax_host(outputs_np)
+                target.reshape((self.current_batch_size,))
+                target = np.squeeze(target, axis=1)
+            else:
+                target = self._post_sampling_topk_host(outputs_np,decode_index, prefill)
+        else:
+            if not do_sample:
+                target = self._post_sampling_argmax_npu(outputs_np)
+            else:
+                target = self._post_sampling_topk_npu(outputs_np,decode_index, prefill)
+        output_info = outputs_np # 假设 get_data_to_numpy 返回 numpy 数组
+    else:
+        if not do_sample:
+            self.targets.clear()
+            #logging.info("pre outputs_np shape is {}, value is{}".format(outputs_np.shape, outputs_np))
+            #logging.info("outputs_np type: {}".format(type(outputs_np)))
+            #logging.info("outputs_np dtype: {}".format(outputs_np.dtype))
+            #logging.info("outputs_np shape: {}".format(outputs_np.shape))
+            target = self.argmax_model.construct(outputs_np)
+        else:
+            target = self._post_sampling_topk_kbk(outputs_np, decode_index)
+        if isinstance(target, np.ndarray):
+            target = target
+        output_info = outputs_np
+    logging.error('argmax_model time is {}'.format((time.time() - start_time) * 1000))
+    logging.info("do_post_sampling target type is {}, value is{}".format(target.dtype, target))
+    logging.info("do_post_sampling output_info type is {}, value is{}".format(output_info.dtype, output_info))
+    if self.rank_id == 0:
+        if prefill:
+            for index in decode_index:
+                tmp = np.ndarray((index + self.current_batch_size,),dtype=target.dtype, buffer=outputs_shm.buf)
+                tmp[index: index + self.current_batch_size] = target[:]
+                logprob_list = []
+                for idx, tag in enumerate(target):
+                    logprob_list.append(output_info[idx][int(tag)])
+                tmp_logprob = np.ndarray((index + self.current_batch_size,),dtype=np.float64,
+                buffer=output_logprob_shm.buf)
+                tmp_logprob[index: index + self.current_batch_size] = logprob_list[:]
+                self.targets[index: index + self.current_batch_size] = target[:]
+        else:
+            tmp = np.ndarray((self.current_batch_size,), dtype=target.dtype,
+            buffer=outputs_shm.buf)
+            tmp[:] = target[:]
+            logprob_list = []
+            for idx, tag in enumerate(target):
+                if len(output_info.shape) == 2:
+                logprob_list.append(output_info[idx][int(tag)])
+                else:
+                logprob_list.append(output_info[idx][0][int(tag)])
+            tmp_logprob = np.ndarray((self.current_batch_size,),dtype=np.float64, buffer=output_logprob_shm.buf)
+            tmp_logprob[:] = logprob_list[:]
+            self.targets[:] = target[:]
+
+```
+
+改进前后耗时比对：
+
+原始 后处理耗时：
+
 
 
 
