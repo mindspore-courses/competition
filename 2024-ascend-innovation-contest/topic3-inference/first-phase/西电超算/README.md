@@ -100,7 +100,242 @@ while True:
 推理
 
 ```
-一大段代码
+# 最重要的类方法是 predict
+def predict(self, shape_list=None, current_batch=None, batch_valid_flag=None):
+    self.status = AgentStatus.busy
+    #申请tmp_shms，包括 existing_shm0，output_shm，output_logprob_shm，gen_params_shm
+    tmp_shms = []
+    start_time = time.time()
+    existing_shm0 = shared_memory.SharedMemory(name=self.shm_names[0])  #共享内存
+    tmp_shms.append(existing_shm0)
+
+    # prefill阶段，只进行各种预处理，没有调用模型
+
+    #########################################################
+    if self.is_prefill:
+        # 第一个数据块的形状
+        first_group = np.ndarray((shape_list[0]), dtype=np.int32, buffer=existing_shm0.buf)
+        # 当前的index，是从first_group中进行切片得到
+        current_index_ = first_group[:, shape_list[0][1] - 3: shape_list[0][1] - 2]
+        current_index = np.squeeze(current_index_, axis=-1) # 去除冗余的长度为1的轴
+
+        valid_length_ = first_group[:, shape_list[0][1] - 1: shape_list[0][1]]
+        if self.config.model_config.current_index or self.config.model_config.backend == "kbk":
+            valid_length = np.squeeze(valid_length_, axis=-1).astype(np.int64)
+        else:
+            valid_length = np.squeeze(valid_length_, axis=-1).astype(np.int32)
+
+        input_ids = first_group[:, :shape_list[0][1] - 3
+        # 生成参数 由id 指定在 shape list中的位置，来进行生成
+        gen_params_id = 1  # 改为1，正向取值，原始shape_list只有两个值，现在多加了两个
+        shape_params = shape_list[gen_params_id]
+        gen_params = np.ndarray(shape_params, dtype=np.float16, buffer=gen_params_shm.buf)
+        # 生成参数 包括 do_sample_list、top_p_list、top_k_list、temperature_list、repetition_penalty_list、decode_index_list
+
+        do_sample_list = gen_params[:, 0].astype(np.bool_)
+        top_p_list = gen_params[:, 1]
+        top_k_list = gen_params[:, 2].astype(np.int32)
+        temperature_list = gen_params[:, 3]
+        repetition_penalty_list = gen_params[:, 4]
+        decode_index_list = gen_params[:, 5].astype(np.int32)
+        # 添加baichuanPA block_tables_shape slot_mapping_shape
+        if self.config.model_config.page_attention:
+            block_tables_shape = shape_list[2] # block_tables_shape 存储了块表格的形状信息
+            slot_mapping_shape = shape_list[3] # 如何将输入数据的不同部分映射到模型的处理单元或输出单元
+
+        extra_input = []
+        # 创建新的 existing_shm用于存放 extra_input
+        for i in range(1, len(shape_list) - 1): #除了第一个是真实的 input，后面是参数
+            existing_shm = shared_memory.SharedMemory(name=self.shm_names[i])
+            tmp_shms.append(existing_shm)
+            # To Do np.int64 ?
+            extra_input.append(np.ndarray((shape_list[i]), dtype=np.int64, buffer=existing_shm.buf))
+
+        if self.config.model_config.backend == "ge":
+            # pa or static model type don't need 'act_len' parameter
+            if self.config.model_config.page_attention or (
+                    self.config.model_config.model_name == 'wizard_coder' and self.config.model_config.model_type == "static"):
+                extra_input = []
+            else:
+                extra_input = self.extra_input_func.get_extra_inputs(input_ids, current_index, None, True,
+                                                                     valid_length,
+                                                                     zactivate_len=self.config.model_config.zactivate_len)
+        # 意味着 batch_size 已经在 input_ids中了，而 input_ids来源于 first_group[:,: shape_list[0][1] - 3]
+        self.current_batch_size = len(input_ids)
+        # init和decode的东西
+        init_reset = []  # 存储初始化值
+        decode_index = []  # 存储 decode的下标
+        for i in range(self.current_batch_size):
+            decode_params = DecodeParams(
+                do_sample=bool(do_sample_list[i]),
+                top_p=top_p_list[i],
+                top_k=int(top_k_list[i]),
+                temperature=temperature_list[i],
+                repetition_penalty=repetition_penalty_list[i],
+                decode_index=int(decode_index_list[i]),
+                current_index=int(current_index[i]),
+                valid_length=int(valid_length[i]),
+                init_reset=False
+            )
+            self.decode_params_map[decode_params.decode_index] = decode_params
+            init_reset.append(decode_params.init_reset)
+            decode_index.append(decode_params.decode_index)
+        init_reset = np.array(init_reset, dtype=np.bool_)
+        decode_index_np = np.array(decode_index, dtype=np.int64)
+    # decode阶段 实际进行推理
+    else:
+        # keep decode map size equal to current batch size
+        # extend
+        # 创建化列表和变量
+        current_index = []
+        valid_length = []
+        init_reset = []
+        decode_index = []
+        self.current_batch_size = current_batch  # 成员变量等于current_batch
+        current_batch_size = self.current_batch_size  # 局部变量等于成员变量
+        # size 和 valid flag数量应该一致
+        if self.current_batch_size != len(batch_valid_flag):
+            batch_valid_flag.clear()
+            batch_valid_flag = [1 for _ in range(self.current_batch_size)]
+        
+        # keys代表了before的bc
+        before_batch_size = len(self.decode_params_map.keys())
+        # 如果之前的少于现在的，那说明添加了新的进来了（CB），需要进行padding
+        if before_batch_size < current_batch_size:
+            #通过output_shm创建input_ids
+            input_ids = np.ndarray((before_batch_size,), dtype=np.int32, buffer=output_shm.buf)
+            # pad的符号是 2
+            pad_input_id = self.config.model_config.end_token
+            #添加的长度
+            add_length = self.current_batch_size - before_batch_size
+            addition_input_ids = np.array(add_length * [pad_input_id], dtype=np.int32)  # 额外增加的ids
+            input_ids = np.append(input_ids, addition_input_ids)
+            target_batch = self.current_batch_size  # 当前的 batch就是 target batch
+            pad_key = list(self.decode_params_map.keys())[-1]
+            # padding_obj = self.decode_params_map[pad_key]
+            for j in range(target_batch):
+                if j not in self.decode_params_map:
+                    padding_obj = copy.deepcopy(self.decode_params_map[pad_key])
+                    padding_obj.current_index = 0
+                    padding_obj.valid_length = 1
+                    padding_obj.decode_index = j
+                    self.decode_params_map[j] = padding_obj
+        else:
+            # pop
+            while len(self.decode_params_map.keys()) > current_batch_size:
+                #从 decode_params_map 中弹出，self.decode_params_map[decode_params.decode_index] = decode_params
+                self.decode_params_map.popitem()
+            input_ids = np.ndarray((current_batch_size,), dtype=np.int32, buffer=output_shm.buf)
+
+        # 给键值 排序
+        self.decode_params_map = dict(sorted(self.decode_params_map.items(), key=lambda x: x[0]))
+        # 很朴素的 全部 +1
+        for key in self.decode_params_map.keys():
+            decode_params = self.decode_params_map[key]
+            decode_params.current_index = decode_params.current_index + 1
+            decode_params.valid_length = decode_params.valid_length + 1
+            decode_params.init_reset = True  # 修改原始代码bug
+            if batch_valid_flag[key] == 1:
+                current_index.append(decode_params.current_index)
+                valid_length.append(decode_params.valid_length)
+            else:
+                current_index.append(0)
+                valid_length.append(1)
+            init_reset.append(decode_params.init_reset)
+            decode_index.append(decode_params.decode_index)
+
+        if self.config.model_config.backend == "ge":
+            # pa or static model type don't need 'act_len' parameter
+            if self.config.model_config.page_attention or (
+                    self.config.model_config.model_name == 'wizard_coder' and self.config.model_config.model_type == "static"):
+                extra_input = []
+            else:
+                extra_input = self.extra_input_func.get_extra_inputs(input_ids, current_index, None, False,
+                                                                     valid_length,
+                                                                     zactivate_len=self.config.model_config.zactivate_len)
+        #重新创建 np.array
+        current_index = np.array(current_index, dtype=np.int32)
+        if self.config.model_config.current_index or self.config.model_config.backend == "kbk":
+            valid_length = np.array(valid_length, dtype=np.int64)
+        else:
+            valid_length = np.array(valid_length, dtype=np.int32)
+        # 重整三个 关键的矩阵
+        init_reset = np.array(init_reset, dtype=np.bool_)
+        decode_index_np = np.array(decode_index, dtype=np.int64)
+        input_ids = input_ids.reshape((-1, 1))
+        # 加入PA特性
+        #PA:这个时候 再次 确定 块表的尺寸和 插槽映射的尺寸 #############
+        if self.config.model_config.page_attention:
+            block_tables_shape = shape_list[0]
+            slot_mapping_shape = shape_list[1]
+
+    #这里开始不分 prefill和decode
+
+    block_tables_np = None
+    slot_mapping_np = None
+    if self.config.model_config.page_attention:  # 当然是要用 page_attention了
+        # 创建共享内存
+        block_tables_shm = shared_memory.SharedMemory(name=self.shm_names[7])  # 这里的共享内存index要改
+        slot_mapping_shm = shared_memory.SharedMemory(name=self.shm_names[8])
+        # 根据shape，在指定的内存，创建array
+        block_tables_np = np.ndarray((block_tables_shape), dtype=np.int32, buffer=block_tables_shm.buf)
+        slot_mapping_np = np.ndarray((slot_mapping_shape), dtype=np.int32, buffer=slot_mapping_shm.buf)
+
+
+    if self.config.model_config.backend == "ge":
+        if self.config.model_config.page_attention:
+            if self.is_prefill:
+                tmp_in = [input_ids, valid_length, slot_mapping_np]
+            else:
+                tmp_in = [input_ids, valid_length, block_tables_np, slot_mapping_np]
+        else:
+            tmp_in = self.basic_input_func.get_inputs(input_ids, current_index, init_reset, valid_length,
+                                                      self.config.model_config.current_index, decode_index_np,
+                                                      self.config.model_config.model_type)
+            if len(extra_input) > 0:
+                tmp_in.extend(extra_input)
+
+        for tmp in tmp_in:
+            print(1)
+
+        outputs = self.predict_for_ge(extra_input, start_time, tmp_in)
+    else:
+        seq_length = self._get_seq_length(input_ids, False)
+        # init kbk_targets, shape(current_batch, seq_length), default value: self.config.model_config.pad_token_id
+        if self.kbk_targets is None:
+            decode_batch_size = self.config.model_config.decode_batch_size[0]
+
+            self.kbk_targets = np.full((decode_batch_size, seq_length), self.config.model_config.pad_token_id)
+
+
+
+        # decode 时，先将 shape 与 prefill 改为一致
+        if input_ids.shape[1] == 1:
+            input_ids = np.concatenate((input_ids, np.zeros((input_ids.shape[0], seq_length - 1))), axis=1)
+
+        # 遍历decode_index
+        for idx, index in enumerate(decode_index):
+            index = int(decode_index[0])
+
+            if self.is_prefill:
+                self.kbk_targets[index] = input_ids[idx]
+            else:
+                current_index_value = int(current_index[idx])
+                self.kbk_targets[index][current_index_value:current_index_value + 1] = input_ids[idx][:1]
+                input_ids[idx] = self.kbk_targets[index]
+
+        outputs = self.predict_for_kbk(current_index, input_ids, valid_length, block_tables_np, slot_mapping_np)
+
+    post_time = time.time()
+    if self.rank_id == 0:
+        multi_thread_time = time.time()
+        if self.is_prefill:
+            self.do_post_sampling(outputs, output_shm, output_logprob_shm, decode_index_np, prefill=True)
+        else:
+            self.do_post_sampling(outputs, output_shm, output_logprob_shm, decode_index_np, prefill=False)
+
+    self.status &= ~AgentStatus.busy
+    return self.targets, tmp_shms
 
 ```
 
