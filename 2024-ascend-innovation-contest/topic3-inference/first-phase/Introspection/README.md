@@ -12,7 +12,7 @@
 本次调优中，首先分析具体时间消耗，如下图所示y轴为时间消耗，x轴为输出日志行数，每次请求均为一个较长时间间隔再加一系列不等的时间间隔。两者占据90%以上的时间。其中较长时间间隔为第一次无KV cache的计算过程，后续较小时间间隔则是增量推理过程。推理过程外的优化空间很小。而对推理本身优化则涉及底层硬件适配。因此，本次选择调优batc_size对速度进行优化。
 
 
-![image]()
+![image11](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/Introspection-1.png)
 
 
 ## 超参配置
