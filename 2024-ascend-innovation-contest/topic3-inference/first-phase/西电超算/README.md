@@ -300,18 +300,24 @@ def predict(self, shape_list=None, current_batch=None, batch_valid_flag=None):
 
         outputs = self.predict_for_ge(extra_input, start_time, tmp_in)
     else:
+        # 得到 seq_length,目前生成了多长
         seq_length = self._get_seq_length(input_ids, False)
         # init kbk_targets, shape(current_batch, seq_length), default value: self.config.model_config.pad_token_id
+        # 如果 kbk_targets还不存在，就创建一个
         if self.kbk_targets is None:
             decode_batch_size = self.config.model_config.decode_batch_size[0]
-
+            # bs * len 用pad 2 来填充
             self.kbk_targets = np.full((decode_batch_size, seq_length), self.config.model_config.pad_token_id)
 
 
 
         # decode 时，先将 shape 与 prefill 改为一致
+        # 如果 input_ids.shape[1]是 1，意味着 是prefill？不确定
         if input_ids.shape[1] == 1:
+            # 如果初始时 input_ids 的第二个维度为1，那么将其扩展到指定的 seq_length
             input_ids = np.concatenate((input_ids, np.zeros((input_ids.shape[0], seq_length - 1))), axis=1)
+
+        # 遍历 decode_index，decode_index 通常指的是用于指导生成过程中位置或者词汇选择的索引
 
         # 遍历decode_index
         for idx, index in enumerate(decode_index):
@@ -321,14 +327,18 @@ def predict(self, shape_list=None, current_batch=None, batch_valid_flag=None):
                 self.kbk_targets[index] = input_ids[idx]
             else:
                 current_index_value = int(current_index[idx])
+                # 精彩的复制，就是把input_ids切片给kbk_targets了
                 self.kbk_targets[index][current_index_value:current_index_value + 1] = input_ids[idx][:1]
                 input_ids[idx] = self.kbk_targets[index]
 
-        outputs = self.predict_for_kbk(current_index, input_ids, valid_length, block_tables_np, slot_mapping_np)
+        # 上面都是预处理，这里是进行一次前向传播
 
+        outputs = self.predict_for_kbk(current_index, input_ids, valid_length, block_tables_np, slot_mapping_np)
+    # 后处理
     post_time = time.time()
     if self.rank_id == 0:
         multi_thread_time = time.time()
+        
         if self.is_prefill:
             self.do_post_sampling(outputs, output_shm, output_logprob_shm, decode_index_np, prefill=True)
         else:
@@ -412,7 +422,69 @@ num_blocks: 2048 、block_size: 16 来实现优化。
 ## 超参配置
 测速读超参配置
 llm-serving/configs/llama/llama_7b_kbk_pa_dyn.yaml
-启用了continous batching，经过测试，可以设成，占用npu的ai core巅峰到达83%，
+启用了continous batching，经过测试，可以设成，占用npu的ai core巅峰到达83%。
+
+```
+model_config:
+    model_name: 'llama_7b'
+    max_generate_length: 4096
+    end_token: 2
+    seq_length: [4096]
+    vocab_size: 32000
+    prefill_batch_size: [96]
+    decode_batch_size: [96]
+    zactivate_len: [512, 1024, 2048, 4096]
+    model_type: 'dyn'
+    seq_type: 'static'
+    batch_waiting_time: 0.0
+    decode_batch_waiting_time: 0.0
+    batching_strategy: 'continuous'
+    current_index: False
+    page_attention: True
+    model_dtype: "DataType.FLOAT32"
+    pad_token_id: 0
+    backend: 'kbk' # 'ge'
+    model_cfg_path: '/home/ma-user/work/mindformers/configs/llama2/predict_llama2_7b.yaml'
+
+serving_config:
+    agent_ports: [16002]
+    start_device_id: 0
+    server_ip: '127.0.0.1'
+    server_port: 8835
+
+pa_config:
+    num_blocks: 1024
+    block_size: 16
+    decode_seq_length: 4096
+
+tokenizer:
+    type: LlamaTokenizer
+    vocab_file: '/home/ma-user/work/checkpoint_download/llama2/tokenizer.model'
+
+basic_inputs:
+    type: LlamaBasicInputs
+
+extra_inputs:
+    type: LlamaExtraInputs
+
+warmup_inputs:
+    type: LlamaWarmupInputs
+
+```
+
+测速指令(performance_serving)：
+
+```
+python test_serving_performance.py -X 3 -P 1 8835 -O "./" -T 500
+```
+
+精度测试配置：
+
+由于 logits的保存脚本，不兼容continuous batching，因此没有办法并行的保存logits。
+
+因此精度的测试，其实就是按照baseline来做，需要将 batch 调整回1。我这里进行了验证，得到了正
+确的结果。
+
 
 ## 未来可优化方向分析
 
