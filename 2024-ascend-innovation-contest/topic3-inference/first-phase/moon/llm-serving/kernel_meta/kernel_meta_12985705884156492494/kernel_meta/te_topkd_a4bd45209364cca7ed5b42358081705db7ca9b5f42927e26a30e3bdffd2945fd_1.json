@@ -1,0 +1,37 @@
+{
+    "binFileName":"te_topkd_a4bd45209364cca7ed5b42358081705db7ca9b5f42927e26a30e3bdffd2945fd_1",
+    "binFileSuffix":".o",
+    "blockDim":16,
+    "coreType":"MIX",
+    "deterministic":"ignore",
+    "intercoreSync":1,
+    "kernelName":"te_topkd_a4bd45209364cca7ed5b42358081705db7ca9b5f42927e26a30e3bdffd2945fd_1__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "memoryStamping":[],
+    "opParaSize":0,
+    "parameters":[
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "dtype":"float32",
+            "init_value":0.0
+        }
+    ],
+    "schedule_mode":1,
+    "sha256":"dc56ef1a1924db6d00d5a111ba7b37ada39c031e7bbfb19bdd2457a5b794d0f7",
+    "taskRation":"0:1",
+    "workspace":{
+        "num":2,
+        "size":[
+            26624,
+            11520
+        ],
+        "type":[
+            0,
+            0
+        ]
+    }
+}
