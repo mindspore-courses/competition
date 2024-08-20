@@ -13,6 +13,7 @@
 
 实验结果见日志: [test_performance_2024-07-31-20_13.log](./test_performance_2024-07-31-20_13.log)，相比基线约提升 `26.65%` (Exec Time: 2605.3589s)
 
+
 ```shell
 # launch llm-serving
 cd /home/ma-user/work/llm-serving/
@@ -28,26 +29,6 @@ curl 127.0.0.1:8835/models/llama2/generate \
 # run performance_serving task-1
 cd /home/ma-user/work/performance_serving/
 python test_serving_performance.py --task 1 -X 0.625 -T 2400
-```
-
-⚪ 精度测试
-
-精度测试脚本如下：
-
-```shell
-# launch llm-serving
-cd /home/ma-user/work/llm-serving/
-python examples/start.py --task 2 --config configs/llama/llama_7b_kbk_pa_dyn.yaml
-
-# run performance_serving task-2
-cd /home/ma-user/work/performance_serving/
-# 这是规定的标准配置 ↓↓↓
-python test_serving_performance.py --task 2 -X 0.1 -T 5000
-# 如果觉得标准配置很慢，也可以用下面的命令 ↓↓↓
-python test_serving_performance.py --task 2 -X 0.4 -T 1250
-# test precision
-cd /home/ma-user/work/
-python acc_allclose.py --base_path file_npy_base --new_path file_npy
 ```
 
 
