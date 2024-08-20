@@ -19,24 +19,24 @@
 
 | 作品名称 | 团队名称 | 推理时长（秒） |  排名  | 作品链接 |
 |-------|-------|-------|  -------| -------| 
-| moon.zip         | moon       | 669.8692       | 1    | https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/moon  |
-| 美滋滋学编程.zip | 美滋滋学编程 | 674.2927       | 2     |  https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/美滋滋学编程   |
-| faster.zip       | faster     | 679.9595       | 3    |   https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/faster  |
-| 西电超算.zip     | 西电超算   | 788.13775      | 4     |    | 
-| Introspection.zip| Introspection| 788.8821       |5      |  https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/Introspection   |
-| ccdd.zip         | ccdd       | 791.0843       | 6     |     |
-| 向日葵.zip       | 向日葵     | 791.3588       | 7     |   |  
-| submit.zip       | 夏日弥光   | 794.8383       | 8     |     |
-| Mindspore-track3-URobot.zip | URobot   | 797.0908 |  9    |    | 
-| hack_ai2.zip     | hack_ai2   | 797.8816       |  10    |     |
-| 汪汪队.zip   | 汪汪队     | 801.0472       | 11   |     |
-| debias_world2.zip   | debias_world2 | 802.7824    | 12       |     |
-| carryhjr.zip                  | carryhjr     | 835.1026    | 13        |     |
-| 勇敢牛牛yyds.zip              | 勇敢牛牛yyds | 839.1604    | 14  |     |
-| Ascend chenyun.pdf.zip        | Oops         | 857.1035    | 15   |     |
-| 不羁混分战队.zip              | 不羁混分战队 | 1890.3587   | 16  |     |
-| 推理赛道_G.zip                | 摸鱼         | 2106.2045   | 17   |     |
-| 啪的一下，很快啊，就寄了.zip | 啪的一下，很快啊，就寄了 | 3076.7487   | 18  |   |
+| moon.zip         | moon       | 669.8692       | 1    | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/moon  |
+| 美滋滋学编程.zip | 美滋滋学编程 | 674.2927       | 2     |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/美滋滋学编程   |
+| faster.zip       | faster     | 679.9595       | 3    |   https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/faster  |
+| 西电超算.zip     | 西电超算   | 788.13775      | 4     |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/西电超算  | 
+| Introspection.zip| Introspection| 788.8821       |5      |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/Introspection   |
+| ccdd.zip         | ccdd       | 791.0843       | 6     |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/ccdd   |
+| 向日葵.zip       | 向日葵     | 791.3588       | 7     | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/向日葵  |  
+| submit.zip       | 夏日弥光   | 794.8383       | 8     |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/夏日弥光   |
+| Mindspore-track3-URobot.zip | URobot   | 797.0908 |  9    |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/URobot  | 
+| hack_ai2.zip     | hack_ai2   | 797.8816       |  10    |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/hack_ai2   |
+| 汪汪队.zip   | 汪汪队     | 801.0472       | 11   |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/汪汪队   |
+| debias_world2.zip   | debias_world2 | 802.7824    | 12       |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/debias_world2   |
+| carryhjr.zip                  | carryhjr     | 835.1026    | 13 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/carryhjr   |
+| 勇敢牛牛yyds.zip              | 勇敢牛牛yyds | 839.1604    | 14  |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/勇敢牛牛yyds   |
+| Ascend chenyun.pdf.zip        | Oops         | 857.1035    | 15   |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/Oops   |
+| 不羁混分战队.zip              | 不羁混分战队 | 1890.3587   | 16  | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/不羁混分战队    |
+| 推理赛道_G.zip                | 摸鱼         | 2106.2045   | 17   |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/摸鱼   |
+| 啪的一下，很快啊，就寄了.zip | 啪的一下，很快啊，就寄了 | 3076.7487   | 18  |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/啪的一下，很快啊，就寄了 |
 
 
 ### 第二阶段
