@@ -20,8 +20,8 @@
 | 作品名称 | 团队名称 | 推理时长（秒） |  排名  | 作品链接 |
 |-------|-------|-------|  -------| -------| 
 | moon.zip         | moon       | 669.8692       | 1    | https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/moon  |
-| 美滋滋学编程.zip | 美滋滋学编程 | 674.2927       | 2     |     |
-| faster.zip       | faster     | 679.9595       | 3    |     |
+| 美滋滋学编程.zip | 美滋滋学编程 | 674.2927       | 2     |  https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/美滋滋学编程   |
+| faster.zip       | faster     | 679.9595       | 3    |   https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/faster  |
 | 西电超算.zip     | 西电超算   | 788.13775      | 4     |    | 
 | Introspection.zip| Introspection| 788.8821       |5      |  https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/Introspection   |
 | ccdd.zip         | ccdd       | 791.0843       | 6     |     |
