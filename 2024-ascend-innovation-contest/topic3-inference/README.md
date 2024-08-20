@@ -23,7 +23,7 @@
 | 美滋滋学编程.zip | 美滋滋学编程 | 674.2927       | 2     |     |
 | faster.zip       | faster     | 679.9595       | 3    |     |
 | 西电超算.zip     | 西电超算   | 788.13775      | 4     |    | 
-| Introspection.zip| Introspection| 788.8821       |5      |     |
+| Introspection.zip| Introspection| 788.8821       |5      |  https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/Introspection   |
 | ccdd.zip         | ccdd       | 791.0843       | 6     |     |
 | 向日葵.zip       | 向日葵     | 791.3588       | 7     |   |  
 | submit.zip       | 夏日弥光   | 794.8383       | 8     |     |
