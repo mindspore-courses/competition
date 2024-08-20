@@ -183,11 +183,99 @@ class Schedule:
 2) 将swap下来的valid entries放入单独的队列
 
 ```
+def try_swap_valid_entries(self):  
+    is_invalid_list = self.checkout_entry()  
+    num_tokens_index_list = []  
+    for index, is_invalid in enumerate(is_invalid_list):  
+        if is_invalid:  
+            continue  
+        # 有效请求  
+        num_tokens_index_list.append((self.running_request_list[index].get_entry_data().get_len(), index))  
+    if not num_tokens_index_list:  
+        raise RuntimeError("no valid entry to pop!")  
+    num_tokens_index_list.sort(key=lambda x: x[0])
+    _, index_to_swap = num_tokens_index_list[0][1]
+    # 释放一条长度最短的valid entries（认为是最后进来的，TODO：按照时间顺序pop掉最晚进来的entry）  
+    entry_to_swap = self.running_request_list[index_to_swap]  
+    entry_to_swap.get_entry_data().set_status(EntryStatus.WAITING)  
+    entry_to_swap.get_entry_data().set_decode_index(0)  
+    entry_to_swap.is_prompt = True  
+    entry_to_swap.cache_engine.release_cache()
+    # append回waiting list  
+    logging.warning("swap entry out, index: %s", index_to_swap)  
+    # self.waiting_request_queue.appendleft(entry_to_swap)  
+    self.swapped_request_queue.append(entry_to_swap) # 插入swap队列
+    # 用padding替代  
+    # logging.debug("inserting padding to popped entry %s", index_to_swap)  
+    self.insert_padding_entry(index_to_swap)
 
+```
+
+3) 优先调度swapped_request_queue中的request
+
+```
+def _continuous_batch_pa(self):  
+    ServingBlockMemPool.instance().reset_budget()
+    # ServingBlockMemPool.instance().log_status()
+    # 这里只是用padding先临时组成batch，一开始里面的请求都是invalid  
+    self.try_initialize_paddings_pa() 
+    # self.log_running_list("schedule start running status") 
+      
+    # 判断batch内的running entry，能否进行本轮推理?  
+    num_entry_swapped_out = 0  
+    while not self.can_predict_current_batch(): 
+        # 如果不能，Swap出去已有请求，使用padding（无效请求）替代  
+        self.reset_all_budgets()  # 重置预算管理，但缺少括号  
+        self.try_swap_valid_entries()  # 尝试交换有效条目  
+        num_entry_swapped_out += 1  
+          
+    # 当前发生了swap，说明资源不够，就不会继续往下加入wait中的request了  
+    if num_entry_swapped_out:  
+        self.reset_all_budgets()
+        return  
+      
+    # 3. 处理新请求  
+    # logging.debug("determine if can process new request...")  # 调试日志  
+      
+    # 只要有等待的请求，就去尝试替换出running_request_list中的invalid请求（即填充的无效请求）  
+    # 针对waiting_request_queue中的请求的执行顺序，是否可以根据其输入长度，越短的优先？  
+    # 这一步可以优化，参考vllm，不要一有空余槽位和等待的请求就将其加入running，  
+    # 因为一旦加入新的序列，就要停止当前running中的请求的decode，转而进行新加入请求的prefill  
+    # 这样整体的吞吐不一定最优，应该设置一个时间阈值，当大于这个阈值时再进行加入     
+    # 根据_passed_delay判断这次step要不要加入新的原生prompt
+
+    # 第二版  
+    # 先调度swap队列中的request  
+    while self.swapped_request_queue:  
+        if not self.try_substitute_entry_swapped(): 
+            # 尝试失败，退出  
+            break
+
+    # swap队列为空，再考虑调度waiting队列  
+    while self.waiting_request_queue and self._passed_delay(time.time()):  
+        # print("33333333333333333333333") 
+        # 如果有空batch槽，尝试插入  
+        # logging.debug("has new entry, trying to enter current batch") 
+        if not self.try_substitute_entry():
+            # 尝试失败，退出  
+            break  
+        else:  
+            # add
+            self.prev_prompt = True  # 记录已经调度过
+    self.reset_all_budgets() 
 
 ```
 
 
+## 二、后续考虑优化的方向
+
+1）当资源不够时，swap的策略是释放一条长度最短的valid entries（认为是最后进来的），策略是否
+后续可以考虑到达时延以及prompt的信息？
+
+2）对于swap下来的valid entries，其已经decode输出的tokens会被直接释放， llmserving目前采用的
+是 greedy search, 因此每个request只生成一个decode序列。 在vllm中，如果只有一个序列，也是直接
+进行重新计算，不需要保存已经计算的结果。但是后续可以对比一下，对于swap下来的request，保存
+计算结果和不保存计算结果的时间差距。
 
 
 
