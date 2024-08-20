@@ -1,0 +1,40 @@
+model_path:
+    prefill_model: ["/path/to/llama_pa_models/no_act/output_no_act_len/output/mindir_full_checkpoint/rank_0_graph.mindir"]
+    decode_model: ["/path/to/llama_pa_models/no_act/output_no_act_len/output/mindir_inc_checkpoint/rank_0_graph.mindir"]
+    argmax_model: "/path/to/serving_dev/extends_13b/argmax.mindir"
+    topk_model: "/path/to/serving_dev/extends_13b/topk.mindir"
+    prefill_ini: ["/home/ma-user/work/llm-serving/configs/llama/llama_7b_kbk_pa_dyn_prefill.ini"]
+    decode_ini: ["/home/ma-user/work/llm-serving/configs/llama/llama_7b_kbk_pa_dyn_decode.ini"]
+    post_model_ini: "/path/to/baichuan/congfig/config.ini"
+model_config:
+    model_name: 'llama_dyn'
+    max_generate_length: 8192
+    end_token: 2
+    seq_length: [512, 1024]
+    vocab_size: 32000
+    prefill_batch_size: [64]			#不支持多分档，只支持多batch
+    decode_batch_size: [1,4,8,16,30,64]	#支持多分档
+    zactivate_len: [512]
+    model_type: "dyn"	#若无此字段默认为“dyn”，若有此字段需指定model_type
+    current_index: False
+    model_dtype: "DataType.FLOAT32"
+    pad_token_id: 0  
+    
+serving_config:
+    agent_ports: [11330]
+    start_device_id: 5
+    server_ip: 'localhost'
+    server_port: 19200
+    
+tokenizer:
+    type: LlamaTokenizer
+    vocab_file: '/path/to/llama_pa_models/output/tokenizer_llama2_13b.model'
+
+basic_inputs:
+    type: LlamaBasicInputs
+
+extra_inputs:
+    type: LlamaExtraInputs
+
+warmup_inputs:
+    type: LlamaWarmupInputs
