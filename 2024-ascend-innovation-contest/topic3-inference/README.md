@@ -19,7 +19,7 @@
 
 | 作品名称 | 团队名称 | 推理时长（秒） |  排名  | 作品链接 |
 |-------|-------|-------|  -------| -------| 
-| moon.zip         | moon       | 669.8692       | 1    |   |
+| moon.zip         | moon       | 669.8692       | 1    | https://github.com/JoegameZhou/competition/tree/master/2024-ascend-innovation-contest/topic3-inference/first-phase/moon  |
 | 美滋滋学编程.zip | 美滋滋学编程 | 674.2927       | 2     |     |
 | faster.zip       | faster     | 679.9595       | 3    |     |
 | 西电超算.zip     | 西电超算   | 788.13775      | 4     |    | 
