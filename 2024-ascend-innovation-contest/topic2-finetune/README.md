@@ -69,26 +69,26 @@
 
 | 作品名称 | 团队名称 | 数学运算准确率 | 低参比例 | 最终得分 | 排名 |  作品链接 |
 | :--: | :--: | :--: | :--: | :--: | :--: |  :--: |
-| debias_world1.zip | debias_world1 | 71.61% | 0.00679028 | 0.799232916 | 1 |    |
-| 枪心如火，枪如我心.zip | 枪心如火，枪如我心 | 70.59% | 0.00169757 | 0.793620729 | 2 |     | 
-| 肆拾贰.zip | 肆拾贰 | 64.00% | 0.000424393 | 0.747872682 | 3 |     | 
-| 南科启明-提交文档.zip | 南科启明 | 61.54% | 0.000424393 | 0.730652682 | 4 |     | 
-| 崩铁暴打zzz.zip | 崩铁暴打zzz | 51.38% | 0.000424393 | 0.659532682 | 5 |     | 
-| aics.zip | aics | 48.20% | 0.000424393 | 0.637272682 | 6 |     | 
-| 模型微调-0801.zip | PEFT小队 | 45.54% | 0.000848785 | 0.618525364 | 7 |      |
-| 慢调细磨.zip | 慢调细磨 | 41.56% | 0.000424393 | 0.590792682 | 8 |    |  
-| nju-websoft.zip | nju-websoft | 36.44% | 0.000424393 | 0.554952682 | 9 |     | 
-| 起名字是这样的，我考虑的就多了.zip | 起名字是这样的，我考虑的就多了 | 33.56% | 0.000424393 | 0.534792682 | 10 |      |
-| 你当我是LZMA吗.zip | 你当我是LZMA吗 | 32.05% | 	0.000424393 | 	0.524222682 | 11 |    |
-| 阿巴阿巴-模型微调.zip | 阿巴阿巴 | 30.10% | 0.000636589 | 0.510509023 | 12 |     | 
-| dian-team.zip | dian-team | 30.04% | 0.000424393 | 0.510152682 | 13 |    |  
-| 作品提交.zip | ALL IN ONE | 29.87% | 0.000424393 | 0.508962682 | 14 |     | 
-| 搞搞镇文化科技.zip | 搞搞镇文化科技 | 27.74% | 0.000212196 | 0.494116341 | 15 |      |
-| 提交汇总.zip | 欢迎光临 | 27.55% | 0.000424393 | 0.492722682 | 16 |      |
-| 牛牛向前冲-常科.zip | 牛牛向前冲 | 26.00% | 0.000424393 | 0.481872682 | 17 |      |
-| 阿巴巴巴.zip | 阿巴巴巴 | 25.64% | 0.000685557 | 0.479274333 | 18 |     | 
-| 九毛一斤的瓜大队.zip | 九毛一斤的瓜大队 | 23.55% | 0.000424393 | 0.464722682 | 19 |      |
-| 比奇堡冲浪小组.zip | 比奇堡冲浪小组 | 22.40% | 0.000424393 | 0.456672682 | 20 |    |
+| debias_world1.zip | debias_world1 | 71.61% | 0.00679028 | 0.799232916 | 1 | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/nju-websoft   |
+| 枪心如火，枪如我心.zip | 枪心如火，枪如我心 | 70.59% | 0.00169757 | 0.793620729 | 2 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/枪心如火，枪如我心   | 
+| 肆拾贰.zip | 肆拾贰 | 64.00% | 0.000424393 | 0.747872682 | 3 |   https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/肆拾贰 | 
+| 南科启明-提交文档.zip | 南科启明 | 61.54% | 0.000424393 | 0.730652682 | 4 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/南科启明   | 
+| 崩铁暴打zzz.zip | 崩铁暴打zzz | 51.38% | 0.000424393 | 0.659532682 | 5 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/崩铁暴打zzz   | 
+| aics.zip | aics | 48.20% | 0.000424393 | 0.637272682 | 6 | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/aics    | 
+| 模型微调-0801.zip | PEFT小队 | 45.54% | 0.000848785 | 0.618525364 | 7 | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/PEFT小队     |
+| 慢调细磨.zip | 慢调细磨 | 41.56% | 0.000424393 | 0.590792682 | 8 | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/慢调细磨   |  
+| nju-websoft.zip | nju-websoft | 36.44% | 0.000424393 | 0.554952682 | 9 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/nju-websoft   | 
+| 起名字是这样的，我考虑的就多了.zip | 起名字是这样的，我考虑的就多了 | 33.56% | 0.000424393 | 0.534792682 | 10 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/起名字是这样的，我考虑的就多了    |
+| 你当我是LZMA吗.zip | 你当我是LZMA吗 | 32.05% | 	0.000424393 | 	0.524222682 | 11 | https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/你当我是LZMA吗   |
+| 阿巴阿巴-模型微调.zip | 阿巴阿巴 | 30.10% | 0.000636589 | 0.510509023 | 12 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/_阿巴阿巴   | 
+| dian-team.zip | dian-team | 30.04% | 0.000424393 | 0.510152682 | 13 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/dian-team  |  
+| 作品提交.zip | ALL IN ONE | 29.87% | 0.000424393 | 0.508962682 | 14 |   https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/ALL%20IN%20ONE  | 
+| 搞搞镇文化科技.zip | 搞搞镇文化科技 | 27.74% | 0.000212196 | 0.494116341 | 15 |   https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/搞搞镇文化科技   |
+| 提交汇总.zip | 欢迎光临 | 27.55% | 0.000424393 | 0.492722682 | 16 |   https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/欢迎光临   |
+| 牛牛向前冲-常科.zip | 牛牛向前冲 | 26.00% | 0.000424393 | 0.481872682 | 17 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/牛牛向前冲    |
+| 阿巴巴巴.zip | 阿巴巴巴 | 25.64% | 0.000685557 | 0.479274333 | 18 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/阿巴巴巴   | 
+| 九毛一斤的瓜大队.zip | 九毛一斤的瓜大队 | 23.55% | 0.000424393 | 0.464722682 | 19 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/九毛一斤的瓜大队  |
+| 比奇堡冲浪小组.zip | 比奇堡冲浪小组 | 22.40% | 0.000424393 | 0.456672682 | 20 |  https://github.com/mindspore-courses/competition/tree/master/2024-ascend-innovation-contest/topic2-finetune/first-phase/比奇堡冲浪小组  |
 
 
 
