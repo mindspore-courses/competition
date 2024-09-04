@@ -4,8 +4,6 @@
 
 团队名：debias_world2
 
-有问题微信交流群联系：快与慢
-
 测试精度需要修改配置文件为baseline一致
 
 prefill_batch_size：5修改为1
