@@ -1,7 +1,5 @@
 # 作品报告
 
-团队名：debias_world1
-
 参考文献：Goat: Fine-tuned LLaMA Outperforms GPT-4 on Arithmetic Tasks
 
 如果保留测试数据和训练集分布一致，在保留5位有效数字的情况下，应该取得50%左右准确率合理。
