@@ -37,7 +37,7 @@ test.sh设置为python test_serving_performance.py -X 2.5 -P 8835 -O "./" -T 60
 精度测试时，由于官方代码限制，配置中需要将decode_batch_size和prefill_batch_size再改回1（与原有配置相同），配置文件为：
 llm-serving/configs/llama/llama_7b_kbk_pa_dyn_val.yaml，日志文件为：performance_serving/test_batch_64_32_val.log
 
-注：decode_batch_size和prefill_batch_size大于1时输出精度也经过测试无问题，可详见之前微信发送给Espada的文件。
+注：decode_batch_size和prefill_batch_size大于1时输出精度也经过测试无问题
 
 ## 运行说明
 运行环境与官方环境相同，所有代码包括日志的压缩包如下：
