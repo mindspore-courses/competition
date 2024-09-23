@@ -176,19 +176,18 @@ def run_image(
                             'img_shape', 'scale_factor', 'pad_param', 'texts'))
     ])
 
-    for i in tqdm(range(5000)):
 
-        data_info = ms_pipeline(dict(img_id=0, img_path=input_image, texts=texts))[0]
+    data_info = ms_pipeline(dict(img_id=0, img_path=input_image, texts=texts))[0]
 
-        data_batch = dict(
-            inputs=[data_info["inputs"]],
-            data_samples=[data_info["data_samples"]],
-        )
+    data_batch = dict(
+        inputs=[data_info["inputs"]],
+        data_samples=[data_info["data_samples"]],
+    )
 
-        time_dict_lst = []
-        
-        ms_output, time_d = ms_model(data_batch)
-        time_dict_lst.append(time_d)
+    time_dict_lst = []
+    
+    ms_output, time_d = ms_model(data_batch)
+    time_dict_lst.append(time_d)
     
     dict2csv(time_dict_lst)
     
