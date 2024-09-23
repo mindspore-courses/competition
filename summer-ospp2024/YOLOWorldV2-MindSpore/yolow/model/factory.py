@@ -22,8 +22,8 @@ import troubleshooter as ts
 import mindspore as ms
 import mindspore.nn as nn
 
-from .clip_t import CLIPTextModel
-from mindformers import CLIPConfig
+# from .clip_t import CLIPTextModel
+# from mindformers import CLIPConfig
 
 # from mindformers import CLIPModel
 
