@@ -1,8 +1,6 @@
 # Copyright (c) Tencent. All rights reserved.
 import cv2
 import supervision as sv
-# import torch
-
 from mindspore.dataset.transforms.py_transforms import Compose
 
 
@@ -33,15 +31,8 @@ def init_env(cfg):
     ms.set_seed(cfg["seed"])
     # 如果device_target设置是None，利用框架自动获取device_target，否则使用设置的。
     if cfg["device_target"] != "None":
-        # if cfg["device_target"] not in ["Ascend", "GPU", "CPU"]:
-        #     raise ValueError(f"Invalid device_target:{cfg["device_target"]}, "
-        #                      f"should be in ['None', 'Ascend', 'GPU', 'CPU']")
         ms.set_context(device_target=cfg["device_target"])
 
-    # 配置运行模式，支持图模式和PYNATIVE模式
-    # if cfg["context_mode"] not in ["graph", "pynative"]:
-    #     raise ValueError(f"Invalid context_mode: {cfg["context_mode"]}, "
-    #                      f"should be in ['graph', 'pynative']")
     context_mode = ms.GRAPH_MODE if cfg["context_mode"] == "graph" else ms.PYNATIVE_MODE
     ms.set_context(mode=context_mode)
 
@@ -61,9 +52,7 @@ def init_env(cfg):
         # init方法用于多卡的初始化，不区分Ascend和GPU，get_group_size和get_rank方法只能在init后使用
         init()
         print("run distribute!", flush=True)
-        group_size = get_group_size()
-        # if cfg["device_num"] != group_size:
-        #     raise ValueError(f"the setting device_num: {cfg["device_num"]} not equal to the real group_size: {group_size}")
+
         cfg["rank_id"] = get_rank()
         ms.set_auto_parallel_context(parallel_mode=ms.ParallelMode.DATA_PARALLEL, gradients_mean=True)
         if hasattr(cfg, "all_reduce_fusion_config"):
@@ -190,19 +179,12 @@ def run_image(
     for i in tqdm(range(5000)):
 
         data_info = ms_pipeline(dict(img_id=0, img_path=input_image, texts=texts))[0]
-        # data_info = pipeline(dict(img_id=0, img_path=input_image, texts=texts))
-        
-        # if isinstance(data_info["inputs"], torch.Tensor):
-        #     data_info["inputs"] = ms.Tensor(data_info["inputs"].cpu().numpy())
 
         data_batch = dict(
             inputs=[data_info["inputs"]],
             data_samples=[data_info["data_samples"]],
         )
 
-
-        # with torch.no_grad():
-        # TODO: stop gradiant in mindspore ?
         time_dict_lst = []
         
         ms_output, time_d = ms_model(data_batch)

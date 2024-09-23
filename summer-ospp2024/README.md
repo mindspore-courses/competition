@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ttaohe/competition">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/yolo_logo.png" alt="Logo" width=60%>
   </a>
 
   <h3 align="center">MindSpore Implementation of YOLO-World V2 with Inference and Testing</h3>
@@ -89,7 +89,7 @@ pip install -e .
 
 ### Preparing Data
 
-You can download the LVIS-minival and LVIS-val from [here](https://github.com/ttaohe/competition/tree/main/data).
+You can download the LVIS-minival and LVIS-val from [here](https://pan.baidu.com/s/1Z16AfpEkJ1w9Ng9jIByR2w?pwd=ospp).
 
 <!-- Zero-shot Inference on LVIS dataset EXAMPLES -->
 ## Zero-shot Inference on LVIS dataset
