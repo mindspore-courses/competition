@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: aisstream.io-example-simple
+Version: 0.1
+Author: aisstream.io
+Requires-Dist: websockets
+Requires-Dist: asyncio

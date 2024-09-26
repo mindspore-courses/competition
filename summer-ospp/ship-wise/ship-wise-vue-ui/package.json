@@ -1,0 +1,32 @@
+{
+  "name": "default",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "echarts": "^5.2.2",
+    "element-ui": "^2.15.8",
+    "leaflet": "^1.8.0",
+    "leaflet-draw": "^1.0.4",
+    "leaflet-fullscreen": "^1.0.2",
+    "leaflet-minimap": "^3.6.1",
+    "sass": "^1.77.8",
+    "sass-loader": "^7.3.1",
+    "vue": "^2.6.10",
+    "vue-axios": "^3.2.4",
+    "vue-bus": "^1.2.1",
+    "vue-router": "^3.5.3",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "axios": "^0.27.2",
+    "babel-plugin-component": "^1.1.1",
+    "vue-template-compiler": "^2.6.10"
+  }
+}

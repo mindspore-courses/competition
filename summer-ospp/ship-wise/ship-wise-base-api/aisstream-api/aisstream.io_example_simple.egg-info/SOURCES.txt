@@ -1,0 +1,10 @@
+README.md
+main.py
+main_mmsi_message_filter.py
+main_ssl_disabled.py
+setup.py
+aisstream.io_example_simple.egg-info/PKG-INFO
+aisstream.io_example_simple.egg-info/SOURCES.txt
+aisstream.io_example_simple.egg-info/dependency_links.txt
+aisstream.io_example_simple.egg-info/requires.txt
+aisstream.io_example_simple.egg-info/top_level.txt
