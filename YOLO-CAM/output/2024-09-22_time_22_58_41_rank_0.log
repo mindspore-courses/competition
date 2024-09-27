@@ -1,0 +1,137 @@
+2024-09-22 22:58:41,517:INFO:Args:
+2024-09-22 22:58:41,517:INFO:--> enable_modelarts: False
+2024-09-22 22:58:41,517:INFO:--> data_path: /cache/data
+2024-09-22 22:58:41,517:INFO:--> output_path: /cache/train
+2024-09-22 22:58:41,517:INFO:--> load_path: /cache/checkpoint_path
+2024-09-22 22:58:41,518:INFO:--> device_target: Ascend
+2024-09-22 22:58:41,518:INFO:--> need_modelarts_dataset_unzip: True
+2024-09-22 22:58:41,518:INFO:--> modelarts_dataset_unzip_name: coco
+2024-09-22 22:58:41,518:INFO:--> data_dir: /home/ma-user/work/IP102-COCO格式
+2024-09-22 22:58:41,518:INFO:--> per_batch_size: 32
+2024-09-22 22:58:41,518:INFO:--> yolov5_version: yolov5s
+2024-09-22 22:58:41,518:INFO:--> pretrained_backbone: 
+2024-09-22 22:58:41,518:INFO:--> resume_yolov5: 
+2024-09-22 22:58:41,518:INFO:--> pretrained_checkpoint: 
+2024-09-22 22:58:41,518:INFO:--> output_dir: ./output
+2024-09-22 22:58:41,518:INFO:--> train_img_dir: /home/ma-user/work/IP102-COCO格式/train2017
+2024-09-22 22:58:41,518:INFO:--> train_ann_file: /home/ma-user/work/IP102-COCO格式/annotations/instances_train2017.json
+2024-09-22 22:58:41,518:INFO:--> lr_scheduler: cosine_annealing
+2024-09-22 22:58:41,519:INFO:--> lr: 0.01
+2024-09-22 22:58:41,519:INFO:--> lr_epochs: [220, 250]
+2024-09-22 22:58:41,519:INFO:--> lr_gamma: 0.1
+2024-09-22 22:58:41,519:INFO:--> eta_min: 0.0
+2024-09-22 22:58:41,519:INFO:--> T_max: 320
+2024-09-22 22:58:41,519:INFO:--> max_epoch: 300
+2024-09-22 22:58:41,519:INFO:--> warmup_epochs: 20
+2024-09-22 22:58:41,519:INFO:--> weight_decay: 0.0005
+2024-09-22 22:58:41,519:INFO:--> momentum: 0.9
+2024-09-22 22:58:41,519:INFO:--> loss_scale: 1024
+2024-09-22 22:58:41,519:INFO:--> label_smooth: 0
+2024-09-22 22:58:41,519:INFO:--> label_smooth_factor: 0.1
+2024-09-22 22:58:41,519:INFO:--> log_interval: 100
+2024-09-22 22:58:41,520:INFO:--> ckpt_path: outputs/
+2024-09-22 22:58:41,520:INFO:--> is_distributed: 0
+2024-09-22 22:58:41,520:INFO:--> bind_cpu: True
+2024-09-22 22:58:41,520:INFO:--> device_num: 8
+2024-09-22 22:58:41,520:INFO:--> rank: 0
+2024-09-22 22:58:41,520:INFO:--> group_size: 1
+2024-09-22 22:58:41,520:INFO:--> need_profiler: 0
+2024-09-22 22:58:41,520:INFO:--> resize_rate: 10
+2024-09-22 22:58:41,520:INFO:--> filter_weight: False
+2024-09-22 22:58:41,520:INFO:--> save_ckpt_interval: 1
+2024-09-22 22:58:41,520:INFO:--> save_ckpt_max_num: 10
+2024-09-22 22:58:41,520:INFO:--> pretrained: 
+2024-09-22 22:58:41,520:INFO:--> log_path: outputs/
+2024-09-22 22:58:41,520:INFO:--> ann_val_file: 
+2024-09-22 22:58:41,521:INFO:--> eval_nms_thresh: 0.6
+2024-09-22 22:58:41,521:INFO:--> ignore_threshold: 0.7
+2024-09-22 22:58:41,521:INFO:--> test_ignore_threshold: 0.001
+2024-09-22 22:58:41,521:INFO:--> multi_label: True
+2024-09-22 22:58:41,521:INFO:--> multi_label_thresh: 0.1
+2024-09-22 22:58:41,521:INFO:--> save_prefix: ../eval_parallel
+2024-09-22 22:58:41,521:INFO:--> run_eval: True
+2024-09-22 22:58:41,521:INFO:--> eval_epoch_interval: 10
+2024-09-22 22:58:41,521:INFO:--> eval_start_epoch: 100
+2024-09-22 22:58:41,521:INFO:--> eval_parallel: True
+2024-09-22 22:58:41,521:INFO:--> val_img_dir: val2017
+2024-09-22 22:58:41,521:INFO:--> val_ann_file: annotations/instances_val2017.json
+2024-09-22 22:58:41,521:INFO:--> batch_size: 1
+2024-09-22 22:58:41,521:INFO:--> testing_shape: [640, 640]
+2024-09-22 22:58:41,522:INFO:--> ckpt_file: 
+2024-09-22 22:58:41,522:INFO:--> file_name: yolov5
+2024-09-22 22:58:41,522:INFO:--> file_format: MINDIR
+2024-09-22 22:58:41,522:INFO:--> dataset_path: 
+2024-09-22 22:58:41,522:INFO:--> ann_file: 
+2024-09-22 22:58:41,522:INFO:--> hue: 0.015
+2024-09-22 22:58:41,522:INFO:--> saturation: 1.5
+2024-09-22 22:58:41,522:INFO:--> value: 0.4
+2024-09-22 22:58:41,522:INFO:--> jitter: 0.3
+2024-09-22 22:58:41,522:INFO:--> num_classes: 102
+2024-09-22 22:58:41,522:INFO:--> max_box: 150
+2024-09-22 22:58:41,522:INFO:--> checkpoint_filter_list: ['feature_map.back_block1.conv.weight', 'feature_map.back_block1.conv.bias', 'feature_map.back_block2.conv.weight', 'feature_map.back_block2.conv.bias', 'feature_map.back_block3.conv.weight', 'feature_map.back_block3.conv.bias']
+2024-09-22 22:58:41,522:INFO:--> anchor_scales: [[12, 16], [19, 36], [40, 28], [36, 75], [76, 55], [72, 146], [142, 110], [192, 243], [459, 401]]
+2024-09-22 22:58:41,523:INFO:--> out_channel: 255
+2024-09-22 22:58:41,523:INFO:--> input_shape: [[3, 32, 64, 128, 256, 512, 1], [3, 48, 96, 192, 384, 768, 2], [3, 64, 128, 256, 512, 1024, 3], [3, 80, 160, 320, 640, 1280, 4]]
+2024-09-22 22:58:41,523:INFO:--> test_img_shape: [640, 640]
+2024-09-22 22:58:41,523:INFO:--> labels: ['rice leaf roller', 'rice leaf caterpillar', 'paddy stem maggot', 'asiatic rice borer', 'yellow rice borer', 'rice gall midge', 'Rice Stemfly', 'brown plant hopper', 'white backed plant hopper', 'small brown plant hopper', 'rice water weevil', 'rice leafhopper', 'grain spreader thrips', 'rice shell pest', 'grub', 'mole cricket', 'wireworm', 'white margined moth', 'black cutworm', 'large cutworm', 'yellow cutworm', 'red spider', 'corn borer', 'army worm', 'aphids', 'Potosiabre vitarsis', 'peach borer', 'english grain aphid', 'green bug', 'bird cherry-oataphid', 'wheat blossom midge', 'penthaleus major', 'longlegged spider mite', 'wheat phloeothrips', 'wheat sawfly', 'cerodonta denticornis', 'beet fly', 'flea beetle', 'cabbage army worm', 'beet army worm', 'Beet spot flies', 'meadow moth', 'beet weevil', 'sericaorient alismots chulsky', 'alfalfa weevil', 'flax budworm', 'alfalfa plant bug', 'tarnished plant bug', 'Locustoidea', 'lytta polita', 'legume blister beetle', 'blister beetle', 'therioaphis maculata Buckton', 'odontothrips loti', 'Thrips', 'alfalfa seed chalcid', 'Pieris canidia', 'Apolygus lucorum', 'Limacodidae', 'Viteus vitifoliae', 'Colomerus vitis', 'Brevipoalpus lewisi McGregor', 'oides decempunctata', 'Polyphagotars onemus latus', 'Pseudococcus comstocki Kuwana', 'parathrene regalis', 'Ampelophaga', 'Lycorma delicatula', 'Xylotrechus', 'Cicadella viridis', 'Miridae', 'Trialeurodes vaporariorum', 'Erythroneura apicalis', 'Papilio xuthus', 'Panonchus citri McGregor', 'Phyllocoptes oleiverus ashmead', 'Icerya purchasi Maskell', 'Unaspis yanonensis', 'Ceroplastes rubens', 'Chrysomphalus aonidum', 'Parlatoria zizyphus Lucus', 'Nipaecoccus vastalor', 'Aleurocanthus spiniferus', 'Tetradacus c Bactrocera minax', 'Dacus dorsalis(Hendel)', 'Bactrocera tsuneonis', 'Prodenia litura', 'Adristyrannus', 'Phyllocnistis citrella Stainton', 'Toxoptera citricidus', 'Toxoptera aurantii', 'Aphis citricola Vander Goot', 'Scirtothrips dorsalis Hood', 'Dasineura sp', 'Lawana imitata Melichar', 'Salurnis marginella Guerr', 'Deporaus marginatus Pascoe', 'Chlumetia transversa', 'Mango flat beak leafhopper', 'Rhytidodera bowrinii white', 'Sternochetus frigidus', 'Cicadellidae']
+2024-09-22 22:58:41,523:INFO:--> coco_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
+2024-09-22 22:58:41,523:INFO:--> result_files: ./result_Files
+2024-09-22 22:58:41,523:INFO:--> config_path: /home/ma-user/work/YOLOv5-最终版/model_utils/../default_config.yaml
+2024-09-22 22:58:41,523:INFO:--> logger: <LOGGER YOLOV5 (NOTSET)>
+2024-09-22 22:58:41,523:INFO:
+2024-09-22 22:59:16,566:INFO:Finish loading train dataset
+2024-09-22 22:59:16,668:INFO:Finish loading val dataset!
+2024-09-22 22:59:19,905:INFO:cur best result 0.16856060922145844 at epoch 280
+2024-09-22 23:04:41,065:INFO:epoch[1], iter[1], loss:7453.759766, fps:0.10 imgs/sec, lr:1.0548523050601943e-06, per step time: 321595.51095962524ms
+2024-09-22 23:05:17,759:INFO:epoch[1], iter[101], loss:1244.569553, fps:87.21 imgs/sec, lr:0.00010654008656274527, per step time: 366.9093918800354ms
+2024-09-22 23:06:12,164:INFO:epoch[1], iter[201], loss:188.943406, fps:58.82 imgs/sec, lr:0.00021202531934250146, per step time: 544.0345740318298ms
+2024-09-22 23:07:04,660:INFO:epoch[1], iter[301], loss:135.239909, fps:60.96 imgs/sec, lr:0.0003175105375703424, per step time: 524.9373745918274ms
+2024-09-22 23:07:58,184:INFO:epoch[1], iter[401], loss:104.078758, fps:59.79 imgs/sec, lr:0.0004229957703500986, per step time: 535.2346086502075ms
+2024-09-22 23:08:52,084:INFO:epoch[2], iter[27], loss:94.092258, fps:59.37 imgs/sec, lr:2.848101212293841e-05, per step time: 538.9796423912048ms
+2024-09-22 23:09:44,081:INFO:epoch[2], iter[127], loss:91.372473, fps:61.57 imgs/sec, lr:0.0001339662412647158, per step time: 519.7754573822021ms
+2024-09-22 23:10:36,861:INFO:epoch[2], iter[227], loss:84.698474, fps:60.63 imgs/sec, lr:0.00023945147404447198, per step time: 527.7535152435303ms
+2024-09-22 23:11:30,572:INFO:epoch[2], iter[327], loss:80.899445, fps:59.58 imgs/sec, lr:0.00034493670682422817, per step time: 537.0867133140564ms
+2024-09-22 23:12:24,699:INFO:epoch[2], iter[427], loss:80.329130, fps:59.14 imgs/sec, lr:0.00045042193960398436, per step time: 541.1256337165833ms
+2024-09-22 23:13:18,353:INFO:epoch[3], iter[53], loss:78.249701, fps:59.64 imgs/sec, lr:5.590717410086654e-05, per step time: 536.5275621414185ms
+2024-09-22 23:14:12,192:INFO:epoch[3], iter[153], loss:73.505336, fps:59.44 imgs/sec, lr:0.00016139241051860154, per step time: 538.3809566497803ms
+2024-09-22 23:15:03,660:INFO:epoch[3], iter[253], loss:74.126456, fps:62.19 imgs/sec, lr:0.0002668776432983577, per step time: 514.5443725585938ms
+2024-09-22 23:15:54,002:INFO:epoch[3], iter[353], loss:73.544452, fps:63.57 imgs/sec, lr:0.0003723628760781139, per step time: 503.3607029914856ms
+2024-09-22 23:16:43,688:INFO:epoch[3], iter[453], loss:72.534077, fps:64.41 imgs/sec, lr:0.0004778481088578701, per step time: 496.8386721611023ms
+2024-09-22 23:17:34,899:INFO:epoch[4], iter[79], loss:70.584565, fps:62.49 imgs/sec, lr:8.333333244081587e-05, per step time: 512.1012115478516ms
+2024-09-22 23:18:27,354:INFO:epoch[4], iter[179], loss:72.070514, fps:61.01 imgs/sec, lr:0.00018881856522057205, per step time: 524.5397448539734ms
+2024-09-22 23:19:18,986:INFO:epoch[4], iter[279], loss:73.240409, fps:61.98 imgs/sec, lr:0.000294303783448413, per step time: 516.3204503059387ms
+2024-09-22 23:20:13,890:INFO:epoch[4], iter[379], loss:68.402507, fps:58.29 imgs/sec, lr:0.0003997890162281692, per step time: 548.9815306663513ms
+2024-09-22 23:21:09,558:INFO:epoch[5], iter[5], loss:69.470340, fps:57.49 imgs/sec, lr:5.274261638987809e-06, per step time: 556.6586494445801ms
+2024-09-22 23:22:03,886:INFO:epoch[5], iter[105], loss:69.321878, fps:58.91 imgs/sec, lr:0.000110759494418744, per step time: 543.2402515411377ms
+2024-09-22 23:22:58,405:INFO:epoch[5], iter[205], loss:68.030102, fps:58.70 imgs/sec, lr:0.00021624471992254257, per step time: 545.1824450492859ms
+2024-09-22 23:23:52,357:INFO:epoch[5], iter[305], loss:71.007141, fps:59.32 imgs/sec, lr:0.00032172995270229876, per step time: 539.4837641716003ms
+2024-09-22 23:24:46,389:INFO:epoch[5], iter[405], loss:71.656181, fps:59.23 imgs/sec, lr:0.00042721518548205495, per step time: 540.3106069564819ms
+2024-09-22 23:25:40,392:INFO:epoch[6], iter[31], loss:69.961239, fps:59.26 imgs/sec, lr:3.270042361691594e-05, per step time: 540.0132489204407ms
+2024-09-22 23:26:34,463:INFO:epoch[6], iter[131], loss:68.764803, fps:59.19 imgs/sec, lr:0.00013818565639667213, per step time: 540.6283378601074ms
+2024-09-22 23:27:27,780:INFO:epoch[6], iter[231], loss:68.817521, fps:60.02 imgs/sec, lr:0.00024367088917642832, per step time: 533.1263470649719ms
+2024-09-22 23:28:21,758:INFO:epoch[6], iter[331], loss:67.033795, fps:59.29 imgs/sec, lr:0.0003491561219561845, per step time: 539.7519516944885ms
+2024-09-22 23:29:13,360:INFO:epoch[6], iter[431], loss:68.133891, fps:62.02 imgs/sec, lr:0.0004546413547359407, per step time: 515.9709930419922ms
+2024-09-22 23:30:05,179:INFO:epoch[7], iter[57], loss:64.184907, fps:61.75 imgs/sec, lr:6.0126581956865266e-05, per step time: 518.1819725036621ms
+2024-09-22 23:30:55,385:INFO:epoch[7], iter[157], loss:66.266477, fps:63.74 imgs/sec, lr:0.00016561181109864265, per step time: 502.0345687866211ms
+2024-09-22 23:31:45,779:INFO:epoch[7], iter[257], loss:65.791209, fps:63.50 imgs/sec, lr:0.00027109705843031406, per step time: 503.9021825790405ms
+2024-09-22 23:32:38,453:INFO:epoch[7], iter[357], loss:65.958767, fps:60.76 imgs/sec, lr:0.00037658229121007025, per step time: 526.6249394416809ms
+2024-09-22 23:33:31,490:INFO:epoch[7], iter[457], loss:64.028324, fps:60.34 imgs/sec, lr:0.00048206752398982644, per step time: 530.36616563797ms
+2024-09-22 23:34:23,997:INFO:epoch[8], iter[83], loss:64.427794, fps:60.95 imgs/sec, lr:8.755274029681459e-05, per step time: 525.0525546073914ms
+2024-09-22 23:35:14,183:INFO:epoch[8], iter[183], loss:66.233301, fps:63.78 imgs/sec, lr:0.0001930379803525284, per step time: 501.7427778244019ms
+2024-09-22 23:36:08,497:INFO:epoch[8], iter[283], loss:63.906680, fps:58.93 imgs/sec, lr:0.00029852319858036935, per step time: 543.052327632904ms
+2024-09-22 23:37:01,986:INFO:epoch[8], iter[383], loss:65.561889, fps:59.83 imgs/sec, lr:0.00040400843136012554, per step time: 534.8863577842712ms
+2024-09-22 23:37:55,054:INFO:epoch[9], iter[9], loss:68.430189, fps:60.30 imgs/sec, lr:9.493671313975938e-06, per step time: 530.6601595878601ms
+2024-09-22 23:38:47,710:INFO:epoch[9], iter[109], loss:63.831911, fps:60.77 imgs/sec, lr:0.00011497890227474272, per step time: 526.5432810783386ms
+2024-09-22 23:39:41,359:INFO:epoch[9], iter[209], loss:64.377283, fps:59.65 imgs/sec, lr:0.0002204641350544989, per step time: 536.4688849449158ms
+2024-09-22 23:40:35,778:INFO:epoch[9], iter[309], loss:64.128403, fps:58.81 imgs/sec, lr:0.0003259493678342551, per step time: 544.1093349456787ms
+2024-09-22 23:41:30,260:INFO:epoch[9], iter[409], loss:62.243924, fps:58.74 imgs/sec, lr:0.0004314346006140113, per step time: 544.8006463050842ms
+2024-09-22 23:42:25,062:INFO:epoch[10], iter[35], loss:60.685797, fps:58.39 imgs/sec, lr:3.6919831472914666e-05, per step time: 548.0132460594177ms
+2024-09-22 23:43:19,974:INFO:epoch[10], iter[135], loss:61.994184, fps:58.28 imgs/sec, lr:0.00014240505697671324, per step time: 549.031867980957ms
+2024-09-22 23:44:15,853:INFO:epoch[10], iter[235], loss:59.852014, fps:57.27 imgs/sec, lr:0.00024789030430838466, per step time: 558.7772417068481ms
+2024-09-22 23:45:12,565:INFO:epoch[10], iter[335], loss:62.183010, fps:56.43 imgs/sec, lr:0.00035337553708814085, per step time: 567.0766830444336ms
+2024-09-22 23:46:07,259:INFO:epoch[10], iter[435], loss:62.186353, fps:58.51 imgs/sec, lr:0.00045886076986789703, per step time: 546.9226336479187ms
+2024-09-22 23:47:03,155:INFO:epoch[11], iter[61], loss:62.668923, fps:57.25 imgs/sec, lr:6.43459934508428e-05, per step time: 558.9258980751038ms
+2024-09-22 23:47:57,875:INFO:epoch[11], iter[161], loss:59.925719, fps:58.48 imgs/sec, lr:0.00016983122623059899, per step time: 547.173125743866ms
+2024-09-22 23:48:49,954:INFO:epoch[11], iter[261], loss:59.106467, fps:61.45 imgs/sec, lr:0.00027531644445843995, per step time: 520.748987197876ms
+2024-09-22 23:49:43,707:INFO:epoch[11], iter[361], loss:61.445213, fps:59.53 imgs/sec, lr:0.00038080167723819613, per step time: 537.5097751617432ms
+2024-09-22 23:50:37,904:INFO:epoch[11], iter[461], loss:57.950960, fps:59.04 imgs/sec, lr:0.0004862869100179523, per step time: 541.9638395309448ms
