@@ -1,0 +1,93 @@
+2024-09-22 16:52:40,651:INFO:Args:
+2024-09-22 16:52:40,651:INFO:--> enable_modelarts: False
+2024-09-22 16:52:40,651:INFO:--> data_path: /cache/data
+2024-09-22 16:52:40,651:INFO:--> output_path: /cache/train
+2024-09-22 16:52:40,651:INFO:--> load_path: /cache/checkpoint_path
+2024-09-22 16:52:40,652:INFO:--> device_target: Ascend
+2024-09-22 16:52:40,652:INFO:--> need_modelarts_dataset_unzip: True
+2024-09-22 16:52:40,652:INFO:--> modelarts_dataset_unzip_name: coco
+2024-09-22 16:52:40,652:INFO:--> data_dir: /home/ma-user/work/coco-mini
+2024-09-22 16:52:40,652:INFO:--> per_batch_size: 32
+2024-09-22 16:52:40,652:INFO:--> yolov5_version: yolov5s
+2024-09-22 16:52:40,652:INFO:--> pretrained_backbone: 
+2024-09-22 16:52:40,652:INFO:--> resume_yolov5: 
+2024-09-22 16:52:40,652:INFO:--> pretrained_checkpoint: 
+2024-09-22 16:52:40,652:INFO:--> output_dir: ./output
+2024-09-22 16:52:40,652:INFO:--> train_img_dir: /home/ma-user/work/coco-mini/train2017
+2024-09-22 16:52:40,652:INFO:--> train_ann_file: /home/ma-user/work/coco-mini/annotations/instances_train2017.json
+2024-09-22 16:52:40,652:INFO:--> lr_scheduler: cosine_annealing
+2024-09-22 16:52:40,653:INFO:--> lr: 0.01
+2024-09-22 16:52:40,653:INFO:--> lr_epochs: [220, 250]
+2024-09-22 16:52:40,653:INFO:--> lr_gamma: 0.1
+2024-09-22 16:52:40,653:INFO:--> eta_min: 0.0
+2024-09-22 16:52:40,653:INFO:--> T_max: 320
+2024-09-22 16:52:40,653:INFO:--> max_epoch: 300
+2024-09-22 16:52:40,653:INFO:--> warmup_epochs: 20
+2024-09-22 16:52:40,653:INFO:--> weight_decay: 0.0005
+2024-09-22 16:52:40,653:INFO:--> momentum: 0.9
+2024-09-22 16:52:40,653:INFO:--> loss_scale: 1024
+2024-09-22 16:52:40,653:INFO:--> label_smooth: 0
+2024-09-22 16:52:40,653:INFO:--> label_smooth_factor: 0.1
+2024-09-22 16:52:40,653:INFO:--> log_interval: 100
+2024-09-22 16:52:40,653:INFO:--> ckpt_path: outputs/
+2024-09-22 16:52:40,654:INFO:--> is_distributed: 0
+2024-09-22 16:52:40,654:INFO:--> bind_cpu: True
+2024-09-22 16:52:40,654:INFO:--> device_num: 8
+2024-09-22 16:52:40,654:INFO:--> rank: 0
+2024-09-22 16:52:40,654:INFO:--> group_size: 1
+2024-09-22 16:52:40,654:INFO:--> need_profiler: 0
+2024-09-22 16:52:40,654:INFO:--> resize_rate: 10
+2024-09-22 16:52:40,654:INFO:--> filter_weight: False
+2024-09-22 16:52:40,654:INFO:--> save_ckpt_interval: 1
+2024-09-22 16:52:40,654:INFO:--> save_ckpt_max_num: 10
+2024-09-22 16:52:40,654:INFO:--> pretrained: 
+2024-09-22 16:52:40,654:INFO:--> log_path: outputs/
+2024-09-22 16:52:40,654:INFO:--> ann_val_file: 
+2024-09-22 16:52:40,655:INFO:--> eval_nms_thresh: 0.6
+2024-09-22 16:52:40,655:INFO:--> ignore_threshold: 0.7
+2024-09-22 16:52:40,655:INFO:--> test_ignore_threshold: 0.001
+2024-09-22 16:52:40,655:INFO:--> multi_label: True
+2024-09-22 16:52:40,655:INFO:--> multi_label_thresh: 0.1
+2024-09-22 16:52:40,655:INFO:--> save_prefix: ../eval_parallel
+2024-09-22 16:52:40,655:INFO:--> run_eval: True
+2024-09-22 16:52:40,655:INFO:--> eval_epoch_interval: 10
+2024-09-22 16:52:40,655:INFO:--> eval_start_epoch: 100
+2024-09-22 16:52:40,655:INFO:--> eval_parallel: True
+2024-09-22 16:52:40,655:INFO:--> val_img_dir: val2017
+2024-09-22 16:52:40,655:INFO:--> val_ann_file: annotations/instances_val2017.json
+2024-09-22 16:52:40,655:INFO:--> batch_size: 1
+2024-09-22 16:52:40,655:INFO:--> testing_shape: [640, 640]
+2024-09-22 16:52:40,656:INFO:--> ckpt_file: 
+2024-09-22 16:52:40,656:INFO:--> file_name: yolov5
+2024-09-22 16:52:40,656:INFO:--> file_format: MINDIR
+2024-09-22 16:52:40,656:INFO:--> dataset_path: 
+2024-09-22 16:52:40,656:INFO:--> ann_file: 
+2024-09-22 16:52:40,656:INFO:--> hue: 0.015
+2024-09-22 16:52:40,656:INFO:--> saturation: 1.5
+2024-09-22 16:52:40,656:INFO:--> value: 0.4
+2024-09-22 16:52:40,656:INFO:--> jitter: 0.3
+2024-09-22 16:52:40,656:INFO:--> num_classes: 80
+2024-09-22 16:52:40,656:INFO:--> max_box: 150
+2024-09-22 16:52:40,656:INFO:--> checkpoint_filter_list: ['feature_map.back_block1.conv.weight', 'feature_map.back_block1.conv.bias', 'feature_map.back_block2.conv.weight', 'feature_map.back_block2.conv.bias', 'feature_map.back_block3.conv.weight', 'feature_map.back_block3.conv.bias']
+2024-09-22 16:52:40,656:INFO:--> anchor_scales: [[12, 16], [19, 36], [40, 28], [36, 75], [76, 55], [72, 146], [142, 110], [192, 243], [459, 401]]
+2024-09-22 16:52:40,657:INFO:--> out_channel: 255
+2024-09-22 16:52:40,657:INFO:--> input_shape: [[3, 32, 64, 128, 256, 512, 1], [3, 48, 96, 192, 384, 768, 2], [3, 64, 128, 256, 512, 1024, 3], [3, 80, 160, 320, 640, 1280, 4]]
+2024-09-22 16:52:40,657:INFO:--> test_img_shape: [640, 640]
+2024-09-22 16:52:40,657:INFO:--> labels: ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+2024-09-22 16:52:40,657:INFO:--> coco_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 67, 70, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 84, 85, 86, 87, 88, 89, 90]
+2024-09-22 16:52:40,657:INFO:--> result_files: ./result_Files
+2024-09-22 16:52:40,657:INFO:--> config_path: /home/ma-user/work/YOLOv5-最终版/model_utils/../default_config.yaml
+2024-09-22 16:52:40,657:INFO:--> logger: <LOGGER YOLOV5 (NOTSET)>
+2024-09-22 16:52:40,657:INFO:
+2024-09-22 16:53:08,056:INFO:Finish loading train dataset
+2024-09-22 16:53:08,157:INFO:Finish loading val dataset!
+2024-09-22 16:53:10,895:INFO:cur best result 0.16856060922145844 at epoch 280
+2024-09-22 16:56:38,338:INFO:epoch[1], iter[1], loss:7851.608398, fps:0.15 imgs/sec, lr:2.7472526653582463e-06, per step time: 207807.4915409088ms
+2024-09-22 16:57:12,928:INFO:epoch[1], iter[101], loss:1347.389993, fps:92.51 imgs/sec, lr:0.0002774725144263357, per step time: 345.89558124542236ms
+2024-09-22 16:57:55,213:INFO:epoch[2], iter[19], loss:328.890813, fps:75.69 imgs/sec, lr:5.219780359766446e-05, per step time: 422.7888226509094ms
+2024-09-22 16:58:32,115:INFO:epoch[2], iter[119], loss:271.082180, fps:86.72 imgs/sec, lr:0.0003269230655860156, per step time: 368.9912748336792ms
+2024-09-22 16:59:09,527:INFO:epoch[3], iter[37], loss:252.098266, fps:85.54 imgs/sec, lr:0.00010164835111936554, per step time: 374.0737295150757ms
+2024-09-22 16:59:45,996:INFO:epoch[3], iter[137], loss:244.675625, fps:87.75 imgs/sec, lr:0.00037637361674569547, per step time: 364.67313051223755ms
+2024-09-22 17:00:23,467:INFO:epoch[4], iter[55], loss:246.425908, fps:85.40 imgs/sec, lr:0.00015109889500308782, per step time: 374.6873879432678ms
+2024-09-22 17:01:00,512:INFO:epoch[4], iter[155], loss:243.870527, fps:86.38 imgs/sec, lr:0.00042582416790537536, per step time: 370.4348921775818ms
+2024-09-22 17:01:36,148:INFO:epoch[5], iter[73], loss:241.054992, fps:89.81 imgs/sec, lr:0.0002005494461627677, per step time: 356.3275074958801ms

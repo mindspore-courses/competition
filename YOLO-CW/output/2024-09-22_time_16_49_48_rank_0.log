@@ -1,0 +1,26 @@
+2024-09-22 16:49:48,840:INFO:Creating Network....
+2024-09-22 16:50:14,486:INFO:yolov5 pretrained network model: /home/ma-user/work/YOLOv5-最终版/output/best.ckpt
+2024-09-22 16:50:15,045:INFO:load_model /home/ma-user/work/YOLOv5-最终版/output/best.ckpt success
+2024-09-22 16:50:15,133:INFO:testing shape : [640, 640]
+2024-09-22 16:50:15,139:INFO:total 224 images to eval
+2024-09-22 16:50:15,200:INFO:Start inference....
+2024-09-22 16:51:24,487:INFO:Processing... 0.00% 
+2024-09-22 16:51:32,862:INFO:Calculating mAP...
+2024-09-22 16:51:40,669:INFO:Save bbox prediction result.
+2024-09-22 16:51:42,114:INFO:Result file path: ./output/predict_2024_09_22_16_51_40.json
+2024-09-22 16:51:51,279:INFO:
+=============coco eval result=========
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.169
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.291
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.180
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.093
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.213
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.226
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.178
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.301
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.328
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.192
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.355
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.410
+
+2024-09-22 16:51:51,283:INFO:testing cost time 0.03 h

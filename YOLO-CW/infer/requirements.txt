@@ -1,0 +1,4 @@
+numpy
+pillow
+opencv-python
+pycocotools >= 2.0.5
