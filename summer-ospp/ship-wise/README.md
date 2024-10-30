@@ -102,10 +102,12 @@ def xml_to_txt(xml_file_dir, txt_file_dir):
 
 首先需要安装相关依赖项，安装MindSpore，你可以通过遵循[官方指引](https://www.mindspore.cn/install)，在不同的硬件平台上获得最优的安装体验。
 
-本项目基于 MindYOLO 开发，还需通过`pip`进行安装 MindYOLO。
+本项目基于 MindYOLO 开发，MindYOLO 仓下载到本地后，将 `mindyolo/models/shipwise.py` 放到 MindYOLO 仓相应文件夹下。再在 `mindyolo/models/__init__.py` 中注册模型：
 
-```shell
-pip install mindyolo
+```python
+from . import shipwise
+__all__.extend(shipwise.__all__)
+from .shipwise import *
 ```
 
 您可以按照如下步骤进行训练和评估：
@@ -170,7 +172,6 @@ python predict.py --config=./workspace/configs/ship-wise/ship-wise-s.yaml --weig
 │
 ├── mindyolo                                       // MindYOLO主模块
 │   ├── version.py                                 // 版本信息
-│   ├── __init__.py                                // 包初始化文件
 │   │
 │   ├── data                                       // 数据模块
 │   │   ├── albumentations.py                      // 数据增强
@@ -180,54 +181,8 @@ python predict.py --config=./workspace/configs/ship-wise/ship-wise-s.yaml --weig
 │   │   ├── utils.py                               // 数据相关工具
 │   │   └── __init__.py                            // 包初始化文件
 │   │
-│   ├── models                                     // 模型定义模块
-│   │   ├── initializer.py                         // 模型初始化
-│   │   ├── model_factory.py                       // 模型工厂
-│   │   ├── registry.py                            // 模型注册模块
-│   │   ├── shipwise.py                            // ShipWise模型定义
-│   │   ├── __init__.py                            // 包初始化文件
-│   │   ├── heads                                  // 模型头部结构
-│   │   │   ├── yolov8_head.py                     // YOLOv8模型头部定义
-│   │   │   └── __init__.py                        // 包初始化文件
-│   │   ├── layers                                 // 模型层定义
-│   │   │   ├── activation.py                      // 激活函数
-│   │   │   ├── bottleneck.py                      // 瓶颈层
-│   │   │   ├── common.py                          // 通用层
-│   │   │   ├── conv.py                            // 卷积层
-│   │   │   ├── implicit.py                        // 隐式层
-│   │   │   ├── pool.py                            // 池化层
-│   │   │   ├── spp.py                             // 空间金字塔池化
-│   │   │   ├── upsample.py                        // 上采样层
-│   │   │   ├── utils.py                           // 层工具
-│   │   │   └── __init__.py                        // 包初始化文件
-│   │   └── losses                                 // 损失函数模块
-│   │       ├── focal_loss.py                      // Focal Loss定义
-│   │       ├── iou_loss.py                        // IoU Loss定义
-│   │       ├── loss_factory.py                    // 损失函数工厂
-│   │       ├── yolov8_loss.py                     // YOLOv8损失函数
-│   │       └── __init__.py                        // 包初始化文件
-│   │
-│   ├── optim                                      // 优化器模块
-│   │   ├── ema.py                                 // EMA优化
-│   │   ├── group_params.py                        // 参数分组
-│   │   ├── optim_factory.py                       // 优化器工厂
-│   │   ├── scheduler.py                           // 调度器
-│   │   └── __init__.py                            // 包初始化文件
-│   │
-│   └── utils                                      // 工具模块
-│       ├── callback.py                            // 回调函数
-│       ├── checkpoint_manager.py                  // 检查点管理
-│       ├── config.py                              // 配置处理
-│       ├── convert_weight_cspdarknet53.py         // 权重转换（CSPDarknet53）
-│       ├── convert_weight_darknet53.py            // 权重转换（Darknet53）
-│       ├── logger.py                              // 日志模块
-│       ├── metrics.py                             // 度量工具
-│       ├── modelarts.py                           // ModelArts支持
-│       ├── poly.py                                // 多边形处理
-│       ├── registry.py                            // 注册表工具
-│       ├── trainer_factory.py                     // 训练工厂
-│       ├── train_step_factory.py                  // 训练步骤工厂
-│       ├── utils.py                               // 通用工具
+│   └── models                                     // 模型定义模块
+│       ├── shipwise.py                            // ShipWise模型定义
 │       └── __init__.py                            // 包初始化文件
 │
 └── workspace                                      // 工作区
@@ -244,13 +199,6 @@ python predict.py --config=./workspace/configs/ship-wise/ship-wise-s.yaml --weig
     │       ├── ship-wise-base.yaml                // ShipWise基础配置
     │       ├── ship-wise-l.yaml                   // ShipWise大模型配置
     │       └── ship-wise-s.yaml                   // ShipWise小模型配置
-    │
-    ├── datasets                                   // 数据集目录
-    │   └── HRSC2016                               // HRSC2016数据集
-    │       ├── test.txt                           // 测试集文件
-    │       ├── train.cache.npy                    // 训练集缓存
-    │       ├── train.txt                          // 训练集文件
-    │       └── val.txt                            // 验证集文件
     │
     └── script                                     // 脚本目录
         └── dataset_tools                          // 数据集工具
