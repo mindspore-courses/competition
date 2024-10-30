@@ -64,8 +64,8 @@ def init(user_config=None):
     test_img_path = r"H:\Library\Datasets\HRSC\HRSC2016_dataset\HRSC2016\FullDataSet-YOLO-Split\test\100000630.bmp"
     if user_config is None:
         user_config = {
-            "config": "./workspace/configs/yolov8/yolov8s.yaml",
-            "weight": "./runs/2024.09.15-22.56.30/weights/yolov8s-153_422.ckpt",
+            "config": "./workspace/configs/ship-wise/ship-wise-s.yaml",
+            "weight": "./runs/2024.09.15-22.56.30/weights/ship-wise-s-153_422.ckpt",
             "device_target": "CPU",
         }
     cfg, _, _ = load_config(user_config["config"])

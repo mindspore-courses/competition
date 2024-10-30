@@ -4,14 +4,14 @@ import cv2
 import numpy as np
 from flask import Flask, request, jsonify
 
-from workspace.flask.model.yolov8 import init, infer
+from workspace.flask.model.ship_wise import init, infer
 
 app = Flask(__name__)
 
 # 在应用开始时加载模型
 user_config = {
-    "config": r"H:\Workspace\DeepLearning\mindyolo-summer-ospp/workspace/configs/yolov8/yolov8s.yaml",
-    "weight": r"H:\Workspace\DeepLearning\mindyolo-summer-ospp/runs/2024.09.15-22.56.30/weights/yolov8s-153_422.ckpt",
+    "config": r"H:\Workspace\DeepLearning\mindyolo-summer-ospp/workspace/configs/ship-wise/ship-wise-s.yaml",
+    "weight": r"H:\Workspace\DeepLearning\mindyolo-summer-ospp/runs/2024.09.15-22.56.30/weights/ship-wise-s-153_422.ckpt",
     "save_result": False,
     "device_target": "CPU",
 }
