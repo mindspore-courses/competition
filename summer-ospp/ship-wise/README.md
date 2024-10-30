@@ -150,55 +150,105 @@ python predict.py --config=./workspace/configs/ship-wise/ship-wise-s.yaml --weig
 ## 5.1 脚本及样例代码
 
 ```text
-├── root_directory                              // 项目的根目录
-│   ├── predict.py                              // 用于预测的主脚本
-│   ├── train.py                                // 用于训练的主脚本
-│   ├── __init__.py                             // 初始化脚本
+├── .gitignore                                     // Git忽略文件
+├── predict.py                                     // 用于预测的主脚本
+├── README.md                                      // 项目说明文件
+├── requirements.txt                               // Python依赖包列表
+├── train.py                                       // 用于训练的主脚本
 │
-├── configs                                     // 配置文件目录
-│   ├── dataset                                 // 数据集配置文件
-│   │   ├── HRSC2016.yaml                       // HRSC2016 数据集的配置文件
+├── assets                                         // 资源文件夹
+│   ├── pic-1.png                                  // 示例图片1
+│   └── pic-2.png                                  // 示例图片2
+│
+├── mindyolo                                       // MindYOLO主模块
+│   ├── version.py                                 // 版本信息
+│   ├── __init__.py                                // 包初始化文件
 │   │
-│   └── ship-wise                               // ShipWiseNet 模型的配置文件
-│       ├── hyp.scratch.high.yaml               // 高精度模式的超参数配置
-│       ├── hyp.scratch.low.yaml                // 低精度模式的超参数配置
-│       ├── ship-wise-base.yaml                 // ShipWiseNet 基础模型配置
-│       ├── ship-wise-l.yaml                    // ShipWiseNet 大型模型配置
-│       ├── ship-wise-s.yaml                    // ShipWiseNet 小型模型配置
-│
-├── datasets                                    // 数据集文件夹
-│   └── HRSC2016                                // HRSC2016 数据集目录
-│       ├── test.txt                            // 测试集文件列表
-│       ├── train.cache.npy                     // 训练集缓存文件
-│       ├── train.txt                           // 训练集文件列表
-│       ├── val.txt                             // 验证集文件列表
-│
-├── flask                                       // 用于模型服务的 Flask 项目目录
-│   ├── index.py                                // 主入口文件
-│   ├── __init__.py                             // 初始化脚本
+│   ├── data                                       // 数据模块
+│   │   ├── albumentations.py                      // 数据增强
+│   │   ├── constants.py                           // 常量配置
+│   │   ├── dataset.py                             // 数据集加载
+│   │   ├── loader.py                              // 数据加载
+│   │   ├── utils.py                               // 数据相关工具
+│   │   └── __init__.py                            // 包初始化文件
 │   │
-│   ├── model                                   // 模型相关文件
-│   │   ├── yolov8.py                           // YOLOv8 模型实现文件
-│   │   ├── __init__.py                         // 初始化脚本
-│   │   └── __pycache__                         // Python 字节码缓存目录
-│   │       ├── yolov8.cpython-38.pyc           // YOLOv8 字节码缓存
-│   │       └── __init__.cpython-38.pyc         // 初始化脚本字节码缓存
+│   ├── models                                     // 模型定义模块
+│   │   ├── initializer.py                         // 模型初始化
+│   │   ├── model_factory.py                       // 模型工厂
+│   │   ├── registry.py                            // 模型注册模块
+│   │   ├── shipwise.py                            // ShipWise模型定义
+│   │   ├── __init__.py                            // 包初始化文件
+│   │   ├── heads                                  // 模型头部结构
+│   │   │   ├── yolov8_head.py                     // YOLOv8模型头部定义
+│   │   │   └── __init__.py                        // 包初始化文件
+│   │   ├── layers                                 // 模型层定义
+│   │   │   ├── activation.py                      // 激活函数
+│   │   │   ├── bottleneck.py                      // 瓶颈层
+│   │   │   ├── common.py                          // 通用层
+│   │   │   ├── conv.py                            // 卷积层
+│   │   │   ├── implicit.py                        // 隐式层
+│   │   │   ├── pool.py                            // 池化层
+│   │   │   ├── spp.py                             // 空间金字塔池化
+│   │   │   ├── upsample.py                        // 上采样层
+│   │   │   ├── utils.py                           // 层工具
+│   │   │   └── __init__.py                        // 包初始化文件
+│   │   └── losses                                 // 损失函数模块
+│   │       ├── focal_loss.py                      // Focal Loss定义
+│   │       ├── iou_loss.py                        // IoU Loss定义
+│   │       ├── loss_factory.py                    // 损失函数工厂
+│   │       ├── yolov8_loss.py                     // YOLOv8损失函数
+│   │       └── __init__.py                        // 包初始化文件
 │   │
-│   └── __pycache__                             // Python 字节码缓存目录
+│   ├── optim                                      // 优化器模块
+│   │   ├── ema.py                                 // EMA优化
+│   │   ├── group_params.py                        // 参数分组
+│   │   ├── optim_factory.py                       // 优化器工厂
+│   │   ├── scheduler.py                           // 调度器
+│   │   └── __init__.py                            // 包初始化文件
+│   │
+│   └── utils                                      // 工具模块
+│       ├── callback.py                            // 回调函数
+│       ├── checkpoint_manager.py                  // 检查点管理
+│       ├── config.py                              // 配置处理
+│       ├── convert_weight_cspdarknet53.py         // 权重转换（CSPDarknet53）
+│       ├── convert_weight_darknet53.py            // 权重转换（Darknet53）
+│       ├── logger.py                              // 日志模块
+│       ├── metrics.py                             // 度量工具
+│       ├── modelarts.py                           // ModelArts支持
+│       ├── poly.py                                // 多边形处理
+│       ├── registry.py                            // 注册表工具
+│       ├── trainer_factory.py                     // 训练工厂
+│       ├── train_step_factory.py                  // 训练步骤工厂
+│       ├── utils.py                               // 通用工具
+│       └── __init__.py                            // 包初始化文件
 │
-└── script                                      // 脚本文件夹
-    ├── train.md                                // 训练文档
-    ├── __init__.py                             // 初始化脚本
+└── workspace                                      // 工作区
+    ├── predict.py                                 // 工作区中的预测脚本
+    ├── train.py                                   // 工作区中的训练脚本
+    ├── __init__.py                                // 包初始化文件
     │
-    ├── dataset_tools                           // 数据集工具文件夹
-    │   ├── __init__.py                         // 初始化脚本
-    │   │
-    │   └── HRSC                                // HRSC 数据集工具
-    │       ├── __init__.py                     // 初始化脚本
-    │       ├── 切分数据集.py                   // 数据集分割脚本
-    │       └── 转换数据集为YOLO格式.py         // 数据集格式转换脚本
+    ├── configs                                    // 配置文件目录
+    │   ├── dataset                                // 数据集相关配置
+    │   │   └── HRSC2016.yaml                      // HRSC2016数据集配置
+    │   └── ship-wise                              // ShipWise相关配置
+    │       ├── hyp.scratch.high.yaml              // 高精度参数配置
+    │       ├── hyp.scratch.low.yaml               // 低精度参数配置
+    │       ├── ship-wise-base.yaml                // ShipWise基础配置
+    │       ├── ship-wise-l.yaml                   // ShipWise大模型配置
+    │       └── ship-wise-s.yaml                   // ShipWise小模型配置
     │
-    └── __pycache__                             // Python 字节码缓存目录
+    ├── datasets                                   // 数据集目录
+    │   └── HRSC2016                               // HRSC2016数据集
+    │       ├── test.txt                           // 测试集文件
+    │       ├── train.cache.npy                    // 训练集缓存
+    │       ├── train.txt                          // 训练集文件
+    │       └── val.txt                            // 验证集文件
+    │
+    └── script                                     // 脚本目录
+        └── dataset_tools                          // 数据集工具
+            └── HRSC                               // 针对HRSC数据集的工具
+                ├── 切分数据集.py                    // 数据集切分脚本
+                └── 转换数据集为YOLO格式.py           // 数据集格式转换脚本
 ```
 
 ## 5.2 脚本参数
