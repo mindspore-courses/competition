@@ -100,7 +100,15 @@ def xml_to_txt(xml_file_dir, txt_file_dir):
 
 # 4. 快速使用
 
-通过官方网站安装 MindSpore 后，您可以按照如下步骤进行训练和评估：
+首先需要安装相关依赖项，安装MindSpore，你可以通过遵循[官方指引](https://www.mindspore.cn/install)，在不同的硬件平台上获得最优的安装体验。
+
+本项目基于 MindYOLO 开发，还需通过`pip`进行安装 MindYOLO。
+
+```shell
+pip install mindyolo
+```
+
+您可以按照如下步骤进行训练和评估：
 
 ## 4.1 模型训练
 
