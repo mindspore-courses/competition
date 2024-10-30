@@ -1,0 +1,11 @@
+__BASE__: [
+  '../dataset/HRSC2016.yaml',
+  './hyp.scratch.high.yaml',
+  './ship-wise-base.yaml'
+]
+
+overflow_still_update: False
+network:
+  depth_multiple: 1.00  # scales module repeats
+  width_multiple: 1.00  # scales convolution channels
+  max_channels: 512

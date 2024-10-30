@@ -75,7 +75,6 @@ test_temp_summary_event_file/
 
 # Custom
 build/
-configs/
 data/
 demo/
 deploy/
