@@ -1,0 +1,84 @@
+2024-09-22 22:45:38,557:INFO:Args:
+2024-09-22 22:45:38,557:INFO:--> enable_modelarts: False
+2024-09-22 22:45:38,557:INFO:--> data_path: /cache/data
+2024-09-22 22:45:38,557:INFO:--> output_path: /cache/train
+2024-09-22 22:45:38,557:INFO:--> load_path: /cache/checkpoint_path
+2024-09-22 22:45:38,557:INFO:--> device_target: Ascend
+2024-09-22 22:45:38,557:INFO:--> need_modelarts_dataset_unzip: True
+2024-09-22 22:45:38,557:INFO:--> modelarts_dataset_unzip_name: coco
+2024-09-22 22:45:38,557:INFO:--> data_dir: /home/ma-user/work/IP102-COCO格式
+2024-09-22 22:45:38,557:INFO:--> per_batch_size: 32
+2024-09-22 22:45:38,558:INFO:--> yolov5_version: yolov5s
+2024-09-22 22:45:38,558:INFO:--> pretrained_backbone: 
+2024-09-22 22:45:38,558:INFO:--> resume_yolov5: 
+2024-09-22 22:45:38,558:INFO:--> pretrained_checkpoint: 
+2024-09-22 22:45:38,558:INFO:--> output_dir: ./output
+2024-09-22 22:45:38,558:INFO:--> train_img_dir: /home/ma-user/work/IP102-COCO格式/train2017
+2024-09-22 22:45:38,558:INFO:--> train_ann_file: /home/ma-user/work/IP102-COCO格式/annotations/instances_train2017.json
+2024-09-22 22:45:38,558:INFO:--> lr_scheduler: cosine_annealing
+2024-09-22 22:45:38,558:INFO:--> lr: 0.01
+2024-09-22 22:45:38,558:INFO:--> lr_epochs: [220, 250]
+2024-09-22 22:45:38,558:INFO:--> lr_gamma: 0.1
+2024-09-22 22:45:38,558:INFO:--> eta_min: 0.0
+2024-09-22 22:45:38,558:INFO:--> T_max: 320
+2024-09-22 22:45:38,559:INFO:--> max_epoch: 300
+2024-09-22 22:45:38,559:INFO:--> warmup_epochs: 20
+2024-09-22 22:45:38,559:INFO:--> weight_decay: 0.0005
+2024-09-22 22:45:38,559:INFO:--> momentum: 0.9
+2024-09-22 22:45:38,559:INFO:--> loss_scale: 1024
+2024-09-22 22:45:38,559:INFO:--> label_smooth: 0
+2024-09-22 22:45:38,559:INFO:--> label_smooth_factor: 0.1
+2024-09-22 22:45:38,559:INFO:--> log_interval: 100
+2024-09-22 22:45:38,559:INFO:--> ckpt_path: outputs/
+2024-09-22 22:45:38,559:INFO:--> is_distributed: 0
+2024-09-22 22:45:38,559:INFO:--> bind_cpu: True
+2024-09-22 22:45:38,559:INFO:--> device_num: 8
+2024-09-22 22:45:38,559:INFO:--> rank: 0
+2024-09-22 22:45:38,560:INFO:--> group_size: 1
+2024-09-22 22:45:38,560:INFO:--> need_profiler: 0
+2024-09-22 22:45:38,560:INFO:--> resize_rate: 10
+2024-09-22 22:45:38,560:INFO:--> filter_weight: False
+2024-09-22 22:45:38,560:INFO:--> save_ckpt_interval: 1
+2024-09-22 22:45:38,560:INFO:--> save_ckpt_max_num: 10
+2024-09-22 22:45:38,560:INFO:--> pretrained: 
+2024-09-22 22:45:38,560:INFO:--> log_path: outputs/
+2024-09-22 22:45:38,560:INFO:--> ann_val_file: 
+2024-09-22 22:45:38,560:INFO:--> eval_nms_thresh: 0.6
+2024-09-22 22:45:38,560:INFO:--> ignore_threshold: 0.7
+2024-09-22 22:45:38,560:INFO:--> test_ignore_threshold: 0.001
+2024-09-22 22:45:38,560:INFO:--> multi_label: True
+2024-09-22 22:45:38,561:INFO:--> multi_label_thresh: 0.1
+2024-09-22 22:45:38,561:INFO:--> save_prefix: ../eval_parallel
+2024-09-22 22:45:38,561:INFO:--> run_eval: True
+2024-09-22 22:45:38,561:INFO:--> eval_epoch_interval: 10
+2024-09-22 22:45:38,561:INFO:--> eval_start_epoch: 100
+2024-09-22 22:45:38,561:INFO:--> eval_parallel: True
+2024-09-22 22:45:38,561:INFO:--> val_img_dir: val2017
+2024-09-22 22:45:38,561:INFO:--> val_ann_file: annotations/instances_val2017.json
+2024-09-22 22:45:38,561:INFO:--> batch_size: 1
+2024-09-22 22:45:38,561:INFO:--> testing_shape: [640, 640]
+2024-09-22 22:45:38,561:INFO:--> ckpt_file: 
+2024-09-22 22:45:38,561:INFO:--> file_name: yolov5
+2024-09-22 22:45:38,561:INFO:--> file_format: MINDIR
+2024-09-22 22:45:38,562:INFO:--> dataset_path: 
+2024-09-22 22:45:38,562:INFO:--> ann_file: 
+2024-09-22 22:45:38,562:INFO:--> hue: 0.015
+2024-09-22 22:45:38,562:INFO:--> saturation: 1.5
+2024-09-22 22:45:38,562:INFO:--> value: 0.4
+2024-09-22 22:45:38,562:INFO:--> jitter: 0.3
+2024-09-22 22:45:38,562:INFO:--> num_classes: 102
+2024-09-22 22:45:38,562:INFO:--> max_box: 150
+2024-09-22 22:45:38,562:INFO:--> checkpoint_filter_list: ['feature_map.back_block1.conv.weight', 'feature_map.back_block1.conv.bias', 'feature_map.back_block2.conv.weight', 'feature_map.back_block2.conv.bias', 'feature_map.back_block3.conv.weight', 'feature_map.back_block3.conv.bias']
+2024-09-22 22:45:38,562:INFO:--> anchor_scales: [[12, 16], [19, 36], [40, 28], [36, 75], [76, 55], [72, 146], [142, 110], [192, 243], [459, 401]]
+2024-09-22 22:45:38,562:INFO:--> out_channel: 255
+2024-09-22 22:45:38,562:INFO:--> input_shape: [[3, 32, 64, 128, 256, 512, 1], [3, 48, 96, 192, 384, 768, 2], [3, 64, 128, 256, 512, 1024, 3], [3, 80, 160, 320, 640, 1280, 4]]
+2024-09-22 22:45:38,563:INFO:--> test_img_shape: [640, 640]
+2024-09-22 22:45:38,563:INFO:--> labels: ['rice leaf roller', 'rice leaf caterpillar', 'paddy stem maggot', 'asiatic rice borer', 'yellow rice borer', 'rice gall midge', 'Rice Stemfly', 'brown plant hopper', 'white backed plant hopper', 'small brown plant hopper', 'rice water weevil', 'rice leafhopper', 'grain spreader thrips', 'rice shell pest', 'grub', 'mole cricket', 'wireworm', 'white margined moth', 'black cutworm', 'large cutworm', 'yellow cutworm', 'red spider', 'corn borer', 'army worm', 'aphids', 'Potosiabre vitarsis', 'peach borer', 'english grain aphid', 'green bug', 'bird cherry-oataphid', 'wheat blossom midge', 'penthaleus major', 'longlegged spider mite', 'wheat phloeothrips', 'wheat sawfly', 'cerodonta denticornis', 'beet fly', 'flea beetle', 'cabbage army worm', 'beet army worm', 'Beet spot flies', 'meadow moth', 'beet weevil', 'sericaorient alismots chulsky', 'alfalfa weevil', 'flax budworm', 'alfalfa plant bug', 'tarnished plant bug', 'Locustoidea', 'lytta polita', 'legume blister beetle', 'blister beetle', 'therioaphis maculata Buckton', 'odontothrips loti', 'Thrips', 'alfalfa seed chalcid', 'Pieris canidia', 'Apolygus lucorum', 'Limacodidae', 'Viteus vitifoliae', 'Colomerus vitis', 'Brevipoalpus lewisi McGregor', 'oides decempunctata', 'Polyphagotars onemus latus', 'Pseudococcus comstocki Kuwana', 'parathrene regalis', 'Ampelophaga', 'Lycorma delicatula', 'Xylotrechus', 'Cicadella viridis', 'Miridae', 'Trialeurodes vaporariorum', 'Erythroneura apicalis', 'Papilio xuthus', 'Panonchus citri McGregor', 'Phyllocoptes oleiverus ashmead', 'Icerya purchasi Maskell', 'Unaspis yanonensis', 'Ceroplastes rubens', 'Chrysomphalus aonidum', 'Parlatoria zizyphus Lucus', 'Nipaecoccus vastalor', 'Aleurocanthus spiniferus', 'Tetradacus c Bactrocera minax', 'Dacus dorsalis(Hendel)', 'Bactrocera tsuneonis', 'Prodenia litura', 'Adristyrannus', 'Phyllocnistis citrella Stainton', 'Toxoptera citricidus', 'Toxoptera aurantii', 'Aphis citricola Vander Goot', 'Scirtothrips dorsalis Hood', 'Dasineura sp', 'Lawana imitata Melichar', 'Salurnis marginella Guerr', 'Deporaus marginatus Pascoe', 'Chlumetia transversa', 'Mango flat beak leafhopper', 'Rhytidodera bowrinii white', 'Sternochetus frigidus', 'Cicadellidae']
+2024-09-22 22:45:38,563:INFO:--> coco_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
+2024-09-22 22:45:38,563:INFO:--> result_files: ./result_Files
+2024-09-22 22:45:38,563:INFO:--> config_path: /home/ma-user/work/YOLOv5-最终版/model_utils/../default_config.yaml
+2024-09-22 22:45:38,563:INFO:--> logger: <LOGGER YOLOV5 (NOTSET)>
+2024-09-22 22:45:38,563:INFO:
+2024-09-22 22:46:27,373:INFO:Finish loading train dataset
+2024-09-22 22:46:27,504:INFO:Finish loading val dataset!
+2024-09-22 22:46:31,858:INFO:cur best result 0.16856060922145844 at epoch 280
