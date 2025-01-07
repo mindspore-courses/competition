@@ -169,8 +169,8 @@ model:
       pet_type: lora
       # configuration of lora
       lora_rank: 8
-      lora_alpha: 16
-      lora_dropout: 0.0
+      lora_alpha: 8
+      lora_dropout: 0.5
       target_modules: '.*wq|.*wv'
   arch:
     type: LlamaForCausalLM
