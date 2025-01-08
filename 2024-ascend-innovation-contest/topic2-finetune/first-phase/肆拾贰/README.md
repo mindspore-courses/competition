@@ -3,22 +3,13 @@
 ## 【文件说明】
 
 ```
-- config                                                       # 配置文件
-	- lora_finetune.yaml                                       # lora微调配置文件
-	- math_eval.yaml                                           # 数学推理配置文件
-    - run_llama3_8b_8k_800T_A2_64G_lora_256_base_eval.yaml     # 原有能力测试配置文件
-    - run_llama3_test.py                                       # 数学推理脚本
-- data_preprocess						# 数据预处理
-	- data_converter.py                                      # 数据集添加prompt模板
-	- data_preprocess.ipynb                               # 数据去重、分类、CoT、采样构建训练集
-- img							       # 存储作品报告.md文件的图片
-- log                                                          # 日志文件
-	- base_eval_log_epoch_1.log                                # epoch_1权重的模型原有能力评估日志
-	- base_eval_log_epoch_2.log                                # epoch_2权重的模型原有能力评估日志
-    - base_eval_log_epoch_3.log                                # epoch_3权重的模型原有能力评估日志
-    - base_eval_log_epoch_4.log                                # epoch_4权重的模型原有能力评估日志
-    - base_eval_log_epoch_5.log                                # epoch_5权重的模型原有能力评估日志
-	- lora_finetune.log                                        # lora微调日志
+lora_finetune.yaml                                       # lora微调配置文件
+math_eval.yaml                                           # 数学推理配置文件
+run_llama3_8b_8k_800T_A2_64G_lora_256_base_eval.yaml     # 原有能力测试配置文件
+run_llama3_test.py                                       # 数学推理脚本
+data_converter.py                                        # 数据集添加prompt模板
+data_preprocess.ipynb                                    # 数据去重、分类、CoT、采样构建训练集
+img							                             # 存储作品报告.md文件的图片
 ```
 
 
@@ -56,13 +47,13 @@ cd /home/ma-user/work/
 wget https://2024-ascend-innovation-contest-mindspore.obs.cn-southwest-2.myhuaweicloud.com/topic2-finetune/train.json
 ```
 
-② 运行提交的压缩包中的 `data_preprocess/data_preprocess.ipynb`，得到去重、分类、CoT、采样后的训练集 `train_dataset.json`
+② 运行 `data_preprocess.ipynb`，得到去重、分类、CoT、采样后的训练集 `train_dataset.json`
 
 
 
 #### 3、添加 prompt 模板
 
-重写了 手册提供的 `data_converter.py` 文件，删除多余的 prompt，修改完数据格式如下图所示：
+重写了手册提供的 `data_converter.py` 文件，删除多余的 prompt，修改完数据格式如下图所示：
 
 
 
@@ -70,7 +61,7 @@ wget https://2024-ascend-innovation-contest-mindspore.obs.cn-southwest-2.myhuawe
 
 
 
-运行提交的压缩包中的 `data_preprocess/data_converter.py`，得到添加模板后的训练集 `train-data-conversation.json`。
+运行 `data_converter.py`，得到添加模板后的训练集 `train-data-conversation.json`。
 
 ```
 python data_converter.py --data_path /home/ma-user/work/train_dataset.json --output_path /home/ma-user/work/train-data-conversation.json
@@ -122,7 +113,7 @@ target_modules: '.*wq | .*wv'
 
 #### 1、微调超参数
 
-提供了修改完的微调配置文件，在提交的压缩包中的 `config/lora_finetune.yaml`。
+提供了修改完的微调配置文件，在 `lora_finetune.yaml`。
 
 主要基于手册提供的 `run_llama3_8b_8k_800T_A2_64G_lora_dis_256.yaml` 做以下修改，其它与手册保持一致，采用4卡微调。
 
@@ -159,7 +150,7 @@ model:
 
 #### 3、数学推理超参数
 
-提供了修改后的推理配置文件，在提交的压缩包中的 `config/math_eval.yaml`。
+提供了修改后的推理配置文件，在 `math_eval.yaml`。
 
 主要基于手册提供的配置文件 `run_llama3_8b_8k_800T_A2_64G_lora_256_eval.yaml` 做以下修改，其它参数以及推理脚本和手册保持一致。
 
@@ -215,9 +206,9 @@ epoch_5: https://lora42.obs.cn-southwest-2.myhuaweicloud.com/v3/lora_checkpoint_
 
 > 此处提供推理用的脚本和配置文件：
 >
-> 推理脚本见压缩包中的 `config/run_llama3_test.py`
+> 推理脚本见 `run_llama3_test.py`
 >
-> 配置文件见压缩包中的 `config/math_eval.yaml` 
+> 配置文件见 `math_eval.yaml` 
 
 
 
@@ -269,5 +260,3 @@ https://lora42.obs.cn-southwest-2.myhuaweicloud.com/v3/mindformers.zip
 - 数学推理配置文件位于 `mindformers/research/llama3/math_eval.yaml`
 
 - 数学推理脚本位于 `mindformers/research/llama3/run_llama3_test.py`
-
-- 源码包中提供的配置文件和推理脚本与作品提交的压缩包中的配置文件和推理脚本是一样的，用哪个都行。
