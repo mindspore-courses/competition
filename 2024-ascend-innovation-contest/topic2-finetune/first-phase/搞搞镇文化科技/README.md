@@ -77,8 +77,13 @@ LoRA 微调算法流程
 https://zzqms.obs.cn-southwest-2.myhuaweicloud.com/model/mydata_5k_256_8_add_4.ckpt
 
 
-##（4）模型微调后原有能力评估得分；
+## （4）模型微调后原有能力评估得分；
 
 在推理原有能力时，修改了配置文件，添加了 min_token = 1 得出原能力分数：F1
 
 score: 58.75865618394202, Em score: 44.17029511369134。 
+
+## （5）数据处理部分的代码
+去除重复数据的代码：fiter.py
+
+对数据添加解题步骤的代码：add_solution.py
