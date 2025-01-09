@@ -31,9 +31,7 @@ Flash attention深度优化了cuda高速显存访问次数，从而可以数倍�
 
 在llm-serving项目中，执行predict后再顺序执行_postprocess，其中_postprocess包含对生成的token进行处理以及将token转换为字符（detokenizer），而接下来的生成步骤（predict）不依赖 detokenizer，因此可以将其detokenizer与原流程进行解耦，使之流水线化。
 
-[llm-serving workflow](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/pipeline.svgworkflow.svg)
-
-
+[llm-serving workflow](https://github.com/JoegameZhou/competition/blob/master/2024-ascend-innovation-contest/topic3-inference/first-phase/assets/workflow.svg)
 
 模型推理和detokenizer异步进行，从而大大提高 GPU 的利用率，增加推理速度。
 
