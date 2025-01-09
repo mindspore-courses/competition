@@ -1,7 +1,7 @@
-##mixtral
+# mixtral
 
 
-##优化点：
+## 优化点：
 
 ppt中基础优化
 
@@ -12,5 +12,5 @@ ppt中基础优化
 自定义one_hot算子
 # qwen2_moe
 
-##优化点：（与mixtral一致）
+## 优化点：（与mixtral一致）
 
