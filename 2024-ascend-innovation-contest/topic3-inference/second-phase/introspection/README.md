@@ -9,33 +9,26 @@
 大模型推理中，prefill阶段产出用户输入的第一个返回字符，decode阶段逐字符生成大模型输出。因此，通常是prefill进行一次，而decode阶段则循环推理N次（N为生成句子长度）。从迭代次数来看decode占主要，而使用KV-cache后，decode阶段的输入仅为1个token，因此通常将多个请求的token合并在一次推理中进行，即组成一个decode batch，以充分利用计算能力。如图1所示，随着batch size的增加，decode阶段的吞吐量快速上升。此时，decode阶段的吞吐量主要受限于显存，decode阶段需要存储batch内所有输入的KV，因此其最大batchsize大小与显存有关，也与生成文本的长度有关。
 本项目中，能支持最大的batch为128，增加batch size之后显著降低的推理时间，由baseline的3000秒左右降低到6-700秒。
 
- 
-图 1 decode阶段吞吐量随batch size的变化
+
 
 然后，将decode阶段batch size改为128后，对推理过程的输出日志进行分析，统计prefill阶段和decode阶段的时间。如下表所示，decode batch size变为128后，decode阶段耗时占比大幅下降，仅占end-to-end总时长的22%，而prefill阶段的耗时占比则为76%。是耗时的主要来源。因此，对该框架的优化应该聚焦在prefill阶段。因此下一章提出一种prefill和decode阶段的调度方法以提升prefill阶段的速度。
 
-阶段	Prefill	Decode	通讯&后处理
-时间/
-占比	575318ms	76%	168259ms	22%	15592ms	2%
+ | 阶段 | 	Prefill	 | Decode | 	通讯&后处理 | 
+ |	--- | --- | --- | --- | 
+ | 时间/占比 | 	575318ms	76%	 | 168259ms	22%	 | 15592ms	2% | 
 
 ## Prefill-Decode混合调度方法
 目前业界共识一般将prefill和decode阶段当做两个完全不同的阶段处理，prefill阶段不涉及KVcache，仅有计算过程，因此被认为是计算密集型任务，而decode阶段仅对最新token计算，然而却需要调度整个batch内的KVcache，因此被认为是内存密集型任务。实际大模型框架中，通常都会对这两个进行分离处理，不会将prefill任务和decode任务放在一个batch里面。
 本项目中，mindspore也是将这两个过程进行了分离处理，执行过程中通过self.prefill或is_first_iteration标识符判断是否prefill阶段。
 在prefill和decode分离之后，如何安排两者之间的先后执行关系，就是推理调度方法。在mindspore中，LLM serving框架使用的是典型的prefill优先策略。即当有新的请求，而且decode batch中存在空位时，马上执行新请求的prefill阶段，然后将这单个新请求插入decode batch中，然后再进行迭代处理。这样的好处是可以将decode阶段每次迭代的batch吞吐量打满，图3是实际运行中decode每次迭代的有效token数量，可以看到整个过程中decode的每个batch都是拉满的，即每当decode中有一个请求完成输出，碰到终止符，就会马上执行一个新的prefill，将新生成的一个token加入decode过程。后面的下降是所有请求都prefill后，逐步有语句结束退出decode，然后逐渐下降到0，完成全部推理。这种模式首先每次decode迭代，完成生成并退出的语句数量都在变化，因此要执行prefill加入decode的语句数量难以固定，因此mindspore中直接将每次prefill 的语句数量写死为1，即prefill batch固定为1。（例如llm-serving/ mindspore_serving/master/master.py中的_check_prompt_predict_data_pa方法，在长度大于1直接break，甚至底层算子P.auto_generate.PagedAttention在设置phase为prefill时只输出第一个语句的logits）
  
-图 2 prefill优先的调度策略
 
- 
-图 3 decode每次迭代中的有效token数量
 
 这种调度方式，虽然可以拉满decode过程，大幅降低decode过程的时间，但是却会导致prefill阶段仅能每次迭代仅能处理单个句子。如经典的图4，虽然prefill过程随batchsize的变化通常被认为并不如decode过程显著，但如图4所示，增加prefill的batchsize也显示出了相当大的优化空间，尤其在输入语句较小的时候。
  
-图 4 prefill过程中吞吐量随batch的变化
+
 
 然后首先验证这种方法的优化效果，同时验证其泛化性，首先抛开本项目的背景，直接固定输入文本的长度，记录不同prefill batch下单个语句的执行时间。由表中可看出，提升prefill batch的优化效果还是比较明显，在较短输入文本上，执行时间甚至可以降低三倍以上。而且优化效果呈现出batch由1到2的优化效果最佳，然后随着batch的继续增加优化效果逐渐下降，其原因是随着batch的增加其逐渐达到了计算能力的瓶颈。然而将prefill batch增大，则需要牺牲一部分decode 阶段的性能，例如prefill batch为4时，decode过程就需要结束四个语句之后才能进行prefill，这个过程中，decode过程就不能拉满。很显然prefill和decode之间存在一种制约关系，增加prefill batch会减小prefill阶段时间，但会导致decode时间增加。因此需要找到两者之间的平衡达到最优，而这个最优的prefill batch大小就与decode batch直接相关。 如图5所示，对128的decode size来说，prefill batch为20时会导致仅20/128的通量损失，而对于24的decode size来说，prefill batch为20时则会导致90%的通量损失，而且这个平衡点与用户输入的语句长度也有关系。因此，现在设置一个经验系数，然后规定prefill batch size = decode batch size * 经验系数。这个经验系数即为decode过程通量牺牲的比例。
-
-
-
 
 
 
@@ -49,13 +42,12 @@
 |	512 |		63	 |	47	 |	44	 |	42	 |	41 |	
 |	1024 |		93	 |	84 |		83 |		83 |		82 |	
 
- 
-图 5 prefill batch为20时decode每次迭代中的有效token数量
+
 
 
 然而在本项目中，prefill阶段推理耗时占比在76%左右，根据以上的验证结果，增加prefill batch size带来的好处远大于对decode过程的不利影响。然后，如表中所示，batch size由1变为2时，对推理速度的提升最大，而且本项目框架中由于静态图编译特性，在prefill batch size过大时，会出现在1到batch size之间的静态图编译过程，因此最后选择经验系数为1/64，即prefill batch size为2. 最后的推理调度过程如图所示
  
-图 6 最后的调度流程
+
 ## 优化验证和运行参数
 超参配置：
 根据一阶段结果，在原有超参上，将decode_batch_size调整为128，此处prefill_batch_size 为无效参数，因此仍保持为1,相应配置文件为llm-serving/configs/llama/llama_7b_kbk_pa_dyn.yaml
