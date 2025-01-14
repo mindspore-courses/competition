@@ -1,0 +1,7 @@
+pydantic==1.10.11
+transformers==4.40.1
+uvicorn==0.26.0
+fastapi
+sse_starlette
+fastapi==0.109.0
+websockets==11.0.3
