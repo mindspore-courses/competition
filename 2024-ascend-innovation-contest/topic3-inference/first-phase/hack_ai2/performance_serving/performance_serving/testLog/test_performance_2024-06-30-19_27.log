@@ -1,0 +1,84 @@
+2024-06-30 19:27:20,449 - test_llama.log - INFO - testcases length is 5010
+2024-06-30 19:27:20,450 - test_llama.log - INFO - thread_tasks length is 20
+2024-06-30 19:27:20,450 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-06-30 19:27:20,453 - test_llama.log - INFO - poisson random interval time is 0.503s
+2024-06-30 19:27:20,958 - test_llama.log - INFO - poisson random interval time is 0.476s
+2024-06-30 19:27:20,969 - test_llama.log - INFO - first_token_time is 0.5187923908233643
+2024-06-30 19:27:21,437 - test_llama.log - INFO - poisson random interval time is 0.528s
+2024-06-30 19:27:21,968 - test_llama.log - INFO - poisson random interval time is 0.48s
+2024-06-30 19:27:22,451 - test_llama.log - INFO - poisson random interval time is 0.541s
+2024-06-30 19:27:22,687 - test_llama.log - INFO - first_token_time is 1.7311782836914062
+2024-06-30 19:27:22,693 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': '\nThe following sentence is missing a word. Add 3 examples to the sentence. Gun violence in the United States can result in...\nThe following sentence is missing a word. Add 3 examples to the sentence.\nGun violence in the United', 'res_time': 2.2427597045898438, 'first_token_time': 0.5187923908233643}
+Test Progress --> 1/20
+2024-06-30 19:27:22,922 - test_llama.log - INFO - first_token_time is 1.487337350845337
+2024-06-30 19:27:22,928 - test_llama.log - INFO - {'input': 'Answer the following question with a Yes, No, or Unsure:Will Canada be able to achieve carbon neutrality by 2050?', 'resp_text': '\nCan', 'res_time': 1.9716839790344238, 'first_token_time': 1.7311782836914062}
+Test Progress --> 2/20
+2024-06-30 19:27:22,995 - test_llama.log - INFO - poisson random interval time is 0.484s
+2024-06-30 19:27:23,482 - test_llama.log - INFO - poisson random interval time is 0.518s
+2024-06-30 19:27:23,572 - test_llama.log - INFO - first_token_time is 1.6062862873077393
+2024-06-30 19:27:23,578 - test_llama.log - INFO - {'input': 'How many words are there in the sentence "He helps the needy every day"?', 'resp_text': '\nHow many words are there in the sentence "He helps the needy every', 'res_time': 2.1426374912261963, 'first_token_time': 1.487337350845337}
+Test Progress --> 3/20
+2024-06-30 19:27:24,003 - test_llama.log - INFO - poisson random interval time is 0.447s
+2024-06-30 19:27:24,398 - test_llama.log - INFO - first_token_time is 1.9495534896850586
+2024-06-30 19:27:24,404 - test_llama.log - INFO - {'input': 'Compose a creative headline given the following article topic:The Benefits of Exercise', 'resp_text': '\nThe Benefits of Exercise.\nExercise is a very important part of a health', 'res_time': 2.4381394386291504, 'first_token_time': 1.6062862873077393}
+Test Progress --> 4/20
+2024-06-30 19:27:24,452 - test_llama.log - INFO - poisson random interval time is 0.518s
+2024-06-30 19:27:24,722 - test_llama.log - INFO - first_token_time is 1.7301304340362549
+2024-06-30 19:27:24,728 - test_llama.log - INFO - {'input': 'Find the area of a triangle whose base is 18 cm and height is 13 cm.', 'resp_text': '\nFind the area of', 'res_time': 2.2791144847869873, 'first_token_time': 1.9495534896850586}
+Test Progress --> 5/20
+2024-06-30 19:27:24,973 - test_llama.log - INFO - poisson random interval time is 0.506s
+2024-06-30 19:27:25,322 - test_llama.log - INFO - first_token_time is 1.8431060314178467
+2024-06-30 19:27:25,328 - test_llama.log - INFO - {'input': 'Calculate the area of a triangle with the given side lengths.:A = 8 cm, B = 6 cm, C = 4 cm', 'resp_text': '\nCalculate the area of a triangle with the given side lengths.:', 'res_time': 2.3354642391204834, 'first_token_time': 1.7301304340362549}
+Test Progress --> 6/20
+2024-06-30 19:27:25,482 - test_llama.log - INFO - poisson random interval time is 0.519s
+2024-06-30 19:27:26,005 - test_llama.log - INFO - poisson random interval time is 0.515s
+2024-06-30 19:27:26,200 - test_llama.log - INFO - first_token_time is 2.199664354324341
+2024-06-30 19:27:26,206 - test_llama.log - INFO - {'input': 'Tell me the first celebrity to win the Nobel Peace Prize.', 'resp_text': '\nThe first celebrity to win the Nobel Peace Prize was Barack Obama.\nTell me the first celebr', 'res_time': 2.726335048675537, 'first_token_time': 1.8431060314178467}
+Test Progress --> 7/20
+2024-06-30 19:27:26,522 - test_llama.log - INFO - poisson random interval time is 0.465s
+2024-06-30 19:27:26,990 - test_llama.log - INFO - poisson random interval time is 0.523s
+2024-06-30 19:27:27,516 - test_llama.log - INFO - poisson random interval time is 0.495s
+2024-06-30 19:27:28,014 - test_llama.log - INFO - poisson random interval time is 0.484s
+2024-06-30 19:27:28,500 - test_llama.log - INFO - poisson random interval time is 0.496s
+2024-06-30 19:27:28,800 - test_llama.log - INFO - first_token_time is 4.349197626113892
+2024-06-30 19:27:28,805 - test_llama.log - INFO - {'input': 'Reflect on the quote below and answer the question::"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albert Einstein', 'resp_text': '\nWhat does this quote mean to you? How does it relate to your life?\nWhat does this quote mean to you? How does it relate to your life? [#permalink]\nRe: Reflect on the quote below and answer the question::"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albert Einstein [#per', 'res_time': 4.804733753204346, 'first_token_time': 2.199664354324341}
+Test Progress --> 8/20
+2024-06-30 19:27:28,999 - test_llama.log - INFO - poisson random interval time is 0.507s
+2024-06-30 19:27:29,510 - test_llama.log - INFO - poisson random interval time is 0.524s
+2024-06-30 19:27:30,037 - test_llama.log - INFO - poisson random interval time is 0.534s
+2024-06-30 19:27:34,203 - test_llama.log - INFO - {'input': 'Design a house in 3D that looks like Hogwarts.', 'resp_text': '\nDesign a house in 3D that looks like Hogwarts. The house should have a front yard, a back yard, and a garden. The house should also have a kitchen, a living room, a bedroom, and a bathroom. The house should be made of wood, stone, or brick. The house should be at least 100 feet long and 50 feet wide. The house should be at least 100 feet tall. The house should be at least 100 feet deep. The house should be at least 100 feet wide. The house should be at least 100 feet tall. The house should be at least 100 feet deep. The house should be at least 100 feet wide. The house should be at least 100 feet tall', 'res_time': 9.752182006835938, 'first_token_time': 4.349197626113892}
+Test Progress --> 9/20
+2024-06-30 19:27:34,203 - test_llama.log - INFO - first_token_time is 9.232002019882202
+2024-06-30 19:27:35,300 - test_llama.log - INFO - {'input': 'Measure the degree of similarity between the two given sentences.:I am doing the laundry.\nI am washing the dishes.', 'resp_text': '\nI am doing the laundry.\nI am washing the dishes.\nI am doing the laundry.I am washing', 'res_time': 10.328917026519775, 'first_token_time': 9.232002019882202}
+Test Progress --> 10/20
+2024-06-30 19:27:35,300 - test_llama.log - INFO - first_token_time is 9.820514678955078
+2024-06-30 19:27:38,273 - test_llama.log - INFO - {'input': 'Write a strong conclusion for the following article:In this article, we discussed the latest research on how increasing the amount of natural light in an office can reduce stress levels and improve employee productivity.', 'resp_text': '\nThe researchers found that employees who worked in offices with more natural light had lower levels of stress and were more productive than those who worked in offices with less natural light.\nThe researchers also found that the amount of natural light in an office was not related to the amount of time employees spent working.\nThe researchers concluded that the amount and type of natural light in an office can have a positive impact on employee productivity.\nThe researchers also found', 'res_time': 12.793536901473999, 'first_token_time': 9.820514678955078}
+Test Progress --> 11/20
+2024-06-30 19:27:38,274 - test_llama.log - INFO - first_token_time is 12.271664142608643
+2024-06-30 19:27:41,798 - test_llama.log - INFO - {'input': 'Explain why it is important to understand the differences between terrorism and guerrilla warfare.', 'resp_text': '\nExplain why it is important to understand the differences between terrorism and guerrilla warfare. Terrorism is a form of political violence that is intended to create fear and intimidation in a population. Guerrilla warfare is a form of warfare that is intended to create fear and intimidation in a population.\nTerrorism is a form of political violence that is intended to create fear and intimidation in a population. Guerrilla warfare is a form of warfare that is intended to create fear', 'res_time': 15.79598069190979, 'first_token_time': 12.271664142608643}
+Test Progress --> 12/20
+2024-06-30 19:27:41,799 - test_llama.log - INFO - first_token_time is 15.278496503829956
+2024-06-30 19:27:44,970 - test_llama.log - INFO - {'input': 'How could blockchain technology be used to reduce fraud in the banking industry?', 'resp_text': '\nBlockchain technology is a distributed ledger that records transactions in a secure and transparent way. It is a decentralized system that is not controlled by any one entity, making it difficult for fraudsters to manipulate the data.\nBlockchain technology could be used to reduce fraud in the banking industry by providing a secure and transparent way to record transactions. This would make it more difficult for fraudsters to manipulate the data and would help to reduce the risk of fraud.\nBlockchain', 'res_time': 18.450031995773315, 'first_token_time': 15.278496503829956}
+Test Progress --> 13/20
+2024-06-30 19:27:44,971 - test_llama.log - INFO - first_token_time is 17.98273777961731
+2024-06-30 19:27:52,851 - test_llama.log - INFO - {'input': "Create a story about a person who discovers a talent they didn't know they had.", 'resp_text': '\nWrite a story about a person who is trying to find a way to make a living.\nWrite a story about a person who is trying to find a way to make a living.\nWrite a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living.\nWrite a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living.\nWrite a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living.\nWrite a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living. Write a story about a person who is trying to find a way to make a living. Write a', 'res_time': 25.86254620552063, 'first_token_time': 17.98273777961731}
+Test Progress --> 14/20
+2024-06-30 19:27:52,851 - test_llama.log - INFO - first_token_time is 25.337048292160034
+2024-06-30 19:27:53,084 - test_llama.log - INFO - {'input': 'Tell me if the following sentence is in the present perfect or simple past tense.:I have been to Canada.', 'resp_text': '\nI', 'res_time': 25.569716215133667, 'first_token_time': 25.337048292160034}
+Test Progress --> 15/20
+2024-06-30 19:27:53,084 - test_llama.log - INFO - first_token_time is 25.07239842414856
+2024-06-30 19:27:56,297 - test_llama.log - INFO - {'input': 'Analyze a current controversial issue and determine which side you agree with and why.', 'resp_text': '\nAnalyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which side you agree with and why.\nAnalyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which', 'res_time': 28.285654306411743, 'first_token_time': 25.07239842414856}
+Test Progress --> 16/20
+2024-06-30 19:27:56,298 - test_llama.log - INFO - first_token_time is 27.799349069595337
+2024-06-30 19:27:57,067 - test_llama.log - INFO - {'input': 'Come up with a riddle', 'resp_text': 'that has a solution that is a number.\nThe solution is a number.\nThe solution is', 'res_time': 28.5685555934906, 'first_token_time': 27.799349069595337}
+Test Progress --> 17/20
+2024-06-30 19:27:57,068 - test_llama.log - INFO - first_token_time is 28.070331573486328
+2024-06-30 19:27:59,356 - test_llama.log - INFO - {'input': 'Identify and explain one important element of data analysis.', 'resp_text': '\nIdentify and explain one important element of data analysis. Identify and explain one important element of data analysis.\nIdentify and explain one important element of data analysis.\nIdentify and explain one important element of data analysis. Identify and explain one important element of data analysis. Identify and explain one important element of data analysis. Identify and', 'res_time': 30.359107971191406, 'first_token_time': 28.070331573486328}
+Test Progress --> 18/20
+2024-06-30 19:27:59,357 - test_llama.log - INFO - first_token_time is 29.84954571723938
+2024-06-30 19:28:02,382 - test_llama.log - INFO - {'input': 'Analyze the given poem and analyze its themes.:"Daisies smell-less, yet most quaint,\nAnd sweet thyme true,\nPrimrose, first born child of Ver,\nMerry Springtime\'s harbinger.\nBird or butterfly on the wing,\nIn the balmy air of the Spring"', 'resp_text': '\nThe poem is about the beauty of nature. The poet is describing the beauty of nature in the spring season. The poet is comparing the beauty of nature with the beauty of a woman. The poet is saying that the beauty of nature is more beautiful than the beauty of a woman. The poet is saying that the beauty of nature is more beautiful than the beauty of a woman. The poet is saying that the beauty of nature is more beautiful than the beauty of a woman. The', 'res_time': 32.87516522407532, 'first_token_time': 29.84954571723938}
+Test Progress --> 19/20
+2024-06-30 19:28:02,383 - test_llama.log - INFO - first_token_time is 32.348498821258545
+2024-06-30 19:28:04,026 - test_llama.log - INFO - {'input': 'Construct a triangle using the following lengths: 12 cm, 12 cm and 16 cm.', 'resp_text': '\nConstruct a triangle using the following lengths: 12 cm, 12 cm and 16 cm. The triangle is shown below.\nThe triangle is shown below.\nThe triangle is shown below. The triangle is shown below.\nThe triangle is shown', 'res_time': 33.99201560020447, 'first_token_time': 32.348498821258545}
+Test Progress --> 20/20
+2024-06-30 19:28:04,027 - test_llama.log - INFO - All Tasks Done; Exec Time is 43.577149391174316

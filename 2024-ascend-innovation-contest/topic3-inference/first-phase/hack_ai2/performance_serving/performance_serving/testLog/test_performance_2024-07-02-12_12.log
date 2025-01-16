@@ -1,0 +1,8 @@
+2024-07-02 12:12:44,288 - test_llama.log - INFO - testcases length is 5010
+2024-07-02 12:12:44,289 - test_llama.log - INFO - thread_tasks length is 1
+2024-07-02 12:12:44,289 - test_llama.log - INFO - Start send request, avg interval is 1.0
+2024-07-02 12:12:44,290 - test_llama.log - INFO - poisson random interval time is 0.998s
+2024-07-02 12:12:44,742 - test_llama.log - INFO - first_token_time is 0.45241522789001465
+2024-07-02 12:12:46,292 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': '\nThe following sentence is missing a word. Add 3 examples to the sentence. Gun violence in the United States can result in...\nThe following sentence is missing a word. Add 3 examples to the sentence.\nGun violence in the United', 'res_time': 2.0031442642211914, 'first_token_time': 0.45241522789001465}
+Test Progress --> 1/1
+2024-07-02 12:12:46,293 - test_llama.log - INFO - All Tasks Done; Exec Time is 2.004021644592285
