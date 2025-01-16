@@ -1,0 +1,24 @@
+2024-06-12 17:27:27,199 - test_llama.log - INFO - testcases length is 52002
+2024-06-12 17:27:27,200 - test_llama.log - INFO - thread_tasks length is 5
+2024-06-12 17:27:27,200 - test_llama.log - INFO - Start send request, avg interval is 1.0
+2024-06-12 17:27:27,203 - test_llama.log - INFO - poisson random interval time is 1.046s
+2024-06-12 17:27:27,953 - test_llama.log - INFO - first_token_time is 0.7521109580993652
+2024-06-12 17:27:28,252 - test_llama.log - INFO - poisson random interval time is 1.028s
+2024-06-12 17:27:29,283 - test_llama.log - INFO - poisson random interval time is 0.919s
+2024-06-12 17:27:30,206 - test_llama.log - INFO - poisson random interval time is 1.039s
+2024-06-12 17:27:30,237 - test_llama.log - INFO - first_token_time is 1.9876041412353516
+2024-06-12 17:27:30,243 - test_llama.log - INFO - {'input': 'Give three tips for staying healthy.', 'resp_text': '\nWhat is the best way to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the ', 'res_time': 3.04183292388916, 'first_token_time': 0.7521109580993652}
+Test Progress --> 1/5
+2024-06-12 17:27:31,014 - test_llama.log - INFO - first_token_time is 1.7332777976989746
+2024-06-12 17:27:31,019 - test_llama.log - INFO - {'input': 'What are the three primary colors?', 'resp_text': '\nWhat are the 3 primary colors?\nWhat', 'res_time': 2.769892930984497, 'first_token_time': 1.9876041412353516}
+Test Progress --> 2/5
+2024-06-12 17:27:31,248 - test_llama.log - INFO - poisson random interval time is 0.987s
+2024-06-12 17:27:33,939 - test_llama.log - INFO - {'input': 'Describe the structure of an atom.', 'resp_text': '\nDescribe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom. Describe the structure of an atom', 'res_time': 4.658479452133179, 'first_token_time': 1.7332777976989746}
+Test Progress --> 3/5
+2024-06-12 17:27:33,940 - test_llama.log - INFO - first_token_time is 3.736143112182617
+2024-06-12 17:27:37,520 - test_llama.log - INFO - {'input': 'How can we reduce air pollution?', 'resp_text': '\nHow can we reduce air pollution? 1. Reduce the use of fossil fuels. 2. Reduce the use of fossil fuels. 3. Reduce the use of fossil fuels. 4. Reduce the use of fossil fuels. 5. Reduce the use of fossil fuels. 6. Reduce the use of fossil fuels. 7. Red', 'res_time': 7.316179275512695, 'first_token_time': 3.736143112182617}
+Test Progress --> 4/5
+2024-06-12 17:27:37,520 - test_llama.log - INFO - first_token_time is 6.274646520614624
+2024-06-12 17:27:53,465 - test_llama.log - INFO - {'input': 'Describe a time when you had to make a difficult decision.', 'resp_text': '\nWhat was the decision?\nWhat were the consequences of your decision?\nWhat did you learn from this experience?\nDescribe a time when you had to make a difficult decision. What was the decision? What were the consequences of your decision? What did you learn from this experience?\nDescribe a time when you had to make a difficult decision. What was the decision? What were the consequences of your decision? What did you learn from this experience? 2017-09-19 11:00:00\nDescribe a time when you had to make a difficult decision. What was the decision? What were the consequences of your decision? What did you learn from this experience? 2017-09-', 'res_time': 22.219154357910156, 'first_token_time': 6.274646520614624}
+Test Progress --> 5/5
+2024-06-12 17:27:53,465 - test_llama.log - INFO - All Tasks Done; Exec Time is 26.265066385269165

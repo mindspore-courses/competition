@@ -1,0 +1,44 @@
+2024-07-20 17:15:49,219 - test_llama.log - INFO - testcases length is 5010
+2024-07-20 17:15:49,219 - test_llama.log - INFO - thread_tasks length is 10
+2024-07-20 17:15:49,219 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-20 17:15:49,221 - test_llama.log - INFO - poisson random interval time is 0.485s
+2024-07-20 17:15:49,327 - test_llama.log - INFO - first_token_time is 0.1071009635925293
+2024-07-20 17:15:49,369 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.1484994888305664, 'first_token_time': 0.1071009635925293}
+Test Progress --> 1/10
+2024-07-20 17:15:49,709 - test_llama.log - INFO - poisson random interval time is 0.509s
+2024-07-20 17:15:49,737 - test_llama.log - INFO - first_token_time is 0.029484033584594727
+2024-07-20 17:15:49,778 - test_llama.log - INFO - {'input': 'Answer the following question with a Yes, No, or Unsure:Will Canada be able to achieve carbon neutrality by 2050?', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.0708014965057373, 'first_token_time': 0.029484033584594727}
+Test Progress --> 2/10
+2024-07-20 17:15:50,221 - test_llama.log - INFO - poisson random interval time is 0.512s
+2024-07-20 17:15:50,250 - test_llama.log - INFO - first_token_time is 0.03106856346130371
+2024-07-20 17:15:50,287 - test_llama.log - INFO - {'input': 'How many words are there in the sentence "He helps the needy every day"?', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.06740450859069824, 'first_token_time': 0.03106856346130371}
+Test Progress --> 3/10
+2024-07-20 17:15:50,736 - test_llama.log - INFO - poisson random interval time is 0.493s
+2024-07-20 17:15:50,765 - test_llama.log - INFO - first_token_time is 0.031159400939941406
+2024-07-20 17:15:50,807 - test_llama.log - INFO - {'input': 'Compose a creative headline given the following article topic:The Benefits of Exercise', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.07245230674743652, 'first_token_time': 0.031159400939941406}
+Test Progress --> 4/10
+2024-07-20 17:15:51,232 - test_llama.log - INFO - poisson random interval time is 0.47s
+2024-07-20 17:15:51,261 - test_llama.log - INFO - first_token_time is 0.03087306022644043
+2024-07-20 17:15:51,302 - test_llama.log - INFO - {'input': 'Find the area of a triangle whose base is 18 cm and height is 13 cm.', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.07226085662841797, 'first_token_time': 0.03087306022644043}
+Test Progress --> 5/10
+2024-07-20 17:15:51,705 - test_llama.log - INFO - poisson random interval time is 0.527s
+2024-07-20 17:15:51,734 - test_llama.log - INFO - first_token_time is 0.03075265884399414
+2024-07-20 17:15:51,770 - test_llama.log - INFO - {'input': 'Calculate the area of a triangle with the given side lengths.:A = 8 cm, B = 6 cm, C = 4 cm', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.06711268424987793, 'first_token_time': 0.03075265884399414}
+Test Progress --> 6/10
+2024-07-20 17:15:52,235 - test_llama.log - INFO - poisson random interval time is 0.469s
+2024-07-20 17:15:52,264 - test_llama.log - INFO - first_token_time is 0.03106403350830078
+2024-07-20 17:15:52,300 - test_llama.log - INFO - {'input': 'Tell me the first celebrity to win the Nobel Peace Prize.', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.06736302375793457, 'first_token_time': 0.03106403350830078}
+Test Progress --> 7/10
+2024-07-20 17:15:52,706 - test_llama.log - INFO - poisson random interval time is 0.49s
+2024-07-20 17:15:52,738 - test_llama.log - INFO - first_token_time is 0.03279519081115723
+2024-07-20 17:15:52,779 - test_llama.log - INFO - {'input': 'Reflect on the quote below and answer the question::"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albert Einstein', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.0742955207824707, 'first_token_time': 0.03279519081115723}
+Test Progress --> 8/10
+2024-07-20 17:15:53,199 - test_llama.log - INFO - poisson random interval time is 0.522s
+2024-07-20 17:15:53,228 - test_llama.log - INFO - first_token_time is 0.030400991439819336
+2024-07-20 17:15:53,264 - test_llama.log - INFO - {'input': 'Design a house in 3D that looks like Hogwarts.', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.06670713424682617, 'first_token_time': 0.030400991439819336}
+Test Progress --> 9/10
+2024-07-20 17:15:53,724 - test_llama.log - INFO - poisson random interval time is 0.544s
+2024-07-20 17:15:53,752 - test_llama.log - INFO - first_token_time is 0.030246973037719727
+2024-07-20 17:15:53,794 - test_llama.log - INFO - {'input': 'Measure the degree of similarity between the two given sentences.:I am doing the laundry.\nI am washing the dishes.', 'resp_text': 'error304: generation task stop abnormally!, please retry!', 'res_time': 0.07178950309753418, 'first_token_time': 0.030246973037719727}
+Test Progress --> 10/10
+2024-07-20 17:15:54,269 - test_llama.log - INFO - All Tasks Done; Exec Time is 5.049315452575684

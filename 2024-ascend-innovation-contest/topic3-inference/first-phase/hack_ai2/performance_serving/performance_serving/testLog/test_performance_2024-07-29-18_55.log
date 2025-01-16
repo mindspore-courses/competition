@@ -1,0 +1,8 @@
+2024-07-29 18:55:18,382 - test_llama.log - INFO - testcases length is 5010
+2024-07-29 18:55:18,383 - test_llama.log - INFO - thread_tasks length is 4
+2024-07-29 18:55:18,383 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-29 18:55:18,385 - test_llama.log - INFO - poisson random interval time is 0.491s
+2024-07-29 18:55:18,879 - test_llama.log - INFO - poisson random interval time is 0.487s
+2024-07-29 18:55:19,369 - test_llama.log - INFO - poisson random interval time is 0.513s
+2024-07-29 18:55:19,886 - test_llama.log - INFO - poisson random interval time is 0.485s
+2024-07-29 18:55:20,371 - test_llama.log - INFO - All Tasks Done; Exec Time is 1.9883031845092773

@@ -1,0 +1,64 @@
+2024-07-21 17:04:33,712 - test_llama.log - INFO - testcases length is 5010
+2024-07-21 17:04:33,713 - test_llama.log - INFO - thread_tasks length is 20
+2024-07-21 17:04:33,713 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-21 17:04:33,715 - test_llama.log - INFO - poisson random interval time is 0.489s
+2024-07-21 17:04:34,208 - test_llama.log - INFO - poisson random interval time is 0.461s
+2024-07-21 17:04:34,672 - test_llama.log - INFO - poisson random interval time is 0.506s
+2024-07-21 17:04:35,181 - test_llama.log - INFO - poisson random interval time is 0.524s
+2024-07-21 17:04:35,678 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': '\nThe following sentence is missing a word. Add 3 examples to the sentence. Gun violence in the United States can result in...\nThe following sentence is missing a word. Add 3 examples to the sentence.\nGun violence in the United', 'res_time': 1.9641053676605225}
+Test Progress --> 1/20
+2024-07-21 17:04:35,707 - test_llama.log - INFO - poisson random interval time is 0.506s
+2024-07-21 17:04:35,792 - test_llama.log - INFO - {'input': 'Answer the following question with a Yes, No, or Unsure:Will Canada be able to achieve carbon neutrality by 2050?', 'resp_text': '\nCan', 'res_time': 1.5874545574188232}
+Test Progress --> 2/20
+2024-07-21 17:04:36,215 - test_llama.log - INFO - poisson random interval time is 0.538s
+2024-07-21 17:04:36,380 - test_llama.log - INFO - {'input': 'How many words are there in the sentence "He helps the needy every day"?', 'resp_text': '\nHow many words are there in the sentence "He helps the needy every', 'res_time': 1.7102446556091309}
+Test Progress --> 3/20
+2024-07-21 17:04:36,756 - test_llama.log - INFO - poisson random interval time is 0.473s
+2024-07-21 17:04:37,206 - test_llama.log - INFO - {'input': 'Compose a creative headline given the following article topic:The Benefits of Exercise', 'resp_text': '\nThe Benefits of Exercise.\nExercise is a very important part of a health', 'res_time': 2.0267210006713867}
+Test Progress --> 4/20
+2024-07-21 17:04:37,231 - test_llama.log - INFO - poisson random interval time is 0.5s
+2024-07-21 17:04:37,436 - test_llama.log - INFO - {'input': 'Find the area of a triangle whose base is 18 cm and height is 13 cm.', 'resp_text': '\nFind the area of', 'res_time': 1.7307307720184326}
+Test Progress --> 5/20
+2024-07-21 17:04:37,733 - test_llama.log - INFO - poisson random interval time is 0.505s
+2024-07-21 17:04:37,961 - test_llama.log - INFO - {'input': 'Calculate the area of a triangle with the given side lengths.:A = 8 cm, B = 6 cm, C = 4 cm', 'resp_text': '\nCalculate the area of a triangle with the given side lengths.:', 'res_time': 1.7480828762054443}
+Test Progress --> 6/20
+2024-07-21 17:04:38,241 - test_llama.log - INFO - poisson random interval time is 0.551s
+2024-07-21 17:04:38,794 - test_llama.log - INFO - poisson random interval time is 0.517s
+2024-07-21 17:04:38,837 - test_llama.log - INFO - {'input': 'Tell me the first celebrity to win the Nobel Peace Prize.', 'resp_text': '\nThe first celebrity to win the Nobel Peace Prize was Barack Obama.\nTell me the first celebr', 'res_time': 2.0827300548553467}
+Test Progress --> 7/20
+2024-07-21 17:04:39,313 - test_llama.log - INFO - poisson random interval time is 0.482s
+2024-07-21 17:04:39,798 - test_llama.log - INFO - poisson random interval time is 0.49s
+2024-07-21 17:04:40,291 - test_llama.log - INFO - poisson random interval time is 0.515s
+2024-07-21 17:04:40,809 - test_llama.log - INFO - poisson random interval time is 0.491s
+2024-07-21 17:04:41,303 - test_llama.log - INFO - poisson random interval time is 0.472s
+2024-07-21 17:04:41,704 - test_llama.log - INFO - {'input': 'Reflect on the quote below and answer the question::"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albert Einstein', 'resp_text': '\nWhat does this quote mean to you? How does it relate to your life?\nWhat does this quote mean to you? How does it relate to your life? [#permalink]\nRe: Reflect on the quote below and answer the question::"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albert Einstein [#per', 'res_time': 4.473921537399292}
+Test Progress --> 8/20
+2024-07-21 17:04:41,778 - test_llama.log - INFO - poisson random interval time is 0.537s
+2024-07-21 17:04:42,317 - test_llama.log - INFO - poisson random interval time is 0.508s
+2024-07-21 17:04:42,828 - test_llama.log - INFO - poisson random interval time is 0.536s
+2024-07-21 17:04:43,367 - test_llama.log - INFO - poisson random interval time is 0.47s
+2024-07-21 17:04:47,782 - test_llama.log - INFO - {'input': 'Design a house in 3D that looks like Hogwarts.', 'resp_text': '\nDesign a house in 3D that looks like Hogwarts. The house should have a front yard, a back yard, and a garden. The house should also have a kitchen, a living room, a bedroom, and a bathroom. The house should be made of wood, stone, or brick. The house should be at least 100 feet long and 50 feet wide. The house should be at least 100 feet tall. The house should be at least 100 feet deep. The house should be at least 100 feet wide. The house should be at least 100 feet tall. The house should be at least 100 feet deep. The house should be at least 100 feet wide. The house should be at least 100 feet tall', 'res_time': 10.049859523773193}
+Test Progress --> 9/20
+2024-07-21 17:04:48,881 - test_llama.log - INFO - {'input': 'Measure the degree of similarity between the two given sentences.:I am doing the laundry.\nI am washing the dishes.', 'resp_text': '\nI am doing the laundry.\nI am washing the dishes.\nI am doing the laundry.I am washing', 'res_time': 10.642545700073242}
+Test Progress --> 10/20
+2024-07-21 17:04:52,226 - test_llama.log - INFO - {'input': 'Write a strong conclusion for the following article:In this article, we discussed the latest research on how increasing the amount of natural light in an office can reduce stress levels and improve employee productivity.', 'resp_text': '\nWrite a strong conclusion for the following article:In this article, we discussed the latest research on how increasing the amount of natural light in an office can reduce stress levels and improve employee productivity. The researchers found that employees who worked in offices with more natural light had lower levels of stress and were more productive than those who worked in offices with less natural light.\nThe researchers also found that employees who worked in offices with more natural light were less likely to', 'res_time': 13.433123111724854}
+Test Progress --> 11/20
+2024-07-21 17:04:56,162 - test_llama.log - INFO - {'input': 'Explain why it is important to understand the differences between terrorism and guerrilla warfare.', 'resp_text': '\nExplain why it is important to understand the differences between terrorism and guerrilla warfare. Terrorism is a form of political violence that is intended to create fear and intimidation in a population. Guerrilla warfare is a form of warfare that is intended to create fear and intimidation in a population.\nTerrorism is a form of political violence that is intended to create fear and intimidation in a population. Guerrilla warfare is a form of warfare that is intended to create fear', 'res_time': 16.85012936592102}
+Test Progress --> 12/20
+2024-07-21 17:04:59,738 - test_llama.log - INFO - {'input': 'How could blockchain technology be used to reduce fraud in the banking industry?', 'resp_text': '\nBlockchain technology is a distributed ledger that records transactions in a secure and transparent way. It is a decentralized system that is not controlled by any one entity, making it difficult for fraudsters to manipulate the data.\nBlockchain technology could be used to reduce fraud in the banking industry by providing a secure and transparent way to record transactions. This would make it more difficult for fraudsters to manipulate the data and would help to reduce the risk of fraud.\nBlockchain', 'res_time': 19.942458391189575}
+Test Progress --> 13/20
+2024-07-21 17:04:59,739 - test_llama.log - INFO - {'input': "Create a story about a person who discovers a talent they didn't know they had.", 'resp_text': 'Error202: prompt out of range', 'res_time': 19.450794458389282}
+Test Progress --> 14/20
+2024-07-21 17:04:59,857 - test_llama.log - INFO - {'input': 'Tell me if the following sentence is in the present perfect or simple past tense.:I have been to Canada.', 'resp_text': '\nI', 'res_time': 19.050217151641846}
+Test Progress --> 15/20
+2024-07-21 17:05:03,470 - test_llama.log - INFO - {'input': 'Analyze a current controversial issue and determine which side you agree with and why.', 'resp_text': '\nAnalyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which side you agree with and why.\nAnalyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which side you agree with and why. Analyze a current controversial issue and determine which', 'res_time': 22.16869592666626}
+Test Progress --> 16/20
+2024-07-21 17:05:04,202 - test_llama.log - INFO - {'input': 'Come up with a riddle', 'resp_text': 'that has a solution that is a number.\nThe solution is a number.\nThe solution is', 'res_time': 22.426215410232544}
+Test Progress --> 17/20
+2024-07-21 17:05:06,739 - test_llama.log - INFO - {'input': 'Identify and explain one important element of data analysis.', 'resp_text': '\nIdentify and explain one important element of data analysis. Identify and explain one important element of data analysis.\nIdentify and explain one important element of data analysis.\nIdentify and explain one important element of data analysis. Identify and explain one important element of data analysis. Identify and explain one important element of data analysis. Identify and', 'res_time': 24.42358946800232}
+Test Progress --> 18/20
+2024-07-21 17:05:10,067 - test_llama.log - INFO - {'input': 'Analyze the given poem and analyze its themes.:"Daisies smell-less, yet most quaint,\nAnd sweet thyme true,\nPrimrose, first born child of Ver,\nMerry Springtime\'s harbinger.\nBird or butterfly on the wing,\nIn the balmy air of the Spring"', 'resp_text': '\nThe poem is about the beauty of nature. The poet is describing the beauty of nature in the spring season. The poet is comparing the beauty of nature with the beauty of a woman. The poet is saying that the beauty of nature is more beautiful than the beauty of a woman. The poet is saying that the beauty of nature is more beautiful than the beauty of a woman. The poet is saying that the beauty of nature is more beautiful than the beauty of a woman. The', 'res_time': 27.2409508228302}
+Test Progress --> 19/20
+2024-07-21 17:05:12,053 - test_llama.log - INFO - {'input': 'Construct a triangle using the following lengths: 12 cm, 12 cm and 16 cm.', 'resp_text': '\nConstruct a triangle using the following lengths: 12 cm, 12 cm and 16 cm. The triangle is shown below.\nThe triangle is shown below.\nThe triangle is shown below. The triangle is shown below.\nThe triangle is shown', 'res_time': 28.688372135162354}
+Test Progress --> 20/20
+2024-07-21 17:05:12,054 - test_llama.log - INFO - All Tasks Done; Exec Time is 38.3404974937439

@@ -1,0 +1,16 @@
+2024-07-30 18:46:40,433 - test_llama.log - INFO - testcases length is 5010
+2024-07-30 18:46:40,433 - test_llama.log - INFO - thread_tasks length is 4
+2024-07-30 18:46:40,433 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-30 18:46:40,435 - test_llama.log - INFO - poisson random interval time is 0.486s
+2024-07-30 18:46:40,923 - test_llama.log - INFO - poisson random interval time is 0.501s
+2024-07-30 18:46:41,303 - test_llama.log - INFO - {'input': 'Answer the following question with a Yes, No, or Unsure:Will Canada be able to achieve carbon neutrality by 2050?', 'resp_text': '\nCan', 'res_time': 0.38131141662597656}
+Test Progress --> 1/4
+2024-07-30 18:46:41,427 - test_llama.log - INFO - poisson random interval time is 0.498s
+2024-07-30 18:46:41,927 - test_llama.log - INFO - poisson random interval time is 0.493s
+2024-07-30 18:46:42,327 - test_llama.log - INFO - {'input': 'How many words are there in the sentence "He helps the needy every day"?', 'resp_text': '\nHow many words are there in the sentence "He helps the needy every', 'res_time': 0.9021601676940918}
+Test Progress --> 2/4
+2024-07-30 18:46:42,489 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': '\nThe following sentence is missing a word. Add 3 examples to the sentence. Gun violence in the United States can result in...\nThe following sentence is missing a word. Add 3 examples to the sentence.\nGun violence in the United', 'res_time': 2.0549962520599365}
+Test Progress --> 3/4
+2024-07-30 18:46:42,981 - test_llama.log - INFO - {'input': 'Compose a creative headline given the following article topic:The Benefits of Exercise', 'resp_text': '\nThe Benefits of Exercise.\nExercise is a very important part of a health', 'res_time': 1.0553433895111084}
+Test Progress --> 4/4
+2024-07-30 18:46:42,981 - test_llama.log - INFO - All Tasks Done; Exec Time is 2.5479140281677246

@@ -1,0 +1,184 @@
+2024-07-31 16:44:34,981 - test_llama.log - INFO - testcases length is 521
+2024-07-31 16:44:34,983 - test_llama.log - INFO - thread_tasks length is 60
+2024-07-31 16:44:34,983 - test_llama.log - INFO - Start send request, avg interval is 10.0
+2024-07-31 16:44:34,985 - test_llama.log - INFO - poisson random interval time is 9.926s
+2024-07-31 16:44:44,914 - test_llama.log - INFO - poisson random interval time is 10.007s
+2024-07-31 16:44:54,926 - test_llama.log - INFO - poisson random interval time is 10.031s
+2024-07-31 16:45:04,961 - test_llama.log - INFO - poisson random interval time is 10.019s
+2024-07-31 16:45:09,501 - test_llama.log - INFO - {'input': 'Give three tips for staying healthy.', 'resp_text': '\nWhat is the best way to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the ', 'res_time': 34.51658248901367}
+Test Progress --> 1/60
+2024-07-31 16:45:12,109 - test_llama.log - INFO - {'input': 'Design a database to record employee salaries.', 'resp_text': '\nDesign a database to record employee salaries. The database should include the following fields:\nEmployee ID (primary key)\nEmployee name (first and last)\nEmployee salary\nThe database should be designed in a relational database.\nThe database should be designed in a relational database.', 'res_time': 27.19703221321106}
+Test Progress --> 2/60
+2024-07-31 16:45:12,725 - test_llama.log - INFO - {'input': 'What geometric shape has 5 sides and 5 angles?', 'resp_text': '\nWhat is the name of a', 'res_time': 17.80248212814331}
+Test Progress --> 3/60
+2024-07-31 16:45:13,237 - test_llama.log - INFO - {'input': 'Generate a random password of 6 characters in length using only capital letters and numbers.', 'resp_text': '\nGenerate a', 'res_time': 8.279090404510498}
+Test Progress --> 4/60
+2024-07-31 16:45:14,982 - test_llama.log - INFO - poisson random interval time is 9.791s
+2024-07-31 16:45:15,982 - test_llama.log - INFO - {'input': 'Come up with a creative tagline for a beauty product.', 'resp_text': "\nI'm looking for a creative tagline for a beauty product.\n", 'res_time': 1.000619649887085}
+Test Progress --> 5/60
+2024-07-31 16:45:24,778 - test_llama.log - INFO - poisson random interval time is 9.872s
+2024-07-31 16:45:27,100 - test_llama.log - INFO - {'input': 'Describe the character of Romeo from Romeo and Juliet.', 'resp_text': '\nRomeo is a young man who is very passionate about love. He is very emotional and is easily swayed by his emotions. He is also very impulsive and makes decisions quickly. He is very loyal to his family and friends', 'res_time': 2.324782371520996}
+Test Progress --> 6/60
+2024-07-31 16:45:34,653 - test_llama.log - INFO - poisson random interval time is 10.078s
+2024-07-31 16:45:36,644 - test_llama.log - INFO - {'input': 'Explain the meaning of the phrase "actions speak louder than words".', 'resp_text': '\nWhat does the phrase "actions speak louder than words" mean?\nWhat does the phrase "actions speak louder than words" mean? What does the phrase "actions speak louder than words" mean', 'res_time': 1.9930744171142578}
+Test Progress --> 7/60
+2024-07-31 16:45:44,734 - test_llama.log - INFO - poisson random interval time is 9.96s
+2024-07-31 16:45:45,321 - test_llama.log - INFO - {'input': 'Construct a sentence using the present tense of the verb "eat".', 'resp_text': '\n\n## Solution\n', 'res_time': 0.5892744064331055}
+Test Progress --> 8/60
+2024-07-31 16:45:54,696 - test_llama.log - INFO - poisson random interval time is 10.055s
+2024-07-31 16:45:58,172 - test_llama.log - INFO - {'input': 'How do you create a pivot table in Excel?', 'resp_text': '\nHow do you create a pivot table in Excel 2010?\nHow do you create a pivot table in Excel 2013?\nHow do you create a pivot table in Excel 2016?\nHow do you create a pivot table in Excel 2019?\nHow do you create a pivot table in Excel 2021?\nHow do you create a pivot table', 'res_time': 3.477146863937378}
+Test Progress --> 9/60
+2024-07-31 16:46:04,755 - test_llama.log - INFO - poisson random interval time is 9.817s
+2024-07-31 16:46:05,888 - test_llama.log - INFO - {'input': 'Calculate the cost of 4 apples at $2.50 each.', 'resp_text': '\nCalculate the cost of 4 apples at $2.50 each.\nThe cost', 'res_time': 1.1354787349700928}
+Test Progress --> 10/60
+2024-07-31 16:46:14,575 - test_llama.log - INFO - poisson random interval time is 9.834s
+2024-07-31 16:46:17,051 - test_llama.log - INFO - {'input': 'List 3 historical events related to the following country:Canada', 'resp_text': '\n1. The first European to explore Canada was Jacques Cartier in 1534.\n2. The first permanent settlement in Canada was founded in 1608 by Samuel de Champlain.\n3. The first English settlement in Canada was founded in 160', 'res_time': 2.477445125579834}
+Test Progress --> 11/60
+2024-07-31 16:46:24,411 - test_llama.log - INFO - poisson random interval time is 10.002s
+2024-07-31 16:46:25,624 - test_llama.log - INFO - {'input': 'Identify the nearest airport based on the given coordinates.:40.728157, -73.794853', 'resp_text': '\nIdentify the nearest airport based on the given coordinates.\nThe given coordinates are 40.7', 'res_time': 1.214299201965332}
+Test Progress --> 12/60
+2024-07-31 16:46:34,416 - test_llama.log - INFO - poisson random interval time is 10.169s
+2024-07-31 16:46:35,406 - test_llama.log - INFO - {'input': 'Categorize the given list of animals.:Elephant, Spider, Cow', 'resp_text': ', Dog, Cat, Horse, Snake, Lion, Monkey, T', 'res_time': 0.9915189743041992}
+Test Progress --> 13/60
+2024-07-31 16:46:44,588 - test_llama.log - INFO - poisson random interval time is 9.939s
+2024-07-31 16:46:46,362 - test_llama.log - INFO - {'input': 'Find the highest peak in the world.', 'resp_text': '\nThe highest mountain in the world is Mount Everest, which is located in the Himalayas. It is 8,848 meters (29,029 feet', 'res_time': 1.7761123180389404}
+Test Progress --> 14/60
+2024-07-31 16:46:54,530 - test_llama.log - INFO - poisson random interval time is 10.073s
+2024-07-31 16:47:04,607 - test_llama.log - INFO - poisson random interval time is 9.916s
+2024-07-31 16:47:07,036 - test_llama.log - INFO - {'input': 'Formulate a budget for the following items.:Groceries (monthly): $400\nClothing (annually): $1200\nTravel (annually): $2500', 'resp_text': '\nEntertainment (annually): $1000\nEducation (annually): $1000\nHealth (annually): $1000\nInsurance (annually): $1000\nUtilities (annually', 'res_time': 12.507512331008911}
+Test Progress --> 15/60
+2024-07-31 16:47:07,655 - test_llama.log - INFO - {'input': 'Edit the given sentence to make it grammatically correct.:I dont has a pen', 'resp_text': '.\nEdit the given sentence to', 'res_time': 3.0504446029663086}
+Test Progress --> 16/60
+2024-07-31 16:47:14,525 - test_llama.log - INFO - poisson random interval time is 9.925s
+2024-07-31 16:47:16,225 - test_llama.log - INFO - {'input': 'Identify the major flaws in the following code snippet.:def add_numbers(x,y):\n    return x+y\n\nadd_numbers(2)', 'resp_text': '\n\ndef add_numbers(x,y):\n    return x+y\n\nadd_numbers(2)\n\ndef add_numbers(x,y):\n', 'res_time': 1.701807975769043}
+Test Progress --> 17/60
+2024-07-31 16:47:24,454 - test_llama.log - INFO - poisson random interval time is 10.115s
+2024-07-31 16:47:34,572 - test_llama.log - INFO - poisson random interval time is 10.052s
+2024-07-31 16:47:44,627 - test_llama.log - INFO - poisson random interval time is 9.791s
+2024-07-31 16:47:53,395 - test_llama.log - INFO - {'input': 'Describe the behavior and characteristics of a falcon', 'resp_text': '.\nDescribe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe the behavior and characteristics of a falcon. Describe', 'res_time': 28.943187475204468}
+Test Progress --> 18/60
+2024-07-31 16:47:54,005 - test_llama.log - INFO - {'input': 'Re-write the following sentence to make it a complete sentence.:Making a difference', 'resp_text': 'is what I do.\nM', 'res_time': 19.43508005142212}
+Test Progress --> 19/60
+2024-07-31 16:47:54,421 - test_llama.log - INFO - poisson random interval time is 10.089s
+2024-07-31 16:47:57,031 - test_llama.log - INFO - {'input': 'Create a timeline for the Battle of Gettysburg.', 'resp_text': '\nThe Battle of Gettysburg was a turning point in the Civil War. It was the largest battle ever fought in North America, and it was the bloodiest battle of the war. The battle was fought on July 1-3, 1863, and it was the first major battle of the war to be fought on American soil.\nThe Battle', 'res_time': 12.406151294708252}
+Test Progress --> 20/60
+2024-07-31 16:48:04,513 - test_llama.log - INFO - poisson random interval time is 9.966s
+2024-07-31 16:48:10,406 - test_llama.log - INFO - {'input': 'Explain what a "food desert" is and why they are a problem.', 'resp_text': '\nExplain what a "food swamp" is and why they are a problem.\nExplain what a "food oasis" is and why they are a problem.\nExplain what a "food desert" is and why they are a problem. Explain what a "food swamp" is and why they are a problem. Explain what a "food oasis" is and why', 'res_time': 15.987558126449585}
+Test Progress --> 21/60
+2024-07-31 16:48:11,434 - test_llama.log - INFO - {'input': 'Calculate the total cost.:There are 6 items with the cost of 4.95 each.', 'resp_text': '\nCalculate the total cost. There are 6 items with the cost of 4.', 'res_time': 6.923040866851807}
+Test Progress --> 22/60
+2024-07-31 16:48:14,483 - test_llama.log - INFO - poisson random interval time is 9.897s
+2024-07-31 16:48:16,468 - test_llama.log - INFO - {'input': 'How does the hydrogen atom react to an electric field?', 'resp_text': '\nThe hydrogen atom is a special case of the hydrogen molecule. The hydrogen atom is a special case of the hydrogen molecule. The hydrogen atom is a special case of the hydrogen', 'res_time': 1.987287998199463}
+Test Progress --> 23/60
+2024-07-31 16:48:24,385 - test_llama.log - INFO - poisson random interval time is 10.054s
+2024-07-31 16:48:25,680 - test_llama.log - INFO - {'input': 'Find a quote related to success.', 'resp_text': '\nSuccess is not a destination, it is a journey.\nSuccess is not a destination, it is a journey. It', 'res_time': 1.2986886501312256}
+Test Progress --> 24/60
+2024-07-31 16:48:34,443 - test_llama.log - INFO - poisson random interval time is 9.916s
+2024-07-31 16:48:35,329 - test_llama.log - INFO - {'input': 'Identify the group of countries referred to in the sentence.:The BRIC countries are growing in economic power.', 'resp_text': '\nIdentify the group of countries referred to in the sentence.:The', 'res_time': 0.889235258102417}
+Test Progress --> 25/60
+2024-07-31 16:48:44,362 - test_llama.log - INFO - poisson random interval time is 10.133s
+2024-07-31 16:48:47,400 - test_llama.log - INFO - {'input': 'Describe the syntax of the given programming language.:Python', 'resp_text': '\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming', 'res_time': 3.0401389598846436}
+Test Progress --> 26/60
+2024-07-31 16:48:54,500 - test_llama.log - INFO - poisson random interval time is 10.029s
+2024-07-31 16:48:55,766 - test_llama.log - INFO - {'input': 'Rewrite the following instructions so that they are simpler and easier to understand:Login to the website, input your username and password, then click the "Continue" button', 'resp_text': '.\nRewrite the following instructions so that they are simpler and easier to understand:Login to the website, input your username', 'res_time': 1.2692739963531494}
+Test Progress --> 27/60
+2024-07-31 16:49:04,533 - test_llama.log - INFO - poisson random interval time is 9.974s
+2024-07-31 16:49:14,511 - test_llama.log - INFO - poisson random interval time is 10.053s
+2024-07-31 16:49:24,568 - test_llama.log - INFO - poisson random interval time is 9.833s
+2024-07-31 16:49:31,244 - test_llama.log - INFO - {'input': 'Compare and contrast the two given news articles.:Article 1: https://www.nytimes.com/2020/10/19/world/europe/turkey-migrant-route.html\nArticle 2: https://www.nytimes.com/2020/10/19/world/europe/greece-migrant-rescue.html', 'resp_text': '\nThe two articles are about the migration crisis in Europe. The first article is about the Turkish government’s decision to allow migrants to cross into Europe. The second article is about the Greek government’s decision to allow migrants to cross into Europe.\nThe two articles are about the migration crisis in Europe. The first article is about the Turkish government’s decision to allow migrants to cross into Europe. The second article is about the Greek government’s decision to allow migrants to cross into Europe. The two articles are about the migration crisis in Europe. The first article is about the Turkish government’s decision to allow migrants to cross into Europe. The second article is about the Greek government’s decision to allow migrants to cross into Europe. The two articles are about the migration crisis in', 'res_time': 26.713456869125366}
+Test Progress --> 28/60
+2024-07-31 16:49:31,930 - test_llama.log - INFO - {'input': 'Determine the perimeter of a right angled triangle with sides a = 6, b = 8 and c = 10.', 'resp_text': '\nThe perimeter of a right angled triangle is the sum', 'res_time': 17.42220711708069}
+Test Progress --> 29/60
+2024-07-31 16:49:33,858 - test_llama.log - INFO - {'input': 'Using the context provided, generate a sample output.:The student was trying to lucid dream but could not stay in the dream.', 'resp_text': '\nUsing the context provided, generate a sample output.:The student was trying to lucid dream but could not stay in the dream.\nUsing the context provided, generate a sample output.:The student was trying to luc', 'res_time': 9.2923424243927}
+Test Progress --> 30/60
+2024-07-31 16:49:34,404 - test_llama.log - INFO - poisson random interval time is 9.955s
+2024-07-31 16:49:35,056 - test_llama.log - INFO - {'input': 'Simplify the following sentence using proper grammar rules.:This task that is a bit too much for me', 'resp_text': '.\nSimplify the following', 'res_time': 0.6540594100952148}
+Test Progress --> 31/60
+2024-07-31 16:49:44,363 - test_llama.log - INFO - poisson random interval time is 10.026s
+2024-07-31 16:49:45,561 - test_llama.log - INFO - {'input': 'Write a 3-line haiku poem about the stars.', 'resp_text': '\nWrite a 3-line haiku poem about the stars.\nWrite a 3-line ha', 'res_time': 1.2007746696472168}
+Test Progress --> 32/60
+2024-07-31 16:49:54,391 - test_llama.log - INFO - poisson random interval time is 10.081s
+2024-07-31 16:49:55,579 - test_llama.log - INFO - {'input': 'Summarize this passage in one sentence.:Cuisine in Singapore is highly diverse, with Chinese, Indian, Malaysian, and Indonesian influences. Local dishes have been adapted to include ingredients from all cultures of the country, resulting in a unique style of cooking.', 'resp_text': '\nWhat is the main idea of this passage?\nWhat is the main idea of this passage? A.', 'res_time': 1.1887147426605225}
+Test Progress --> 33/60
+2024-07-31 16:50:04,475 - test_llama.log - INFO - poisson random interval time is 10.024s
+2024-07-31 16:50:14,503 - test_llama.log - INFO - poisson random interval time is 10.043s
+2024-07-31 16:50:19,565 - test_llama.log - INFO - {'input': 'Describe the process of transcription in genetic material.', 'resp_text': '\nDescribe the process of translation in genetic material.\nDescribe the process of replication in genetic material.\nDescribe the process of mitosis in genetic material.\nDescribe the process of meiosis in genetic material.\nDescribe the process of transcription in genetic material. (10 points)\nTranscription is the process of copying the genetic information from DNA to RNA.\nTranscription is the process of copying the genetic information from DNA to RNA. The process of transcription is as follows:\nThe DNA is unzipped by the enzyme helicase.\nThe RNA polymerase binds', 'res_time': 15.091755867004395}
+Test Progress --> 34/60
+2024-07-31 16:50:19,974 - test_llama.log - INFO - {'input': 'Come up with an antonym for the word "conservative".', 'resp_text': '\n', 'res_time': 5.4733171463012695}
+Test Progress --> 35/60
+2024-07-31 16:50:24,547 - test_llama.log - INFO - poisson random interval time is 10.136s
+2024-07-31 16:50:25,403 - test_llama.log - INFO - {'input': 'Imagine you are in a restaurant and compose a sentence (using at least 3 words) that describes the taste of a dish.:<No input>', 'resp_text': '\nImagine you are in a restaurant and compose a sentence', 'res_time': 0.8563082218170166}
+Test Progress --> 36/60
+2024-07-31 16:50:34,686 - test_llama.log - INFO - poisson random interval time is 10.055s
+2024-07-31 16:50:44,744 - test_llama.log - INFO - poisson random interval time is 10.065s
+2024-07-31 16:50:54,813 - test_llama.log - INFO - poisson random interval time is 10.132s
+2024-07-31 16:51:04,948 - test_llama.log - INFO - poisson random interval time is 10.043s
+2024-07-31 16:51:14,994 - test_llama.log - INFO - poisson random interval time is 10.011s
+2024-07-31 16:51:25,008 - test_llama.log - INFO - poisson random interval time is 10.129s
+2024-07-31 16:51:29,288 - test_llama.log - INFO - {'input': 'Find a recipe for a vegetarian soup.', 'resp_text': '\nFind a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for a vegetarian soup. Find a recipe for', 'res_time': 54.603349685668945}
+Test Progress --> 37/60
+2024-07-31 16:51:30,189 - test_llama.log - INFO - {'input': 'Who is the current president of Mexico?', 'resp_text': '\nWho is the president of Mexico 2020?\nWho', 'res_time': 45.44715857505798}
+Test Progress --> 38/60
+2024-07-31 16:51:30,990 - test_llama.log - INFO - {'input': 'Provide an example input and an appropriate output for a classification task.', 'resp_text': '\nProvide an example input and an appropriate output for', 'res_time': 36.18015718460083}
+Test Progress --> 39/60
+2024-07-31 16:51:31,908 - test_llama.log - INFO - {'input': 'Determine the missing numbers in the sequence.:2, 4, 8, __, 16', 'resp_text': ', 32, 64, 128, ', 'res_time': 26.962063550949097}
+Test Progress --> 40/60
+2024-07-31 16:51:34,813 - test_llama.log - INFO - {'input': 'What does “algorithm” mean?', 'resp_text': '\nThe word “algorithm” is derived from the name of the Persian mathematician Muhammad ibn Musa al-Khwarizmi, who lived in the 9th century. He was the first to describe the rules for solving mathematical problems.\nThe word “algorithm” is derived from the name of the Persian mathematician', 'res_time': 19.821348428726196}
+Test Progress --> 41/60
+2024-07-31 16:51:35,140 - test_llama.log - INFO - poisson random interval time is 9.92s
+2024-07-31 16:51:45,064 - test_llama.log - INFO - poisson random interval time is 9.948s
+2024-07-31 16:51:47,957 - test_llama.log - INFO - {'input': 'Summarize this article in 2 sentences in your own words.:In December 2017, an artificial intelligence (AI) program called AlphaGo Zero beat the best-ever version of itself in an ancient Chinese board game called Go. AlphaGo Zero achieved victory at unprecedented speeds, taking only three days to become unbeatable — thousands of times faster than its predecessor, AlphaGo.', 'resp_text': '\nAlphaGo Zero is a deep-learning program that uses a technique called reinforcement learning. It was developed by Google’s DeepMind, a London-based AI research company.\nAlphaGo Zero is a deep-learning program that uses a technique called reinforcement learning. It was developed by Google’s DeepMind, a London-based A', 'res_time': 22.95044779777527}
+Test Progress --> 42/60
+2024-07-31 16:51:55,015 - test_llama.log - INFO - poisson random interval time is 9.948s
+2024-07-31 16:52:02,757 - test_llama.log - INFO - {'input': 'Describe the life cycle of a product', 'resp_text': '.\nDescribe the life cycle of a product. The life cycle of a product is the time period from the introduction of a product to the time it is removed from the market. The life cycle of a product is the time period from the introduction of a product to the time it is removed from the market. The life cycle of a product is the time period from the introduction of a product to the time it is removed from the market. The life cycle of a product is the time period from the introduction of a product to the time it is removed from the market. The life cycle of a product is the time period from the introduction of a product to the time it is removed from the', 'res_time': 27.618747234344482}
+Test Progress --> 43/60
+2024-07-31 16:52:04,534 - test_llama.log - INFO - {'input': 'What are 5 must-have survival skills?', 'resp_text': '\nWhat are the 5 basic survival skills?\nWhat are the 5 basic survival skills?\nWhat are the 5 basic survival skills?\nWhat are the 5 basic', 'res_time': 19.473186016082764}
+Test Progress --> 44/60
+2024-07-31 16:52:04,966 - test_llama.log - INFO - poisson random interval time is 9.931s
+2024-07-31 16:52:14,899 - test_llama.log - INFO - poisson random interval time is 9.802s
+2024-07-31 16:52:18,669 - test_llama.log - INFO - {'input': 'Tell me about a particular type of tree that grows in your region.', 'resp_text': '\nTell me about a particular type of tree that grows in your region. [#permalink]\nTell me about a particular type of tree that grows in your region.\n(A) Tell me about a particular type of tree that grows in your region.\n(B) Tell me about a particular type of tree that grows in your region.\n(C) Tell me about a particular type of tree that grows in your region.\n(D) Tell me about', 'res_time': 23.656702756881714}
+Test Progress --> 45/60
+2024-07-31 16:52:19,463 - test_llama.log - INFO - {'input': 'Estimate the size of the object.:A pea', 'resp_text': '\nEstimate the size of the object.:A pea', 'res_time': 14.498920202255249}
+Test Progress --> 46/60
+2024-07-31 16:52:21,718 - test_llama.log - INFO - {'input': 'Use the input to generate three sentences that could fit in the following context:I wanted to go on a picnic with my friends', 'resp_text': ', but they were all busy. I decided to go on a picnic by myself. I went to the park and sat on a bench. I ate my lunch and read a book.\nI wanted to go on a picnic with my friends,', 'res_time': 6.819757699966431}
+Test Progress --> 47/60
+2024-07-31 16:52:24,704 - test_llama.log - INFO - poisson random interval time is 10.014s
+2024-07-31 16:52:27,753 - test_llama.log - INFO - {'input': 'Provide a list of all the animals that are native to North America.', 'resp_text': '\nProvide a list of all the animals that are native to North America. Provide a list of all the animals that are native to North America.\nProvide a list of all the animals that are native to North America. Provide a list of all the animals that are native to North America. Provide a list of all the animals that are native to', 'res_time': 3.0510683059692383}
+Test Progress --> 48/60
+2024-07-31 16:52:34,721 - test_llama.log - INFO - poisson random interval time is 9.977s
+2024-07-31 16:52:35,591 - test_llama.log - INFO - {'input': 'How would you describe the emotional atmosphere of the following scene?:A brightly lit room with balloons on the walls, streamers from the ceiling and presents gathered around a fireplace.', 'resp_text': 'The room is filled with people, all of whom are smiling', 'res_time': 0.8716354370117188}
+Test Progress --> 49/60
+2024-07-31 16:52:44,700 - test_llama.log - INFO - poisson random interval time is 9.842s
+2024-07-31 16:52:54,546 - test_llama.log - INFO - poisson random interval time is 10.096s
+2024-07-31 16:52:59,743 - test_llama.log - INFO - {'input': 'Outline the key steps to solve this puzzle.:A chef is making a tiramisu with 10 ingredients. She needs to figure out the volume of each ingredient.', 'resp_text': 'She has a 1000 mL beaker and a 500 mL beaker. She needs to measure 100 mL of each ingredient. She has a 100 mL graduated cylinder and a 50 mL graduated cylinder. She needs to measure 10 mL of each ingredient. She has a 10 mL graduated cylinder and a 5 mL graduated cylinder. She needs to measure 1 mL of each ingredient. She has a 1 mL graduated cylinder and', 'res_time': 15.044118642807007}
+Test Progress --> 50/60
+2024-07-31 16:53:01,109 - test_llama.log - INFO - {'input': 'Generate a chessboard with the given size and with pieces at the specified positions.:Size: 8x8 \nPiece positions:\nWhite Rook at H8\nWhite Pawn at B3\nBlack Pawn at A3\nBlack Rook at H2', 'resp_text': '\nBlack Pawn at B8\nWhite Pawn at B8\nWhite Pawn at B3\nBlack Pawn at B', 'res_time': 6.565244436264038}
+Test Progress --> 51/60
+2024-07-31 16:53:04,645 - test_llama.log - INFO - poisson random interval time is 10.056s
+2024-07-31 16:53:05,517 - test_llama.log - INFO - {'input': 'Translate this sentence from English to French: "I ate lunch at noon".', 'resp_text': '\nI ate lunch at noon.\nI a', 'res_time': 0.873532772064209}
+Test Progress --> 52/60
+2024-07-31 16:53:14,705 - test_llama.log - INFO - poisson random interval time is 10.116s
+2024-07-31 16:53:16,349 - test_llama.log - INFO - {'input': 'Generate an adventure activity for a group of ten people.', 'resp_text': '\nThe adventure activity must be a physical activity.\nThe adventure activity must be a team activity.\nThe adventure activity must be a fun activity.\n', 'res_time': 1.6461896896362305}
+Test Progress --> 53/60
+2024-07-31 16:53:24,824 - test_llama.log - INFO - poisson random interval time is 9.889s
+2024-07-31 16:53:26,008 - test_llama.log - INFO - {'input': 'Complete the following sentence: "In an ideal world, scientists would be able to _______".', 'resp_text': '\nThe answer is: "communicate their findings to the public".\nThe reason is that scient', 'res_time': 1.1862328052520752}
+Test Progress --> 54/60
+2024-07-31 16:53:34,716 - test_llama.log - INFO - poisson random interval time is 9.979s
+2024-07-31 16:53:35,446 - test_llama.log - INFO - {'input': 'Name a common type of house pet.', 'resp_text': '\nName a common type of house pet.', 'res_time': 0.7322022914886475}
+Test Progress --> 55/60
+2024-07-31 16:53:44,698 - test_llama.log - INFO - poisson random interval time is 9.981s
+2024-07-31 16:53:45,591 - test_llama.log - INFO - {'input': 'Suggest two Twitter hashtags related to this article.:WASHINGTON (CNN) -- A wide-open presidential race and a willingness by candidates, interest groups, unions and corporations to buy TV time will lead to historic spending for political and issue-advocacy advertising in the 2008 election cycle, an analysis shows.', 'resp_text': '\nThe analysis by the Campaign Media Analysis Group, a unit', 'res_time': 0.8955991268157959}
+Test Progress --> 56/60
+2024-07-31 16:53:54,682 - test_llama.log - INFO - poisson random interval time is 9.979s
+2024-07-31 16:53:56,881 - test_llama.log - INFO - {'input': 'Generate three potential slogans for an auctioneering company.', 'resp_text': '\nGenerate three potential slogans for an auctioneering company. The slogans should be catchy and memorable.\nThe slogans should be catchy and memorable.\nThe slogans should be catch', 'res_time': 2.20037579536438}
+Test Progress --> 57/60
+2024-07-31 16:54:04,665 - test_llama.log - INFO - poisson random interval time is 9.933s
+2024-07-31 16:54:14,602 - test_llama.log - INFO - poisson random interval time is 9.924s
+2024-07-31 16:54:20,945 - test_llama.log - INFO - {'input': 'Generate a brainstorm list of things related to the topic of artificial intelligence.', 'resp_text': '\nWrite a paragraph that explains the topic of artificial intelligence.\nWrite a paragraph that explains the topic of artificial intelligence. Include the following:\nWhat is artificial intelligence? What is the difference between artificial intelligence and human intelligence?\nWhat are the advantages of artificial intelligence?\nWhat are the disadvantages of artificial intelligence?\nWhat are some examples of artificial intelligence?\nWhat are some examples of artificial intelligence in everyday life?\nWhat are some examples of artificial intelligence in the workplace?\nWhat are some examples of artificial intelligence in the home?\nWhat are some examples of artificial intelligence in the medical field?\nWhat are some examples of artificial intelligence in the military?\nWhat are some examples of', 'res_time': 16.2824649810791}
+Test Progress --> 58/60
+2024-07-31 16:54:21,684 - test_llama.log - INFO - {'input': 'Categorize the given news article according to the five categories.:By Rose Naylor – NYT\n\nAmazon, the world’s largest online retailer, announced Thursday that it is investing $10 billion to expand its operations in the United States, creating a total of 100,000 new jobs in the process.', 'resp_text': '\nThe company said it would spend $5 billion', 'res_time': 7.084730625152588}
+Test Progress --> 59/60
+2024-07-31 16:54:24,528 - test_llama.log - INFO - poisson random interval time is 10.201s
+2024-07-31 16:54:25,003 - test_llama.log - INFO - {'input': 'Given an array of numbers, calculate the sum of the array:Array: [2, 4, 6, 8, 10]', 'resp_text': 'Sum:', 'res_time': 0.47646307945251465}
+Test Progress --> 60/60
+2024-07-31 16:54:34,730 - test_llama.log - INFO - All Tasks Done; Exec Time is 599.7466678619385

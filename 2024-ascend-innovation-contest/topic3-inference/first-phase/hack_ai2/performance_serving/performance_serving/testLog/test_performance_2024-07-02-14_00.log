@@ -1,0 +1,28 @@
+2024-07-02 14:00:57,998 - test_llama.log - INFO - testcases length is 521
+2024-07-02 14:00:57,999 - test_llama.log - INFO - thread_tasks length is 6
+2024-07-02 14:00:57,999 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-02 14:00:58,001 - test_llama.log - INFO - poisson random interval time is 0.501s
+2024-07-02 14:00:58,504 - test_llama.log - INFO - poisson random interval time is 0.475s
+2024-07-02 14:00:58,982 - test_llama.log - INFO - poisson random interval time is 0.503s
+2024-07-02 14:00:59,488 - test_llama.log - INFO - poisson random interval time is 0.491s
+2024-07-02 14:00:59,981 - test_llama.log - INFO - poisson random interval time is 0.495s
+2024-07-02 14:01:00,479 - test_llama.log - INFO - poisson random interval time is 0.538s
+2024-07-02 14:01:19,435 - test_llama.log - INFO - first_token_time is 21.43515968322754
+2024-07-02 14:01:33,427 - test_llama.log - INFO - {'input': 'Give three tips for staying healthy.', 'resp_text': '\nWhat is the best way to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the ', 'res_time': 35.427616357803345, 'first_token_time': 21.43515968322754}
+Test Progress --> 1/6
+2024-07-02 14:01:33,428 - test_llama.log - INFO - first_token_time is 34.92538642883301
+2024-07-02 14:01:35,714 - test_llama.log - INFO - {'input': 'Design a database to record employee salaries.', 'resp_text': '\nDesign a database to record employee salaries. The database should include the following fields:\nEmployee ID (primary key)\nEmployee name (first and last)\nEmployee salary\nThe database should be designed in a relational database.\nThe database should be designed in a relational database.', 'res_time': 37.21129775047302, 'first_token_time': 34.92538642883301}
+Test Progress --> 2/6
+2024-07-02 14:01:35,714 - test_llama.log - INFO - first_token_time is 36.733919858932495
+2024-07-02 14:01:36,294 - test_llama.log - INFO - {'input': 'What geometric shape has 5 sides and 5 angles?', 'resp_text': '\nWhat is the name of a', 'res_time': 37.313788175582886, 'first_token_time': 36.733919858932495}
+Test Progress --> 3/6
+2024-07-02 14:01:36,294 - test_llama.log - INFO - first_token_time is 36.80854296684265
+2024-07-02 14:01:36,782 - test_llama.log - INFO - {'input': 'Generate a random password of 6 characters in length using only capital letters and numbers.', 'resp_text': '\nGenerate a', 'res_time': 37.296470403671265, 'first_token_time': 36.80854296684265}
+Test Progress --> 4/6
+2024-07-02 14:01:36,783 - test_llama.log - INFO - first_token_time is 36.80330181121826
+2024-07-02 14:01:37,659 - test_llama.log - INFO - {'input': 'Come up with a creative tagline for a beauty product.', 'resp_text': "\nI'm looking for a creative tagline for a beauty product.\n", 'res_time': 37.67979693412781, 'first_token_time': 36.80330181121826}
+Test Progress --> 5/6
+2024-07-02 14:01:37,660 - test_llama.log - INFO - first_token_time is 37.18274903297424
+2024-07-02 14:01:39,284 - test_llama.log - INFO - {'input': 'Describe the character of Romeo from Romeo and Juliet.', 'resp_text': '\nRomeo is a young man who is very passionate about love. He is very emotional and is easily swayed by his emotions. He is also very impulsive and makes decisions quickly. He is very loyal to his family and friends', 'res_time': 38.806713581085205, 'first_token_time': 37.18274903297424}
+Test Progress --> 6/6
+2024-07-02 14:01:39,284 - test_llama.log - INFO - All Tasks Done; Exec Time is 41.28499960899353
