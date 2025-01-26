@@ -1,0 +1,96 @@
+2024-07-31 08:49:14,323 - test_llama.log - INFO - testcases length is 521
+2024-07-31 08:49:14,342 - test_llama.log - INFO - thread_tasks length is 500
+2024-07-31 08:49:14,342 - test_llama.log - INFO - Start send request, avg interval is 10.0
+2024-07-31 08:49:14,344 - test_llama.log - INFO - poisson random interval time is 10.02s
+2024-07-31 08:49:16,489 - test_llama.log - INFO - {'input': 'Give three tips for staying healthy.', 'resp_text': '\nWhat is the best way to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the ', 'res_time': 2.1462337970733643}
+Test Progress --> 1/500
+2024-07-31 08:49:24,368 - test_llama.log - INFO - poisson random interval time is 10.079s
+2024-07-31 08:49:26,812 - test_llama.log - INFO - {'input': 'Design a database to record employee salaries.', 'resp_text': '\nDesign a database to record employee salaries. The database should include the following fields:\nEmployee ID (primary key)\nEmployee name (first and last)\nEmployee salary\nThe database should be designed in a relational database.\nThe database should be designed in a relational database.', 'res_time': 2.4467594623565674}
+Test Progress --> 2/500
+2024-07-31 08:49:34,451 - test_llama.log - INFO - poisson random interval time is 10.006s
+2024-07-31 08:49:34,800 - test_llama.log - INFO - {'input': 'What geometric shape has 5 sides and 5 angles?', 'resp_text': '\nWhat is the name of a', 'res_time': 0.3520486354827881}
+Test Progress --> 3/500
+2024-07-31 08:49:44,461 - test_llama.log - INFO - poisson random interval time is 10.039s
+2024-07-31 08:49:44,690 - test_llama.log - INFO - {'input': 'Generate a random password of 6 characters in length using only capital letters and numbers.', 'resp_text': '\nGenerate a', 'res_time': 0.23146820068359375}
+Test Progress --> 4/500
+2024-07-31 08:49:54,505 - test_llama.log - INFO - poisson random interval time is 10.114s
+2024-07-31 08:49:55,221 - test_llama.log - INFO - {'input': 'Come up with a creative tagline for a beauty product.', 'resp_text': "\nI'm looking for a creative tagline for a beauty product.\n", 'res_time': 0.7198948860168457}
+Test Progress --> 5/500
+2024-07-31 08:50:04,621 - test_llama.log - INFO - poisson random interval time is 9.947s
+2024-07-31 08:50:06,790 - test_llama.log - INFO - {'input': 'Describe the character of Romeo from Romeo and Juliet.', 'resp_text': '\nRomeo is a young man who is very passionate about love. He is very emotional and is easily swayed by his emotions. He is also very impulsive and makes decisions quickly. He is very loyal to his family and friends', 'res_time': 2.170146942138672}
+Test Progress --> 6/500
+2024-07-31 08:50:14,574 - test_llama.log - INFO - poisson random interval time is 9.872s
+2024-07-31 08:50:16,418 - test_llama.log - INFO - {'input': 'Explain the meaning of the phrase "actions speak louder than words".', 'resp_text': '\nWhat does the phrase "actions speak louder than words" mean?\nWhat does the phrase "actions speak louder than words" mean? What does the phrase "actions speak louder than words" mean', 'res_time': 1.8460807800292969}
+Test Progress --> 7/500
+2024-07-31 08:50:24,450 - test_llama.log - INFO - poisson random interval time is 10.027s
+2024-07-31 08:50:24,713 - test_llama.log - INFO - {'input': 'Construct a sentence using the present tense of the verb "eat".', 'resp_text': '\n\n## Solution\n', 'res_time': 0.2659797668457031}
+Test Progress --> 8/500
+2024-07-31 08:50:34,482 - test_llama.log - INFO - poisson random interval time is 10.222s
+2024-07-31 08:50:37,938 - test_llama.log - INFO - {'input': 'How do you create a pivot table in Excel?', 'resp_text': '\nHow do you create a pivot table in Excel 2010?\nHow do you create a pivot table in Excel 2013?\nHow do you create a pivot table in Excel 2016?\nHow do you create a pivot table in Excel 2019?\nHow do you create a pivot table in Excel 2021?\nHow do you create a pivot table', 'res_time': 3.4584579467773438}
+Test Progress --> 9/500
+2024-07-31 08:50:44,708 - test_llama.log - INFO - poisson random interval time is 9.963s
+2024-07-31 08:50:45,577 - test_llama.log - INFO - {'input': 'Calculate the cost of 4 apples at $2.50 each.', 'resp_text': '\nCalculate the cost of 4 apples at $2.50 each.\nThe cost', 'res_time': 0.8716051578521729}
+Test Progress --> 10/500
+2024-07-31 08:50:54,675 - test_llama.log - INFO - poisson random interval time is 9.975s
+2024-07-31 08:50:57,012 - test_llama.log - INFO - {'input': 'List 3 historical events related to the following country:Canada', 'resp_text': '\n1. The first European to explore Canada was Jacques Cartier in 1534.\n2. The first permanent settlement in Canada was founded in 1608 by Samuel de Champlain.\n3. The first English settlement in Canada was founded in 160', 'res_time': 2.3389623165130615}
+Test Progress --> 11/500
+2024-07-31 08:51:04,655 - test_llama.log - INFO - poisson random interval time is 10.029s
+2024-07-31 08:51:05,604 - test_llama.log - INFO - {'input': 'Identify the nearest airport based on the given coordinates.:40.728157, -73.794853', 'resp_text': '\nIdentify the nearest airport based on the given coordinates.:40.728157,', 'res_time': 0.9522457122802734}
+Test Progress --> 12/500
+2024-07-31 08:51:14,688 - test_llama.log - INFO - poisson random interval time is 9.936s
+2024-07-31 08:51:15,407 - test_llama.log - INFO - {'input': 'Categorize the given list of animals.:Elephant, Spider, Cow', 'resp_text': ', Dog, Cat, Horse, Snake, Lion, Monkey, T', 'res_time': 0.7218632698059082}
+Test Progress --> 13/500
+2024-07-31 08:51:24,628 - test_llama.log - INFO - poisson random interval time is 10.06s
+2024-07-31 08:51:26,193 - test_llama.log - INFO - {'input': 'Find the highest peak in the world.', 'resp_text': '\nThe highest mountain in the world is Mount Everest, which is located in the Himalayas. It is 8,848 meters (29,029 feet', 'res_time': 1.5679216384887695}
+Test Progress --> 14/500
+2024-07-31 08:51:34,691 - test_llama.log - INFO - poisson random interval time is 9.961s
+2024-07-31 08:51:36,934 - test_llama.log - INFO - {'input': 'Formulate a budget for the following items.:Groceries (monthly): $400\nClothing (annually): $1200\nTravel (annually): $2500', 'resp_text': '\nEntertainment (annually): $1000\nEducation (annually): $1000\nHealth (annually): $1000\nInsurance (annually): $1000\nUtilities (annually', 'res_time': 2.244701623916626}
+Test Progress --> 15/500
+2024-07-31 08:51:44,656 - test_llama.log - INFO - poisson random interval time is 9.929s
+2024-07-31 08:51:45,010 - test_llama.log - INFO - {'input': 'Edit the given sentence to make it grammatically correct.:I dont has a pen', 'resp_text': '.\nEdit the given sentence to', 'res_time': 0.3563516139984131}
+Test Progress --> 16/500
+2024-07-31 08:51:54,589 - test_llama.log - INFO - poisson random interval time is 10.036s
+2024-07-31 08:51:56,088 - test_llama.log - INFO - {'input': 'Identify the major flaws in the following code snippet.:def add_numbers(x,y):\n    return x+y\n\nadd_numbers(2)', 'resp_text': '\n\ndef add_numbers(x,y):\n    return x+y\n\nadd_numbers(2)\n\ndef add_numbers(x,y):\n', 'res_time': 1.5017683506011963}
+Test Progress --> 17/500
+2024-07-31 08:52:04,629 - test_llama.log - INFO - poisson random interval time is 9.975s
+2024-07-31 08:52:04,652 - test_llama.log - INFO - {'input': 'Describe the behavior and characteristics of a falcon', 'resp_text': 'Error202: prompt out of range', 'res_time': 0.025401592254638672}
+Test Progress --> 18/500
+2024-07-31 08:52:14,608 - test_llama.log - INFO - poisson random interval time is 10.061s
+2024-07-31 08:52:14,954 - test_llama.log - INFO - {'input': 'Re-write the following sentence to make it a complete sentence.:Making a difference', 'resp_text': 'is what I do.\nM', 'res_time': 0.3486299514770508}
+Test Progress --> 19/500
+2024-07-31 08:52:24,673 - test_llama.log - INFO - poisson random interval time is 9.953s
+2024-07-31 08:52:27,675 - test_llama.log - INFO - {'input': 'Create a timeline for the Battle of Gettysburg.', 'resp_text': '\nThe Battle of Gettysburg was a turning point in the Civil War. It was the largest battle ever fought in North America, and it was the bloodiest battle of the war. The battle was fought on July 1-3, 1863, and it was the first major battle of the war to be fought on American soil.\nThe Battle', 'res_time': 3.003732442855835}
+Test Progress --> 20/500
+2024-07-31 08:52:34,631 - test_llama.log - INFO - poisson random interval time is 10.073s
+2024-07-31 08:52:38,051 - test_llama.log - INFO - {'input': 'Explain what a "food desert" is and why they are a problem.', 'resp_text': '\nExplain what a "food swamp" is and why they are a problem.\nExplain what a "food oasis" is and why they are a problem.\nExplain what a "food desert" is and why they are a problem. Explain what a "food swamp" is and why they are a problem. Explain what a "food oasis" is and why', 'res_time': 3.4225893020629883}
+Test Progress --> 21/500
+2024-07-31 08:52:44,708 - test_llama.log - INFO - poisson random interval time is 10.102s
+2024-07-31 08:52:45,503 - test_llama.log - INFO - {'input': 'Calculate the total cost.:There are 6 items with the cost of 4.95 each.', 'resp_text': '\nCalculate the total cost. There are 6 items with the cost of 4.', 'res_time': 0.7985141277313232}
+Test Progress --> 22/500
+2024-07-31 08:52:54,814 - test_llama.log - INFO - poisson random interval time is 10.111s
+2024-07-31 08:52:56,618 - test_llama.log - INFO - {'input': 'How does the hydrogen atom react to an electric field?', 'resp_text': '\nThe hydrogen atom is a special case of the hydrogen molecule. The hydrogen atom is a special case of the hydrogen molecule. The hydrogen atom is a special case of the hydrogen', 'res_time': 1.8065135478973389}
+Test Progress --> 23/500
+2024-07-31 08:53:04,929 - test_llama.log - INFO - poisson random interval time is 9.883s
+2024-07-31 08:53:05,973 - test_llama.log - INFO - {'input': 'Find a quote related to success.', 'resp_text': '\nSuccess is not a destination, it is a journey.\nSuccess is not a destination, it is a journey. It', 'res_time': 1.0467302799224854}
+Test Progress --> 24/500
+2024-07-31 08:53:14,817 - test_llama.log - INFO - poisson random interval time is 10.051s
+2024-07-31 08:53:15,425 - test_llama.log - INFO - {'input': 'Identify the group of countries referred to in the sentence.:The BRIC countries are growing in economic power.', 'resp_text': '\nIdentify the group of countries referred to in the sentence.:The', 'res_time': 0.6115710735321045}
+Test Progress --> 25/500
+2024-07-31 08:53:24,872 - test_llama.log - INFO - poisson random interval time is 9.945s
+2024-07-31 08:53:27,855 - test_llama.log - INFO - {'input': 'Describe the syntax of the given programming language.:Python', 'resp_text': '\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming language.:Python\n\nDescribe the syntax of the given programming', 'res_time': 2.9855871200561523}
+Test Progress --> 26/500
+2024-07-31 08:53:34,821 - test_llama.log - INFO - poisson random interval time is 10.028s
+2024-07-31 08:53:35,858 - test_llama.log - INFO - {'input': 'Rewrite the following instructions so that they are simpler and easier to understand:Login to the website, input your username and password, then click the "Continue" button', 'resp_text': '.\nRewrite the following instructions so that they are simpler and easier to understand:Login to the website, input your username', 'res_time': 1.039579153060913}
+Test Progress --> 27/500
+2024-07-31 08:53:44,853 - test_llama.log - INFO - poisson random interval time is 10.054s
+2024-07-31 08:53:44,881 - test_llama.log - INFO - {'input': 'Compare and contrast the two given news articles.:Article 1: https://www.nytimes.com/2020/10/19/world/europe/turkey-migrant-route.html\nArticle 2: https://www.nytimes.com/2020/10/19/world/europe/greece-migrant-rescue.html', 'resp_text': 'Error202: prompt out of range', 'res_time': 0.03049302101135254}
+Test Progress --> 28/500
+2024-07-31 08:53:54,912 - test_llama.log - INFO - poisson random interval time is 9.872s
+2024-07-31 08:53:55,480 - test_llama.log - INFO - {'input': 'Determine the perimeter of a right angled triangle with sides a = 6, b = 8 and c = 10.', 'resp_text': '\nThe perimeter of a right angled triangle is the sum', 'res_time': 0.5710439682006836}
+Test Progress --> 29/500
+2024-07-31 08:54:04,788 - test_llama.log - INFO - poisson random interval time is 9.984s
+2024-07-31 08:54:06,556 - test_llama.log - INFO - {'input': 'Using the context provided, generate a sample output.:The student was trying to lucid dream but could not stay in the dream.', 'resp_text': '\nUsing the context provided, generate a sample output.:The student was trying to lucid dream but could not stay in the dream.\nUsing the context provided, generate a sample output.:The student was trying to luc', 'res_time': 1.7703337669372559}
+Test Progress --> 30/500
+2024-07-31 08:54:14,775 - test_llama.log - INFO - poisson random interval time is 10.08s
+2024-07-31 08:54:15,115 - test_llama.log - INFO - {'input': 'Simplify the following sentence using proper grammar rules.:This task that is a bit too much for me', 'resp_text': '.\nSimplify the following', 'res_time': 0.3423349857330322}
+Test Progress --> 31/500

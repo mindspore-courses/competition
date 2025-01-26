@@ -1,0 +1,16 @@
+2024-07-29 19:56:05,574 - test_llama.log - INFO - testcases length is 5010
+2024-07-29 19:56:05,575 - test_llama.log - INFO - thread_tasks length is 4
+2024-07-29 19:56:05,575 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-29 19:56:05,578 - test_llama.log - INFO - poisson random interval time is 0.468s
+2024-07-29 19:56:05,678 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': 'Error203: prompt token empty', 'res_time': 0.10211491584777832}
+Test Progress --> 1/4
+2024-07-29 19:56:06,048 - test_llama.log - INFO - poisson random interval time is 0.474s
+2024-07-29 19:56:06,080 - test_llama.log - INFO - {'input': 'Answer the following question with a Yes, No, or Unsure:Will Canada be able to achieve carbon neutrality by 2050?', 'resp_text': 'Error203: prompt token empty', 'res_time': 0.03365635871887207}
+Test Progress --> 2/4
+2024-07-29 19:56:06,525 - test_llama.log - INFO - poisson random interval time is 0.529s
+2024-07-29 19:56:06,552 - test_llama.log - INFO - {'input': 'How many words are there in the sentence "He helps the needy every day"?', 'resp_text': 'Error203: prompt token empty', 'res_time': 0.02897477149963379}
+Test Progress --> 3/4
+2024-07-29 19:56:07,057 - test_llama.log - INFO - poisson random interval time is 0.466s
+2024-07-29 19:56:07,090 - test_llama.log - INFO - {'input': 'Compose a creative headline given the following article topic:The Benefits of Exercise', 'resp_text': 'Error203: prompt token empty', 'res_time': 0.03471660614013672}
+Test Progress --> 4/4
+2024-07-29 19:56:07,523 - test_llama.log - INFO - All Tasks Done; Exec Time is 1.9482665061950684

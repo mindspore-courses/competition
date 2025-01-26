@@ -1,0 +1,4 @@
+2024-07-30 19:17:11,823 - test_llama.log - INFO - testcases length is 5010
+2024-07-30 19:17:11,831 - test_llama.log - INFO - thread_tasks length is 200
+2024-07-30 19:17:11,831 - test_llama.log - INFO - Start send request, avg interval is 0.5
+2024-07-30 19:17:11,833 - test_llama.log - INFO - poisson random interval time is 0.514s

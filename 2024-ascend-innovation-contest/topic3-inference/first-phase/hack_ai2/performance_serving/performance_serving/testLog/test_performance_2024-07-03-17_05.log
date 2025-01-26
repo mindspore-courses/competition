@@ -1,0 +1,8 @@
+2024-07-03 17:05:13,121 - test_llama.log - INFO - testcases length is 5010
+2024-07-03 17:05:13,121 - test_llama.log - INFO - thread_tasks length is 1
+2024-07-03 17:05:13,121 - test_llama.log - INFO - Start send request, avg interval is 1.0
+2024-07-03 17:05:13,123 - test_llama.log - INFO - poisson random interval time is 0.996s
+2024-07-03 17:05:34,344 - test_llama.log - INFO - first_token_time is 21.221946239471436
+2024-07-03 17:05:57,521 - test_llama.log - INFO - {'input': 'Add 3 examples to the following sentence.:Gun violence in the United States can result in...', 'resp_text': '\nerror304: generation task stop abnormally!, please retry!', 'res_time': 44.39881610870361, 'first_token_time': 21.221946239471436}
+Test Progress --> 1/1
+2024-07-03 17:05:57,521 - test_llama.log - INFO - All Tasks Done; Exec Time is 44.39976954460144
