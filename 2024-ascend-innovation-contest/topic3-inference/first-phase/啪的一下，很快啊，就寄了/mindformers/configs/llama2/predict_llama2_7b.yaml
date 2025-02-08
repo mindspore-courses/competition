@@ -1,0 +1,105 @@
+seed: 0
+output_dir: './output' # path to save checkpoint/strategy
+load_checkpoint: ''
+src_strategy_path_or_dir: ''
+run_mode: 'predict'
+
+# trainer config
+trainer:
+  type: CausalLanguageModelingTrainer
+  model_name: 'llama2_7b'
+
+# runner config
+runner_config:
+  epochs: 1
+  batch_size: 1
+  sink_mode: True
+  sink_size: 2
+
+# recompute config
+recompute_config:
+  recompute: True
+  select_recompute: True
+  parallel_optimizer_comm_recompute: True
+  mp_comm_recompute: True
+  recompute_slice_activation: True
+
+# mindspore context init config
+context:
+  mode: 0                       # 0--Graph Mode; 1--Pynative Mode
+  device_target: "Ascend"
+  enable_graph_kernel: True
+  graph_kernel_flags: "--disable_expand_ops=Softmax,Dropout --enable_parallel_fusion=true --reduce_fuse_depth=8 --enable_auto_tensor_inplace=true"
+  max_call_depth: 10000
+  max_device_memory: "28GB"
+  save_graphs: True
+  save_graphs_path: "./graph"
+  device_id: 0
+
+# model config
+model:
+  model_config:
+    type: LlamaConfig
+    batch_size: 1 # add for increase predict
+    seq_length: 512
+    hidden_size: 4096
+    num_layers: 32
+    num_heads: 32
+    vocab_size: 32000
+    multiple_of: 256
+    rms_norm_eps: 1.0e-5
+    bos_token_id: 1
+    eos_token_id: 2
+    pad_token_id: 0
+    ignore_token_id: -100
+    compute_dtype: "float16"
+    layernorm_compute_type: "float16"
+    softmax_compute_type: "float16"
+    rotary_dtype: "float16"
+    param_init_type: "float16"
+    use_past: True
+    scaling_factor: 1.0 # The scale factor of seq length
+    extend_method: "None" # support "None", "PI", "NTK"
+    # use_flash_attention: True # FA can accelerate training or finetune
+    block_size: 16
+    num_blocks: 1024
+    is_dynamic: True
+    offset: 0
+    checkpoint_name_or_path: "/home/ma-user/work/checkpoint_download/llama2/llama2_7b.ckpt"
+    repetition_penalty: 1
+    max_decode_length: 504
+    top_k: 3
+    top_p: 1
+    do_sample: True
+  arch:
+    type: LlamaForCausalLM
+
+processor:
+  return_tensors: ms
+  tokenizer:
+    unk_token: '<unk>'
+    bos_token: '<s>'
+    eos_token: '</s>'
+    pad_token: '<unk>'
+    type: LlamaTokenizer
+  type: LlamaProcessor
+
+# wrapper cell config
+runner_wrapper:
+  type: MFTrainOneStepCell
+  scale_sense:
+    type: DynamicLossScaleUpdateCell
+    loss_scale_value: 65536
+    scale_factor: 2
+    scale_window: 1000
+  use_clip_grad: True
+
+profile: False
+profile_start_step: 1
+profile_stop_step: 10
+init_start_profile: False
+profile_communication: False
+profile_memory: True
+layer_scale: False
+layer_decay: 0.65
+lr_scale_factor: 256
