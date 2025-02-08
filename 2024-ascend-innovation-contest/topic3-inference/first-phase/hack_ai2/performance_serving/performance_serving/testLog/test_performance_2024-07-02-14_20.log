@@ -1,8 +1,0 @@
-2024-07-02 14:20:52,334 - test_llama.log - INFO - testcases length is 521
-2024-07-02 14:20:52,334 - test_llama.log - INFO - thread_tasks length is 1
-2024-07-02 14:20:52,334 - test_llama.log - INFO - Start send request, avg interval is 1.0
-2024-07-02 14:20:52,336 - test_llama.log - INFO - poisson random interval time is 1.001s
-2024-07-02 14:20:52,806 - test_llama.log - INFO - first_token_time is 0.47071337699890137
-2024-07-02 14:20:54,401 - test_llama.log - INFO - {'input': 'Give three tips for staying healthy.', 'resp_text': '\nWhat is the best way to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the 5 ways to stay healthy?\nWhat are the ', 'res_time': 2.0657548904418945, 'first_token_time': 0.47071337699890137}
-Test Progress --> 1/1
-2024-07-02 14:20:54,401 - test_llama.log - INFO - All Tasks Done; Exec Time is 2.0668094158172607
