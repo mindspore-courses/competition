@@ -1,5 +1,4 @@
 from . import (heads, initializer, layers, losses, model_factory)
-
 from . import shipwise
 
 __all__ = []
