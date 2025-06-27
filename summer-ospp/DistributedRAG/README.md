@@ -1,0 +1,1 @@
+# 基于 Ray+MindSpore+Milvus 实现开箱即用的分布式 RAG
