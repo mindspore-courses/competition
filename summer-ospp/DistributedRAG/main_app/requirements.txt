@@ -1,0 +1,23 @@
+# 用于与外部服务通信
+requests
+
+# 用于连接Milvus
+pymilvus
+
+# 用于连接MinIO
+boto3
+
+# 不用gradio
+# pydantic==2.10.6
+# gradio
+# 文件处理与解析
+PyPDF2
+markdown
+beautifulsoup4
+tiktoken
+numpy
+
+streamlit
+
+# Ray (为后续分布式改造预留)
+ray[default]
