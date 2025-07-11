@@ -226,13 +226,6 @@ docker-compose logs -f llm-server
 - [Milvus](https://milvus.io/) - 向量数据库
 - [MinIO](https://min.io/) - 对象存储服务
 - [Streamlit](https://streamlit.io/) - Web 应用框架
-
-## 📞 联系方式
-
-如有问题或建议，请通过以下方式联系：
-
-- 提交 Issue
-- 发送邮件至 [your-email@example.com]
 ---
 
 **注意**: 首次启动时，系统会自动下载模型文件，这可能需要较长时间，请耐心等待。
