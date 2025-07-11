@@ -1,6 +1,5 @@
 # main_app/main.py
 
-# ------------------- 原始依赖 (保留) -------------------
 import requests
 import os
 import PyPDF2
@@ -13,11 +12,10 @@ import logging
 from datetime import datetime
 from typing import List, Dict
 
-# ------------------- 新增的Streamlit相关依赖 -------------------
+# ------------------- Streamlit相关依赖 -------------------
 import streamlit as st
 import tempfile # 用于处理Streamlit上传的文件
 
-# ------------------- 服务连接配置 (与之前相同) -------------------
 EMBEDDING_SERVER_URL = os.getenv("EMBEDDING_SERVER_URL", "http://embedding-server/embed")
 LLM_SERVER_URL = os.getenv("LLM_SERVER_URL", "http://llm-server/generate")
 MINIO_HOST = os.getenv("MINIO_HOST", "minio:9000")
@@ -27,7 +25,6 @@ MILVUS_HOST = os.getenv("MILVUS_HOST", "standalone")
 MILVUS_PORT = os.getenv("MILVUS_PORT", "19530")
 MINIO_BUCKET_NAME = "rag-documents"
 
-# --- 核心逻辑类 (与之前相同) ---
 enc = tiktoken.get_encoding("cl100k_base")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -269,9 +266,6 @@ def run_streamlit_app():
             temp_file_paths = []
             try:
                 with st.spinner("系统正在处理中，请稍候..."):
-                    # Streamlit上传的文件是内存中的对象(BytesIO)。
-                    # 我们的核心函数 `execute_rag_pipeline` 需要的是文件在磁盘上的路径。
-                    # 因此，我们需要将这些内存中的文件写入到安全的临时文件中，以获取它们的路径。
                     for uploaded_file in uploaded_files:
                         with tempfile.NamedTemporaryFile(delete=False, suffix=f"_{uploaded_file.name}") as tmp_file:
                             tmp_file.write(uploaded_file.getvalue())
@@ -279,7 +273,6 @@ def run_streamlit_app():
                     
                     logging.info(f"Streamlit 接收到查询: '{query}' 和 {len(temp_file_paths)} 个文件。")
                     
-                    # ⭐ 直接调用你已经写好的核心业务逻辑函数
                     final_response = execute_rag_pipeline(files=temp_file_paths, query=query)
                     
                     # 更新会话状态中的回答

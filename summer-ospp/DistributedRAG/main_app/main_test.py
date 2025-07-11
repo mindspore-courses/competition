@@ -1,4 +1,6 @@
-# main_app/main.py
+# main_app/main_test.py
+
+# 无streamlit界面，快速检查RAG框架
 
 import requests
 import os
@@ -12,17 +14,17 @@ import logging
 from datetime import datetime
 from typing import List, Dict
 
-# ------------------- 服务连接配置 (与之前相同) -------------------
+# ------------------- 服务连接配置  -------------------
 EMBEDDING_SERVER_URL = os.getenv("EMBEDDING_SERVER_URL", "http://embedding-server/embed")
 LLM_SERVER_URL = os.getenv("LLM_SERVER_URL", "http://llm-server/generate")
 MINIO_HOST = os.getenv("MINIO_HOST", "minio:9000")
 MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
 MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY", "minioadmin")
-MILVUS_HOST = os.getenv("MILVUS_HOST", "standalone") # 确保这里是正确的服务名
+MILVUS_HOST = os.getenv("MILVUS_HOST", "standalone") 
 MILVUS_PORT = os.getenv("MILVUS_PORT", "19530")
 MINIO_BUCKET_NAME = "rag-documents"
 
-# --- 核心逻辑类 (FileProcessor, ServiceClient, MilvusClient - 与之前相同) ---
+# --- 核心逻辑类 (FileProcessor, ServiceClient, MilvusClient ) ---
 # 初始化tiktoken编码器
 enc = tiktoken.get_encoding("cl100k_base")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

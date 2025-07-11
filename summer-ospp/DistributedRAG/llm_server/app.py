@@ -6,21 +6,17 @@ from pydantic import BaseModel
 from typing import List, Dict
 
 # ------------------- 模型加载 -------------------
-# 这是一个非常耗时和消耗资源的操作，必须在服务启动时完成。
-# 我们将模型加载逻辑放在全局作用域，确保它只执行一次。
 try:
     # 导入必要的库
     import mindspore
     from mindnlp.transformers import AutoTokenizer, AutoModelForCausalLM
-
-    # 使用您导师代码中指定的模型路径
     LLM_MODEL_PATH = 'openbmb/MiniCPM-2B-dpo-bf16'
+    # LLM_MODEL_PATH = 'openbmb/MiniCPM-S-1B-sft'
+    # LLM_MODEL_PATH = 'openbmb/MiniCPM-2B-dpo-int4'
     
     print(f"正在加载LLM模型及分词器 ({LLM_MODEL_PATH})...")
     print("这可能需要几分钟时间，并消耗大量内存和网络带宽。请耐心等待。")
 
-    # 从Hugging Face镜像加载模型和分词器
-    # mirror="huggingface" 参数会尝试从Hugging Face的国内镜像节点下载
     tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL_PATH, mirror="huggingface")
     model = AutoModelForCausalLM.from_pretrained(LLM_MODEL_PATH, ms_dtype=mindspore.float16, mirror="huggingface")
     
@@ -76,9 +72,6 @@ async def generate_response(request: GenerationRequest):
 
     try:
         print(f"收到生成请求，Prompt长度: {len(request.prompt)}")
-        
-        # 调用模型的chat方法进行推理
-        # 这里的调用方式与您导师代码中的 MindNLPChat.chat 方法保持一致
         response_text, _ = model.chat(
             tokenizer,
             request.prompt,

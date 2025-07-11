@@ -7,8 +7,6 @@ from typing import List
 import numpy as np
 
 # ------------------- 模型加载 -------------------
-# 这是一个重量级操作，我们希望它在服务启动时只执行一次。
-# 因此，我们将模型加载放在全局作用域。
 try:
     from mindnlp.sentence import SentenceTransformer
     print("正在加载Embedding模型 (BAAI/bge-base-zh-v1.5)...")
@@ -64,9 +62,6 @@ async def get_embeddings(request: EmbeddingRequest):
         print(f"收到 {len(request.texts)} 条文本的向量化请求...")
         # 调用模型的encode方法进行批量向量化
         vectors = embedding_model.encode(request.texts, normalize_embeddings=True)
-        
-        # --- 逻辑修正 ---
-        # 无论真实模型还是模拟模型，现在都返回numpy数组，可以直接转换
         vectors_list = vectors.tolist()
         
         print("✅ 向量化完成。")
