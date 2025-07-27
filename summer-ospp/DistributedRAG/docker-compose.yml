@@ -1,5 +1,5 @@
 services:
-  # Ray Head 节点 (最终修正版)
+  # Ray Head 节点 
   ray-head:
     build:
       context: .
@@ -7,26 +7,23 @@ services:
     ports:
       - "8265:8265"
       - "10001:10001"
-    # ❗️ [关键修正] 为容器分配4GB的共享内存
     shm_size: '4gb' 
     # command: ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4
     command: bash -c "ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4 --block"
     networks:
       - rag_net
     volumes:
-      # [修改] 将本地目录挂载到我们新指定的/models路径
       - ./rag_models_cache:/app/.mindnlp/model
     
     
 
-  # Ray Worker 节点 (最终修正版)
+  # Ray Worker 节点
   ray-worker:
     build:
       context: .
       dockerfile: Dockerfile.ray
     depends_on:
       - ray-head
-    # ❗️ [关键修正] 为容器分配4GB的共享内存
     shm_size: '8gb'
     command: ray start --address=ray-head:6379 --num-cpus=8 --block
     networks:
@@ -48,12 +45,11 @@ services:
     build:
       context: ./main_app
     ports:
-      - "7860:7860" # 遵从您原来的端口映射
+      - "7860:7860" 
     volumes:
       - ./main_app:/app
       - ./test_data:/app/test_data
     environment:
-      # [新增] Ray 集群地址，让 main.py 知道该连接到哪里
       - RAY_ADDRESS=ray://ray-head:10001
       
       # [保留] MinIO 和 Milvus 的配置保持不变
@@ -76,7 +72,7 @@ services:
     command: streamlit run main.py --server.port=7860 --server.address=0.0.0.0 --server.enableCORS=false
 
   # ===================================================
-  # 您的 Milvus, MinIO, ETCD 配置 (完全保留)
+  # 您的 Milvus, MinIO, ETCD 配置
   # ===================================================
 
   etcd:
@@ -150,7 +146,7 @@ services:
       - rag_net
 
 # ---------------------------------------------------
-# 顶层配置 (遵从您的原版配置)
+# 顶层配置 
 # ---------------------------------------------------
 networks:
   rag_net:
