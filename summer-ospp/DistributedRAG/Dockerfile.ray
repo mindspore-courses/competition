@@ -1,0 +1,36 @@
+# 使用官方提供的包含 CUDA 的 Ray 镜像作为基础
+FROM rayproject/ray:2.9.3-py39
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装系统级依赖
+RUN sudo apt-get update && sudo apt-get install -y \
+    build-essential \
+    gcc \
+    libsm6 libxrender1 libxext6 \
+    libgl1 \
+    libglib2.0-0 \
+    && sudo rm -rf /var/lib/apt/lists/*
+
+# 复制我们新创建的 ray_tasks.py 文件
+# 这是 Ray Worker 执行计算的逻辑来源
+COPY main_app/ray_tasks.py /app/ray_tasks.py
+
+# 安装所有计算所需的 Python 依赖
+# 注意：这里包含了所有原来分散在不同服务中的依赖
+RUN pip install --no-cache-dir \
+    "ray[serve]==2.9.3" \
+    "mindspore~=2.3.0" \
+    "mindnlp~=0.4.0" \
+    "sentencepiece" \
+    "tiktoken~=0.8.0" \
+    "PyPDF2~=3.0.1" \
+    "markdown~=3.7" \
+    "beautifulsoup4~=4.12.3"\
+    "rapidocr-onnxruntime" \
+    "Pillow" \
+    "jinja2" -i https://mirrors.aliyun.com/pypi/simple/
+
+# 这个镜像将作为 ray-head 和 ray-worker 的通用镜像
+# 启动命令在 docker-compose.yml 中定义

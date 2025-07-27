@@ -1,77 +1,86 @@
-
 services:
+  # Ray Head 节点 (最终修正版)
+  ray-head:
+    build:
+      context: .
+      dockerfile: Dockerfile.ray
+    ports:
+      - "8265:8265"
+      - "10001:10001"
+    # ❗️ [关键修正] 为容器分配4GB的共享内存
+    shm_size: '4gb' 
+    # command: ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4
+    command: bash -c "ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4 --block"
+    networks:
+      - rag_net
+    volumes:
+      # [修改] 将本地目录挂载到我们新指定的/models路径
+      - ./rag_models_cache:/app/.mindnlp/model
+    
+    
+
+  # Ray Worker 节点 (最终修正版)
+  ray-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.ray
+    depends_on:
+      - ray-head
+    # ❗️ [关键修正] 为容器分配4GB的共享内存
+    shm_size: '8gb'
+    command: ray start --address=ray-head:6379 --num-cpus=8 --block
+    networks:
+      - rag_net
+    environment:
+      # [新增] 设置Hugging Face的统一缓存目录为容器内的/models
+      # 这个环境变量会覆盖默认的 ~/.cache 路径
+      - HF_HOME=/models
+    volumes:
+      # [修改] 将本地目录挂载到我们新指定的/models路径
+      - ./rag_models_cache:/app/.mindnlp/model
+
+
   # ---------------------------------------------------
-  # 1. 主应用服务 (运行 Main.py, 作为总调度器)
+  # 3. 主应用服务 (改造后)
+  # 运行 Streamlit, 作为 Ray Client 向 Ray 集群提交任务
   # ---------------------------------------------------
   main_app:
     build:
       context: ./main_app
     ports:
-      - "7860:7860"
+      - "7860:7860" # 遵从您原来的端口映射
     volumes:
       - ./main_app:/app
       - ./test_data:/app/test_data
     environment:
-      # Embedding服务配置
-      - EMBEDDING_SERVER_URL=http://embedding-server/embed
-      # LLM服务配置  
-      - LLM_SERVER_URL=http://llm-server/generate
-      # MinIO存储配置
+      # [新增] Ray 集群地址，让 main.py 知道该连接到哪里
+      - RAY_ADDRESS=ray://ray-head:10001
+      
+      # [保留] MinIO 和 Milvus 的配置保持不变
       - MINIO_HOST=minio:9000
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
-      # Milvus向量数据库配置
       - MILVUS_HOST=standalone
       - MILVUS_PORT=19530
+      
+      # [废弃] 不再需要独立的 embedding 和 llm 服务地址
+      # - EMBEDDING_SERVER_URL=http://embedding-server/embed
+      # - LLM_SERVER_URL=http://llm-server/generate
     depends_on:
       standalone:
-        condition: service_healthy 
-      embedding-server:
-        condition: service_started
-      llm-server:
+        condition: service_healthy
+      ray-head: # [修改] 现在依赖 Ray Head 节点
         condition: service_started
     networks:
       - rag_net
     command: streamlit run main.py --server.port=7860 --server.address=0.0.0.0 --server.enableCORS=false
 
-  # ---------------------------------------------------
-  # 2. Embedding 服务
-  # ---------------------------------------------------
-  embedding-server:
-    build:
-      context: ./embedding_server
-    ports:
-      - "8001:80"
-    volumes:
-      - ./embedding_server:/app
-    networks:
-      - rag_net
+  # ===================================================
+  # 您的 Milvus, MinIO, ETCD 配置 (完全保留)
+  # ===================================================
 
-  # ---------------------------------------------------
-  # 3. LLM 推理服务
-  # ---------------------------------------------------
-  llm-server:
-    build:
-      context: ./llm_server
-    ports:
-      - "8002:80"
-    volumes:
-      - ./llm_server:/app
-      # - /path/to/your/local/models:/app/models # 挂载本地模型
-    networks:
-      - rag_net
-    # deploy:
-    #   resources:
-        # limits:
-        #   memory: 12G
-        # reservations:
-        #   memory: 8G
-
-  # ---------------------------------------------------
-  # 4. Milvus 依赖服务: etcd (官方配置)
-  # ---------------------------------------------------
   etcd:
-    container_name: rag-etcd 
+    container_name: rag-etcd
     image: quay.io/coreos/etcd:v3.5.18
     environment:
       - ETCD_AUTO_COMPACTION_MODE=revision
@@ -79,7 +88,7 @@ services:
       - ETCD_QUOTA_BACKEND_BYTES=4294967296
       - ETCD_SNAPSHOT_COUNT=50000
     volumes:
-      - ./volumes/etcd:/etcd 
+      - ./volumes/etcd:/etcd
     command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     healthcheck:
       test: ["CMD", "etcdctl", "endpoint", "health"]
@@ -89,9 +98,6 @@ services:
     networks:
       - rag_net
 
-  # ---------------------------------------------------
-  # 5. Milvus 依赖与应用共用的服务: MinIO (官方配置)
-  # ---------------------------------------------------
   minio:
     container_name: rag-minio
     image: minio/minio:RELEASE.2023-03-20T20-16-18Z
@@ -112,19 +118,15 @@ services:
     networks:
       - rag_net
 
-  # ---------------------------------------------------
-  # 6. Milvus 核心服务: Standalone (官方配置)
-  # ---------------------------------------------------
   standalone:
     container_name: rag-milvus-standalone
-    image: milvusdb/milvus:v2.4.1 
+    image: milvusdb/milvus:v2.4.1
     command: ["milvus", "run", "standalone"]
     security_opt:
       - seccomp:unconfined
     environment:
       ETCD_ENDPOINTS: etcd:2379
       MINIO_ADDRESS: minio:9000
-      # 以下为新增的配置，确保Milvus能正确访问MinIO
       MINIO_ACCESS_KEY_ID: minioadmin
       MINIO_SECRET_KEY_ID: minioadmin
       MINIO_USE_SSL: "false"
@@ -141,24 +143,16 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
       interval: 30s
-      start_period: 90s # 给予Milvus更长的启动时间
+      start_period: 90s
       timeout: 20s
       retries: 3
     networks:
       - rag_net
 
 # ---------------------------------------------------
-# 顶层配置
+# 顶层配置 (遵从您的原版配置)
 # ---------------------------------------------------
-
-# 定义一个所有服务共享的自定义网络
 networks:
   rag_net:
-    name: rag_net 
+    name: rag_net
     driver: bridge
-
-# Docker Compose不会自动创建目录，但会使用这些卷
-# volumes:
-#   etcd_data:
-#   minio_data:
-#   milvus_data:
