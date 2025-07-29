@@ -25,7 +25,8 @@ RUN pip install --no-cache-dir \
     "pymilvus==2.4.1" \
     "boto3" \
     "botocore" \
-    "mindspore~=2.3.0" \
+    #"mindspore~=2.3.0"
+    "mindspore~=2.6.0" \
     "mindnlp~=0.4.0" \
     "sentencepiece" \
     "tiktoken~=0.8.0" \
