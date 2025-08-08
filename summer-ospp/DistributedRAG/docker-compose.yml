@@ -1,5 +1,5 @@
 services:
-  # Ray Head 节点 
+  # Ray Head 节点
   ray-head:
     build:
       context: .
@@ -7,38 +7,39 @@ services:
     ports:
       - "8265:8265"
       - "10001:10001"
+ 
     shm_size: '4gb' 
-    # command: ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4
+
     command: bash -c "ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4 --block"
     networks:
       - rag_net
     volumes:
+      # 将本地目录挂载到我们新指定的/models路径
       - ./rag_models_cache:/app/.mindnlp/model
     
     
 
-  # Ray Worker 节点
+  # Ray Worker 节点 
   ray-worker:
     build:
       context: .
       dockerfile: Dockerfile.ray
     depends_on:
       - ray-head
+    # 
     shm_size: '8gb'
     command: ray start --address=ray-head:6379 --num-cpus=8 --block
     networks:
       - rag_net
     environment:
-      # [新增] 设置Hugging Face的统一缓存目录为容器内的/models
-      # 这个环境变量会覆盖默认的 ~/.cache 路径
       - HF_HOME=/models
     volumes:
-      # [修改] 将本地目录挂载到我们新指定的/models路径
+      # 将本地目录挂载到我们新指定的/models路径
       - ./rag_models_cache:/app/.mindnlp/model
 
 
   # ---------------------------------------------------
-  # 3. 主应用服务 (改造后)
+  # 3. 主应用服务 
   # 运行 Streamlit, 作为 Ray Client 向 Ray 集群提交任务
   # ---------------------------------------------------
   main_app:
@@ -52,27 +53,26 @@ services:
     environment:
       - RAY_ADDRESS=ray://ray-head:10001
       
-      # [保留] MinIO 和 Milvus 的配置保持不变
       - MINIO_HOST=minio:9000
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
       - MILVUS_HOST=standalone
       - MILVUS_PORT=19530
       
-      # [废弃] 不再需要独立的 embedding 和 llm 服务地址
+      # LLM-Actor下不再需要独立的 embedding 和 llm 服务地址
       # - EMBEDDING_SERVER_URL=http://embedding-server/embed
       # - LLM_SERVER_URL=http://llm-server/generate
     depends_on:
       standalone:
         condition: service_healthy
-      ray-head: # [修改] 现在依赖 Ray Head 节点
+      ray-head: 
         condition: service_started
     networks:
       - rag_net
     command: streamlit run main.py --server.port=7860 --server.address=0.0.0.0 --server.enableCORS=false
 
   # ===================================================
-  # 您的 Milvus, MinIO, ETCD 配置
+  # Milvus, MinIO, ETCD 配置 
   # ===================================================
 
   etcd:
@@ -146,7 +146,7 @@ services:
       - rag_net
 
 # ---------------------------------------------------
-# 顶层配置 
+# 顶层配置
 # ---------------------------------------------------
 networks:
   rag_net:

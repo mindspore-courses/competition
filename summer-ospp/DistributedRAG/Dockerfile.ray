@@ -13,13 +13,14 @@ RUN sudo apt-get update && sudo apt-get install -y \
     libglib2.0-0 \
     && sudo rm -rf /var/lib/apt/lists/*
 
+
 COPY main_app/ray_tasks.py /app/ray_tasks.py
 
-# 安装所有计算所需的 Python 依赖
+# 这里包含了所有原来分散在不同服务中的依赖
 RUN pip install --no-cache-dir \
     "ray[serve]==2.9.3" \
     "mindspore~=2.6.0" \
-    "mindnlp~=0.4.1" \
+    "mindnlp~=0.4.0" \
     "sentencepiece" \
     "tiktoken~=0.8.0" \
     "PyPDF2~=3.0.1" \
@@ -27,6 +28,7 @@ RUN pip install --no-cache-dir \
     "beautifulsoup4~=4.12.3"\
     "rapidocr-onnxruntime" \
     "Pillow" \
+    "langchain-text-splitters" \
     "jinja2" -i https://mirrors.aliyun.com/pypi/simple/
 
-# 启动命令在 docker-compose.yml 中定义
+# 这个镜像将作为 ray-head 和 ray-worker 的通用镜像

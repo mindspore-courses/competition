@@ -9,19 +9,20 @@ from typing import List
 from io import BytesIO
 import logging
 
-# from rapidocr_onnxruntime import RapidOCR
-# from PIL import Image
+from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
+
 # ==============================================================================
 # 1. 定义 Embedding Actor
+# (逻辑来自原 embedding_server/app.py)
 # ==============================================================================
-@ray.remote(num_cpus=4)  
+@ray.remote(num_cpus=4)  # 为每个 Embedding Actor 实例分配4个CPU
 class EmbeddingActor:
     """
     一个专用于文本向量化的 Ray Actor。
     它在自己的进程中加载并持有 BAAI/bge-base-zh-v1.5 模型。
     """
     def __init__(self):
-
+        # 在 Actor 初始化时加载模型，模型将常驻于该 Actor 的显存中
         try:
             from mindnlp.sentence import SentenceTransformer
             print("▶️ EmbeddingActor: 正在加载模型 (BAAI/bge-base-zh-v1.5)...")
@@ -46,8 +47,9 @@ class EmbeddingActor:
 
 # ==============================================================================
 # 2. 定义 LLM Actor
+# (逻辑来自原 llm_server/app.py)
 # ==============================================================================
-@ray.remote(num_cpus=6)  
+@ray.remote(num_cpus=6) # 为每个 LLM Actor 实例分配6个CPU
 class LLMActor:
     """
     一个专用于大语言模型推理的 Ray Actor。
@@ -63,7 +65,7 @@ class LLMActor:
             logging.info(f"▶️ LLMActor: 正在加载LLM模型及分词器 ({LLM_MODEL_PATH})...")
             
             self.tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL_PATH, mirror="huggingface")
-            self.model = AutoModelForCausalLM.from_pretrained(LLM_MODEL_PATH, ms_dtype=mindspore.float16, mirror="huggingface")
+            self.model = AutoModelForCausalLM.from_pretrained(LLM_MODEL_PATH, ms_dtype=mindspore.float32, mirror="huggingface")
             
             logging.info("✅ LLMActor: 模型加载成功!")
         except Exception as e:
@@ -91,18 +93,19 @@ class LLMActor:
 
 # ==============================================================================
 # 3. 定义文件处理 Task
+# (逻辑来自原 main_app/main.py 中的 FileProcessor 类)
+# 这是一个无状态的任务，非常适合用 Ray Task 来并行处理。
 # ==============================================================================
 @ray.remote
 def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
     """
     一个 Ray Task，用于解析单个文件内容并将其分块。
-    现在已集成OCR功能，可以处理图片。
+    此版本采用了更智能的、感知内容结构的分块策略。
     """
     print(f"⚙️ Ray Task: 正在解析文件 '{file_name}'...")
     from rapidocr_onnxruntime import RapidOCR
     from PIL import Image
     import numpy as np
-    # [新增] 初始化OCR引擎。这个对象可以被复用。
     ocr_engine = RapidOCR()
 
     def read_pdf(stream) -> str:
@@ -118,11 +121,9 @@ def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
     def read_text(stream) -> str:
         return stream.read().decode('utf-8')
 
-    # [新增] 处理图片的核心函数
     def read_image(stream) -> str:
         # 使用Pillow打开图像数据流
         img = Image.open(stream)
-        # 将Pillow图像对象转为numpy数组以供OCR引擎使用
         import numpy as np
         img_np = np.array(img)
         
@@ -139,7 +140,6 @@ def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
     text = ""
     file_suffix = file_name.split('.')[-1].lower()
 
-    # [修改] 在文件类型判断中加入对常见图片格式的支持
     if file_suffix == 'pdf':
         text = read_pdf(file_stream)
     elif file_suffix == 'md':
@@ -156,18 +156,42 @@ def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
         print(f"ℹ️ Ray Task: 从文件 '{file_name}' 中未提取到文本。")
         return []
 
-    # 使用 tiktoken进行分块 
-    enc = tiktoken.get_encoding("cl100k_base")
-    tokens = enc.encode(text)
     chunks = []
-    max_token_len = 600
-    cover_content = 150
-    i = 0
-    while i < len(tokens):
-        end = min(i + max_token_len, len(tokens))
-        chunk_text = enc.decode(tokens[i:end])
-        chunks.append(chunk_text)
-        i += (max_token_len - cover_content)
+    if file_suffix == 'md':
+        # 对 Markdown 文件使用标题分割器
+        print(f"✨ Ray Task: 对 Markdown 文件 '{file_name}' 使用标题分割策略。")
+        headers_to_split_on = [
+            ("#", "Header 1"),
+            ("##", "Header 2"),
+            ("###", "Header 3"),
+        ]
+        markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on, strip_headers=False)
+        md_header_splits = markdown_splitter.split_text(text)
+        
+        # 对分割后的每个大块，再进行递归分块，防止有超长章节
+        # (这部分和下面的递归分块逻辑是复用的)
+        chunk_size = 600
+        chunk_overlap = 150
+        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+            encoding_name="cl100k_base",
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+        )
+        for split in md_header_splits:
+            chunks.extend(text_splitter.split_text(split.page_content))
+
+    else:
+        # 对其他类型文件（PDF, TXT, 图片OCR结果）使用递归字符分割器
+        print(f"✨ Ray Task: 对文件 '{file_name}' 使用递归字符分割策略。")
+        chunk_size = 600
+        chunk_overlap = 150
+        # 使用tiktoken来计算块长度
+        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+            encoding_name="cl100k_base",
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+        )
+        chunks = text_splitter.split_text(text)
         
     print(f"✅ Ray Task: 文件 '{file_name}' 解析并分块为 {len(chunks)} 块。")
-    return chunks  
+    return chunks
