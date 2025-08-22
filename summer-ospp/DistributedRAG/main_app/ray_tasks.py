@@ -11,6 +11,14 @@ import logging
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
 
+import docx
+import pptx
+import pandas as pd
+import whisper
+import soundfile as sf
+import tempfile
+import os
+
 # ==============================================================================
 # 1. 定义 Embedding Actor
 # (逻辑来自原 embedding_server/app.py)
@@ -122,32 +130,64 @@ def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
         return stream.read().decode('utf-8')
 
     def read_image(stream) -> str:
-        # 使用Pillow打开图像数据流
-        img = Image.open(stream)
+        from rapidocr_onnxruntime import RapidOCR
+        from PIL import Image
         import numpy as np
+        ocr_engine = RapidOCR()
+        img = Image.open(stream)
         img_np = np.array(img)
-        
-        # 调用OCR引擎进行识别
         result, _ = ocr_engine(img_np)
-        
-        # 将识别出的文本行拼接成一个完整的字符串
         if result:
-            text_list = [line[1] for line in result]
-            return "\n".join(text_list)
+            return "\n".join([line[1] for line in result])
         return ""
+
+    def read_docx(stream) -> str:
+        document = docx.Document(stream)
+        return "\n".join([para.text for para in document.paragraphs])
+
+    def read_pptx(stream) -> str:
+        presentation = pptx.Presentation(stream)
+        text_runs = []
+        for slide in presentation.slides:
+            for shape in slide.shapes:
+                if not shape.has_text_frame:
+                    continue
+                for paragraph in shape.text_frame.paragraphs:
+                    for run in paragraph.runs:
+                        text_runs.append(run.text)
+        return "\n".join(text_runs)
+
+    def read_csv(stream) -> str:
+        df = pd.read_csv(stream)
+        return df.to_string()
+
+    def read_audio(stream, file_name) -> str:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(file_name)[1]) as tmp_file:
+            tmp_file.write(stream.read())
+            tmp_file_path = tmp_file.name
+        
+        try:
+            print("🎤 Ray Task: 正在加载 Whisper 模型进行语音识别...")
+            model = whisper.load_model("small")
+            result = model.transcribe(tmp_file_path, fp16=False)
+            print(f"🔊 Ray Task: 文件 '{file_name}' 语音识别完成。")
+            return result.get("text", "")
+        finally:
+            os.remove(tmp_file_path) 
+
 
     file_stream = BytesIO(file_content)
     text = ""
     file_suffix = file_name.split('.')[-1].lower()
 
-    if file_suffix == 'pdf':
-        text = read_pdf(file_stream)
-    elif file_suffix == 'md':
-        text = read_markdown(file_stream)
-    elif file_suffix == 'txt':
-        text = read_text(file_stream)
-    elif file_suffix in ['png', 'jpg', 'jpeg', 'bmp', 'tiff']:
-        text = read_image(file_stream)
+    if file_suffix == 'pdf': text = read_pdf(file_stream)
+    elif file_suffix == 'md': text = read_markdown(file_stream)
+    elif file_suffix == 'txt': text = read_text(file_stream)
+    elif file_suffix in ['png', 'jpg', 'jpeg']: text = read_image(file_stream)
+    elif file_suffix == 'docx': text = read_docx(file_stream)
+    elif file_suffix == 'pptx': text = read_pptx(file_stream)
+    elif file_suffix == 'csv': text = read_csv(file_stream)
+    elif file_suffix in ['wav', 'mp3', 'm4a']: text = read_audio(file_stream, file_name)
     else:
         print(f"⚠️ Ray Task: 不支持的文件类型 '{file_suffix}'，跳过文件 {file_name}。")
         return []
@@ -157,6 +197,7 @@ def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
         return []
 
     chunks = []
+
     if file_suffix == 'md':
         # 对 Markdown 文件使用标题分割器
         print(f"✨ Ray Task: 对 Markdown 文件 '{file_name}' 使用标题分割策略。")
@@ -193,5 +234,14 @@ def parse_and_chunk_document(file_content: bytes, file_name: str) -> List[str]:
         )
         chunks = text_splitter.split_text(text)
         
-    print(f"✅ Ray Task: 文件 '{file_name}' 解析并分块为 {len(chunks)} 块。")
-    return chunks
+    final_chunks = [
+        {
+            "content": chunk_text,
+            "source": file_name,
+            "chunk_index": i + 1
+        }
+        for i, chunk_text in enumerate(chunks)
+    ]
+        
+    print(f"✅ Ray Task: 文件 '{file_name}' 解析并分块为 {len(final_chunks)} 块。")
+    return final_chunks

@@ -1,13 +1,18 @@
-# main.py (集成HyDE策略)
+# main.py
 
 import os
 import time
 import logging
+import re
 from datetime import datetime
 from typing import List, Dict
 
 import streamlit as st
 import ray
+
+from duckduckgo_search import DDGS
+from bs4 import BeautifulSoup
+import requests
 
 from ray_tasks import EmbeddingActor, LLMActor, parse_and_chunk_document
 
@@ -39,7 +44,7 @@ except Exception as e:
 
 
 # ==============================================================================
-# 2. MilvusClient 类 
+# 2. MilvusClient 类
 # ==============================================================================
 class MilvusClient:
     def __init__(self, host, port):
@@ -85,7 +90,7 @@ class MilvusClient:
         return [hit.entity.get('text') for hit in results[0]] if results else []
 
 # ==============================================================================
-# 3. RAG Prompt 模板 
+# 3. RAG Prompt 模板
 # ==============================================================================
 RELEVANCE_ASSESSMENT_TEMPLATE = """你是一个文档相关性评估员。请判断下面提供的【文档片段】是否能帮助回答【用户问题】。
 请只回答“是”或“否”。
@@ -114,22 +119,22 @@ QUERY_OPTIMIZATION_TEMPLATE = """你是一个搜索引擎优化专家。当前�
 FINAL_ANSWER_TEMPLATE = """你是一个专业、严谨的问答助手。请根据下面提供的【可参考的上下文】来回答用户的【问题】。
 你的回答必须遵循以下规则：
 1.  完全基于提供的上下文进行回答，禁止使用任何外部知识或进行猜测。
-2.  如果上下文内容足以回答问题，请清晰、准确地组织答案。
-3.  如果上下文内容不相关或不足以回答问题，请明确指出：“根据您提供的文档，我无法找到关于这个问题的确切信息。”
-4.  回答时请保持客观、专业的口吻，并且总是使用中文。
-
-【问题】
-{question}
+2.  在回答中，你必须明确引用信息来源。引用格式为：[来源: 文件名 (块号: X)]。
+3.  如果上下文内容足以回答问题，请清晰、准确地组织答案。
+4.  如果上下文内容不相关或不足以回答问题，请明确指出：“根据您提供的文档，我无法找到关于这个问题的确切信息。”
+5.  回答时请保持客观、专业的口吻，并且总是使用中文。
 
 【可参考的上下文】
 ---
 {context}
 ---
 
+【问题】
+{question}
+
 【你的回答】
 """
 
-# --- 新增：HyDE 答案生成 Prompt ---
 HYDE_PROMPT_TEMPLATE = """你是一个善于回答问题的助手。请根据用户的【问题】，生成一个详细、完整、看起来非常专业的回答。
 重要提示：这个回答是用于后续检索的，所以它不需要保证事实的绝对正确性，但必须与问题高度相关，并且在格式和措辞上像一篇真实的文档片段。
 
@@ -138,14 +143,48 @@ HYDE_PROMPT_TEMPLATE = """你是一个善于回答问题的助手。请根据用
 
 【请生成一个假想的、用于检索的答案】
 """
+# ==============================================================================
+# 4. 新增：联网搜索功能函数
+# ==============================================================================
+def fetch_internet_search_results(query: str, num_results: int = 5) -> List[Dict]:
+    """使用DuckDuckGo的API进行搜索，并爬取前N个结果的文本内容。"""
+    logging.info(f"🌐 正在执行联网搜索: '{query}'")
+    search_results = []
+    
+    try:
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, region='wt-wt', safesearch='off', timelimit='y', max_results=num_results))
+            urls = [r['href'] for r in results]
+    except Exception as e:
+        logging.error(f"联网搜索失败: {e}")
+        return []
+
+    def scrape_url(url: str):
+        try:
+            response = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.content, 'html.parser')
+                text = re.sub(r'\s+', ' ', soup.get_text()).strip()
+                return {'name': f"Web: {url}", 'content': text.encode('utf-8', 'ignore')}
+        except Exception as e:
+            logging.warning(f"爬取URL失败: {url}, 原因: {e}")
+        return None
+
+    for url in urls:
+        scraped_data = scrape_url(url)
+        if scraped_data and scraped_data['content']:
+            search_results.append(scraped_data)
+            logging.info(f"✅ 成功爬取: {url}")
+
+    logging.info(f"🌐 联网搜索完成，获得 {len(search_results)} 个有效网页内容。")
+    return search_results
 
 # ==============================================================================
-# 4. 集成HyDE的RAG流程
+# 5. 集成所有功能的RAG流程
 # ==============================================================================
 def execute_rag_pipeline_ray(files_data: List[Dict], query: str, use_hyde: bool) -> Dict:
     logging.info("🚀 ======== 开始执行RAG工作流 ========")
     
-    # --- 1. 获取 Actor 句柄 ---
     try:
         embedding_actor = ray.get_actor("EmbeddingActor")
         llm_actor = ray.get_actor("LLMActor")
@@ -156,7 +195,6 @@ def execute_rag_pipeline_ray(files_data: List[Dict], query: str, use_hyde: bool)
         llm_actor = LLMActor.options(name="LLMActor", get_if_exists=True).remote()
         logging.info("✅ 新的 Actor 实例已创建。")
 
-    # --- 2. 文件解析与HyDE并行执行 ---
     parse_tasks = [parse_and_chunk_document.remote(f['content'], f['name']) for f in files_data]
     logging.info(f"提交了 {len(parse_tasks)} 个文件解析任务到 Ray。")
     
@@ -166,18 +204,17 @@ def execute_rag_pipeline_ray(files_data: List[Dict], query: str, use_hyde: bool)
         hyde_prompt = HYDE_PROMPT_TEMPLATE.format(question=query)
         hypothetical_answer_ref = llm_actor.generate.remote(hyde_prompt)
 
-    # --- 3. 向量化、存储和检索 (包含重试循环) ---
-    milvus_client = MilvusClient(host=MILVUS_HOST, port=MILVUS_PORT)
     parsed_results = ray.get(parse_tasks)
-    all_chunks = [chunk for result in parsed_results for chunk in result]
+    # --- 修改接收带来源的字典列表 ---
+    all_chunks_with_source = [chunk for result in parsed_results for chunk in result]
     
-    if not all_chunks:
-        return {"answer": "❌ 未能从任何文件中提取文本块。", "hypothetical_answer": ""}
+    if not all_chunks_with_source:
+        return {"answer": "❌ 未能从任何文件中提取文本块。", "hypothetical_answer": "", "sources": []}
 
-    logging.info(f"所有文件解析完成，共得到 {len(all_chunks)} 个文本块。")
-    chunk_vectors_ref = embedding_actor.embed.remote(all_chunks)
+    # --- 修改：分离文本内容用于向量化 ---
+    all_chunk_texts = [chunk['content'] for chunk in all_chunks_with_source]
+    logging.info(f"所有文件解析完成，共得到 {len(all_chunk_texts)} 个文本块。")
     
-    # --- 获取HyDE结果并确定初次检索文本 ---
     hypothetical_answer = ""
     if use_hyde and hypothetical_answer_ref:
         hypothetical_answer = ray.get(hypothetical_answer_ref).strip()
@@ -186,31 +223,30 @@ def execute_rag_pipeline_ray(files_data: List[Dict], query: str, use_hyde: bool)
     else:
         retrieval_text = query
 
-    current_query = query # 保存原始问题，用于相关性评估和最终生成
+    current_query = query
     
     for attempt in range(MAX_OPTIMIZATION_ATTEMPTS + 1):
         logging.info(f"--- 第 {attempt + 1} 次尝试 ---")
         
-        # 优化后，使用优化查询进行检索
         if attempt > 0:
             retrieval_text = current_query
 
         logging.info(f"当前用于检索的文本: '{retrieval_text[:100]}...'")
         
         query_vector_ref = embedding_actor.embed.remote([retrieval_text])
+        chunk_vectors_ref = embedding_actor.embed.remote(all_chunk_texts)
         query_vector, chunk_vectors = ray.get([query_vector_ref, chunk_vectors_ref])
         
         if not chunk_vectors or not query_vector:
-            return {"answer": "❌ 向量化失败，请检查 EmbeddingActor 的日志。", "hypothetical_answer": hypothetical_answer}
+            return {"answer": "❌ 向量化失败。", "hypothetical_answer": hypothetical_answer, "sources": []}
         
         if attempt == 0:
             collection_name = f"rag_session_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-            milvus_client.insert(collection_name, all_chunks, chunk_vectors)
-            logging.info(f"已将 {len(all_chunks)} 个向量存入 Milvus 集合 '{collection_name}'。")
+            milvus_client.insert(collection_name, all_chunk_texts, chunk_vectors)
+            logging.info(f"已将 {len(all_chunk_texts)} 个向量存入 Milvus 集合 '{collection_name}'。")
 
         retrieved_docs = milvus_client.search(collection_name, query_vector)
         
-        # --- 4. 相关性评估 ---
         if retrieved_docs:
             assessment_tasks = [
                 llm_actor.generate.remote(
@@ -219,18 +255,31 @@ def execute_rag_pipeline_ray(files_data: List[Dict], query: str, use_hyde: bool)
             ]
             assessment_results = ray.get(assessment_tasks)
             
-            relevant_docs = [doc for doc, assessment in zip(retrieved_docs, assessment_results) if "是" in assessment.strip()]
-            logging.info(f"检索到 {len(retrieved_docs)} 篇文档，其中 {len(relevant_docs)} 篇通过相关性评估。")
+            relevant_docs_texts = [doc for doc, assessment in zip(retrieved_docs, assessment_results) if "是" in assessment.strip()]
+            logging.info(f"检索到 {len(retrieved_docs)} 篇文档，其中 {len(relevant_docs_texts)} 篇通过相关性评估。")
 
-            if relevant_docs:
-                context = "\n---\n".join(relevant_docs)
+            if relevant_docs_texts:
+                # --- 修改：找到相关文本的完整来源信息 ---
+                relevant_docs_with_source = [
+                    chunk for chunk in all_chunks_with_source if chunk['content'] in relevant_docs_texts
+                ]
+                
+                # --- 修改：构建带来源的上下文 ---
+                context_parts = []
+                for doc in relevant_docs_with_source:
+                    source_tag = f"[来源: {doc['source']} (块号: {doc['chunk_index']})]"
+                    context_parts.append(f"{source_tag}\n{doc['content']}")
+                context = "\n---\n".join(context_parts)
+                
                 final_prompt = FINAL_ANSWER_TEMPLATE.format(question=query, context=context)
                 logging.info("提交最终答案生成任务。")
                 final_response = ray.get(llm_actor.generate.remote(final_prompt))
                 logging.info("🏁 ======== Ray RAG 工作流执行完毕 ========")
-                return {"answer": final_response, "hypothetical_answer": hypothetical_answer}
+                
+                # --- 修改：在返回值中加入来源列表 ---
+                sources_used = sorted(list(set([doc['source'] for doc in relevant_docs_with_source])))
+                return {"answer": final_response, "hypothetical_answer": hypothetical_answer, "sources": sources_used}
         
-        # --- 5. 查询优化 ---
         if attempt < MAX_OPTIMIZATION_ATTEMPTS:
             logging.warning("未找到相关文档，正在尝试优化查询...")
             optimization_prompt = QUERY_OPTIMIZATION_TEMPLATE.format(question=current_query)
@@ -245,22 +294,25 @@ def execute_rag_pipeline_ray(files_data: List[Dict], query: str, use_hyde: bool)
 
     return {
         "answer": "抱歉，在您提供的文档中，我多次尝试后仍未找到能回答您问题的相关信息。",
-        "hypothetical_answer": hypothetical_answer
+        "hypothetical_answer": hypothetical_answer,
+        "sources": []
     }
 
 # ==============================================================================
-# 5. Streamlit 界面 (集成HyDE开关和慢思考展示)
+# 6. Streamlit 界面
 # ==============================================================================
 def run_streamlit_app():
     st.set_page_config(page_title="分布式RAG应用 (Ray版)", layout="wide")
     st.title("🚀 分布式RAG应用 (Ray 统一计算后端)")
-    st.markdown("上传文件并提问，系统将通过 Ray 分布式后端并行处理数据并生成回答。")
+    st.markdown("上传文件、输入问题，可选联网搜索，系统将通过 Ray 分布式后端并行处理数据并生成回答。")
 
     # --- 初始化会话状态 ---
     if "response" not in st.session_state:
         st.session_state.response = "请在下方提交问题和文件，我会在这里给出回答..."
     if "hypothetical_answer" not in st.session_state:
         st.session_state.hypothetical_answer = ""
+    if "sources" not in st.session_state:
+        st.session_state.sources = []
 
     # --- 高级选项侧边栏 ---
     with st.sidebar:
@@ -269,49 +321,65 @@ def run_streamlit_app():
 
     # --- 输入表单 ---
     with st.form("rag_form"):
-        query = st.text_input(
-            "请输入你的问题:",
-            placeholder="例如：这份文档的核心内容是什么？"
-        )
+        query = st.text_input("请输入你的问题:", placeholder="例如：这份文档的核心内容是什么？")
         
+        # --- 修改：支持所有新文件类型 ---
         uploaded_files = st.file_uploader(
-            "上传知识库文件（支持图片、PDF、Markdown、文本），可多选: 🖼️",
+            "上传知识库文件（支持Docx, PPTX, Csv, PDF, MD, Txt, 图片, 语音）",
             accept_multiple_files=True,
-            type=['png', 'jpg', 'jpeg', 'md', 'txt', 'pdf']
+            type=['docx', 'pptx', 'csv', 'pdf', 'md', 'txt', 'png', 'jpg', 'jpeg', 'wav', 'mp3', 'm4a']
         )
         
-        submit_button = st.form_submit_button("提交")
+        col1, col2, _ = st.columns([1, 1, 3])
+        with col1:
+            submit_button = st.form_submit_button("仅文件问答")
+        with col2:
+            submit_with_internet_button = st.form_submit_button("文件+联网问答")
 
-    # --- 逻辑处理 ---
-    if submit_button:
-        if query and uploaded_files:
-            with st.spinner("系统正在通过 Ray 分布式后端处理中..."):
-                try:
-                    files_data = [{'name': f.name, 'content': f.getvalue()} for f in uploaded_files]
-                    
-                    logging.info(f"Streamlit 接收到查询: '{query}' 和 {len(files_data)} 个文件。")
-                    # 调用RAG流程，并传入HyDE开关状态
-                    result_dict = execute_rag_pipeline_ray(files_data=files_data, query=query, use_hyde=use_hyde)
-                    
-                    st.session_state.response = result_dict.get("answer", "未能获取回答。")
-                    st.session_state.hypothetical_answer = result_dict.get("hypothetical_answer", "")
-                except Exception as e:
-                    error_message = f"处理过程中发生严重错误: {e}"
-                    st.error(error_message)
-                    st.session_state.response = error_message
-                    logging.error(f"Streamlit UI层捕获到异常: {e}", exc_info=True)
+
+    if submit_button or submit_with_internet_button:
+        if query:
+            all_files_data = []
+            if uploaded_files:
+                all_files_data.extend([{'name': f.name, 'content': f.getvalue()} for f in uploaded_files])
+            
+            if submit_with_internet_button:
+                with st.spinner("正在进行联网搜索并爬取内容..."):
+                    internet_data = fetch_internet_search_results(query)
+                    all_files_data.extend(internet_data)
+            
+            if not all_files_data:
+                st.error("错误：请至少上传一个文件或使用联网功能。")
+            else:
+                with st.spinner("系统正在通过 Ray 分布式后端处理中..."):
+                    try:
+                        logging.info(f"Streamlit 接收到查询: '{query}' 和 {len(all_files_data)} 个数据源。")
+                        result_dict = execute_rag_pipeline_ray(files_data=all_files_data, query=query, use_hyde=use_hyde)
+                        
+                        st.session_state.response = result_dict.get("answer", "未能获取回答。")
+                        st.session_state.hypothetical_answer = result_dict.get("hypothetical_answer", "")
+                        st.session_state.sources = result_dict.get("sources", [])
+                    except Exception as e:
+                        error_message = f"处理过程中发生严重错误: {e}"
+                        st.error(error_message)
+                        st.session_state.response = error_message
+                        logging.error(f"Streamlit UI层捕获到异常: {e}", exc_info=True)
         else:
-            st.error("错误：请确保您已输入问题并上传了文件。")
+            st.error("错误：请确保您已输入问题。")
 
     # --- 展示“慢思考”过程 ---
     if st.session_state.hypothetical_answer:
         with st.expander("🔍 查看“慢思考”过程 (HyDE生成的假想答案)"):
             st.info(st.session_state.hypothetical_answer)
 
-    # --- 显示最终回答 ---
+    # --- 显示最终回答和来源 ---
     st.subheader("模型的回答:")
-    st.text_area("", value=st.session_state.response, height=400, disabled=True, label_visibility="collapsed")
+    st.text_area("", value=st.session_state.response, height=300, disabled=True, label_visibility="collapsed")
 
+    if st.session_state.sources:
+        st.subheader("信息来源:")
+        for source in st.session_state.sources:
+            st.info(f"📄 {source}")
 
 if __name__ == "__main__":
     run_streamlit_app()

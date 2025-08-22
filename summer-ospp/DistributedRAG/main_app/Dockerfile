@@ -31,7 +31,15 @@ RUN pip install --no-cache-dir \
     "rapidocr-onnxruntime" \
     "Pillow" \
     "langchain-text-splitters" \
-    "jinja2" -i https://mirrors.aliyun.com/pypi/simple/
+    "jinja2" \
+    "python-docx" \         
+    "python-pptx" \         
+    "pandas" \              
+    "openai-whisper" \      
+    "soundfile" \   
+    "duckduckgo-search" \ 
+    "requests" \       
+    -i https://mirrors.aliyun.com/pypi/simple/
 
 # 容器暴露的端口
 EXPOSE 7860
