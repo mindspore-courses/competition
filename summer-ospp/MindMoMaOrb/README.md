@@ -10,7 +10,8 @@
 ## 环境要求
 
 > 1. 安装`mindspore（2.5.0）`
-> 2. 安装依赖包：`pip install -r requirement.txt`
+> 2. 安装`mindchemistry`
+> 3. 安装依赖包：`pip install -r requirement.txt`
 
 ## 快速入门
 
@@ -39,23 +40,17 @@ orb_models                                           # 模型名
   └── config_eval.yaml                               # 推理参数配置文件
 ├── src
   ├── __init__.py
+  ├── ase_dataset.py                                 # 处理和加载数据集
   ├── atomic_system.py                               # 定义原子系统的数据结构
   ├── base.py                                        # 基础类定义
-  ├── ase_dataset.py                                 # 处理和加载数据集
-  ├── calculator.py                                  # 用于计算原子系统的能量、力或其他物理性质
   ├── featurization_utilities.py                     # 提供将原子系统转换为特征向量的工具
-  ├── gns.py                                         # 图神经网络相关
-  ├── graph_regressor.py                             # 图回归模型
-  ├── nn_util.py                                     # 神经网络工具
   ├── pretrained.py                                  # 预训练模型相关函数
   ├── property_definitions.py                        # 定义原子系统中各种物理性质的计算方式和命名规则
-  ├── rbf.py                                         # 实现径向基函数的计算，可能用于将原子间距离转换为特征向量
-  ├── reference_energies.py                          # 用于模型能量计算的基准
+  ├── trainer.py                                     # 模型loss类定义
   ├── segment_ops.py                                 # 提供对数据进行分段处理的工具
   └── utils.py                                       # 工具模块
-├── finetune.py                                      # 模型单卡微调
-├── finetune_prallel.py                              # 模型并行微调
-├── evaluate.py                                      # 模型推理
+├── finetune.py                                      # 模型微调代码
+├── evaluate.py                                      # 模型推理代码
 ├── run.sh                                           # 单卡训练启动脚本
 ├── run_parallel.sh                                  # 多卡并行训练启动脚本
 └── requirement.txt                                  # 环境
@@ -87,9 +82,9 @@ bash run.sh
 Please run the script as:
 bash run.sh
 ==============================================================================================================
-2025-06-02 01:09:34,543 - INFO - Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
-2025-06-02 01:10:02,390 - INFO - Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
-2025-06-02 01:10:07,079 - INFO - Model has 25213610 trainable parameters.
+Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
+Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
+Model has 25213610 trainable parameters.
 Epoch: 0/100,
  train_metrics: {'data_time': 0.00010895108183224995, 'train_time': 386.58018293464556, 'energy_reference_mae': 5.598883946736653, 'energy_mae': 3.3611322244008384, 'energy_mae_raw': 103.14391835530598, 'stress_mae': 41.36046473185221, 'stress_mae_raw': 12.710869789123535, 'node_mae': 0.02808943825463454, 'node_mae_raw': 0.0228044210622708, 'node_cosine_sim': 0.7026202281316122, 'fwt_0.03': 0.23958333333333334, 'loss': 44.74968592325846}
  val_metrics: {'energy_reference_mae': 5.316623687744141, 'energy_mae': 3.594848871231079, 'energy_mae_raw': 101.00129699707031, 'stress_mae': 30.630516052246094, 'stress_mae_raw': 9.707925796508789, 'node_mae': 0.017718862742185593, 'node_mae_raw': 0.014386476017534733, 'node_cosine_sim': 0.5506304502487183, 'fwt_0.03': 0.375, 'loss': 34.24308395385742}
@@ -99,8 +94,8 @@ Epoch: 0/100,
 Epoch: 99/100,
  train_metrics: {'data_time': 7.802306208759546e-05, 'train_time': 59.67856075416785, 'energy_reference_mae': 5.5912095705668134, 'energy_mae': 0.007512244085470836, 'energy_mae_raw': 0.21813046435515085, 'stress_mae': 0.7020445863405863, 'stress_mae_raw': 2.222463607788086, 'node_mae': 0.04725319395462672, 'node_mae_raw': 0.042800972859064736, 'node_cosine_sim': 0.3720853428045909, 'fwt_0.03': 0.09895833333333333, 'loss': 0.7568100094795227}
  val_metrics: {'energy_reference_mae': 5.308632850646973, 'energy_mae': 0.27756747603416443, 'energy_mae_raw': 3.251189708709717, 'stress_mae': 2.8720269203186035, 'stress_mae_raw': 9.094478607177734, 'node_mae': 0.05565642938017845, 'node_mae_raw': 0.05041291564702988, 'node_cosine_sim': 0.212838813662529, 'fwt_0.03': 0.19499999284744263, 'loss': 3.2052507400512695}
-2025-06-02 03:12:22,942 - INFO - Checkpoint saved to orb_ckpts/
-2025-06-02 03:12:22,942 - INFO - Training time: 7333.08717 seconds
+Checkpoint saved to orb_ckpts/
+Training time: 7333.08717 seconds
 ```
 
 ### 多卡并行训练
@@ -120,33 +115,25 @@ bash run_parallel.sh
 代码运行结果如下所示：
 
 ```log
-2025-05-22 00:30:45,548 - INFO - Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
-2025-05-22 00:30:45,728 - INFO - Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
-2025-05-22 00:30:45,686 - INFO - Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
-2025-05-22 00:30:45,681 - INFO - Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
-2025-05-22 00:31:08,282 - INFO - Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
-2025-05-22 00:31:08,584 - INFO - Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
-2025-05-22 00:31:08,495 - INFO - Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
-2025-05-22 00:31:08,096 - INFO - Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
-2025-05-22 00:31:12,594 - INFO - Model has 25213607 trainable parameters.
-2025-05-22 00:31:13,056 - INFO - Model has 25213607 trainable parameters.
-2025-05-22 00:31:13,408 - INFO - Model has 25213607 trainable parameters.
-2025-05-22 00:31:13,666 - INFO - Model has 25213607 trainable parameters.
+Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
+Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
+Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
+Loading datasets: dataset/train_mptrj_ase.dbTotal train dataset size: 800 samples
+Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
+Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
+Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
+Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
+Model has 25213607 trainable parameters.
+Model has 25213607 trainable parameters.
+Model has 25213607 trainable parameters.
+Model has 25213607 trainable parameters.
 
 ...
 
-2025-05-22 01:10:51,992 - INFO - Training time: 2375.89474 seconds
-2025-05-22 01:10:52,005 - INFO - Training time: 2377.02413 seconds
-2025-05-22 01:10:52,675 - INFO - Training time: 2377.22778 seconds
-2025-05-22 01:10:52,476 - INFO - Training time: 2376.63176 seconds
-[INFO] PS(2744253,ffff137ef120,python):2025-05-22-01:11:03.754.142 [mindspore/ccsrc/ps/core/communicator/tcp_client.cc:318] Start] Event base dispatch success!
-[INFO] PS(2744253,ffff13fff120,python):2025-05-22-01:11:03.754.184 [mindspore/ccsrc/ps/core/communicator/tcp_server.cc:220] Start] Event base dispatch success!
-[INFO] PS(2744259,ffff1ffff120,python):2025-05-22-01:11:03.529.843 [mindspore/ccsrc/ps/core/communicator/tcp_client.cc:318] Start] Event base dispatch success!
-[INFO] PS(2744259,ffff3495a120,python):2025-05-22-01:11:03.529.844 [mindspore/ccsrc/ps/core/communicator/tcp_server.cc:220] Start] Event base dispatch success!
-[INFO] PS(2744247,ffff19fbf120,python):2025-05-22-01:11:06.926.027 [mindspore/ccsrc/ps/core/communicator/tcp_client.cc:318] Start] Event base dispatch success!
-[INFO] PS(2744247,ffff1a7cf120,python):2025-05-22-01:11:06.926.027 [mindspore/ccsrc/ps/core/communicator/tcp_server.cc:220] Start] Event base dispatch success!
-[INFO] PS(2744241,ffff2cf0c120,python):2025-05-22-01:11:10.634.471 [mindspore/ccsrc/ps/core/communicator/tcp_client.cc:318] Start] Event base dispatch success!
-[INFO] PS(2744241,ffff2d71c120,python):2025-05-22-01:11:10.634.471 [mindspore/ccsrc/ps/core/communicator/tcp_server.cc:220] Start] Event base dispatch success!
+Training time: 2375.89474 seconds
+Training time: 2377.02413 seconds
+Training time: 2377.22778 seconds
+Training time: 2376.63176 seconds
 ```
 
 ### 推理
@@ -164,8 +151,8 @@ python evaluate.py
 代码运行结果如下所示：
 
 ```log
-2025-05-22 00:18:51,054 - INFO - Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
-2025-05-22 00:19:02,033 - INFO - Model has 25213607 trainable parameters.
+Loading datasets: dataset/val_mptrj_ase.dbTotal train dataset size: 200 samples
+Model has 25213607 trainable parameters.
 .Validation loss: 0.89507836
     energy_reference_mae: 5.3159098625183105
     energy_mae: 0.541229784488678
