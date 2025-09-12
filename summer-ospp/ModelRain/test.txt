@@ -1,0 +1,186 @@
+DEVICE: Ascend
+Args in experiment:
+tuple(model='informer', data='JFNG_data_15min', root_path='./data/Rain/', data_path='JFNG_data_15min.csv', features='MS', target='tp', freq='h', detail_freq='h', checkpoints='./checkpoints/', seq_len=24, label_len=12, pred_len=4, enc_in=6, dec_in=6, c_out=1, d_model=512, n_heads=8, e_layers=3, d_layers=3, s_layers=[3, 2, 1], d_ff=2048, factor=5, padding=0, distil=True, dropout=0.05, attn='prob', embed='timeF', activation='gelu', output_attention=False, do_predict=False, mix=True, cols='+', num_workers=0, itr=1, train_epochs=20, batch_size=32, patience=20, learning_rate=0.0001, des='Informer_ms', loss='mse', lradj='type1', use_amp=False, inverse=True, seed=2021, device='Ascend', do_train=False, ckpt_path='/home/gelu/Informer-MindSpore-master/checkpoints/informer_JFNG_data_15min_ftMS_sl24_ll12_pl4_dm512_nh8_el3_dl3_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Informer_ms_0/checkpoint.ckpt', distribute=False, device_num=None, rank_id=None)
+Setting: informer_JFNG_data_15min_ftMS_sl24_ll12_pl4_dm512_nh8_el3_dl3_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Informer_ms_0
+Informer<
+  (enc_embedding): DataEmbedding<
+    (value_embedding): TokenEmbedding<
+      (tokenConv): Conv1d<input_channels=6, output_channels=512, kernel_size=(1, 3), stride=(1, 1), pad_mode=pad, padding=(0, 0, 1, 1), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xfffe8827c490>, bias_init=None, format=NCHW>
+      >
+    (position_embedding): PositionalEmbedding<>
+    (temporal_embedding): TimeFeatureEmbedding<
+      (embed): Dense<input_channels=4, output_channels=512, has_bias=True>
+      >
+    (dropout): Dropout<p=0.05>
+    >
+  (dec_embedding): DataEmbedding<
+    (value_embedding): TokenEmbedding<
+      (tokenConv): Conv1d<input_channels=6, output_channels=512, kernel_size=(1, 3), stride=(1, 1), pad_mode=pad, padding=(0, 0, 1, 1), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd4190>, bias_init=None, format=NCHW>
+      >
+    (position_embedding): PositionalEmbedding<>
+    (temporal_embedding): TimeFeatureEmbedding<
+      (embed): Dense<input_channels=4, output_channels=512, has_bias=True>
+      >
+    (dropout): Dropout<p=0.05>
+    >
+  (encoder): Encoder<
+    (attn_layers): CellList<
+      (0): EncoderLayer<
+        (attention): AttentionLayer<
+          (inner_attention): ProbAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (conv1): Conv1d<input_channels=512, output_channels=2048, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd4520>, bias_init=None, format=NCHW>
+        (conv2): Conv1d<input_channels=2048, output_channels=512, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd4700>, bias_init=None, format=NCHW>
+        (norm1): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.attn_layers.0.norm1.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.attn_layers.0.norm1.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm2): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.attn_layers.0.norm2.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.attn_layers.0.norm2.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (dropout): Dropout<p=0.05>
+        >
+      (1): EncoderLayer<
+        (attention): AttentionLayer<
+          (inner_attention): ProbAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (conv1): Conv1d<input_channels=512, output_channels=2048, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd5240>, bias_init=None, format=NCHW>
+        (conv2): Conv1d<input_channels=2048, output_channels=512, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd5270>, bias_init=None, format=NCHW>
+        (norm1): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.attn_layers.1.norm1.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.attn_layers.1.norm1.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm2): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.attn_layers.1.norm2.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.attn_layers.1.norm2.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (dropout): Dropout<p=0.05>
+        >
+      (2): EncoderLayer<
+        (attention): AttentionLayer<
+          (inner_attention): ProbAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (conv1): Conv1d<input_channels=512, output_channels=2048, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd5cf0>, bias_init=None, format=NCHW>
+        (conv2): Conv1d<input_channels=2048, output_channels=512, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd5810>, bias_init=None, format=NCHW>
+        (norm1): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.attn_layers.2.norm1.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.attn_layers.2.norm1.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm2): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.attn_layers.2.norm2.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.attn_layers.2.norm2.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (dropout): Dropout<p=0.05>
+        >
+      >
+    (conv_layers): CellList<
+      (0): ConvLayer<
+        (downConv): Conv1d<input_channels=512, output_channels=512, kernel_size=(1, 3), stride=(1, 1), pad_mode=pad, padding=(0, 0, 1, 1), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd6020>, bias_init=None, format=NCHW>
+        (norm): BatchNorm2d<num_features=512, eps=1e-05, momentum=0.9, gamma=Parameter (name=encoder.conv_layers.0.norm.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.conv_layers.0.norm.beta, shape=(512,), dtype=Float32, requires_grad=True), moving_mean=Parameter (name=encoder.conv_layers.0.norm.moving_mean, shape=(512,), dtype=Float32, requires_grad=False), moving_variance=Parameter (name=encoder.conv_layers.0.norm.moving_variance, shape=(512,), dtype=Float32, requires_grad=False)>
+        (activation): ELU<>
+        (pad): Pad<>
+        (maxPool): MaxPool1d<kernel_size=(1, 3), stride=(1, 2), pad_mode=VALID>
+        >
+      (1): ConvLayer<
+        (downConv): Conv1d<input_channels=512, output_channels=512, kernel_size=(1, 3), stride=(1, 1), pad_mode=pad, padding=(0, 0, 1, 1), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd4fa0>, bias_init=None, format=NCHW>
+        (norm): BatchNorm2d<num_features=512, eps=1e-05, momentum=0.9, gamma=Parameter (name=encoder.conv_layers.1.norm.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.conv_layers.1.norm.beta, shape=(512,), dtype=Float32, requires_grad=True), moving_mean=Parameter (name=encoder.conv_layers.1.norm.moving_mean, shape=(512,), dtype=Float32, requires_grad=False), moving_variance=Parameter (name=encoder.conv_layers.1.norm.moving_variance, shape=(512,), dtype=Float32, requires_grad=False)>
+        (activation): ELU<>
+        (pad): Pad<>
+        (maxPool): MaxPool1d<kernel_size=(1, 3), stride=(1, 2), pad_mode=VALID>
+        >
+      >
+    (norm): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=encoder.norm.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=encoder.norm.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+    >
+  (decoder): Decoder<
+    (layers): CellList<
+      (0): DecoderLayer<
+        (self_attention): AttentionLayer<
+          (inner_attention): ProbAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (cross_attention): AttentionLayer<
+          (inner_attention): FullAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (conv1): Conv1d<input_channels=512, output_channels=2048, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd74f0>, bias_init=None, format=NCHW>
+        (conv2): Conv1d<input_channels=2048, output_channels=512, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99cd52d0>, bias_init=None, format=NCHW>
+        (norm1): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.0.norm1.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.0.norm1.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm2): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.0.norm2.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.0.norm2.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm3): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.0.norm3.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.0.norm3.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (dropout): Dropout<p=0.05>
+        >
+      (1): DecoderLayer<
+        (self_attention): AttentionLayer<
+          (inner_attention): ProbAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (cross_attention): AttentionLayer<
+          (inner_attention): FullAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (conv1): Conv1d<input_channels=512, output_channels=2048, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99300cd0>, bias_init=None, format=NCHW>
+        (conv2): Conv1d<input_channels=2048, output_channels=512, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99300d30>, bias_init=None, format=NCHW>
+        (norm1): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.1.norm1.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.1.norm1.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm2): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.1.norm2.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.1.norm2.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm3): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.1.norm3.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.1.norm3.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (dropout): Dropout<p=0.05>
+        >
+      (2): DecoderLayer<
+        (self_attention): AttentionLayer<
+          (inner_attention): ProbAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (cross_attention): AttentionLayer<
+          (inner_attention): FullAttention<
+            (dropout): Dropout<p=0.05>
+            >
+          (query_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (key_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (value_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          (out_projection): Dense<input_channels=512, output_channels=512, has_bias=True>
+          >
+        (conv1): Conv1d<input_channels=512, output_channels=2048, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99301cc0>, bias_init=None, format=NCHW>
+        (conv2): Conv1d<input_channels=2048, output_channels=512, kernel_size=(1, 1), stride=(1, 1), pad_mode=same, padding=(0, 0, 0, 0), dilation=(1, 1), group=1, has_bias=False, weight_init=<mindspore.common.initializer.HeUniform object at 0xffff99301d80>, bias_init=None, format=NCHW>
+        (norm1): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.2.norm1.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.2.norm1.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm2): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.2.norm2.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.2.norm2.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (norm3): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.layers.2.norm3.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.layers.2.norm3.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+        (dropout): Dropout<p=0.05>
+        >
+      >
+    (norm): LayerNorm<normalized_shape=[512], begin_norm_axis=-1, begin_params_axis=-1, gammaParameter (name=decoder.norm.gamma, shape=(512,), dtype=Float32, requires_grad=True), beta=Parameter (name=decoder.norm.beta, shape=(512,), dtype=Float32, requires_grad=True)>
+    >
+  (projection): Dense<input_channels=512, output_channels=1, has_bias=True>
+  >
+>>>>>>>loading : /home/gelu/Informer-MindSpore-master/checkpoints/informer_JFNG_data_15min_ftMS_sl24_ll12_pl4_dm512_nh8_el3_dl3_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Informer_ms_0/checkpoint.ckpt<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>testing : informer_JFNG_data_15min_ftMS_sl24_ll12_pl4_dm512_nh8_el3_dl3_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Informer_ms_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+True
+test 34210
+test shape: (1069, 32, 4, 1) (1069, 32, 4, 1)
+test shape: (34208, 4, 1) (34208, 4, 1)
+mse:0.0605546310544014, mae:0.19545507431030273, rmse:0.2460785061120987
