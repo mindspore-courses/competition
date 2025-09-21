@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+DTU_TESTING="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu"
+CKPT_FILE="checkpoints/model_000001.ckpt"
+CUDA_VISIBLE_DEVICES=0
+python eval.py --dataset=dtu_yao_eval --batch_size=1 --testpath=$DTU_TESTING --testlist lists/dtu/test.txt --loadckpt $CKPT_FILE $@
+# python eval.py --dataset=dtu_yao_eval --batch_size=1 --testpath="F:\DTU\Dataset\dtu\dtu" --testlist lists/dtu/test.txt --loadckpt "model_000014_ms.ckpt" 
+# python eval.py --dataset=dtu_yao_eval --batch_size=1 --testpath="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu" --testlist lists/dtu/test.txt --loadckpt "model_000014_ms.ckpt" 
