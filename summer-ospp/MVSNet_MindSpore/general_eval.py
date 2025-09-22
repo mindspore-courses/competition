@@ -1,5 +1,3 @@
-# 已改完
-# from torch.utils.data import Dataset
 import mindspore
 from mindspore import dataset as Dataset
 from mindspore.dataset import GeneratorDataset
@@ -184,23 +182,9 @@ class MVSDataset():
                     depth_values = np.linspace(disp_max, disp_min, self.ndepths, dtype=np.float32)
                 else:
                     depth_values = np.linspace(disp_min, disp_max, self.ndepths, dtype=np.float32)
-                # depth_values = np.arange(depth_min, depth_interval * (self.ndepths - 0.5) + depth_min, depth_interval,
-                #                          dtype=np.float32)
 
         #all
         imgs = np.stack(imgs).transpose([0, 3, 1, 2])
-        # proj_matrices = np.stack(proj_matrices)
-        # stage1_pjmats = proj_matrices.copy()
-        # stage1_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 0.25
-        # stage2_pjmats = proj_matrices.copy()
-        # stage2_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 1
-        # stage3_pjmats = proj_matrices.copy()
-        # stage3_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 2
-        # proj_matrices_ms = {
-        #     "stage1": stage1_pjmats,
-        #     "stage2": stage2_pjmats,
-        #     "stage3": stage3_pjmats,
-        # }
         proj_matrices = np.stack(proj_matrices)
         stage0_pjmats = proj_matrices.copy()
         stage0_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 0.25
@@ -214,11 +198,6 @@ class MVSDataset():
         stage4_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 4
 
         proj_matrices_ms = {
-            # "stage0": torch.from_numpy(stage0_pjmats.copy()).contiguous().float(),
-            # "stage1": torch.from_numpy(stage1_pjmats.copy()).contiguous().float(),
-            # "stage2": torch.from_numpy(stage2_pjmats.copy()).contiguous().float(),
-            # "stage3": torch.from_numpy(stage3_pjmats.copy()).contiguous().float(),
-            # "stage4": torch.from_numpy(stage4_pjmats.copy()).contiguous().float(),
             "stage0": stage0_pjmats.copy(),
             "stage1": stage1_pjmats.copy(),
             "stage2": stage2_pjmats.copy(),
@@ -226,22 +205,10 @@ class MVSDataset():
             "stage4": stage4_pjmats.copy(),
         }
         
-        # proj_matrices_ms = {
-        #     "stage1": stage1_pjmats,
-        #     "stage2": proj_matrices,
-        #     "stage3": stage3_pjmats,
-        #     "stage4": stage4_pjmats,
-        # }
-        # proj_matrices_ms = torch.from_numpy(proj_matrices_ms.copy()).contiguous().float()
         imgs = mindspore.Tensor.from_numpy(imgs.copy()).contiguous().float()
         depth_values = mindspore.Tensor.from_numpy(depth_values.copy()).contiguous().float()
         
         
-        
-        # return {"imgs": imgs,
-        #         "proj_matrices": proj_matrices_ms,
-        #         "depth_values": depth_values,
-        #         "filename": scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}"}
         filename = scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}"
         filename_np = np.array(filename.encode('utf-8'), dtype=np.bytes_)
         return (
@@ -249,9 +216,6 @@ class MVSDataset():
             proj_matrices_ms,        # "proj_matrices" (多尺度投影矩阵)
             depth_values,            # "depth_values" (ndepths,)
             filename_np
-            # np.array(scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}")  # "filename"
-            # scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}"
-            # np.asarray(scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}")
         )
 if __name__ == "__main__":
     DTU_TESTING="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu"

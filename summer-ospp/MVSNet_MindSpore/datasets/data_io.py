@@ -1,7 +1,6 @@
 import numpy as np
 import re
 import sys
-# import torchvision.transforms as transforms
 import mindspore.dataset.vision as vision
 class Compose:
     """Composes several transforms together.

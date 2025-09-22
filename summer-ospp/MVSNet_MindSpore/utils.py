@@ -13,7 +13,6 @@ def print_args(args):
     print("########################################################################")
 
 
-# torch.no_grad warpper for functions
 def make_nograd_func(func):
     def wrapper(*f_args, **f_kwargs):
         ret = func(*f_args, **f_kwargs)
@@ -76,7 +75,6 @@ def save_scalars(logger, mode, scalar_dict, global_step):
 
 def make_grid_ms(img_tensor, nrow=1, padding=0, normalize=True):
     """
-    替代 torchvision.utils.make_grid 的简单实现
     img_tensor: shape [N, C, H, W]
     """
     if normalize:
@@ -151,7 +149,6 @@ def compute_metrics_for_each_image(metric_func):
         for idx in range(batch_size):
             ret = metric_func(depth_est[idx], depth_gt[idx], mask[idx], *args)
             results.append(ret)
-        # return torch.stack(results).mean()
         return ops.stack(results).mean()
     return wrapper
 
@@ -161,9 +158,6 @@ def compute_metrics_for_each_image(metric_func):
 def Thres_metrics(depth_est, depth_gt, mask, thres):
     assert isinstance(thres, (int, float))
     depth_est_mask, depth_gt_mask = depth_est[mask], depth_gt[mask]
-    # errors = torch.abs(depth_est_mask - depth_gt_mask)
-    # err_mask = errors > thres
-    # return torch.mean(err_mask.float())
     errors = ops.abs(depth_est_mask - depth_gt_mask)
     err_mask = errors > thres
     return ops.mean(err_mask.astype(mindspore.float32))
