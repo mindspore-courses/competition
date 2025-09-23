@@ -1,0 +1,4 @@
+summer-ospp/DistributedRAG/volumes/
+__pycache__/
+*.py[cod]
+*$py.class
