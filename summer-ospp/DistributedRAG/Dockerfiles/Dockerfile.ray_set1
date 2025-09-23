@@ -1,0 +1,3 @@
+FROM hooyu/mindnlp-latest:1
+
+WORKDIR /app
