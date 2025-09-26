@@ -44,7 +44,7 @@ MindSpore 是华为开发的一个全场景AI计算框架，支持端、边、�
   <img src="mindyolo.png" alt="Mindyolo" width="400"/>
 </p>
 - **工作成果**  
-  在本次项目中，使用MindYOLO的YOLOv5作为目标识别的模型，以下是YOLO算法的具体实现步骤：  
+在本次项目中，使用MindYOLO的YOLOv5作为目标识别的模型，以下是YOLO算法的具体实现步骤：  
   （1）划分图像  
   YOLO将输入图像划分为一个固定大小的网格。  
 
