@@ -1,0 +1,44 @@
+[WARNING] ME(239459:281473262508336,MainProcess):2025-08-26-13:51:46.735.3 [mindspore/run_check/_check_version.py:412] Can not find the tbe operator implementation(need by mindspore-ascend). Please check whether the Environment Variable PYTHONPATH is set. For details, refer to the installation guidelines: https://www.mindspore.cn/install
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:549: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
+  setattr(self, word, getattr(machar, word).flat[0])
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
+  return self._float_to_str(self.smallest_subnormal)
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:549: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
+  setattr(self, word, getattr(machar, word).flat[0])
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
+  return self._float_to_str(self.smallest_subnormal)
+[WARNING] ME(239459:281473262508336,MainProcess):2025-08-26-13:51:50.489.609 [mindspore/run_check/_check_version.py:412] Can not find the tbe operator implementation(need by mindspore-ascend). Please check whether the Environment Variable PYTHONPATH is set. For details, refer to the installation guidelines: https://www.mindspore.cn/install
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:50.491.435 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 17 source: 127.0.0.1:36388, destination: 127.0.0.1:8118
+[WARNING] DISTRIBUTED(239459,ffff233361e0,python):2025-08-26-13:51:50.491.434 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:79] ConnectedEventHandler] Connection from 127.0.0.1:36388 to 127.0.0.1:8118 is successfully created. System errno: Success
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:50.491.489 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:494] Connect] Waiting for the state of the connection to 127.0.0.1:8118 to be connected...Retry number: 1
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:50.991.656 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 18 source: 127.0.0.1:36402, destination: 127.0.0.1:8118
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:50.991.692 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:494] Connect] Waiting for the state of the connection to 127.0.0.1:8118 to be connected...Retry number: 2
+[WARNING] DISTRIBUTED(239459,ffff243381e0,python):2025-08-26-13:51:50.991.691 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:79] ConnectedEventHandler] Connection from 127.0.0.1:36402 to 127.0.0.1:8118 is successfully created. System errno: Success
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:51.492.065 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:246] BuildCluster] Topology build timed out., retry(1/1200).
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:51.992.163 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:246] BuildCluster] Topology build timed out., retry(2/1200).
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:52.492.280 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:249] BuildCluster] Cluster is successfully initialized.
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:52.492.436 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:356] PostProcess] This node 5 rank id: 5
+[WARNING] DISTRIBUTED(239459,ffff99d35930,python):2025-08-26-13:51:58.174.131 [mindspore/ccsrc/distributed/collective/collective_manager.cc:338] CreateCommunicationGroup] Start to create communication group: hccl_world_group [const vector]{0, 1, 2, 3, 4, 5, 6, 7}, async: 0, submit_now: 1
+[WARNING] DISTRIBUTED(239459,fffe927fc1e0,python):2025-08-26-13:51:58.174.822 [mindspore/ccsrc/distributed/collective/collective_manager.cc:962] CreateDeviceCommunicator] Begin initialize communication group on the device side: hccl_world_group
+[WARNING] DEVICE(239459,fffe91ffb1e0,python):2025-08-26-13:51:58.175.129 [mindspore/ccsrc/plugin/res_manager/ascend/collective/ascend_communication_group.cc:165] InitializeByRankTable] Start to initialize communicator by HcclCommInitClusterInfoConfig for hccl_world_group, hcclBufferSize is 200 MB. hcclDeterministic is 0
+[WARNING] DEVICE(239459,fffe91ffb1e0,python):2025-08-26-13:51:58.248.635 [mindspore/ccsrc/plugin/res_manager/ascend/collective/ascend_communication_group.cc:175] InitializeByRankTable] End to initialize communicator by HcclCommInitClusterInfoConfig for hccl_world_group
+[WARNING] DISTRIBUTED(239459,fffe927fc1e0,python):2025-08-26-13:51:58.249.209 [mindspore/ccsrc/distributed/collective/collective_manager.cc:973] CreateDeviceCommunicator] End initialize communication group on the device side: hccl_world_group
+Scanning 'coco/train2017.cache.npy' images and labels... 118287 found, 0 missing, 1021 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 118287/118287 [00:00<?, ?it/s]Scanning 'coco/train2017.cache.npy' images and labels... 118287 found, 0 missing, 1021 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 118287/118287 [00:00<?, ?it/s]
+Scanning 'coco/train2017.cache.npy' images and labels... 118287 found, 0 missing, 1021 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 118287/118287 [00:00<?, ?it/s]Scanning 'coco/train2017.cache.npy' images and labels... 118287 found, 0 missing, 1021 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 118287/118287 [00:00<?, ?it/s]
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+[WARNING] package not installed, albumentations load failed
+...........

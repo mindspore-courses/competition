@@ -1,0 +1,162 @@
+[WARNING] ME(206678:281473131714864,MainProcess):2025-08-16-12:26:06.872.856 [mindspore/run_check/_check_version.py:412] Can not find the tbe operator implementation(need by mindspore-ascend). Please check whether the Environment Variable PYTHONPATH is set. For details, refer to the installation guidelines: https://www.mindspore.cn/install
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:549: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
+  setattr(self, word, getattr(machar, word).flat[0])
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
+  return self._float_to_str(self.smallest_subnormal)
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:549: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
+  setattr(self, word, getattr(machar, word).flat[0])
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
+  return self._float_to_str(self.smallest_subnormal)
+[WARNING] ME(206678:281473131714864,MainProcess):2025-08-16-12:26:11.568.197 [mindspore/run_check/_check_version.py:412] Can not find the tbe operator implementation(need by mindspore-ascend). Please check whether the Environment Variable PYTHONPATH is set. For details, refer to the installation guidelines: https://www.mindspore.cn/install
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:11.570.617 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 17 source: 127.0.0.1:60994, destination: 127.0.0.1:8118
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:11.570.676 [mindspore/ccsrc/distributed/rpc/tcp/tcp_client.cc:76] Connect] Failed to connect to the tcp server : 127.0.0.1:8118, retry to reconnect(1/1)...
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:12.070.821 [mindspore/ccsrc/distributed/cluster/topology/compute_graph_node.cc:173] Register] Failed to connect to the meta server node url: 127.0.0.1:8118
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:12.070.888 [mindspore/ccsrc/distributed/cluster/topology/compute_graph_node.cc:363] ReconnectWithTimeoutWindow] Failed to register and try to reconnect to the meta server.
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:12.571.123 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 18 source: 127.0.0.1:32784, destination: 127.0.0.1:8118
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:12.571.154 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:494] Connect] Waiting for the state of the connection to 127.0.0.1:8118 to be connected...Retry number: 1
+[WARNING] DISTRIBUTED(206678,ffff1c5f31e0,python):2025-08-16-12:26:12.571.179 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:79] ConnectedEventHandler] Connection from 127.0.0.1:32784 to 127.0.0.1:8118 is successfully created. System errno: Success
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:13.071.325 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 19 source: 127.0.0.1:32794, destination: 127.0.0.1:8118
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:13.071.354 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:494] Connect] Waiting for the state of the connection to 127.0.0.1:8118 to be connected...Retry number: 2
+[WARNING] DISTRIBUTED(206678,ffff1b5f11e0,python):2025-08-16-12:26:13.071.368 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:79] ConnectedEventHandler] Connection from 127.0.0.1:32794 to 127.0.0.1:8118 is successfully created. System errno: Success
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:13.572.533 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:246] BuildCluster] Topology build timed out., retry(1/1200).
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:14.072.696 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:249] BuildCluster] Cluster is successfully initialized.
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:14.072.894 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:356] PostProcess] This node 0 rank id: 0
+[WARNING] DISTRIBUTED(206678,ffff92079930,python):2025-08-16-12:26:19.790.489 [mindspore/ccsrc/distributed/collective/collective_manager.cc:338] CreateCommunicationGroup] Start to create communication group: hccl_world_group [const vector]{0, 1, 2, 3, 4, 5, 6, 7}, async: 0, submit_now: 1
+[WARNING] DISTRIBUTED(206678,fffe8affd1e0,python):2025-08-16-12:26:19.791.038 [mindspore/ccsrc/distributed/collective/collective_manager.cc:962] CreateDeviceCommunicator] Begin initialize communication group on the device side: hccl_world_group
+[WARNING] DEVICE(206678,fffe8a7fc1e0,python):2025-08-16-12:26:19.792.612 [mindspore/ccsrc/plugin/res_manager/ascend/collective/ascend_communication_group.cc:165] InitializeByRankTable] Start to initialize communicator by HcclCommInitClusterInfoConfig for hccl_world_group, hcclBufferSize is 200 MB. hcclDeterministic is 0
+[WARNING] DEVICE(206678,fffe8a7fc1e0,python):2025-08-16-12:26:19.874.962 [mindspore/ccsrc/plugin/res_manager/ascend/collective/ascend_communication_group.cc:175] InitializeByRankTable] End to initialize communicator by HcclCommInitClusterInfoConfig for hccl_world_group
+[WARNING] DISTRIBUTED(206678,fffe8affd1e0,python):2025-08-16-12:26:19.875.352 [mindspore/ccsrc/distributed/collective/collective_manager.cc:973] CreateDeviceCommunicator] End initialize communication group on the device side: hccl_world_group
+2025-08-16 12:26:22,378 [INFO] parse_args:
+2025-08-16 12:26:22,378 [INFO] task                                    detect
+2025-08-16 12:26:22,378 [INFO] device_target                           Ascend
+2025-08-16 12:26:22,378 [INFO] ms_mode                                 0
+2025-08-16 12:26:22,378 [INFO] ms_amp_level                            O2
+2025-08-16 12:26:22,378 [INFO] ms_enable_graph_kernel                  False
+2025-08-16 12:26:22,378 [INFO] precision_mode                          None
+2025-08-16 12:26:22,378 [INFO] weight                                  ./runs/2025.08.14-10.32.51/weights/EMA_yolov12-n-600_462.ckpt
+2025-08-16 12:26:22,378 [INFO] per_batch_size                          32
+2025-08-16 12:26:22,378 [INFO] img_size                                640
+2025-08-16 12:26:22,378 [INFO] single_cls                              False
+2025-08-16 12:26:22,378 [INFO] rect                                    False
+2025-08-16 12:26:22,378 [INFO] exec_nms                                True
+2025-08-16 12:26:22,378 [INFO] nms_time_limit                          60.0
+2025-08-16 12:26:22,378 [INFO] conf_thres                              0.001
+2025-08-16 12:26:22,378 [INFO] iou_thres                               0.7
+2025-08-16 12:26:22,378 [INFO] conf_free                               True
+2025-08-16 12:26:22,378 [INFO] seed                                    2
+2025-08-16 12:26:22,378 [INFO] log_level                               INFO
+2025-08-16 12:26:22,378 [INFO] save_dir                                ./runs_test/2025.08.16-12.26.19
+2025-08-16 12:26:22,378 [INFO] enable_modelarts                        False
+2025-08-16 12:26:22,378 [INFO] data_url                                
+2025-08-16 12:26:22,378 [INFO] ckpt_url                                
+2025-08-16 12:26:22,378 [INFO] train_url                               
+2025-08-16 12:26:22,378 [INFO] data_dir                                /cache/data/
+2025-08-16 12:26:22,378 [INFO] is_parallel                             True
+2025-08-16 12:26:22,378 [INFO] ckpt_dir                                /cache/pretrain_ckpt/
+2025-08-16 12:26:22,378 [INFO] data.dataset_name                       coco
+2025-08-16 12:26:22,378 [INFO] data.train_set                          ./coco/train2017.txt
+2025-08-16 12:26:22,378 [INFO] data.val_set                            ./coco/val2017.txt
+2025-08-16 12:26:22,378 [INFO] data.nc                                 80
+2025-08-16 12:26:22,378 [INFO] data.names                              ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+2025-08-16 12:26:22,378 [INFO] train_transforms.stage_epochs           [590, 10]
+2025-08-16 12:26:22,378 [INFO] train_transforms.trans_list             [[{'func_name': 'mosaic', 'prob': 1.0}, {'func_name': 'copy_paste', 'prob': 0.1, 'sorted': True}, {'func_name': 'resample_segments'}, {'func_name': 'random_perspective', 'prob': 1.0, 'degrees': 0.0, 'translate': 0.1, 'scale': 0.5, 'shear': 0.0}, {'func_name': 'albumentations'}, {'func_name': 'hsv_augment', 'prob': 1.0, 'hgain': 0.015, 'sgain': 0.7, 'vgain': 0.4}, {'func_name': 'fliplr', 'prob': 0.5}, {'func_name': 'label_norm', 'xyxy2xywh_': True}, {'func_name': 'label_pad', 'padding_size': 160, 'padding_value': -1}, {'func_name': 'image_norm', 'scale': 255.0}, {'func_name': 'image_transpose', 'bgr2rgb': True, 'hwc2chw': True}], [{'func_name': 'letterbox', 'scaleup': True}, {'func_name': 'resample_segments'}, {'func_name': 'random_perspective', 'prob': 1.0, 'degrees': 0.0, 'translate': 0.1, 'scale': 0.5, 'shear': 0.0}, {'func_name': 'albumentations'}, {'func_name': 'hsv_augment', 'prob': 1.0, 'hgain': 0.015, 'sgain': 0.7, 'vgain': 0.4}, {'func_name': 'fliplr', 'prob': 0.5}, {'func_name': 'label_norm', 'xyxy2xywh_': True}, {'func_name': 'label_pad', 'padding_size': 160, 'padding_value': -1}, {'func_name': 'image_norm', 'scale': 255.0}, {'func_name': 'image_transpose', 'bgr2rgb': True, 'hwc2chw': True}]]
+2025-08-16 12:26:22,378 [INFO] data.test_transforms                    [{'func_name': 'letterbox', 'scaleup': False, 'only_image': True}, {'func_name': 'image_norm', 'scale': 255.0}, {'func_name': 'image_transpose', 'bgr2rgb': True, 'hwc2chw': True}]
+2025-08-16 12:26:22,378 [INFO] data.num_parallel_workers               16
+2025-08-16 12:26:22,378 [INFO] epochs                                  600
+2025-08-16 12:26:22,378 [INFO] clip_grad                               True
+2025-08-16 12:26:22,378 [INFO] ms_loss_scaler                          dynamic
+2025-08-16 12:26:22,378 [INFO] ms_loss_scaler_value                    65536.0
+2025-08-16 12:26:22,378 [INFO] overflow_still_update                   False
+2025-08-16 12:26:22,378 [INFO] sync_bn                                 False
+2025-08-16 12:26:22,378 [INFO] anchor_base                             False
+2025-08-16 12:26:22,378 [INFO] opencv_threads_num                      0
+2025-08-16 12:26:22,378 [INFO] optimizer.optimizer                     momentum
+2025-08-16 12:26:22,378 [INFO] optimizer.lr_init                       0.01
+2025-08-16 12:26:22,378 [INFO] optimizer.momentum                      0.937
+2025-08-16 12:26:22,378 [INFO] optimizer.nesterov                      True
+2025-08-16 12:26:22,378 [INFO] optimizer.loss_scale                    1.0
+2025-08-16 12:26:22,378 [INFO] optimizer.warmup_epochs                 3
+2025-08-16 12:26:22,378 [INFO] optimizer.warmup_momentum               0.8
+2025-08-16 12:26:22,378 [INFO] optimizer.warmup_bias_lr                0.0
+2025-08-16 12:26:22,378 [INFO] optimizer.min_warmup_step               1000
+2025-08-16 12:26:22,378 [INFO] optimizer.group_param                   yolov8
+2025-08-16 12:26:22,378 [INFO] optimizer.gp_weight_decay               0.0005
+2025-08-16 12:26:22,378 [INFO] optimizer.start_factor                  1.0
+2025-08-16 12:26:22,378 [INFO] optimizer.end_factor                    0.01
+2025-08-16 12:26:22,378 [INFO] loss.name                               YOLOv12Loss
+2025-08-16 12:26:22,378 [INFO] loss.box                                7.5
+2025-08-16 12:26:22,378 [INFO] loss.cls                                0.5
+2025-08-16 12:26:22,378 [INFO] loss.dfl                                1.5
+2025-08-16 12:26:22,378 [INFO] loss.reg_max                            16
+2025-08-16 12:26:22,378 [INFO] network.model_name                      yolov12
+2025-08-16 12:26:22,378 [INFO] network.nc                              80
+2025-08-16 12:26:22,378 [INFO] network.reg_max                         16
+2025-08-16 12:26:22,378 [INFO] network.stride                          [8, 16, 32]
+2025-08-16 12:26:22,378 [INFO] network.backbone                        [[-1, 1, 'ConvNormAct', [64, 3, 2]], [-1, 1, 'ConvNormAct', [128, 3, 2, 1, 2]], [-1, 2, 'C3k2', [256, False, 0.25]], [-1, 1, 'ConvNormAct', [256, 3, 2, 1, 4]], [-1, 2, 'C3k2', [512, False, 0.25]], [-1, 1, 'ConvNormAct', [512, 3, 2]], [-1, 4, 'A2C2f', [512, True, 4]], [-1, 1, 'ConvNormAct', [1024, 3, 2]], [-1, 4, 'A2C2f', [1024, True, 1]]]
+2025-08-16 12:26:22,378 [INFO] network.head                            [[-1, 1, 'Upsample', ['None', 2, 'nearest']], [[-1, 6], 1, 'Concat', [1]], [-1, 2, 'A2C2f', [512, False, -1]], [-1, 1, 'Upsample', ['None', 2, 'nearest']], [[-1, 4], 1, 'Concat', [1]], [-1, 2, 'A2C2f', [256, False, -1]], [-1, 1, 'ConvNormAct', [256, 3, 2]], [[-1, 11], 1, 'Concat', [1]], [-1, 2, 'A2C2f', [512, False, -1]], [-1, 1, 'ConvNormAct', [512, 3, 2]], [[-1, 8], 1, 'Concat', [1]], [-1, 2, 'C3k2', [1024, True]], [[14, 17, 20], 1, 'YOLOv12Head', ['nc', 'reg_max', 'stride']]]
+2025-08-16 12:26:22,378 [INFO] network.depth_multiple                  0.5
+2025-08-16 12:26:22,378 [INFO] network.width_multiple                  0.25
+2025-08-16 12:26:22,378 [INFO] network.max_channels                    1024
+2025-08-16 12:26:22,378 [INFO] network.scale                           n
+2025-08-16 12:26:22,378 [INFO] config                                  ./configs/yolov12/yolov12-n.yaml
+2025-08-16 12:26:22,378 [INFO] rank                                    0
+2025-08-16 12:26:22,378 [INFO] rank_size                               8
+2025-08-16 12:26:22,378 [INFO] 
+2025-08-16 12:26:23,410 [WARNING] Parse Model, args: nearest, keep str type
+2025-08-16 12:26:23,533 [WARNING] Parse Model, args: nearest, keep str type
+2025-08-16 12:26:24,170 [INFO] number of network params, total: 2.576835M, trainable: 2.553888M
+[WARNING] ME(206678:281473131714864,MainProcess):2025-08-16-12:26:32.766.368 [mindspore/train/serialization.py:1860] For 'load_param_into_net', remove parameter prefix name: ema., continue to load.
+2025-08-16 12:26:32,787 [INFO] Load checkpoint from [./runs/2025.08.14-10.32.51/weights/EMA_yolov12-n-600_462.ckpt] success.
+2025-08-16 12:26:33,429 [INFO] Dataset Cache file hash/version check success.
+2025-08-16 12:26:33,429 [INFO] Load dataset cache from [coco/val2017.cache.npy] success.
+Scanning 'coco/val2017.cache.npy' images and labels... 5000 found, 0 missing, 48 empty, 0 corrupted: 100%|██████████████████████████████████████████████| 5000/5000 [00:00<?, ?it/s]Scanning 'coco/val2017.cache.npy' images and labels... 5000 found, 0 missing, 48 empty, 0 corrupted: 100%|██████████████████████████████████████████████| 5000/5000 [00:00<?, ?it/s]
+2025-08-16 12:26:33,487 [INFO] Dataloader num parallel workers: [16]
+2025-08-16 12:26:33,508 [WARNING] unable to load fast_coco_eval api, use normal one instead
+.2025-08-16 12:27:07,497 [INFO] Sample 20/1, time cost: 32702.13 ms.
+2025-08-16 12:27:08,557 [INFO] Sample 20/2, time cost: 960.61 ms.
+2025-08-16 12:27:09,677 [INFO] Sample 20/3, time cost: 1020.75 ms.
+2025-08-16 12:27:10,772 [INFO] Sample 20/4, time cost: 995.57 ms.
+2025-08-16 12:27:11,833 [INFO] Sample 20/5, time cost: 960.81 ms.
+2025-08-16 12:27:13,262 [INFO] Sample 20/6, time cost: 1329.73 ms.
+2025-08-16 12:27:14,424 [INFO] Sample 20/7, time cost: 1063.18 ms.
+2025-08-16 12:27:15,535 [INFO] Sample 20/8, time cost: 1012.59 ms.
+2025-08-16 12:27:16,653 [INFO] Sample 20/9, time cost: 1018.39 ms.
+2025-08-16 12:27:17,977 [INFO] Sample 20/10, time cost: 1222.72 ms.
+2025-08-16 12:27:19,035 [INFO] Sample 20/11, time cost: 959.19 ms.
+2025-08-16 12:27:20,151 [INFO] Sample 20/12, time cost: 1016.05 ms.
+2025-08-16 12:27:21,393 [INFO] Sample 20/13, time cost: 1142.85 ms.
+2025-08-16 12:27:22,433 [INFO] Sample 20/14, time cost: 941.28 ms.
+2025-08-16 12:27:23,392 [INFO] Sample 20/15, time cost: 859.35 ms.
+2025-08-16 12:27:24,562 [INFO] Sample 20/16, time cost: 1070.44 ms.
+2025-08-16 12:27:25,708 [INFO] Sample 20/17, time cost: 1046.27 ms.
+2025-08-16 12:27:27,238 [INFO] Sample 20/18, time cost: 1430.29 ms.
+2025-08-16 12:27:28,368 [INFO] Sample 20/19, time cost: 1031.16 ms.
+.2025-08-16 12:27:55,617 [INFO] Sample 20/20, time cost: 27194.19 ms.
+2025-08-16 12:27:59,633 [INFO] Loading 8 eval file from directory ./runs_test/2025.08.16-12.26.19/infer/0: ['det_result_rank0_8.json', 'det_result_rank1_8.json', 'det_result_rank2_8.json', 'det_result_rank3_8.json', 'det_result_rank4_8.json', 'det_result_rank5_8.json', 'det_result_rank6_8.json', 'det_result_rank7_8.json'].
+2025-08-16 12:28:05,759 [INFO] loading annotations into memory...
+2025-08-16 12:28:06,548 [INFO] Done (t=0.79s)
+2025-08-16 12:28:06,549 [INFO] creating index...
+2025-08-16 12:28:06,617 [INFO] index created!
+2025-08-16 12:28:06,618 [INFO] Loading and preparing results...
+2025-08-16 12:28:11,663 [INFO] DONE (t=5.04s)
+2025-08-16 12:28:11,663 [INFO] creating index...
+2025-08-16 12:28:12,752 [INFO] index created!
+2025-08-16 12:28:12,764 [INFO] Running per image evaluation...
+2025-08-16 12:28:12,764 [INFO] Evaluate annotation type *bbox*
+2025-08-16 12:29:54,595 [INFO] DONE (t=101.83s).
+2025-08-16 12:29:54,596 [INFO] Accumulating evaluation results...
+2025-08-16 12:30:15,708 [INFO] DONE (t=21.11s).
+2025-08-16 12:30:15,710 [INFO]  Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.396
+2025-08-16 12:30:15,711 [INFO]  Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.556
+2025-08-16 12:30:15,711 [INFO]  Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.430
+2025-08-16 12:30:15,713 [INFO]  Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.193
+2025-08-16 12:30:15,714 [INFO]  Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.439
+2025-08-16 12:30:15,716 [INFO]  Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.574
+2025-08-16 12:30:15,716 [INFO]  Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.324
+2025-08-16 12:30:15,716 [INFO]  Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.540
+2025-08-16 12:30:15,716 [INFO]  Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.594
+2025-08-16 12:30:15,717 [INFO]  Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.359
+2025-08-16 12:30:15,717 [INFO]  Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.660
+2025-08-16 12:30:15,717 [INFO]  Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.783
+2025-08-16 12:30:15,717 [INFO] Speed: 94.4/29.4/123.8 ms inference/NMS/total per 640x640 image at batch-size 32;
+2025-08-16 12:30:15,717 [INFO] Testing completed, cost 244.15s.

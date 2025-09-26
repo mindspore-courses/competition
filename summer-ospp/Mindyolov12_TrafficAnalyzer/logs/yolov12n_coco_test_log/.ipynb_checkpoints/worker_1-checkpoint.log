@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/ma-user/work/mindyolo/test.py", line 12, in <module>
+    from pycocotools.coco import COCO
+  File "/home/ma-user/modelarts-dev/common-algo-toolkit/pycocotools/coco.py", line 52, in <module>
+    from . import mask as maskUtils
+  File "/home/ma-user/modelarts-dev/common-algo-toolkit/pycocotools/mask.py", line 3, in <module>
+    import pycocotools._mask as _mask
+ModuleNotFoundError: No module named 'pycocotools._mask'

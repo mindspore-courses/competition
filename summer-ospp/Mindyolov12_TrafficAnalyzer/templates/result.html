@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>基于MindSpore的YOLOv12实现智能交通分析 - 处理结果</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --bg-accent: #eef3fb;
+      --text: #1f2330;
+      --text-light: #586174;
+      --primary: #2c7be5;
+      --primary-hover: #1b64c2;
+      --border: #d9e2ef;
+      --radius: 14px;
+      --shadow: 0 4px 12px -2px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --gradient: linear-gradient(135deg,#2c7be5 0%, #6a5af9 60%, #8f59ff 100%);
+      --danger:#d93025;
+      --success:#2e8b57;
+    }
+    .dark {
+      --bg: #12161d;
+      --bg-alt: #1e2530;
+      --bg-accent: #262f3b;
+      --text: #e6e9ef;
+      --text-light: #9aa4b1;
+      --primary: #4d8dff;
+      --primary-hover: #3374e6;
+      --border: #2f3b49;
+      --shadow: 0 4px 14px -2px rgba(0,0,0,.6);
+      --gradient: linear-gradient(135deg,#1d62d9 0%, #5840e0 60%, #7c3bdc 100%);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      font-family:"Inter",system-ui,Arial,Helvetica,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      line-height:1.5;
+      padding:0 0 3rem;
+    }
+    header {
+      background:var(--gradient);
+      color:#fff;
+      padding:1.9rem clamp(1rem,3vw,3rem) 1.4rem;
+      position:relative;
+      overflow:hidden;
+    }
+    header::after {
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 15% 120%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(circle at 85% -10%, rgba(255,255,255,.25), transparent 55%);
+      mix-blend-mode:overlay;
+      pointer-events:none;
+    }
+    h1 {
+      margin:0 0 .45rem;
+      font-size:clamp(1.45rem,2.2vw,2.15rem);
+      font-weight:600;
+      letter-spacing:.5px;
+    }
+    header p { margin:0; opacity:.9; font-size:.9rem; }
+    main {
+      max-width:1100px;
+      margin:-2.4rem auto 0;
+      padding:0 clamp(1rem,3vw,3rem);
+      display:grid;
+      gap:1.4rem;
+    }
+    .card {
+      background:var(--bg-alt);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:1.3rem 1.4rem 1.55rem;
+      box-shadow:var(--shadow);
+      position:relative;
+      animation:fade .5s ease;
+    }
+    @keyframes fade { from { opacity:0; transform:translateY(6px);} to { opacity:1; transform:translateY(0);} }
+    .title-row {
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:.9rem;
+      margin:0 0 1rem;
+    }
+    .badge {
+      background:var(--primary);
+      color:#fff;
+      font-size:.7rem;
+      letter-spacing:.5px;
+      padding:.35rem .6rem;
+      border-radius:40px;
+      font-weight:600;
+      text-transform:uppercase;
+    }
+    h2 {
+      margin:0;
+      font-size:1.25rem;
+      font-weight:600;
+      letter-spacing:.5px;
+    }
+    .btns {
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem;
+      margin-top:1rem;
+    }
+    .btn {
+      --btn-bg:var(--primary);
+      background:var(--btn-bg);
+      color:#fff;
+      border:none;
+      padding:.75rem 1.35rem;
+      border-radius:10px;
+      font:500 .9rem/1 "Inter",sans-serif;
+      letter-spacing:.3px;
+      cursor:pointer;
+      display:inline-flex;
+      gap:.45rem;
+      align-items:center;
+      position:relative;
+      box-shadow:0 4px 12px -2px rgba(44,123,229,.4);
+      text-decoration:none;
+      transition:background .25s, transform .25s;
+    }
+    .btn:hover { background:var(--primary-hover); transform:translateY(-2px); }
+    .btn:active { transform:translateY(0); }
+    .secondary {
+      --btn-bg:var(--bg-accent);
+      color:var(--text-light);
+      box-shadow:none;
+      border:1px solid var(--border);
+    }
+    .secondary:hover { background:var(--bg-alt); color:var(--text); }
+    .ghost {
+      --btn-bg:transparent;
+      color:var(--primary);
+      border:1px dashed var(--primary);
+      box-shadow:none;
+    }
+    .ghost:hover { background:rgba(44,123,229,.08); }
+    video {
+      width:100%;
+      max-height:70vh;
+      background:var(--bg-accent);
+      border:1px solid var(--border);
+      border-radius:12px;
+      display:block;
+    }
+    .info {
+      font-size:.8rem;
+      color:var(--text-light);
+      margin-top:.55rem;
+      line-height:1.4;
+    }
+    footer {
+      margin-top:2rem;
+      text-align:center;
+      font-size:.7rem;
+      color:var(--text-light);
+      opacity:.8;
+    }
+    .toggle-theme {
+      position:absolute;
+      top:1rem;
+      right:1rem;
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,.4);
+      padding:.5rem .85rem;
+      border-radius:30px;
+      font-size:.68rem;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      cursor:pointer;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      gap:.35rem;
+      transition:background .3s;
+    }
+    .dark .toggle-theme { background:rgba(0,0,0,.25); border-color:rgba(255,255,255,.25); }
+    .toggle-theme:hover { background:rgba(255,255,255,.28); }
+    .dark .toggle-theme:hover { background:rgba(255,255,255,.15); }
+    .loader {
+      width:40px;
+      aspect-ratio:1;
+      border-radius:50%;
+      border:4px solid var(--border);
+      border-top-color:var(--primary);
+      animation:spin 1s linear infinite;
+      margin:1.4rem auto .8rem;
+    }
+    @keyframes spin { to { transform:rotate(360deg);} }
+    .fade { animation:fade .4s ease; }
+    .alert {
+      margin-top:1rem;
+      font-size:.8rem;
+      color:var(--danger);
+      display:none;
+    }
+    /* 新增：统计样式 */
+    .stats-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+      gap:1rem;
+      margin:1rem 0;
+    }
+    .stat-item {
+      display:flex;
+      align-items:center;
+      gap:.75rem;
+      padding:.8rem;
+      background:var(--bg-accent);
+      border-radius:8px;
+      border:1px solid var(--border);
+    }
+    .stat-icon {
+      font-size:1.5rem;
+      width:2.5rem;
+      height:2.5rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--primary);
+      color:#fff;
+      border-radius:50%;
+      flex-shrink:0;
+    }
+    .stat-content {
+      flex:1;
+    }
+    .stat-value {
+      font-size:1.1rem;
+      font-weight:600;
+      margin:0;
+    }
+    .stat-label {
+      font-size:.8rem;
+      color:var(--text-light);
+      margin:0;
+    }
+    .vehicle-list {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:.5rem;
+      margin:.5rem 0;
+    }
+    .vehicle-item {
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      padding:.5rem .75rem;
+      background:var(--bg-accent);
+      border-radius:6px;
+      font-size:.85rem;
+    }
+    .percentage {
+      color:var(--text-light);
+      font-size:.75rem;
+    }
+    .alert-item {
+      background:rgba(217, 48, 37, .1);
+      border:1px solid rgba(217, 48, 37, .3);
+      border-radius:8px;
+      padding:.75rem;
+      margin:.5rem 0;
+      font-size:.85rem;
+    }
+    .suspicious-item {
+      background:rgba(249, 168, 37, .1);
+      border:1px solid rgba(249, 168, 37, .3);
+      border-radius:8px;
+      padding:.75rem;
+      margin:.5rem 0;
+      font-size:.85rem;
+    }
+    .behavior-tag {
+      display:inline-block;
+      background:var(--warning);
+      color:red;
+      font-size:.7rem;
+      padding:.2rem .4rem;
+      border-radius:4px;
+      margin:.1rem .2rem .1rem 0;
+    }
+    @media (max-width:640px){
+      .btns { flex-direction:column; align-items:stretch; }
+      .toggle-theme { top:.75rem; right:.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button type="button" class="toggle-theme" id="themeToggle" aria-label="切换主题">
+      <span id="themeIcon">🌙</span><span>主题</span>
+    </button>
+    <h1>推理结果</h1>
+    <p>模型已完成车道检测，下面是输出视频。</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="title-row">
+        <span class="badge">Result</span>
+        <h2>处理完成</h2>
+      </div>
+      <p style="margin:.2rem 0 1rem;">可在线预览或下载结果视频。</p>
+
+      <div id="videoWrap" class="fade">
+        <div id="videoLoading">
+          <div class="loader"></div>
+          <div style="text-align:center; font-size:.8rem; color:var(--text-light);">视频加载中...</div>
+        </div>
+        <video id="resultVideo" controls preload="metadata" style="opacity:0.5;"
+               src="{{ url_for('download', filename=video_filename) }}"></video>
+        <div class="alert" id="videoError">视频加载失败，请重试或直接下载。</div>
+      </div>
+
+      <div class="btns">
+        <a class="btn" id="downloadBtn" href="{{ url_for('download', filename=video_filename) }}" download>
+          ⬇️ <span>下载视频</span>
+        </a>
+        <button class="btn ghost" type="button" id="copyLinkBtn">🔗 复制下载链接</button>
+        <a class="btn secondary" href="{{ url_for('index') }}">← 返回首页</a>
+      </div>
+
+      <div class="info">
+        文件名：{{ video_filename }}<br>
+        若视频较大，第一次加载可能需要等待缓冲。可直接下载离线查看。
+      </div>
+    </div>
+
+    <!-- 新增：车辆分类统计卡片 -->
+    {% if summary.vehicle_classification %}
+    <div class="card">
+      <div class="title-row">
+        <span class="badge success">Classification</span>
+        <h2>车辆分类统计</h2>
+      </div>
+      
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-icon">🚗</div>
+          <div class="stat-content">
+            <p class="stat-value">{{ summary.vehicle_classification.total_vehicles_detected }}</p>
+            <p class="stat-label">总检测车辆数</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">📊</div>
+          <div class="stat-content">
+            <p class="stat-value">{{ summary.vehicle_classification.current_frame_total }}</p>
+            <p class="stat-label">当前帧车辆数</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>🏷️ 车辆类型分布</h3>
+      <div class="vehicle-list">
+        {% for vehicle_type, count in summary.vehicle_classification.cumulative_counts.items() %}
+          {% if count > 0 %}
+          <div class="vehicle-item">
+            <span>{{ vehicle_type|vehicle_type_icon }}</span>
+            <span>{{ vehicle_type.title() }}</span>
+            <span style="margin-left:auto; font-weight:600;">{{ count }}</span>
+            <span class="percentage">({{ count|percentage(summary.vehicle_classification.total_vehicles_detected) }}%)</span>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="card">
+      <div class="title-row">
+        <span class="badge">Stats</span>
+        <h2>分析统计</h2>
+      </div>
+      <div style="font-size:.85rem; line-height:1.5;">
+        <strong>时间:</strong> {{ summary.datetime }}<br>
+        <strong>总帧数:</strong> {{ summary.total_frames }} |
+        <strong>总耗时:</strong> {{ summary.total_time_sec }}s |
+        <strong>估算FPS:</strong> {{ summary.fps_estimated }}
+        <hr style="border:none;border-top:1px solid var(--border);margin:.7rem 0;">
+        <strong>车道统计:</strong>
+        <ul style="padding-left:1.1rem; margin:.4rem 0;">
+          {% for lane in summary.lanes %}
+          <li>
+            车道 {{ lane.lane_id }}{% if lane.is_emergency %} (应急){% endif %}：
+            车辆数 {{ lane.vehicle_count }}，
+            平均速度 {{ "%.1f"|format(lane.avg_speed) }} km/h，
+            拥堵 {{ lane.congestion_level }}
+          </li>
+          {% endfor %}
+        </ul>
+        <strong>应急车道违规:</strong> {{ summary.emergency_violations_count }}
+        {% if summary.emergency_violations_count > 0 %}
+        <ol style="padding-left:1.2rem; margin:.4rem 0;">
+          {% for v in summary.emergency_violations[:10] %}
+          <li>
+            ID {{ v.track_id }} {{ v.vehicle_type }} @ {{ v.time_str }}
+            持续 {{ "%.1f"|format(v.duration) }}s 速度 {{ "%.1f"|format(v.speed) }}km/h
+          </li>
+          {% endfor %}
+        </ol>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- 可疑车辆 -->
+    {% if summary.suspicious_vehicles_count > 0 %}
+    <div class="card">
+      <div class="title-row">
+        <span class="badge warning">Suspicious</span>
+        <h2>可疑车辆</h2>
+      </div>
+      <p><strong>检测到可疑车辆:</strong> {{ summary.suspicious_vehicles_count }} 辆</p>
+      {% for vehicle in summary.suspicious_vehicles[:10] %}
+      <div class="suspicious-item">
+        <strong>⚠️ 车辆 ID {{ vehicle.track_id }}</strong> 
+        ({{ vehicle.vehicle_type|vehicle_type_icon }} {{ vehicle.vehicle_type }})
+        <span style="float:right;">评分: {{ "%.1f"|format(vehicle.suspicious_score) }}</span><br>
+        速度: {{ "%.1f"|format(vehicle.speed) }}km/h | 车道: {{ vehicle.lane_id }}<br>
+        可疑行为: 
+        {% for behavior in vehicle.suspicious_behaviors %}
+        <span class="behavior-tag">{{ behavior }}</span>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <footer>基于MindSpore的YOLOv12实现智能交通分析 前端界面 · {{ '%Y'|strftime }} · 支持浅/深色主题</footer>
+  </main>
+
+  <script>
+    (function(){
+      const qs = s=>document.querySelector(s);
+      const video = qs('#resultVideo');
+      const loading = qs('#videoLoading');
+      const themeToggle = qs('#themeToggle');
+      const themeIcon = qs('#themeIcon');
+      const copyBtn = qs('#copyLinkBtn');
+      const errMsg = qs('#videoError');
+      const downloadBtn = qs('#downloadBtn');
+
+      // 主题
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const stored = localStorage.getItem('theme-mode');
+      if(stored === 'dark' || (!stored && prefersDark)){
+        document.documentElement.classList.add('dark');
+        themeIcon.textContent='🌞';
+      }
+      themeToggle.addEventListener('click',()=>{
+        document.documentElement.classList.toggle('dark');
+        const dark = document.documentElement.classList.contains('dark');
+        themeIcon.textContent = dark ? '🌞' : '🌙';
+        localStorage.setItem('theme-mode', dark ? 'dark':'light');
+      });
+
+      // 视频事件
+      let loaded = false;
+      function showVideo(){
+        if(loaded) return;
+        loaded = true;
+        loading.style.display='none';
+        video.style.transition='opacity .5s';
+        video.style.opacity='1';
+      }
+      
+      video.addEventListener('loadeddata', showVideo);
+      video.addEventListener('canplay', showVideo);
+      video.addEventListener('error', (e)=>{
+        console.error('Video error:', e);
+        loading.style.display='none';
+        errMsg.style.display='block';
+        
+        // 获取视频详细信息
+        fetch(`/video_info/{{ video_filename }}`)
+          .then(r => r.json())
+          .then(data => {
+            console.log('Video info:', data);
+            if(data.error) {
+              errMsg.innerHTML = `视频加载失败: ${data.error}<br>建议直接下载查看`;
+            }
+          })
+          .catch(err => console.error('Failed to get video info:', err));
+      });
+
+      // 复制下载链接
+      copyBtn.addEventListener('click', ()=>{
+        const url = downloadBtn.href;
+        navigator.clipboard.writeText(url).then(()=>{
+          copyBtn.textContent='✅ 已复制';
+          copyBtn.disabled=true;
+          setTimeout(()=>{
+            copyBtn.textContent='🔗 复制下载链接';
+            copyBtn.disabled=false;
+          },1800);
+        }).catch(()=>{
+          copyBtn.textContent='❌ 失败';
+          setTimeout(()=> copyBtn.textContent='🔗 复制下载链接',1600);
+        });
+      });
+
+      // 提供快捷键：按 D 下载
+      document.addEventListener('keydown', e=>{
+        if(e.key.toLowerCase()==='d'){
+          downloadBtn.click();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

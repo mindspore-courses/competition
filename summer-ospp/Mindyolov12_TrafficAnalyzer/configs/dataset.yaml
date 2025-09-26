@@ -1,0 +1,14 @@
+data:
+  dataset_name: VOC2028_YOLO
+
+  train_set: ./VOC2028_YOLO/images/train  # 118287 images
+  val_set: ./VOC2028_YOLO/images/val  # 5000 images
+  test_set: ./VOC2028_YOLO/images/test  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+
+  nc: 2
+
+  # class names
+  names: ['hat', 'person']
+
+  train_transforms: []
+  test_transforms: []
