@@ -141,21 +141,22 @@ YOLO算法的目标检测的速度非常快，标准版本的YOLO可以每秒处
 
 ### 5️⃣ 鸿蒙终端 UI 界面开发
 - **技术方案**  
-  使用 DevEco Studio + ArkTS 语言开发上位机界面，ArkTS支持声明式UI、状态管理和静态类型，适合高性能HarmonyOS应用开发。  
-<p align="center">
-  <img src="HarmonyOS.png" alt="鸿蒙" width="400"/>
-</p>
-- **工作成果** 
+    使用 DevEco Studio + ArkTS 语言开发上位机界面，ArkTS支持声明式UI、状态管理和静态类型，适合高性能HarmonyOS应用开发。  
+    <p align="center">
+      <img src="HarmonyOS.png" alt="鸿蒙" width="400"/>
+    </p>
 
-  界面功能模块包括：  
-  1. 运动控制（前进/后退/左转/右转）  
-  2. 舵机控制（左右/上下）  
-  3. 速度调节（高/中/低）  
-  4. 视频回传  
-  5. 信息交互（UDP文字显示）
-<p align="center">
-  <img src="鸿蒙终端控制界面.jpg" alt="鸿蒙界面" width="400"/>
-</p>
+- **工作成果**  
+    界面功能模块包括：  
+    1. 运动控制（前进/后退/左转/右转）  
+    2. 舵机控制（左右/上下）  
+    3. 速度调节（高/中/低）  
+    4. 视频回传  
+    5. 信息交互（UDP文字显示）  
+    <p align="center">
+      <img src="鸿蒙终端控制界面.jpg" alt="鸿蒙界面" width="400"/>
+    </p>
+
 
 ### 6️⃣ 智能网联车构造设计和模拟沙盘
 - **技术方案**  
