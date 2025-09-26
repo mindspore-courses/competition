@@ -35,14 +35,15 @@
 
 ### 1️⃣ 目标识别模型训练
 - **技术方案**  
-本项目的模型训练基于开源物体检测数据集COCO2017，使用华为云ModelArts训练Mindyolo模型。COCO2017数据集是2017年发布的COCO数据集的一个版本,主要用于COCO在2017年后持有的物体检测任务、关键点检测任务和全景分割任务。COCO2017共包含训练集118287张，验证集5000张，80分类。以下是数据集的目录格式：
-<p align="center">
-  <img src="coco.png" alt="coco数据集" width="300" height="300"/>
-</p>
-MindSpore 是华为开发的一个全场景AI计算框架，支持端、边、云全场景的 AI 应用开发。MindYOLO作为MindSpore生态的一部分，充分利用了MindSpore 的高性能和灵活性。YOLO系列算法MindYOLO实现了多种YOLO系列算法，包括 YOLOv8、YOLOv7、YOLOX、YOLOv5、YOLOv4和YOLOv3。这些算法在目标检测领域具有广泛的应用，MindYOLO 为这些算法的实现和优化提供了统一的框架。MindYOLO的目标是为研究人员和开发者提供一个灵活且标准化的工具包，以便他们能够重新实现现有的实时目标检测方法，并开发自己的新方法。
-<p align="center">
-  <img src="mindyolo.png" alt="Mindyolo" width="400"/>
-</p>
+本项目的模型训练基于开源物体检测数据集COCO2017，使用华为云ModelArts训练Mindyolo模型。COCO2017数据集是2017年发布的COCO数据集的一个版本,主要用于COCO在2017年后持有的物体检测任务、关键点检测任务和全景分割任务。COCO2017共包含训练集118287张，验证集5000张，80分类。以下是数据集的目录格式：  
+    <p align="center">
+      <img src="coco.png" alt="coco数据集" width="300" height="300"/>
+    </p>  
+MindSpore 是华为开发的一个全场景AI计算框架，支持端、边、云全场景的 AI 应用开发。MindYOLO作为MindSpore生态的一部分，充分利用了MindSpore 的高性能和灵活性。YOLO系列算法MindYOLO实现了多种YOLO系列算法，包括 YOLOv8、YOLOv7、YOLOX、YOLOv5、YOLOv4和YOLOv3。这些算法在目标检测领域具有广泛的应用，MindYOLO 为这些算法的实现和优化提供了统一的框架。MindYOLO的目标是为研究人员和开发者提供一个灵活且标准化的工具包，以便他们能够重新实现现有的实时目标检测方法，并开发自己的新方法。  
+    <p align="center">
+      <img src="mindyolo.png" alt="Mindyolo" width="400"/>
+    </p>  
+
 在本次项目中，使用MindYOLO的YOLOv5作为目标识别的模型，以下是YOLO算法的具体实现步骤：  
   （1）划分图像  
   YOLO将输入图像划分为一个固定大小的网格。  
@@ -59,20 +60,23 @@ MindSpore 是华为开发的一个全场景AI计算框架，支持端、边、�
   （5）非最大抑制  
   在预测的边界框中，可能存在多个相互重叠的框，代表同一个目标。为了消除冗余的边界框，YOLO使用非最大抑制算法，根据置信度和重叠程度筛选出最佳的边界框。  
 
-  YOLO算法的目标检测的速度非常快，标准版本的YOLO可以每秒处理45张图像，YOLO的极速版本每秒可以处理150帧图像。这就意味着YOLO可以小于25毫秒延迟，实时地处理视频。YOLO算法的迁移能力也比较强，可以快速运用到其他新的领域，完成特定需求的目标识别任务。基于以上的特点，可以将训练好的YOLO算法模型部署至边缘计算设备，在适用于所要实现的目标识别任务同时，还保证识别的高实时性和高准确性。  
+YOLO算法的目标检测的速度非常快，标准版本的YOLO可以每秒处理45张图像，YOLO的极速版本每秒可以处理150帧图像。这就意味着YOLO可以小于25毫秒延迟，实时地处理视频。YOLO算法的迁移能力也比较强，可以快速运用到其他新的领域，完成特定需求的目标识别任务。基于以上的特点，可以将训练好的YOLO算法模型部署至边缘计算设备，在适用于所要实现的目标识别任务同时，还保证识别的高实时性和高准确性。  
 
-- **工作成果**
-  华为ModelArts 是一个一站式的AI开发平台，它提供了从数据准备到模型训练、部署等一系列的功能。下面是使用华为ModelArts的基本步骤：登录华为云控制台，在华为云控制台中，找到“人工智能”分类下的“ModelArts”服务，点击ModelArts图标进入ModelArts控制台。ModelArts需要使用华为云的对象存储服务（OBS）来存储数据集。在ModelArts控制台中，选择“数据管理”，然后点击“创建OBS桶”。  
+- **工作成果**  
+    华为ModelArts 是一个一站式的AI开发平台，它提供了从数据准备到模型训练、部署等一系列的功能。下面是使用华为ModelArts的基本步骤：登录华为云控制台，在华为云控制台中，找到“人工智能”分类下的“ModelArts”服务，点击ModelArts图标进入ModelArts控制台。ModelArts需要使用华为云的对象存储服务（OBS）来存储数据集。在ModelArts控制台中，选择“数据管理”，然后点击“创建OBS桶”。  
 
-  由于容量限制，以下是在OBS Browsers+中创建的数据集：  
- <p align="center">
-  <img src="obs.png" alt="数据集创建" width="400"/>
-</p>
-  在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。
-  <p align="center">
-  <img src="jupyter.png" alt="模型训练" width="400"/>
-</p>
-  训练结束后，调用mindyolo开发套件的export接口进行模型转换，将训练好的ckpt文件转为onnx模型文件。然后针对OrangePi AIpro板卡，在ATC转换模型完成后，即可得到适用于模型推理的om模型文件。
+    由于容量限制，以下是在OBS Browsers+中创建的数据集：  
+    <p align="center">
+      <img src="obs.png" alt="数据集创建" width="400"/>
+    </p>  
+
+    在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。  
+    <p align="center">
+      <img src="jupyter.png" alt="模型训练" width="400"/>
+    </p>  
+
+    训练结束后，调用 mindyolo 开发套件的 export 接口进行模型转换，将训练好的 ckpt 文件转为 onnx 模型文件。然后针对 OrangePi AIpro 板卡，在 ATC 转换模型完成后，即可得到适用于模型推理的 om 模型文件。
+
 
 ### 2️⃣ 车道线检测
 - **技术方案**  
