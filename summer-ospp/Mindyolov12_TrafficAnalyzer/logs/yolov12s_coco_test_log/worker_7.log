@@ -1,26 +1,0 @@
-[WARNING] ME(160474:281473180338480,MainProcess):2025-08-22-18:13:38.349.473 [mindspore/run_check/_check_version.py:412] Can not find the tbe operator implementation(need by mindspore-ascend). Please check whether the Environment Variable PYTHONPATH is set. For details, refer to the installation guidelines: https://www.mindspore.cn/install
-/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:500: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
-  setattr(self, word, getattr(machar, word).flat[0])
-/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
-  return self._float_to_str(self.smallest_subnormal)
-/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:500: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
-  setattr(self, word, getattr(machar, word).flat[0])
-/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
-  return self._float_to_str(self.smallest_subnormal)
-[WARNING] ME(160474:281473180338480,MainProcess):2025-08-22-18:13:42.933.571 [mindspore/run_check/_check_version.py:412] Can not find the tbe operator implementation(need by mindspore-ascend). Please check whether the Environment Variable PYTHONPATH is set. For details, refer to the installation guidelines: https://www.mindspore.cn/install
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:42.935.416 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 17 source: 127.0.0.1:57816, destination: 127.0.0.1:8118
-[WARNING] DISTRIBUTED(160474,ffff1d77a1e0,python):2025-08-22-18:13:42.935.421 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:79] ConnectedEventHandler] Connection from 127.0.0.1:57816 to 127.0.0.1:8118 is successfully created. System errno: Success
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:42.935.473 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:494] Connect] Waiting for the state of the connection to 127.0.0.1:8118 to be connected...Retry number: 1
-[WARNING] DISTRIBUTED(160474,ffff1e77c1e0,python):2025-08-22-18:13:43.435.773 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:79] ConnectedEventHandler] Connection from 127.0.0.1:57818 to 127.0.0.1:8118 is successfully created. System errno: Success
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:43.435.761 [mindspore/ccsrc/distributed/rpc/tcp/tcp_comm.cc:485] Connect] Connection 18 source: 127.0.0.1:57818, destination: 127.0.0.1:8118
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:43.436.647 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:246] BuildCluster] Topology build timed out., retry(1/1200).
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:43.936.791 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:249] BuildCluster] Cluster is successfully initialized.
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:43.936.990 [mindspore/ccsrc/distributed/cluster/cluster_context.cc:356] PostProcess] This node 7 rank id: 7
-[WARNING] DISTRIBUTED(160474,ffff94ed8930,python):2025-08-22-18:13:49.645.548 [mindspore/ccsrc/distributed/collective/collective_manager.cc:338] CreateCommunicationGroup] Start to create communication group: hccl_world_group [const vector]{0, 1, 2, 3, 4, 5, 6, 7}, async: 0, submit_now: 1
-[WARNING] DISTRIBUTED(160474,fffe94ff91e0,python):2025-08-22-18:13:49.646.179 [mindspore/ccsrc/distributed/collective/collective_manager.cc:962] CreateDeviceCommunicator] Begin initialize communication group on the device side: hccl_world_group
-[WARNING] DEVICE(160474,fffe73fff1e0,python):2025-08-22-18:13:49.646.608 [mindspore/ccsrc/plugin/res_manager/ascend/collective/ascend_communication_group.cc:165] InitializeByRankTable] Start to initialize communicator by HcclCommInitClusterInfoConfig for hccl_world_group, hcclBufferSize is 200 MB. hcclDeterministic is 0
-[WARNING] DEVICE(160474,fffe73fff1e0,python):2025-08-22-18:13:49.729.592 [mindspore/ccsrc/plugin/res_manager/ascend/collective/ascend_communication_group.cc:175] InitializeByRankTable] End to initialize communicator by HcclCommInitClusterInfoConfig for hccl_world_group
-[WARNING] DISTRIBUTED(160474,fffe94ff91e0,python):2025-08-22-18:13:49.730.024 [mindspore/ccsrc/distributed/collective/collective_manager.cc:973] CreateDeviceCommunicator] End initialize communication group on the device side: hccl_world_group
-[WARNING] ME(160474:281473180338480,MainProcess):2025-08-22-18:14:03.106.615 [mindspore/train/serialization.py:1860] For 'load_param_into_net', remove parameter prefix name: ema., continue to load.
-Scanning 'coco/val2017.cache.npy' images and labels... 5000 found, 0 missing, 48 empty, 0 corrupted: 100%|█████████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<?, ?it/s]Scanning 'coco/val2017.cache.npy' images and labels... 5000 found, 0 missing, 48 empty, 0 corrupted: 100%|█████████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<?, ?it/s]
-..
