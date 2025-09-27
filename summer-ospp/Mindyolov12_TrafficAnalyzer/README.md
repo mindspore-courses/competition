@@ -51,14 +51,14 @@
 
 准备好COCO2017数据集，首先将其转换为YOLO格式，如图4所示；然后将数据集按照如图5所示的文件结构放置。
 
-<div style="text-align: center;">
+<p align="center">
 <img src="./figures/YOLO数据集格式.png" alt="YOLO数据集格式" style="zoom:67%;" />
-</div>
+</p>
 <p align="center">图4 YOLO数据集格式</p>
 
-<div style="text-align: center;">
+<p align="center">
 <img src="./figures/数据集文件放置形式.png" alt="数据集文件放置形式" style="zoom:67%;" />
-</div>
+</p>
 <p align="center">图5 数据集文件放置形式</p>
 
 **2.环境准备**
@@ -109,26 +109,26 @@ msrun --worker_num=8 --local_worker_num=8 --bind_core=True --log_dir=./yolov12_l
 
   解决方案：这个错误是由于安装`pycocotools`包时其缺少了`_mask`这个API导致的报错，需要手动解决。以下是基于Linux系统的解决方案：
 
-​	(1)首先需要去github上下载COCOAPI，git指令为：
+(1)首先需要去github上下载COCOAPI，git指令为：
 
 ```shell
 git clone https://github.com/cocodataset/cocoapi.git
 ```
 
-​	(2)下载好之后需要进到PythonAPI文件夹，运行指令：
+(2)下载好之后需要进到PythonAPI文件夹，运行指令：
 
 ```shell
 cd cocoapi/PythonAPI
 ```
 
-​	(3)进入文件夹之后，执行以下两条指令：
+(3)进入文件夹之后，执行以下两条指令：
 
-```c++
+```shell
 python setup.py build_ext --inplace
 python setup.py build_ext install
 ```
 
-​	重新运行验证代码，就能够解决报错。
+重新运行验证代码，就能够解决报错。
 
 + 问题二：在进行模型验证时报错`module 'numpy' has no attribute 'float'`
 
