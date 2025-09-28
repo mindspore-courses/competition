@@ -140,7 +140,7 @@
 - **工作成果**  
   成功在OrangePi AIpro上运行YOLO模型，实现行人、小汽车等目标检测，并通过UDP发送检测结果，实现实时反馈。
 <p align="center">
-  <img src="目标识别图.png" alt="目标识别图" width="400"/>
+  <img src="目标识别.png" alt="目标识别图" width="400"/>
 </p>
 
 ### 5️⃣ 鸿蒙终端 UI 界面开发
