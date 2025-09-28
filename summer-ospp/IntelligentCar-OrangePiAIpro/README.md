@@ -120,7 +120,7 @@
 - **工作成果** 
   根据计算的偏移量，控制智能车做出相应调整（左微调AL、右微调AR、直行F），并通过UDP协议将偏移量发送到鸿蒙终端，实现车道保持功能。
 <p align="center">
-  <img src="转向.png" alt="车道转向图" width="400"/>
+  <img src="转弯.png" alt="车道转向图" width="400"/>
 </p>
 
 ### 4️⃣ OrangePi AIpro 模型部署
