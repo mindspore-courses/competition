@@ -31,6 +31,7 @@
 <p align="center">图1 YOLOv12s推理结果</p>
 
 ## 智能交通分析
+智能交通分析演示：
 <img src="./figures/traffic_analysis.gif">
 
 项目使用`HTML+CSS+JavaScript`作为前端，Python的`flask`库作为后端进行web界面开发，前端界面主要包含两个：一个是上传视频及参数选择界面，如图2所示，另一个是检测结果界面，如图3，4所示。
