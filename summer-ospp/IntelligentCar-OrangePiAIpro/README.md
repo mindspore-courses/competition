@@ -134,7 +134,8 @@
 <p align="center">
   <img src="流程.png" alt="推理流程图" width="400"/>
 </p>
-    模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
+
+  模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
 
 - **工作成果**  
   成功在OrangePi AIpro上运行YOLO模型，实现行人、小汽车等目标检测，并通过UDP发送检测结果，实现实时反馈。
