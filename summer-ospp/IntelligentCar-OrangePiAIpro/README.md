@@ -135,7 +135,7 @@
   <img src="流程.png" alt="推理流程图" width="400"/>
 </p>
 
-     模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
+  模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
 <p align="center">
   <img src="流程图.png" alt="推理流程" width="400"/>
 </p>
