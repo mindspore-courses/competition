@@ -103,6 +103,10 @@ msrun --worker_num=8 --local_worker_num=8 --bind_core=True --log_dir=./yolov12_l
 ```
 
 ### 使用智能交通分析页面
+智能交通分析演示：
+<video src="./figures/traffic_analysis.mp4" width="1280" height="720">
+  智能交通分析
+</video>
 
 + 车道`json`文件按照以下格式准备，`video_width`和`video_height`指原视频的宽高，`points`的四个坐标分别是车道区域的左下、左上、右上、右下方向，`is_emergency`为`true`代表为紧急车道。
 
