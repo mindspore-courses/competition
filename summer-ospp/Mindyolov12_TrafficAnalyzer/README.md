@@ -46,7 +46,7 @@
 
 <p align="center">图3 前端推理结果界面2</p>
 
-## 快速开始
+## 快速开始本项目
 
 ### 模型迁移
 
@@ -104,7 +104,90 @@ msrun --worker_num=8 --local_worker_num=8 --bind_core=True --log_dir=./yolov12_l
 
 ### 使用智能交通分析页面
 
-执行`python web.py`，上传视频、选择车道JSON文件、模型配置及权重即可。
++ 车道`json`文件按照以下格式准备，`video_width`和`video_height`指原视频的宽高，`points`的四个坐标分别是车道区域的左下、左上、右上、右下方向，`is_emergency`为`true`代表为紧急车道。
+
+```c++
+{
+  "video_width": 1920,
+  "video_height": 1080,
+  "lanes": [
+    {
+      "id": 0,
+      "points": [
+        [0,150],
+        [400,0],
+        [480,0],
+        [0,250]
+      ],
+      "is_emergency": true
+    },
+    {
+      "id": 1,
+      "points": [
+        [0,250],
+        [480,0],
+        [510,0],
+        [0,400]
+      ],
+      "is_emergency": false
+    },
+    {
+      "id": 2,
+      "points": [
+        [0,400],
+        [510,0],
+        [560,0],
+        [50,750]
+      ],
+      "is_emergency": false
+    },
+    {
+      "id": 3,
+      "points": [
+        [50,750],
+        [560,0],
+        [630,0],
+        [350,1080]
+      ],
+      "is_emergency": false
+    },
+    {
+      "id": 4,
+      "points": [
+        [350,1080],
+        [630,0],
+        [700,0],
+        [960,1080]
+      ],
+      "is_emergency": false
+    },
+    {
+      "id": 5,
+      "points": [
+        [960,1080],
+        [700,0],
+        [750,0],
+        [1500,1080]
+      ],
+      "is_emergency": false
+    },
+    {
+      "id": 6,
+      "points": [
+        [1500,1080],
+        [750,0],
+        [850,0],
+        [1920,900]
+      ],
+      "is_emergency": true
+    }
+  ]
+}
+```
+
++ 根据需求修改`traffic_flow_manager.py`中`estimate_realistic_speed`的`base_speeds`变量。
+
++ 执行`python web.py`，上传视频、选择车道`json`文件、模型配置`yaml`文件及权重`ckpt`文件即可。
 
 ### 可能出现的问题
 
