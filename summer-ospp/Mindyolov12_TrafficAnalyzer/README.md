@@ -15,10 +15,8 @@
 
 项目基于MindSpore框架和Mindyolo项目复现了YOLOv12模型，使用与论文相同的参数，在COCO数据集下进行验证的结果如表1所示。
 
-<style> .center  {   width: auto;   display: table;   margin-left: auto;   margin-right: auto; } </style>
-
 <p align="center">表1 YOLOv12验证结果（单位：%）</p>
-<div class="center">
+<div class="center" style="width: auto;display: table;margin-left: auto;margin-right: auto;">
 
 |          | $AP_{50:95}^{val}$ | $AP_{75}^{val}$ | $AP_{95}^{val}$ | $AP_{samll}^{val}$ | $AP_{medium}^{val}$ | $AP_{large}^{val}$ |
 | :------: | :----------------: | :-------------: | :-------------: | :----------------: | :-----------------: | :----------------: |
