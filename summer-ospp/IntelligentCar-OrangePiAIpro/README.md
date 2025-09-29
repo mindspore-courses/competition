@@ -43,7 +43,7 @@
    YOLO系列算法，包括 YOLOv8、YOLOv7、YOLOX、YOLOv5、YOLOv4和YOLOv3。这些算法在目标检测领域具有广泛的应用，MindYOLO 为这些算法的实现和优化提供了统一的框架。MindYOLO的目标是为研究人员和开发
    者提供一个灵活且标准化的工具包，以便他们能够重新实现现有的实时目标检测方法，并开发自己的新方法。  
     <p align="center">
-      <img src="mindyolo.png" alt="Mindyolo" width="400"/>
+      <img src="pictures/mindyolo.png" alt="Mindyolo" width="400"/>
     </p>  
     在本次项目中，使用MindYOLO的YOLOv5作为目标识别的模型，以下是YOLO算法的具体实现步骤：  
     
@@ -70,12 +70,12 @@
 
     由于容量限制，以下是在OBS Browsers+中创建的数据集：  
     <p align="center">
-      <img src="obs.png" alt="数据集创建" width="400"/>
+      <img src="pictures/obs.png" alt="数据集创建" width="400"/>
     </p>  
 
     在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。  
     <p align="center">
-      <img src="jupyter.png" alt="模型训练" width="400"/>
+      <img src="pictures/jupyter.png" alt="模型训练" width="400"/>
     </p>  
 
     训练结束后，调用 mindyolo 开发套件的 export 接口进行模型转换，将训练好的 ckpt 文件转为 onnx 模型文件。然后针对 OrangePi AIpro 板卡，在 ATC 转换模型完成后，即可得到适用于模型推理的 om      模型文件。
@@ -107,20 +107,20 @@
 - **工作成果**  
   根据Canny算子提取的边缘图像，在感兴趣区域（ROI）内使用概率霍夫直线变换检测左右车道线，并通过最近几帧车道线队列平滑，最终绘制稳定车道线，实现车道线检测功能。
 <p align="center">
-  <img src="车道线.png" alt="车道线检测" width="400"/>
+  <img src="pictures/车道线.png" alt="车道线检测" width="400"/>
 </p>
 
 ### 3️⃣ 车道偏移量计算
 - **技术方案**   
   车道偏移量计算是根据左右车道线位置估计车道中心位置，并计算车道中心与车辆图像中心的偏差。偏移量的正负值表示车辆偏离车道中心的方向。  
 <p align="center">
-  <img src="中位线.png" alt="车道偏移" width="300"/>
+  <img src="pictures/中位线.png" alt="车道偏移" width="300"/>
 </p>
 
 - **工作成果** 
   根据计算的偏移量，控制智能车做出相应调整（左微调L、右微调R、直行F），并通过UDP协议将偏移量发送到鸿蒙终端，实现车道保持功能。
 <p align="center">
-  <img src="转弯.png" alt="车道转向图" width="400"/>
+  <img src="pictures/转弯.png" alt="车道转向图" width="400"/>
 </p>
 
 ### 4️⃣ OrangePi AIpro 模型部署
@@ -132,25 +132,25 @@
   4. 可视化：使用PIL在图像上绘制边框和类别标签。  
   5. 结果发送：通过UDP发送JSON数据给终端。  
 <p align="center">
-  <img src="流程.png" alt="推理流程图" width="400"/>
+  <img src="pictures/流程.png" alt="推理流程图" width="400"/>
 </p>
 
   模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
 <p align="center">
-  <img src="流程图.png" alt="推理流程" width="400"/>
+  <img src="pictures/流程图.png" alt="推理流程" width="400"/>
 </p>
 
 - **工作成果**  
   成功在OrangePi AIpro上运行YOLO模型，实现行人、小汽车等目标检测，并通过UDP发送检测结果，实现实时反馈。
 <p align="center">
-  <img src="目标识别.jpg" alt="目标识别图" width="400"/>
+  <img src="pictures/目标识别.jpg" alt="目标识别图" width="400"/>
 </p>
 
 ### 5️⃣ 鸿蒙终端 UI 界面开发
 - **技术方案**  
     使用 DevEco Studio + ArkTS 语言开发上位机界面，ArkTS支持声明式UI、状态管理和静态类型，适合高性能HarmonyOS应用开发。  
     <p align="center">
-      <img src="HarmonyOS.png" alt="鸿蒙" width="400"/>
+      <img src="pictures/HarmonyOS.png" alt="鸿蒙" width="400"/>
     </p>
 
 - **工作成果**  
@@ -161,7 +161,7 @@
     4. 视频回传  
     5. 信息交互（UDP文字显示）  
     <p align="center">
-      <img src="鸿蒙终端控制界面.jpg" alt="鸿蒙界面" width="400"/>
+      <img src="pictures/鸿蒙终端控制界面.jpg" alt="鸿蒙界面" width="400"/>
     </p>
 
 
@@ -178,10 +178,10 @@
 
   以下是智能车的整体搭建图：
     <p align="center">
-      <img src="小车1.png" alt="小车图1" width="400"/>
+      <img src="pictures/小车1.png" alt="小车图1" width="400"/>
     </p>
     <p align="center">
-      <img src="小车2.png" alt="小车图2" width="400"/>
+      <img src="pictures/小车2.png" alt="小车图2" width="400"/>
     </p>
 
 - **工作成果**  
@@ -192,7 +192,7 @@
 
     以下是实验场景图：
     <p align="center">
-      <img src="地图布置.png" alt="地图布置" width="400"/>
+      <img src="pictures/地图布置.png" alt="地图布置" width="400"/>
     </p>
 
 </p>
