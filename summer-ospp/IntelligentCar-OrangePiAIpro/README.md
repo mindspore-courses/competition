@@ -37,7 +37,7 @@
 - **技术方案**  
    本项目的模型训练基于开源物体检测数据集COCO2017，使用华为云ModelArts训练Mindyolo模型。COCO2017数据集是2017年发布的COCO数据集的一个版本,主要用于COCO在2017年后持有的物体检测任务、关键        任务和全景分割任务。COCO2017共包含训练集118287张，验证集5000张，80分类。以下是数据集的目录格式：  
     <p align="center">
-      <img src="coco.png" alt="coco数据集" width="300" height="300"/>
+      <img src="pictures/coco.png" alt="coco数据集" width="300" height="300"/>
     </p>  
    MindSpore 是华为开发的一个全场景AI计算框架，支持端、边、云全场景的 AI 应用开发。MindYOLO作为MindSpore生态的一部分，充分利用了MindSpore 的高性能和灵活性。YOLO系列算法MindYOLO实现了多种
    YOLO系列算法，包括 YOLOv8、YOLOv7、YOLOX、YOLOv5、YOLOv4和YOLOv3。这些算法在目标检测领域具有广泛的应用，MindYOLO 为这些算法的实现和优化提供了统一的框架。MindYOLO的目标是为研究人员和开发
