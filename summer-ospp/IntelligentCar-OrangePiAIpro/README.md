@@ -194,8 +194,7 @@
     <p align="center">
       <img src="pictures/地图布置.png" alt="地图布置" width="400"/>
     </p>
-
-</p>
+    
 ---
 
 ## ⚠️ 三、遇到的问题及解决方案
