@@ -13,6 +13,11 @@
       ├── info_label
       └── radar_tesseract
   ```
+  关于pypcd库的修改：
+      将pypcd/pypcd.py第15行的 import cStringIO as sio 替换为 import io as sio
+  
+  # 模型权重
+  提供adapted_v1.ckpt和adapted_v2.ckpt两个版本的模型权重，分别基于Kradar数据集的revision v1.0 和 v2.0训练。
 
   # 预处理
 
@@ -24,4 +29,8 @@
 
     ```python
       python evaluate.py --src ./dataset_dir --cfg ./config/kradar.json --dst ./processed_data
+    ```
+  # 可视化Demo
+    ```python
+      python demo.py 
     ```

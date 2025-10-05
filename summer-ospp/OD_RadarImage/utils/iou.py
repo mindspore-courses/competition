@@ -87,7 +87,6 @@ def iou3d(boxes1: ms.Tensor, boxes2: ms.Tensor) -> ms.Tensor:
     # Flatten inputs (B, N, 8, 3) -> (B * N, 8, 3)
     boxes1 = boxes1.flatten(0, 1)
     boxes2 = boxes2.flatten(0, 1)
-
     # Initialize iou
     iou_3d = ops.zeros((B*N,B*M), dtype=boxes1.dtype)
 
@@ -101,7 +100,7 @@ def iou3d(boxes1: ms.Tensor, boxes2: ms.Tensor) -> ms.Tensor:
     mask = ops.logical_and(*ops.meshgrid(mask_1, mask_2, indexing='ij'))
     # Check if inputs contain valid entries
     if not mask.any():
-        return iou_3d.reshape((B, N, M))
+        return iou_3d.reshape((B, N, M)),0
     
     # Get intersection over union
     _, iou_3d_valid = box3d_overlap(boxes1[mask_1], boxes2[mask_2])
@@ -111,8 +110,10 @@ def iou3d(boxes1: ms.Tensor, boxes2: ms.Tensor) -> ms.Tensor:
         
     # Reconstruct input shape
     iou_3d = iou_3d.reshape((B, N, M))
-
-    return iou_3d
+    max_iou=ops.max(iou_3d,axis=1)
+    print("sample iou is:",max_iou[0][0][0])
+    print("max id is:",max_iou[1][0][0])
+    return iou_3d,max_iou[1][0][0]
 
 
 def giou3d(boxes1: ms.Tensor, boxes2: ms.Tensor) -> ms.Tensor:

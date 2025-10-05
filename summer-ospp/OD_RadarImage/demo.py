@@ -5,7 +5,7 @@ from collections import defaultdict
 from mindspore import load_param_into_net,ops
 import numpy as np
 from datasets import init 
-from evaluation.exporters import build as build_exporter
+# from evaluation.exporters import build as build_exporter
 from evaluation.metric import build_metric
 from vis import DetectionVisualizer
 
@@ -21,7 +21,7 @@ ms.set_context(
 )
 
 config=load_config('./config/kradar.json')
-param_dict= ms.load_checkpoint("adapted_v1.ckpt")
+param_dict= ms.load_checkpoint("./weights/adapted_v1.ckpt")
 model=build('dpft',config)
 load_param_into_net(model,param_dict)
 
@@ -47,7 +47,6 @@ model.set_train(False)
 
 res=model(inputs)
 print("inference completed")
-
 targets=defaultdict(list)
 for i in range(6):
     for k,v in test_dataset[i][1].items():
@@ -57,11 +56,11 @@ for k,v in targets.items():
 
 metric=build_metric(config['evaluate'])
 score,idx=metric(res,targets)
-
+print(score)
 
 sample_detections = {}
 for k,v in res.items():
-    sample_detections[k]=np.array(v[0,idx[0],:])
+    sample_detections[k]=np.array(v[0,idx[0][0][1],:])
 
 sample_detections = [sample_detections]
 print(sample_detections)
