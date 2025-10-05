@@ -1,55 +1,77 @@
 services:
-  # Ray Head 节点
   ray-head:
     build:
-      context: .
-      dockerfile: Dockerfile.ray
+      context: ./Dockerfiles/
+      dockerfile: Dockerfile.ray_set2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     ports:
       - "8265:8265"
+      - "6379:6379" 
       - "10001:10001"
- 
-    shm_size: '4gb' 
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_HOME=/usr/local/cuda-11.6
+      - PATH=/usr/local/cuda-11.6/bin:${PATH}
+      - LD_LIBRARY_PATH=/usr/local/cuda-11.6/lib64:${LD_LIBRARY_PATH}
+      - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+      - PYTHONPATH=/app
 
-    command: bash -c "ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 --num-cpus=4 --block"
+    volumes:
+      - ./rag_models_cache:/app/.mindnlp/model
+      - ./main_app2:/app
     networks:
       - rag_net
-    volumes:
-      # 将本地目录挂载到我们新指定的/models路径
-      - ./rag_models_cache:/app/.mindnlp/model
-    
-    
+    shm_size: '10gb'
+    command: ray start --head --port=6379 --dashboard-host=0.0.0.0 --block
 
-  # Ray Worker 节点 
   ray-worker:
     build:
-      context: .
-      dockerfile: Dockerfile.ray
-    depends_on:
-      - ray-head
-    # 
-    shm_size: '8gb'
-    command: ray start --address=ray-head:6379 --num-cpus=8 --block
+      context: ./Dockerfiles/
+      dockerfile: Dockerfile.ray_set2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_HOME=/usr/local/cuda-11.6
+      - PATH=/usr/local/cuda-11.6/bin:${PATH}
+      - LD_LIBRARY_PATH=/usr/local/cuda-11.6/lib64:${LD_LIBRARY_PATH}
+      - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+      - PYTHONPATH=/app
+    volumes:
+      - ./rag_models_cache:/app/.mindnlp/model
+      - ./main_app2:/app
     networks:
       - rag_net
-    environment:
-      - HF_HOME=/models
-    volumes:
-      # 将本地目录挂载到我们新指定的/models路径
-      - ./rag_models_cache:/app/.mindnlp/model
+    shm_size: '10gb'
+    command: ray start --address=ray-head:6379 --num-gpus=1 --num-cpus=8 --block
 
-
-  # ---------------------------------------------------
-  # 3. 主应用服务 
-  # 运行 Streamlit, 作为 Ray Client 向 Ray 集群提交任务
-  # ---------------------------------------------------
   main_app:
     build:
-      context: ./main_app
+      context: ./Dockerfiles/
+      dockerfile: Dockerfile.set2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     ports:
       - "7860:7860" 
     volumes:
-      - ./main_app:/app
-      - ./test_data:/app/test_data
+      - ./main_app2:/app
+      - ./rag_models_cache:/app/.mindnlp/model
     environment:
       - RAY_ADDRESS=ray://ray-head:10001
       
@@ -58,10 +80,12 @@ services:
       - MINIO_SECRET_KEY=minioadmin
       - MILVUS_HOST=standalone
       - MILVUS_PORT=19530
-      
-      # LLM-Actor下不再需要独立的 embedding 和 llm 服务地址
-      # - EMBEDDING_SERVER_URL=http://embedding-server/embed
-      # - LLM_SERVER_URL=http://llm-server/generate
+
+      - CUDA_HOME=/usr/local/cuda-11.6
+      - PATH=/usr/local/cuda-11.6/bin:${PATH}
+      - LD_LIBRARY_PATH=/usr/local/cuda-11.6/lib64:${LD_LIBRARY_PATH}
+      - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+      - PYTHONPATH=/app
     depends_on:
       standalone:
         condition: service_healthy
@@ -69,11 +93,10 @@ services:
         condition: service_started
     networks:
       - rag_net
+    shm_size: '10gb'
     command: streamlit run main.py --server.port=7860 --server.address=0.0.0.0 --server.enableCORS=false
 
-  # ===================================================
-  # Milvus, MinIO, ETCD 配置 
-  # ===================================================
+# 数据库容器配置
 
   etcd:
     container_name: rag-etcd
@@ -145,9 +168,6 @@ services:
     networks:
       - rag_net
 
-# ---------------------------------------------------
-# 顶层配置
-# ---------------------------------------------------
 networks:
   rag_net:
     name: rag_net
