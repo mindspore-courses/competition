@@ -223,8 +223,6 @@ class DPFT(nn.Cell):
         # Feature extraction
         features = {input: self.backbones[input](batch[input]) for input in self.inputs}
 
-        # for k,v in features['camera_mono'].items():
-        #     print(k,v[0,:10,10,0],v.dtype)
 
         # Add input features (skip link)
         features = {
