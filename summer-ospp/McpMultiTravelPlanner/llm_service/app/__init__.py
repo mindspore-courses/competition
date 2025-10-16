@@ -22,7 +22,7 @@ def create_app():
     torch.npu.set_option(option)
 
     # 加载模型和分词器
-    DEFAULT_CKPT_PATH = '/home/ma-user/work/Qwen2-7B-Instruct'
+    DEFAULT_CKPT_PATH = './app/models/Qwen2-7B-Instruct'
     global model
     if model is None:
         model = AutoModelForCausalLM.from_pretrained(

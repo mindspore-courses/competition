@@ -1,0 +1,305 @@
+absl-py==1.4.0
+accelerate==0.24.1
+aclruntime @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/torch/tools/msit/aclruntime-0.0.2-cp310-cp310-linux_aarch64.whl#sha256=70338b2783dae888371cb3b8f657b409bd9e05d77cc7148a13647d7b5073c995
+addict==2.4.0
+aiohappyeyeballs==2.4.8
+aiohttp==3.11.13
+aiosignal==1.3.2
+ais-bench @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/torch/tools/msit/ais_bench-0.0.2-py3-none-any.whl#sha256=77c6b35f3116415a8e289824c6bb0ed245ece9fded6b9ff15cb70c7a90fcd5a6
+akg @ file:///usr/local/mindspore-lite/mindspore-lite-2.4.10-linux-aarch64/tools/akg/akg-2.2-cp310-cp310-linux_aarch64.whl#sha256=7dc9caea1f02ee47b44c56024941c43c26b9b10083956b7197a54390986d76b9
+albumentations==1.3.1
+annotated-types==0.7.0
+anyio==4.11.0
+arrow==1.3.0
+astroid==3.0.3
+asttokens==3.0.0
+astunparse==1.6.3
+async-timeout==5.0.1
+attrs==23.2.0
+auto_tune @ file:///root/selfgz856716304/compiler/lib64/auto_tune-0.1.0-py3-none-any.whl
+Automat==24.8.1
+backcall==0.2.0
+beautifulsoup4==4.14.2
+binaryornot==0.4.4
+bleach==6.2.0
+blinker==1.9.0
+blosc2==2.7.1
+boto3==1.23.10
+botocore==1.26.10
+certifi==2025.1.31
+cffi==1.16.0
+chardet==5.2.0
+charset-normalizer==3.4.1
+click==8.1.8
+click-aliases==1.0.5
+cloudpickle==3.1.1
+coloredlogs==15.0.1
+configparser==6.0.0
+constantly==23.10.4
+contourpy==1.3.1
+cookiecutter==2.6.0
+coverage==7.3.0
+cryptography==44.0.2
+cycler==0.12.1
+Cython==3.0.2
+dask==2024.2.1
+dataflow @ file:///root/selfgz856716304/compiler/lib64/dataflow-0.0.1-py3-none-any.whl
+datasets==2.18.0
+debugpy==1.8.12
+decorator==5.1.1
+defusedxml==0.7.1
+dill==0.3.8
+docopt==0.6.2
+easydict==1.12
+ecdsa==0.19.1
+einops==0.8.0
+entrypoints==0.4
+esdk-obs-python==3.23.12
+et_xmlfile==2.0.0
+exceptiongroup==1.2.2
+executing==2.2.0
+Farama-Notifications==0.0.4
+fastjsonschema==2.21.2
+filelock==3.17.0
+Flask==2.3.3
+flask-cors==5.0.1
+flatbuffers==25.2.10
+fonttools==4.56.0
+frozenlist==1.5.0
+fsspec==2024.2.0
+ftfy==6.3.1
+gast==0.6.0
+gnureadline==8.2.10
+greenlet==3.1.1
+grpcio==1.60.0
+grpcio-tools==1.60.0
+gunicorn==21.2.0
+gymnasium==1.2.1
+h11==0.16.0
+h5py==3.9.0
+hccl @ file:///root/selfgz2397022245/hccl/lib64/hccl-0.1.0-py3-none-any.whl
+hccl_parser @ file:///usr/local/Ascend/ascend-toolkit/8.0.0/toolkit/tools/hccl_parser-0.1-py3-none-any.whl
+httpcore==1.0.9
+httpx==0.28.1
+httpx-sse==0.4.3
+huaweicloud-sdk-python-modelarts-dataset @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/compiled-wheel/huaweicloud_sdk_python_modelarts_dataset-0.1.5-py2.py3-none-any.whl#sha256=171cfad0191538159ed8b80a89dc278d81014bee5695a4b4510957e412cff8dc
+huaweicloudsdkcore==3.1.58
+huggingface-hub==0.29.1
+humanfriendly==10.0
+hyperlink==21.0.0
+idna==3.10
+ijson==3.3.0
+imageio==2.37.0
+importlib_metadata==8.6.1
+incremental==24.7.2
+iniconfig==2.0.0
+ipykernel==6.7.0
+ipython==8.12.3
+isort==5.13.2
+itsdangerous==2.2.0
+jedi==0.19.2
+jieba==0.42.1
+Jinja2==3.1.5
+jmespath==1.0.1
+joblib==1.4.2
+jsonschema==4.25.1
+jsonschema-specifications==2025.9.1
+jupyter_client==7.4.9
+jupyter_core==5.7.2
+jupyterlab_pygments==0.3.0
+keras==3.2.1
+kiwisolver==1.4.5
+lazy-import==0.2.2
+lazy_loader==0.4
+Levenshtein==0.26.1
+libcst==1.2.0
+llm_datadist @ file:///root/selfgz856716304/compiler/lib64/llm_datadist-0.0.1-py3-none-any.whl
+llvmlite==0.41.1
+locket==1.0.0
+lxml==5.1.0
+ma-cli @ https://cnnorth305-modelarts-sdk.obs.cn-north-305.tjaicc.com/modelarts/ma-cli/ma_cli-latest-py3-none-any.whl
+ma_mindstudio_insight @ file:///modelarts/tools/visualization/ma_mindstudio_insight/dist/ma_mindstudio_insight-1.0.0-py3-none-any.whl
+ma_tensorboard @ file:///modelarts/tools/visualization/ma_tensorboard/dist/ma_tensorboard-1.0.0-py3-none-any.whl
+Markdown==3.7
+markdown-it-py==3.0.0
+MarkupSafe==3.0.2
+marshmallow==3.26.1
+matplotlib==3.7.3
+matplotlib-inline==0.1.7
+mccabe==0.7.0
+mcp==1.17.0
+mdurl==0.1.2
+mindarmour @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/mindspore/mindarmour-2.0.0-py3-none-any.whl#sha256=6371fdb5168ec11ed1f1fe33b0964234f39d077d7d169f1aa63ac46b4c5e3f1e
+mindformers @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/mindspore/mindformers-1.3.2-py3-none-any.whl#sha256=e3c96ac5b08b8f2cd34b89883dd49f4a250555c7b615251543ba76b44f16353e
+mindinsight @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/mindspore/mindinsight-2.3.0-py3-none-any.whl#sha256=a2221854c12465b62a58b08411379b07cf0b6f3015d476a14fee461790b43dea
+mindpet==1.0.4
+mindspore @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/mindspore/mindspore-2.4.10-cp310-cp310-linux_aarch64.whl#sha256=dec974642000ea3ba3d3da98ca158a389743333eec72ad52076eb812e294b9fa
+mindspore_lite @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/mindspore_lite/py310/mindspore_lite-2.4.10-cp310-cp310-linux_aarch64.whl#sha256=184acafb4ec1fbf295d5857e3efdc7e6559c25d67451c2f0d19227d2a300c96a
+mindstudio-probe==1.2.0
+mindx_elastic @ http://100.95.151.167:6868/aarch64/euler/dls-release/euleros-arm/Ascend/run/nocoupling_aarch64_run_20250120_7.0.0/mindx_elastic-6.0.0-py3-none-linux_aarch64.whl#sha256=30bc398b372d6bed5afa6627753a755afe3f9dec429dd9b67feac394678aa151
+mistune==3.1.4
+ml_dtypes==0.5.1
+mmcv==2.0.1
+mmengine==0.10.7
+mock==5.1.0
+modelarts @ https://cnnorth305-modelarts-sdk.obs.cn-north-305.tjaicc.com/modelarts-latest-py2.py3-none-any.whl
+modelarts-mindspore-model-server @ http://100.95.151.167:6868/aarch64/euler/dls-release/euler-2.8/modelarts_service/modelarts_mindspore_model_server-1.0.6-py3-none-any.whl#sha256=1f87c03ef2b81af40d2e4f8b31454b2aa82df5fa899aedeeb969b9754818287c
+moxing-framework @ http://100.95.151.167:6868/aarch64/euler/dls-release/ubuntu-16.04/moxing_framework/moxing_framework-2.2.10-py2.py3-none-any.whl#sha256=07d43edd1b3f2081172343d0afb83ea210e67e055c0eaa98b715296335218721
+mpi4py==3.1.6
+mpmath==1.3.0
+msgpack==1.1.0
+msit==7.0.0rc1230
+msit-benchmark @ file:///home/ma-user/anaconda3/envs/MindSpore/lib/python3.10/site-packages/components/benchmark
+msit-compare @ file:///home/ma-user/anaconda3/envs/MindSpore/lib/python3.10/site-packages/components/debug/compare
+msit-surgeon @ file:///home/ma-user/anaconda3/envs/MindSpore/lib/python3.10/site-packages/components/debug/surgeon
+msobjdump @ file:///usr/local/Ascend/ascend-toolkit/8.0.0/toolkit/tools/msobjdump-0.1.0-py3-none-any.whl
+msprof-analyze==1.3.4
+multidict==6.1.0
+multiprocess==0.70.16
+mypy-extensions==1.0.0
+namex==0.0.8
+nbclient==0.10.2
+nbconvert==7.16.6
+nbformat==5.10.4
+ndindex==1.9.2
+nest-asyncio==1.6.0
+networkx==3.4.2
+nltk==3.9.1
+numba==0.58.1
+numexpr==2.8.6
+numpy==1.23.0
+onnx==1.17.0
+onnxconverter-common==1.14.0
+onnxruntime==1.15.1
+op_compile_tool @ file:///root/selfgz856716304/compiler/lib64/op_compile_tool-0.1.0-py3-none-any.whl
+op_gen @ file:///usr/local/Ascend/ascend-toolkit/8.0.0/toolkit/tools/op_gen-0.1-py3-none-any.whl
+op_test_frame @ file:///usr/local/Ascend/ascend-toolkit/8.0.0/toolkit/tools/op_test_frame-0.1-py3-none-any.whl
+opc_tool @ file:///root/selfgz856716304/compiler/lib64/opc_tool-0.1.0-py3-none-any.whl
+opencv-python==4.9.0.80
+opencv-python-headless==4.8.1.78
+openpyxl==3.1.5
+optree==0.14.1
+packaging==24.2
+pandas==1.3.5
+pandocfilters==1.5.1
+parso==0.8.4
+partd==1.4.2
+pathlib2==2.3.7.post1
+pexpect==4.9.0
+pickleshare==0.7.5
+pillow==10.3.0
+pipreqs==0.5.0
+platformdirs==4.3.6
+pluggy==1.5.0
+prettytable==3.15.1
+prometheus-client==0.14.1
+prompt_toolkit==3.0.50
+propcache==0.3.0
+protobuf==3.20.2
+psutil==6.0.0
+ptyprocess==0.7.0
+pure_eval==0.2.3
+py-cpuinfo==9.0.0
+pyarrow==12.0.1
+pyarrow-hotfix==0.6
+pyasn1==0.5.1
+pycocotools==2.0.7
+pycparser==2.22
+pycryptodome==3.21.0
+pydantic==2.12.2
+pydantic-settings==2.11.0
+pydantic_core==2.41.4
+Pygments==2.19.1
+pylint==3.0.2
+pynndescent==0.5.13
+pyOpenSSL==25.0.0
+pyparsing==3.2.1
+pypng==0.20220715.0
+pytest==7.4.3
+python-dateutil==2.9.0.post0
+python-dotenv==1.1.1
+python-multipart==0.0.20
+python-slugify==8.0.4
+pytz==2025.1
+PyWavelets==1.4.1
+PyYAML==6.0.2
+pyzmq==26.2.1
+qudida==0.0.4
+RapidFuzz==3.10.1
+redis==5.1.1
+referencing==0.37.0
+regex==2024.11.6
+requests==2.32.2
+requests-toolbelt==1.0.0
+rich==13.9.4
+rouge-chinese==1.0.3
+rpds-py==0.27.1
+s3transfer==0.5.2
+safetensors==0.5.3
+sb3_contrib==2.7.0
+schedule_search @ file:///root/selfgz856716304/compiler/lib64/schedule_search-0.1.0-py3-none-any.whl
+scikit-image==0.22.0
+scikit-learn==1.5.1
+scipy==1.12.0
+semantic-version==2.10.0
+sentencepiece==0.2.0
+setproctitle==1.3.5
+show_kernel_debug_data @ file:///usr/local/Ascend/ascend-toolkit/8.0.0/toolkit/tools/show_kernel_debug_data-0.1.0-py3-none-any.whl
+simplejson==3.20.1
+six==1.17.0
+skl2onnx==1.18.0
+sniffio==1.3.1
+soupsieve==2.8
+SQLAlchemy==2.0.38
+sse-starlette==3.0.2
+stable_baselines3==2.7.0
+stack-data==0.6.3
+starlette==0.48.0
+sympy==1.13.0
+tables==3.9.2
+tabulate==0.9.0
+tailor @ http://100.95.151.167:6868/aarch64/euler/ascend-tools/tailor/tailor-0.3.4-py3-none-any.whl#sha256=5dea89e0203cb4a2423347f3531b3f65bdc67880c9ab825c552c58f040294a88
+te @ file:///root/selfgz856716304/compiler/lib64/te-0.4.0-py3-none-any.whl
+tenacity==8.2.2
+tensorboard==2.19.0
+tensorboard-data-server==0.7.2
+termcolor==2.5.0
+terminaltables==3.1.10
+text-unidecode==1.3
+threadpoolctl==3.5.0
+tifffile==2025.2.18
+tiktoken==0.9.0
+tinycss2==1.4.0
+tokenizers==0.15.0
+tomli==2.2.1
+tomlkit==0.13.2
+toolz==1.0.0
+torch==2.4.0
+torch-npu==2.4.0
+tornado==6.4.2
+tqdm==4.66.1
+traitlets==5.14.3
+transformers==4.39.2
+transformers-stream-generator==0.0.5
+treelib==1.7.1
+Twisted==24.11.0
+types-python-dateutil==2.9.0.20241206
+typing-inspect==0.9.0
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2025.1
+umap-learn==0.5.6
+urllib3==1.26.7
+uvicorn==0.37.0
+wcwidth==0.2.13
+webencodings==0.5.1
+Werkzeug==3.0.3
+XlsxWriter==3.2.2
+xmltodict==0.13.0
+xxhash==3.5.0
+yapf==0.43.0
+yarg==0.1.9
+yarl==1.18.3
+zhdate==0.1
+zipp==3.21.0
+zope.interface==7.2
