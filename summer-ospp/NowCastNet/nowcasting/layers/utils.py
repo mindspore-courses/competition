@@ -34,22 +34,41 @@ def change_alpha(x):
     alpha[x >= 2] = 1
     return alpha
 
-def plt_img(field, label, interval=10, fig_name="", vmin=1, vmax=40, cmap="viridis"):
-    target_idx = 0
-    _, axs = plt.subplots(1, 2, figsize=(10, 4))
+def plt_img(field, label, idx, plot_evo=False, evo=None, interval=10, fig_name="", vmin=1, vmax=40, cmap="viridis"):
+    fig, axs = plt.subplots(2, 3, figsize=(12, 8))
     
-    alpha = change_alpha(label[target_idx])
-    _ = axs[0].imshow(label[target_idx], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
-    axs[0].set_title(f"Ground Truth - {interval} min")
-    axs[0].set_axis_off()
+    def set_enhanced_title(ax, text, color='navy'):
+        ax.set_title(text, fontsize=12, fontweight='bold', pad=10,
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor=color, alpha=0.1, edgecolor=color))
+        ax.set_axis_off()
     
-    alpha = change_alpha(field[target_idx])
-    _ = axs[1].imshow(field[target_idx], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
-    axs[1].set_title(f"Prediction - {interval} min")
-    axs[1].set_axis_off()
+    alpha = change_alpha(label[idx[0]])
+    _ = axs[0][0].imshow(label[idx[0]], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
+    set_enhanced_title(axs[0][0], f"Ground Truth\n{idx[0] * interval + interval} min", 'darkblue')
+    
+    alpha = change_alpha(label[idx[1]])
+    _ = axs[0][1].imshow(label[idx[1]], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
+    set_enhanced_title(axs[0][1], f"Ground Truth\n{idx[1] * interval + interval} min", 'darkblue')
+    
+    alpha = change_alpha(label[idx[2]])
+    _ = axs[0][2].imshow(label[idx[2]], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
+    set_enhanced_title(axs[0][2], f"Ground Truth\n{idx[2] * interval + interval} min", 'darkblue')
+    
+    alpha = change_alpha(field[idx[0]])
+    _ = axs[1][0].imshow(field[idx[0]], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
+    set_enhanced_title(axs[1][0], f"Prediction\n{idx[0] * interval + interval} min", 'darkred')
+    
+    alpha = change_alpha(field[idx[1]])
+    _ = axs[1][1].imshow(field[idx[1]], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
+    set_enhanced_title(axs[1][1], f"Prediction\n{idx[1] * interval + interval} min", 'darkred')
+    
+    alpha = change_alpha(field[idx[2]])
+    _ = axs[1][2].imshow(field[idx[2]], alpha=alpha, vmin=vmin, vmax=vmax, cmap=cmap)
+    set_enhanced_title(axs[1][2], f"Prediction\n{idx[2] * interval + interval} min", 'darkred')
     
     plt.tight_layout()
-    plt.savefig(fig_name, dpi=180, bbox_inches='tight')
+    plt.subplots_adjust(top=0.9, hspace=0.1, wspace=0.05)
+    plt.savefig(fig_name, dpi=200, bbox_inches='tight', facecolor='white')
     plt.show()
     plt.close()
 
@@ -107,4 +126,3 @@ class SpectralNormal(nn.Cell):
             input_perm.insert(0, self.dim)
             self.weight = ops.transpose(self.weight, input_perm)
         return self.weight.reshape(self.weight.shape[0], -1)
-

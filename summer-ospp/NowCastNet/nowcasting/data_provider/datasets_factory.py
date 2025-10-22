@@ -32,10 +32,16 @@ class NowcastDataset(Dataset):
 
     def create_dataset(self, batch_size):
         ds.config.set_prefetch_size(1)
-        dataset = ds.GeneratorDataset(self.dataset_generator,
-                                        ['inputs', 'evo', 'labels'],
-                                        shuffle=self.shuffle,
-                                        num_parallel_workers=self.num_workers)
+        if self.module_name == 'generation':
+            dataset = ds.GeneratorDataset(self.dataset_generator,
+                                            ['inputs', 'evo', 'labels'],
+                                            shuffle=self.shuffle,
+                                            num_parallel_workers=self.num_workers)
+        else:
+            dataset = ds.GeneratorDataset(self.dataset_generator,
+                                ['inputs'],
+                                shuffle=self.shuffle,
+                                num_parallel_workers=self.num_workers)
         if self.distribute:
             distributed_sampler_train = ds.DistributedSampler(self.rank_size, self.rank_id)
             dataset.use_sampler(distributed_sampler_train)
