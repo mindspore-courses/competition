@@ -14,14 +14,79 @@ MindSpore生成式套件提供了ASR（自动语音识别）、LM（语言模型
 Python 3.9+
 FastAPI
 Uvicorn
+### 安装步骤
 
+
+
+1. **准备模型文件**
+```bash
+pip install mindspore
+
+```
+
+2. **配置环境**
+```bash
+cd ../../
+pip install -r requestment.txt
+
+3. **启动服务**
+```bash
+npm run dev
+
+cd ../llm_service
+python app.py
+```
+### 项目结构
+─BankAI-Assistant
+│  ├─bankagent              # 银行代理服务模块
+│  │  ├─app.py              # 代理服务主程序
+│  │  ├─asr.py              # 语音识别服务
+│  │  ├─tts.py              # 文本转语音服务
+│  │  ├─luyin.py            # 录音功能模块
+│  │  ├─huaweicloud_sis.py   # 华为云语音接口
+│  │  ├─utils_audio.py       # 音频处理工具
+│  │  ├─env.example          # 环境配置示例
+│  │  └─requirements.txt     # Python依赖包列表
+│  ├─bank-user              # 银行用户管理模块
+│  │  ├─app.py              # 用户服务主程序
+│  │  ├─account_manager.py   # 账户管理功能
+│  │  ├─asr.py              # 语音识别模块
+│  │  ├─recommend.py         # 智能推荐功能
+│  │  ├─dify_integration.py  # Dify平台集成
+│  │  ├─generate_test_data.py # 测试数据生成
+│  │  ├─test_asr.py          # 语音识别测试
+│  │  ├─accounts.json        # 账户数据文件
+│  │  ├─bank_users.json      # 用户信息数据
+│  │  └─bank_users_en.json   # 英文用户数据
+│  ├─tencent_tts            # 腾讯语音服务模块
+│  │  ├─app.py              # TTS服务主程序
+│  │  ├─asr.py              # 语音识别功能
+│  │  ├─tts.py              # 文本转语音核心
+│  │  ├─utils_audio.py      # 音频工具函数
+│  │  ├─requirements.txt    # 依赖包配置
+│  │  ├─audio_storage       # 音频文件存储
+│  │  │  ├─tts_*.mp3        # 生成的语音文件
+│  │  │  └─english_output.mp3 # 英文语音输出
+│  │  └─__pycache__         # Python编译缓存
+│  │      └─speech_client.cpython-39.pyc # 语音客户端缓存
+│  ├─shared                 # 共享工具模块
+│  │  ├─account_manager.py  # 通用账户管理
+│  │  ├─import_requests.py  # 请求处理工具
+│  │  ├─test_encoding.py    # 编码测试工具
+│  │  ├─accounts.json       # 共享账户数据
+│  │  ├─bank_users.json     # 共享用户数据
+│  │  ├─tickets.json       # 业务票据数据
+│  │  └─tts_output          # 共享语音输出
+│  │      ├─tts_*.mp3      # 语音输出文件
+│  └─docs                   # 项目文档
+│      ├─README.md          # 项目说明文档
 #运行结果演示
 <img width="346" height="254" alt="image" src="https://github.com/user-attachments/assets/f9062331-9432-42d6-b933-e219ca4a1e01" />
 <img width="373" height="564" alt="image" src="https://github.com/user-attachments/assets/d5901fec-de79-4d64-972d-5b8590723293" />
 <img width="364" height="387" alt="image" src="https://github.com/user-attachments/assets/fb2e7158-c828-48a6-aff4-50408b9d16af" />
 <img width="335" height="409" alt="image" src="https://github.com/user-attachments/assets/ab9ba678-8891-4959-9abf-4c473e8cb4da" />
 
-项目完成时间：2024年暑期 | 技术栈：Python + FastAPI + 规则引擎 + 语音技术
+项目完成时间：2025年暑期 | 技术栈：Python + FastAPI + 规则引擎 + 语音技术
 
 
 
