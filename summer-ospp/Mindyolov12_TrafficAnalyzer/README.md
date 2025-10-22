@@ -48,6 +48,115 @@
 
 <p align="center">图3 前端推理结果界面2</p>
 
+## 所使用的MindSpore组件
+
+**1.mindspore.nn**
+
+用于构建神经网络中的预定义构建块或计算单元。在`AAttn`, `ABlock`, `A2C2f`模块以及YOLOv12模型的代码中，都使用了`nn`组件来搭建网络，其中使用的最多的是：
+
+```python
+nn.Cell # 所有神经网络层的基类，构建网络结构都需要继承该类
+nn.CellList # 用于包装多个Cell的容器
+nn.SequentialCell #同于顺序执行多个Cell的容器
+nn.Conv2d #2D卷积层
+Parameter #可训练参数
+```
+
+**2.mindspore.ops**
+
+mindspore.ops提供了大量的function接口，包括神经网络函数、数学运算函数、Tensor操作函数、Parameter操作函数、微分函数等。在`AAttn`, `ABlock`, `A2C2f`模块以及YOLOv12模型的代码中，使用的最多的`ops`算子是：
+
+```python
+# 基础算子
+ops.concat    # 张量拼接
+ops.split    # 张量分割
+ops.transpose  # 张量转置
+ops.reshape   # 张量形状变换
+ops.matmul    # 矩阵乘法
+
+# 数学运算
+ops.exp     # 指数运算
+ops.Sigmoid   # Sigmoid激活
+ops.softmax   # Softmax激活
+ops.ones     # 创建全1张量
+
+# 归约操作
+ops.ReduceMax  # 最大值归约
+ops.ReduceSum  # 求和归约
+```
+
+**3.mindspore.Tensor及mindspore.tensor**
+
+Tensor张量，即存储多维数组（n-dimensional array）的数据结构。tensor接口用于在Cell.construct()或者@jit装饰的函数内，创建一个新的Tensor对象。在`AAttn`, `ABlock`, `A2C2f`模块以及YOLOv12模型的代码中，使用的最多的是：
+
+```python
+Tensor(data, dtype)  # 创建张量
+tensor.shape         # 获取张量形状
+tensor.view()        # 改变张量形状
+tensor.flatten()     # 张量扁平化
+tensor.swapaxes()    # 交换轴
+```
+
+**4.mindspore.common.initializer**
+
+初始化神经元参数。在`AAttn`, `ABlock`, `A2C2f`模块以及YOLOv12模型的代码中，使用了：
+
+```python
+initializer()           # 参数初始化器
+TruncatedNormal()      # 截断正态分布初始化
+Constant()             # 常数初始化
+```
+
+**5.核心框架组件**
+
+在训练和测试代码中，使用了`mindspore`的核心组件，这些组件主要包含了`mindspore.set_context`, `mindspore.set_recursion_limit`以及`mindspore.set_device`：
+
+```python
+ms.set_context(mode=args.ms_mode)  # GRAPH_MODE(0) 或 PYNATIVE_MODE(1)
+ms.set_context(jit_config={"jit_level": "O2"})  # JIT编译优化
+ms.set_recursion_limit(2000)  # 递归深度限制
+ms.set_device("Ascend", device_id)  # 设备选择
+```
+
+**6.并行计算组件**
+
+在训练和测试代码中，使用了`mindspore.communication`以及`mindspore.set_auto_parallel_context`等分布式计算组件：
+
+```python
+from mindspore import ParallelMode
+from mindspore.communication import init, get_rank, get_group_size
+
+# 分布式初始化
+init()
+args.rank, args.rank_size = get_rank(), get_group_size()
+ms.set_auto_parallel_context(device_num=args.rank_size, parallel_mode=ParallelMode.DATA_PARALLEL)
+```
+
+**7.自动混合精度**
+
+在训练和测试代码中，使用了`mindspore.amp`这个自动混合精度组件：
+
+```python
+ms.amp.auto_mixed_precision(network, amp_level=args.ms_amp_level)  # O0/O1/O2/O3
+ms.amp.auto_mixed_precision(loss_fn, amp_level="O0" if args.keep_loss_fp32 else args.ms_amp_level)
+```
+
+**8.训练及数据处理组件**
+
+在训练和测试代码中，使用了训练及数据处理组件：
+
+```python
+ms.dataset.ConcatDataset(stage_dataloaders)  # 数据集拼接
+ms.dataset.Dataset # MindSpore的数据集类，用于加载和处理数据
+ms.data.Albumentations # 数据增强库
+ms.dataset.create_dict_iterator #创建数据集的字典迭代器，用于逐批获取数据
+nn.SGD/nn.Momentum #优化器，用于更新模型参数
+optimizer.parameters #获取优化器管理的参数
+ops.clip_by_global_norm #用于防止梯度爆炸，通过裁剪梯度的全局范数
+mindspore.utils.callback #回调函数
+mindspore.utils.checkpoint_manager.CheckpointManager #管理模型权重的保存和加载
+```
+
 ## 快速开始本项目
 
 ### 模型迁移
@@ -106,11 +215,6 @@ msrun --worker_num=8 --local_worker_num=8 --bind_core=True --log_dir=./yolov12_l
 
 ### 使用智能交通分析页面
 智能交通分析演示：
-<video width="1280" height="720" controls>
-    <source src="./fighures/traffic_analysis.mp4" type="video/mp4">
-</video>
-
-
 + 车道`json`文件按照以下格式准备，`video_width`和`video_height`指原视频的宽高，`points`的四个坐标分别是车道区域的左下、左上、右上、右下方向，`is_emergency`为`true`代表为紧急车道。
 
 ```c++
