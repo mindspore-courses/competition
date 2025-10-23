@@ -1,0 +1,8 @@
+优化方法：
+本次优化代码都在transformers/models/qwen2_moe/modeling_qwen2_moe.py和/transformers/models/qwen2_moe/configuration_qwen2_moe.py
+1.专家推理循环代码优化，主要有两个操作
+(1)将nonzero算子移到循环外，使每个block中nonzero算子的调用从60次减少到1次 
+(2)使用计数代替算子操作，优化代码中虽然仍遍历了num_experts次，但绝大多数时候是计数，设计算子操作的次数很少，有效提高性能
+2.Rms_norm算子替换
+3.使用llama的Rotary算子进行替换
+4.Tensor索引替换为embedding
