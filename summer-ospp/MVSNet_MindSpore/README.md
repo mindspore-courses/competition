@@ -19,8 +19,12 @@
 ### Training
 
 * 可转化pytorch权重为mindspore权重，
-
 * 下载处理好的DTU训练数据集 [DTU training data](https://drive.google.com/file/d/1eDjh-_bxKKnEuz5h-HXS7EDJn59clx6V/view) (来自 [Original MVSNet](https://github.com/YoYo000/MVSNet))，解压为 ``MVS_TRANING`` 文件夹。在云端可使用OBS脚本`installDTUTraining.py`获得该训练数据集。
+* 同时也可以使用华为云OBS获得训练数据集：
+  * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/Depths_raw.zip
+  * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/dtu.zip
+  * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/dtu_training.rar
+
 * 在 ``train.sh``脚本中设置 ``MVS_TRAINING`` 为上一个训练文件夹路径。并创建一个 ``checkpoints``文件夹。
 * 运行 ``./train.sh``
 

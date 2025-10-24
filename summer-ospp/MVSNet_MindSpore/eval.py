@@ -67,7 +67,7 @@ def read_mask(filename):
 
 # save a binary mask
 def save_mask(filename, mask):
-    assert mask.dtype == np.bool
+    assert mask.dtype == bool
     mask = mask.astype(np.uint8) * 255
     Image.fromarray(mask).save(filename)
 
@@ -201,8 +201,6 @@ def filter_depth(scan_folder, out_folder, plyfilename):
     pair_data = read_pair_file(pair_file)
     nviews = len(pair_data)
     # TODO: hardcode size
-    # used_mask = [np.zeros([296, 400], dtype=np.bool) for _ in range(nviews)]
-
     # for each reference view and the corresponding source views
     for ref_view, src_views in pair_data:
         # load the camera parameters
