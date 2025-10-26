@@ -107,10 +107,10 @@ def getRespone():
             )
             
             # 准备模型输入
-            model_inputs = tokenizer([text], return_tensors="pt", padding=True, truncation=True).to(torch_device)
+            model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True).to(torch_device)
             
             # 生成响应
-            generated_ids = model.module.generate(
+            generated_ids = model.generate(
                 model_inputs.input_ids,
                 max_new_tokens=1024,
             )
@@ -388,10 +388,10 @@ def moreChat():
         )
         
         # 准备模型输入
-        model_inputs = tokenizer([text], return_tensors="pt", padding=True, truncation=True).to(torch_device)
+        model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True).to(torch_device)
         
         # 生成响应
-        generated_ids = model.module.generate(
+        generated_ids = model.generate(
             model_inputs.input_ids,
             max_new_tokens=1024,
         )

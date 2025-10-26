@@ -10,6 +10,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from datetime import datetime, timedelta
 from app import model, tokenizer, torch_device
 import time
+from .TourismDataSimplifier import TourismDataSimplifier
 
 # 初始化MCP服务器
 mcp = FastMCP("travel")
@@ -486,10 +487,10 @@ def generate_with_tools(user_query: str, max_iterations: int = 100):
         )
         
         # 准备模型输入
-        model_inputs = tokenizer([text], return_tensors="pt", padding=True, truncation=True).to(torch_device)
+        model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True).to(torch_device)
         
         # 生成响应
-        generated_ids = model.module.generate(
+        generated_ids = model.generate(
             model_inputs.input_ids,
             max_new_tokens=512,
         )
@@ -538,9 +539,9 @@ def generate_with_tools(user_query: str, max_iterations: int = 100):
 
 def get_tool_ans(city):
     # 获取景点列表
-    result = []
+    result = {}
     attractions = json.loads(TravelTools.get_attractions(city))
-    result.append(f'旅游景点列表：{attractions}')
+    result['attractions'] = attractions
     poi_names = [poi['name'] for poi in attractions['pois']]
     poi_rating = [poi['biz_ext']['rating'] for poi in attractions['pois']]
     poi_spend = ['0.00' if isinstance(poi['biz_ext']['cost'], list) else poi['biz_ext']['cost'] for poi in attractions['pois']]
@@ -552,7 +553,7 @@ def get_tool_ans(city):
         poi_photo.append(now)
     # 获取天气情况
     weather = TravelTools.get_all_weather(city)
-    result.append(f"天气情况：{weather.encode('utf-8').decode('unicode_escape')}")
+    result['weather'] = weather
     # 获取景点周围的酒店、美食
     hotels = []
     foods = []
@@ -562,12 +563,13 @@ def get_tool_ans(city):
         hotels.append(f"{poi_name}附近酒店：{res}")
         foods.append(f"{poi_name}附近美食：{res2}")
         time.sleep(1)
-    result.append(f"酒店：{hotels}")
-    result.append(f"美食：{foods}")
+    result['hotels'] = hotels
+    result['foods'] = foods
     # 获取距离
-    distances = TravelTools.get_location_distance(f'{poi_names[:2]}')
+    distances = TravelTools.get_location_distance(f'{poi_names}')
     # print(distances)
-    # print(result)
+    simplifier = TourismDataSimplifier()
+    result = simplifier.process_complete_data(result)
     return result, poi_names, distances, poi_rating, poi_spend, poi_photo
 
 def get_small_transport(paths):

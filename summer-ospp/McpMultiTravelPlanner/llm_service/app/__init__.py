@@ -1,57 +1,80 @@
 from flask import Flask
-import torch
-import torch_npu
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from mindnlp.transformers import AutoTokenizer, AutoModelForCausalLM
 import gymnasium as gym
 from gymnasium import spaces
 from stable_baselines3 import PPO
 from app.ppo.touristAttractions import TouristAttractionEnv
+from mindspore import context
+import mindspore as ms
+from mindspore.communication import get_group_size
 
+# 全局变量定义
 model = None
+tokenizer = None
+env = None
+model_ppo = None
+
 
 def create_app():
     app = Flask(__name__)
-    app.config['DEBUG'] = True
-    # 设置设备和其他配置
-    global torch_device
-    torch_device = "npu:1"
-    torch.npu.set_device(torch.device(torch_device))
-    torch.npu.set_compile_mode(jit_compile=False)
-    option = {}
-    option["NPU_FUZZY_COMPILE_BLACKLIST"] = "Tril"
-    torch.npu.set_option(option)
+    app.config['DEBUG'] = False
 
-    # 加载模型和分词器
-    DEFAULT_CKPT_PATH = './app/models/Qwen2-7B-Instruct'
-    global model
-    if model is None:
-        model = AutoModelForCausalLM.from_pretrained(
-            DEFAULT_CKPT_PATH,
-            torch_dtype=torch.float16,
-            device_map=torch_device
-        ).npu().eval()
-        # 将模型封装为 DataParallel
-        if torch.npu.device_count() > 1:
-            model = torch.nn.DataParallel(model)
-    # 将模型注册到应用上下文
-    @app.before_request
-    def before_first_request():
-        """确保模型在第一个请求前已加载"""
-        app.config['MODEL'] = model
-    global tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(DEFAULT_CKPT_PATH)
-    # 加载强化学习模型
-    # 初始化环境
-    global env
-    env = TouristAttractionEnv(max_attractions=25)
-    # 模型文件路径
-    model_path = "./app/ppo/flexible_tourist_model"  # 修改为你的模型路径
-    # 加载模型
-    print("正在加载模型...")
-    global model_ppo
-    model_ppo = PPO.load(model_path, env=env)
-    print("模型加载成功！")
+    # 设置MindSpore
+    context.set_context(mode=context.PYNATIVE_MODE, device_target="Ascend")
+    context.set_auto_parallel_context(
+        parallel_mode=context.ParallelMode.AUTO_PARALLEL,  # 自动并行模式
+        gradients_mean=True,
+        device_num=2  # 指定使用2张卡
+    )
+    # 初始化分布式通信（需在多进程/多线程启动时调用）
+    # ms.communication.init()  # 初始化HCCL通信
+
+    # 初始化函数 - 只执行一次
+    with app.app_context():
+        init_extensions(app)
+
+    # 注册蓝图
     from . import routes
     app.register_blueprint(routes.bp)
 
     return app
+
+
+def init_extensions(app):
+    """初始化扩展，确保只执行一次"""
+    global model, tokenizer, env, model_ppo
+
+    # 加载语言模型
+    if model is None:
+        print("正在加载Qwen2-7B模型...")
+        DEFAULT_CKPT_PATH = '/home/ma-user/work/Qwen2-7B-Instruct'
+        model = AutoModelForCausalLM.from_pretrained(
+            DEFAULT_CKPT_PATH,
+            device_map="balanced",
+            load_in_8bit=True,  # 8位量化
+            low_cpu_mem_usage=True
+        ).npu().eval()
+        model.set_train(False)
+        print("Qwen2-7B模型加载完成！")
+
+    # 加载分词器
+    if tokenizer is None:
+        tokenizer = AutoTokenizer.from_pretrained(DEFAULT_CKPT_PATH)
+
+    # 加载强化学习环境
+    if env is None:
+        from app.ppo.touristAttractions import TouristAttractionEnv
+        env = TouristAttractionEnv(max_attractions=25)
+
+    # 加载PPO模型
+    if model_ppo is None:
+        print("正在加载PPO模型...")
+        model_path = "./app/ppo/flexible_tourist_model"
+        model_ppo = PPO.load(model_path, env=env)
+        print("PPO模型加载完成！")
+
+    # 存储到app配置中
+    app.config['MODEL'] = model
+    app.config['TOKENIZER'] = tokenizer
+    app.config['ENV'] = env
+    app.config['MODEL_PPO'] = model_ppo

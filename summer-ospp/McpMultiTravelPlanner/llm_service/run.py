@@ -11,4 +11,4 @@ app.config['JSONIFY_MIMETYPE'] = 'application/json;charset=utf-8'  # 可选：�
 
 if __name__ == '__main__':
     
-    app.run(debug=True)
+    app.run(debug=False)
