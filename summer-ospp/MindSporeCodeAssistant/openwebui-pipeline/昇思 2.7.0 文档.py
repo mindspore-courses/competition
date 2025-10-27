@@ -2769,7 +2769,7 @@ api_mapping = {
     "mindspore.mint.exp.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.exp.html",
     "mindspore.mint.expm1.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.expm1.html",
     "mindspore.mint.greater.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.greater.html",
-    "mindspore.mint.gt.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mindspore.mint.gt.html",
+    "mindspore.mint.gt.md": "https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.gt.html",
     "mindspore.mint.le.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.le.html",
     "mindspore.mint.less.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.less.html",
     "mindspore.mint.less_equal.md": " https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/mint/mindspore.mint.less_equal.html",
@@ -2803,6 +2803,7 @@ api_mapping = {
 
 
 docs_mapping = {
+    "env_var_list.md": "https://www.mindspore.cn/docs/zh-CN/r2.7.0/api_python/env_var_list.html",
     "introduction.md": "https://www.mindspore.cn/tutorials/zh-CN/r2.7.0/beginner/introduction.html",
     "ms_infer_model_infer.md": "https://www.mindspore.cn/tutorials/zh-CN/r2.7.0/model_infer/ms_infer/ms_infer_model_infer.html",
     "ms_infer_network_develop.md": "https://www.mindspore.cn/tutorials/zh-CN/r2.7.0/model_infer/ms_infer/ms_infer_network_develop.html",
@@ -3153,7 +3154,7 @@ class Pipe:
                 or resource.get("dataset_name")
                 or f"Source {idx}"
             )
-            content = resource.get("content", "").strip()
+            content = resource.get("content", "")
             # 从api_mapping 和docs_mapping 中分别尝试获取url
             # url = api_mapping.get(document_name, "")
             url = docs_mapping.get(document_name) or api_mapping.get(
@@ -3176,7 +3177,7 @@ class Pipe:
             citation_event = {
                 "type": "citation",
                 "data": {
-                    "document": [f"{url}"],
+                    "document": [content],
                     "metadata": [
                         {
                             "date_accessed": datetime.now().isoformat(),

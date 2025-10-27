@@ -4,6 +4,7 @@
 # Usage: api_mapping = {...}
 
 api_mapping = {
+    "mindspore.mint.gt.md": "https://www.mindspore.cn/docs/zh-CN/r2.6.0/api_python/mint/mindspore.mint.gt.html",
     "mindspore.mindrecord.md": " https://www.mindspore.cn/docs/zh-CN/r2.6.0/api_python/mindspore.mindrecord.html",
     "mindspore.boost.md": " https://www.mindspore.cn/docs/zh-CN/r2.6.0/api_python/mindspore.boost.html",
     "mindspore.utils.md": " https://www.mindspore.cn/docs/zh-CN/r2.6.0/api_python/mindspore.utils.html",
@@ -2789,6 +2790,7 @@ api_mapping = {
 # Usage: docs_mapping = {...}
 
 docs_mapping = {
+    "env_var_list.md": "https://www.mindspore.cn/docs/zh-CN/r2.6.0/api_python/env_var_list.html",
     "introduction.md": "https://www.mindspore.cn/tutorials/zh-CN/r2.7.0/beginner/introduction.html",
     "ms_infer_model_infer.md": "https://www.mindspore.cn/tutorials/zh-CN/r2.7.0/model_infer/ms_infer/ms_infer_model_infer.html",
     "ms_infer_network_develop.md": "https://www.mindspore.cn/tutorials/zh-CN/r2.7.0/model_infer/ms_infer/ms_infer_network_develop.html",
@@ -3139,7 +3141,7 @@ class Pipe:
                 or resource.get("dataset_name")
                 or f"Source {idx}"
             )
-            content = resource.get("content", "").strip()
+            content = resource.get("content", "")
             # 从api_mapping 和docs_mapping 中分别尝试获取url
             # url = api_mapping.get(document_name, "")
             url = docs_mapping.get(document_name) or api_mapping.get(
@@ -3162,7 +3164,7 @@ class Pipe:
             citation_event = {
                 "type": "citation",
                 "data": {
-                    "document": [f"{url}"],
+                    "document": [content],
                     "metadata": [
                         {
                             "date_accessed": datetime.now().isoformat(),
