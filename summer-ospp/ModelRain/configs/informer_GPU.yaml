@@ -1,0 +1,52 @@
+---
+
+model: 'informer'
+data: 'ETTh1'
+root_path: './data/ETT/'
+data_path: 'ETTh1.csv'
+features: 'S'
+target: 'OT'
+freq: 'h'
+detail_freq: 'h'
+checkpoints: './checkpoints/'
+seq_len: 96
+label_len: 48
+pred_len: 48
+
+enc_in: 1
+dec_in: 1d
+c_out: 1
+d_model: 512
+n_heads: 8
+e_layers: 2
+d_layers: 1
+s_layers: '3,2,1'
+d_ff: 2048
+factor: 5
+padding: 0
+distil: True
+dropout: 0.05
+attn: 'prob'
+embed: 'timeF'
+activation: 'gelu'
+output_attention: False
+do_predict: False
+mix: True
+cols: '+'
+num_workers: 0
+itr: 1
+train_epochs: 1
+batch_size: 32
+patience: 3
+learning_rate: 0.0001
+des: 'Informer_ms'
+loss: 'mse'
+lradj: 'type1'
+
+use_amp: False
+inverse: False
+seed: 42
+
+device: "GPU"
+do_train: True
+ckpt_path: "./Informer_test.ckpt"

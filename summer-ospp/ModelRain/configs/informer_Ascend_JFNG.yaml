@@ -1,0 +1,52 @@
+---
+
+model: 'informer'
+data: 'JFNG_data_15min'
+root_path: './data/Rain/'
+data_path: 'JFNG_data_15min.csv'
+features: 'MS'
+target: 'tp'
+freq: 'h'
+detail_freq: 'h'
+checkpoints: './checkpoints/'
+seq_len: 24
+label_len: 12
+pred_len: 4
+
+enc_in: 6
+dec_in: 1d
+c_out: 6
+d_model: 512
+n_heads: 8
+e_layers: 3
+d_layers: 3
+s_layers: '3,2,1'
+d_ff: 2048
+factor: 5
+padding: 0
+distil: True
+dropout: 0.1
+attn: 'prob'
+embed: 'timeF'
+activation: 'gelu'
+output_attention: False
+do_predict: False
+mix: True
+cols: '+'
+num_workers: 0
+itr: 1
+train_epochs: 20
+batch_size: 32
+patience: 20
+learning_rate: 0.0001
+des: 'Informer_ms'
+loss: 'mse'
+lradj: 'type1'
+
+use_amp: False
+inverse: True
+seed: 2021
+
+device: "Ascend"
+do_train: True
+ckpt_path: "./checkpoint.ckpt"
