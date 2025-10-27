@@ -47,7 +47,7 @@ def init_extensions(app):
     # 加载语言模型
     if model is None:
         print("正在加载Qwen2-7B模型...")
-        DEFAULT_CKPT_PATH = '/home/ma-user/work/Qwen2-7B-Instruct'
+        DEFAULT_CKPT_PATH = './app/models/Qwen2-7B-Instruct'
         model = AutoModelForCausalLM.from_pretrained(
             DEFAULT_CKPT_PATH,
             device_map="balanced",

@@ -15,7 +15,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@rollup/rollup-win32-x64-msvc": "^4.50.1",
+    "rollup": "^4.50.1",
     "@types/node": "^24.5.2",
     "@types/vue-router": "^2.0.0",
     "@vitejs/plugin-vue": "^6.0.1",
