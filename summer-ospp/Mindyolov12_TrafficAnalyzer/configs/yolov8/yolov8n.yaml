@@ -1,0 +1,11 @@
+__BASE__: [
+  '../coco.yaml',
+  './hyp.scratch.low.yaml',
+  './yolov8-base.yaml'
+]
+
+overflow_still_update: False
+network:
+  depth_multiple: 0.33  # scales module repeats
+  width_multiple: 0.25  # scales convolution channels
+  max_channels: 1024

@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <!-- ...existing code... -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>基于MindSpore的YOLOv12实现智能交通分析 前端</title>
+  <!-- 新增 Google 字体可选（离线可删除） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --bg-accent: #eef3fb;
+      --text: #1f2330;
+      --text-light: #586174;
+      --primary: #2c7be5;
+      --primary-hover: #1b64c2;
+      --border: #d9e2ef;
+      --radius: 14px;
+      --shadow: 0 4px 12px -2px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --danger: #d93025;
+      --warn: #d89614;
+      --success: #2e8b57;
+      --focus-ring: 0 0 0 3px rgba(44,123,229,.35);
+      --gradient: linear-gradient(135deg,#2c7be5 0%, #6a5af9 60%, #8f59ff 100%);
+    }
+    .dark {
+      --bg: #12161d;
+      --bg-alt: #1e2530;
+      --bg-accent: #262f3b;
+      --text: #e6e9ef;
+      --text-light: #9aa4b1;
+      --primary: #4d8dff;
+      --primary-hover: #3374e6;
+      --border: #2f3b49;
+      --shadow: 0 4px 14px -2px rgba(0,0,0,.6);
+      --gradient: linear-gradient(135deg,#1d62d9 0%, #5840e0 60%, #7c3bdc 100%);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Inter", system-ui, Arial, Helvetica, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      padding: 0 0 4rem;
+    }
+    header {
+      padding: 2.2rem clamp(1rem,3vw,3rem) 1.2rem;
+      background: var(--gradient);
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,.15);
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 15% 120%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(circle at 85% -10%, rgba(255,255,255,.25), transparent 55%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+    h1 {
+      margin: 0 0 .4rem;
+      font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+      letter-spacing:.5px;
+      font-weight:600;
+    }
+    header p { margin:0; opacity:.9; font-size:.95rem; }
+
+    main {
+      max-width: 1180px;
+      margin: -3rem auto 0;
+      padding: 0 clamp(1rem,3vw,3rem);
+    }
+
+    form {
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    .card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem 1.4rem;
+      position: relative;
+      box-shadow: var(--shadow);
+      transition: border-color .25s, transform .25s;
+    }
+    .card:hover {
+      border-color: var(--primary);
+    }
+    .card h3 {
+      margin: 0 0 .85rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing:.5px;
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+    }
+    .step-badge {
+      background: var(--primary);
+      color:#fff;
+      width: 26px;
+      height: 26px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      font-size:.82rem;
+      font-weight:600;
+      box-shadow: 0 2px 4px rgba(0,0,0,.25);
+    }
+
+    .row {
+      --gap: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap);
+    }
+    .col {
+      flex: 1 1 340px;
+      min-width: 260px;
+      display:flex;
+      flex-direction:column;
+      gap:.4rem;
+    }
+
+    label {
+      font-weight: 600;
+      font-size:.85rem;
+      letter-spacing:.3px;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    select {
+      background: var(--bg-accent);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .65rem .75rem;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, background .25s, box-shadow .25s;
+    }
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+      background: var(--bg-alt);
+    }
+
+    .file-box {
+      position: relative;
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: .9rem;
+      background: var(--bg-accent);
+      display:flex;
+      flex-direction:column;
+      gap:.55rem;
+      transition: border-color .25s, background .25s;
+      cursor: pointer;
+    }
+    .file-box.dragover {
+      border-color: var(--primary);
+      background: rgba(44,123,229,.1);
+    }
+    .file-box input[type="file"] {
+      opacity:0;
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      cursor:pointer;
+    }
+    .file-box .file-hint {
+      font-size:.75rem;
+      text-transform:uppercase;
+      font-weight:600;
+      letter-spacing:.5px;
+      color: var(--text-light);
+    }
+    .file-selected {
+      font-size:.8rem;
+      color: var(--success);
+      font-weight:600;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .hint {
+      font-size: .78rem;
+      color: var(--text-light);
+      line-height:1.4;
+      margin-top:.25rem;
+    }
+    .warn {
+      color: var(--warn);
+      font-size:.75rem;
+      font-weight:500;
+      margin-top:.15rem;
+    }
+    .msgs {
+      border:1px solid var(--danger);
+      background: rgba(217,48,37,.07);
+      padding:.85rem 1rem;
+      border-radius:10px;
+      font-size:.85rem;
+      color: var(--danger);
+      display:flex;
+      flex-direction:column;
+      gap:.3rem;
+    }
+
+    .actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:.9rem;
+      align-items:center;
+      margin-top:.6rem;
+    }
+    .btn {
+      --btn-bg: var(--primary);
+      background: var(--btn-bg);
+      color:#fff;
+      border:none;
+      font: 500 0.95rem/1 "Inter", sans-serif;
+      padding:.85rem 1.55rem;
+      border-radius: 10px;
+      cursor:pointer;
+      letter-spacing:.3px;
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 4px 12px -2px rgba(44,123,229,.4);
+      transition: background .25s, transform .25s;
+    }
+    .btn:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled {
+      background: linear-gradient(90deg,#9bbcf1,#9bbcf1);
+      cursor:not-allowed;
+      opacity:.65;
+      box-shadow:none;
+    }
+    .secondary {
+      --btn-bg: var(--bg-accent);
+      color: var(--text-light);
+      box-shadow:none;
+      border:1px solid var(--border);
+    }
+    .secondary:hover { background: var(--bg-alt); color: var(--text); }
+
+    .toggle-theme {
+      position:absolute;
+      top:1rem;
+      right:1rem;
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.4);
+      padding:.55rem .85rem;
+      border-radius: 30px;
+      font-size:.7rem;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      cursor:pointer;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      gap:.4rem;
+      transition: background .3s;
+    }
+    .dark .toggle-theme {
+      background: rgba(0,0,0,.25);
+      border-color: rgba(255,255,255,.2);
+    }
+    .toggle-theme:hover { background: rgba(255,255,255,.28); }
+    .dark .toggle-theme:hover { background: rgba(255,255,255,.15); }
+
+    .progress {
+      position: relative;
+      width: 240px;
+      height: 10px;
+      background: var(--bg-accent);
+      border-radius: 6px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      display:none;
+    }
+    .progress-bar {
+      position:absolute;
+      inset:0;
+      width:0%;
+      background: var(--gradient);
+      transition: width .35s ease;
+    }
+    .fade-in {
+      animation: fade .5s ease;
+    }
+    @keyframes fade { from { opacity:0; transform: translateY(4px);} to { opacity:1; transform: translateY(0);} }
+
+    footer {
+      margin-top:3rem;
+      text-align:center;
+      font-size:.75rem;
+      color: var(--text-light);
+      opacity:.8;
+    }
+
+    @media (max-width: 640px) {
+      .actions { flex-direction:column; align-items:stretch; }
+      .progress { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button type="button" class="toggle-theme" id="themeToggle" aria-label="切换主题">
+      <span id="themeIcon">🌙</span> <span>主题</span>
+    </button>
+    <h1>基于MindSpore的YOLOv12实现智能交通分析</h1>
+    <p>上传视频与模型配置，完成智能交通分析。</p>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="msgs fade-in">
+          {% for message in messages %}
+            <div>{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form id="laneForm" action="{{ url_for('process') }}" method="post" enctype="multipart/form-data" novalidate>
+      <div class="card fade-in">
+        <h3><span class="step-badge">1</span> 上传视频</h3>
+        <div class="file-box" data-role="drop" data-input="video_file">
+          <div class="file-hint">拖拽或点击选择视频 (mp4 / avi / mov / mkv)</div>
+          <div class="file-selected" id="video_file_selected">未选择文件</div>
+          <input type="file" id="video_file" name="video_file" accept="video/*" required>
+        </div>
+        <div class="hint">视频将被上传到服务器进行推理，请确保大小合适。</div>
+      </div>
+
+      <div class="card fade-in">
+        <h3><span class="step-badge">2</span> 选择或上传模型配置</h3>
+        <div class="row">
+          <div class="col">
+            <label for="selected_config">仓库中的配置</label>
+            <select name="selected_config" id="selected_config">
+              <option value="">-- 请选择 --</option>
+              {% for c in configs %}
+                <option value="{{ c }}">{{ c }}</option>
+              {% endfor %}
+            </select>
+            <div class="hint">示例：configs/yolov12/yolov12-n.yaml</div>
+            <div class="warn" id="config_conflict_msg" style="display:none;">已选择上传文件，将忽略此下拉。</div>
+          </div>
+          <div class="col">
+            <label>或上传配置 (.yaml / .yml)</label>
+            <div class="file-box" data-role="drop" data-input="config_file">
+              <div class="file-hint">拖拽或点击选择配置文件</div>
+              <div class="file-selected" id="config_file_selected">未选择文件</div>
+              <input type="file" name="config_file" id="config_file" accept=".yaml,.yml">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <h3><span class="step-badge">3</span> 权重</h3>
+        <div class="row">
+          <div class="col">
+            <label for="weight_path">本地权重路径（可选）</label>
+            <input type="text" id="weight_path" name="weight_path" placeholder="如 D:/weights/yolov12n.ckpt">
+            <div class="hint">支持绝对或相对路径。</div>
+          </div>
+          <div class="col">
+            <label>或上传权重 (.ckpt / .pt / .bin)</label>
+            <div class="file-box" data-role="drop" data-input="weight_file">
+              <div class="file-hint">拖拽或点击选择权重文件</div>
+              <div class="file-selected" id="weight_file_selected">未选择文件</div>
+              <input type="file" name="weight_file" id="weight_file" accept=".ckpt,.pt,.bin">
+            </div>
+          </div>
+        </div>
+        <div class="hint">若留空将使用随机初始化，检测效果较差。</div>
+      </div>
+
+      <div class="card fade-in">
+        <h3><span class="step-badge">4</span> lane_config</h3>
+        <div class="row">
+          <div class="col">
+            <label for="lane_config_path">lane_config.json 路径（可选）</label>
+            <input type="text" id="lane_config_path" name="lane_config_path" value="{{ default_lane }}" placeholder="如 YOLOv12/lane_config.json">
+          </div>
+          <div class="col">
+            <label>或上传 lane_config.json</label>
+            <div class="file-box" data-role="drop" data-input="lane_config_file">
+              <div class="file-hint">拖拽或点击选择 lane_config.json</div>
+              <div class="file-selected" id="lane_config_file_selected">未选择文件</div>
+              <input type="file" name="lane_config_file" id="lane_config_file" accept=".json">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="submitBtn" type="submit" disabled>开始处理</button>
+        <button class="btn secondary" type="button" id="resetBtn">重置</button>
+        <div class="progress" id="progressWrap" aria-label="上传进度">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </form>
+
+    <footer>
+      基于MindSpore的YOLOv12实现智能交通分析 前端界面 · {{ '%Y'|strftime }} · 支持浅/深色主题
+    </footer>
+  </main>
+
+  <script>
+    (function(){
+      const qs = sel => document.querySelector(sel);
+      const qsa = sel => Array.from(document.querySelectorAll(sel));
+      const form = qs('#laneForm');
+      const submitBtn = qs('#submitBtn');
+      const resetBtn = qs('#resetBtn');
+      const progressWrap = qs('#progressWrap');
+      const progressBar = qs('#progressBar');
+      const themeToggle = qs('#themeToggle');
+      const themeIcon = qs('#themeIcon');
+      const configSelect = qs('#selected_config');
+      const configFile = qs('#config_file');
+      const configConflictMsg = qs('#config_conflict_msg');
+
+      // 主题
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const storedTheme = localStorage.getItem('theme-mode');
+      if(storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        themeIcon.textContent = '🌞';
+      }
+      themeToggle.addEventListener('click', ()=>{
+        document.documentElement.classList.toggle('dark');
+        const dark = document.documentElement.classList.contains('dark');
+        themeIcon.textContent = dark ? '🌞' : '🌙';
+        localStorage.setItem('theme-mode', dark ? 'dark' : 'light');
+      });
+
+      // 拖拽区域
+      qsa('[data-role="drop"]').forEach(box=>{
+        const inputId = box.dataset.input;
+        const input = qs('#'+inputId);
+        const selectedLabel = qs('#'+inputId+'_selected');
+        // box.addEventListener('click', ()=> input.click());
+        // 修复重复弹窗：若点击事件源本身就是 input，则不再二次调用 input.click()
+       box.addEventListener('click', (e)=>{
+          if (e.target === input) return;   // 已由浏览器原生处理
+          input.click();                    // 仅在点击容器其它区域时手动触发
+       });
+        input.addEventListener('change', ()=>{
+          if (input.files && input.files[0]) {
+            selectedLabel.textContent = input.files[0].name;
+            selectedLabel.style.color = 'var(--success)';
+            handleConfigConflict();
+            validate();
+          } else {
+            selectedLabel.textContent = '未选择文件';
+            selectedLabel.style.color = '';
+            validate();
+          }
+        });
+        ['dragenter','dragover'].forEach(evt=>{
+          box.addEventListener(evt, e=>{
+            e.preventDefault(); e.stopPropagation();
+            box.classList.add('dragover');
+          });
+        });
+        ['dragleave','drop'].forEach(evt=>{
+          box.addEventListener(evt, e=>{
+            e.preventDefault(); e.stopPropagation();
+            box.classList.remove('dragover');
+          });
+        });
+        box.addEventListener('drop', e=>{
+          const files = e.dataTransfer.files;
+          if(files.length){
+            input.files = files;
+            input.dispatchEvent(new Event('change'));
+          }
+        });
+      });
+
+      // 配置互斥提示
+      function handleConfigConflict(){
+        const hasUpload = configFile.files && configFile.files.length > 0;
+        if(hasUpload){
+          configSelect.disabled = true;
+          configConflictMsg.style.display = 'block';
+        } else {
+          configSelect.disabled = false;
+          configConflictMsg.style.display = 'none';
+        }
+      }
+      configSelect.addEventListener('change', validate);
+      configFile.addEventListener('change', handleConfigConflict);
+
+      // 基础校验：视频文件必须；配置下拉或上传其一
+      function validate(){
+        const videoOk = qs('#video_file').files.length > 0;
+        const configOk = (configSelect.value && !configSelect.disabled) || configFile.files.length > 0;
+        submitBtn.disabled = !(videoOk && configOk);
+      }
+
+      // 表单提交进度模拟（真实可改为 AJAX 上传加后端进度）
+      form.addEventListener('submit', (e)=>{
+        if(submitBtn.disabled){ e.preventDefault(); return; }
+        submitBtn.disabled = true;
+        progressWrap.style.display = 'block';
+        progressBar.style.width = '0%';
+        let pct = 0;
+        const timer = setInterval(()=>{
+          pct += Math.random()*18;
+            if(pct >= 90) pct = 90;
+          progressBar.style.width = pct+'%';
+        }, 400);
+        // 让浏览器继续原生提交；此时模拟不清除 interval（页面跳转会结束）
+      });
+
+      // 重置
+      resetBtn.addEventListener('click', ()=>{
+        form.reset();
+        qsa('.file-selected').forEach(el=>{ el.textContent='未选择文件'; el.style.color=''; });
+        configSelect.disabled = false;
+        configConflictMsg.style.display='none';
+        progressWrap.style.display='none';
+        progressBar.style.width='0%';
+        submitBtn.disabled = true;
+      });
+
+      validate();
+    })();
+  </script>
+</body>
+</html>
