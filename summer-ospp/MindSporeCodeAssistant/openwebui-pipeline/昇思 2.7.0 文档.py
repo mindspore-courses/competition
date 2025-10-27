@@ -1,16 +1,4 @@
-"""
-title: Dify Pipeline
-author: TeddyNote (patched)
-author_url: https://github.com/teddylee777
-version: 0.0.8
-description:
-    Dify Pipe for OpenWebUI with native citation chips.
-    - Connects OpenWebUI → Dify (workflow/agent/chat/completion)
-    - Supports streaming / blocking
-    - Emits OpenWebUI-native citation chips from Dify metadata `retriever_resources`.
-    - Also surfaces usage metadata when available.
-    NOTE: SSL verify is fixed to False (as requested).
-"""
+
 
 # MindSpore 2.7.0_api_list.xlsx API Mapping Dictionary
 # Usage: api_mapping = {...}
