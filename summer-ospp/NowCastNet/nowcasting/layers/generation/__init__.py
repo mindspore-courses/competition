@@ -1,0 +1,1 @@
+# Generation module for MindSpore implementation 
