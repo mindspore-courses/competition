@@ -1,0 +1,529 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 昇思知识库-报错地图版
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/openai_api_compatible:0.0.22@88c295aff1ea52ea6ab56e3869ee37702d91f7b678c547254cf2b48271c8e81f
+    version: null
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/siliconflow:0.0.33@6792acf632f24f1c41a3192a78ef181f7149811a8dfd9a16ade984978613f79c
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables:
+  - description: ''
+    id: c33cdf38-c628-4603-9d78-c7aaeb4fb5d7
+    name: Conversation_History
+    selector:
+    - conversation
+    - Conversation_History
+    value: []
+    value_type: array[string]
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 500
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1756445442821-source-1756550647583-target
+      source: '1756445442821'
+      sourceHandle: source
+      target: '1756550647583'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1755603339629-source-1756550647583-target
+      source: '1755603339629'
+      sourceHandle: source
+      target: '1756550647583'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1756550647583-source-17556033888310-target
+      source: '1756550647583'
+      sourceHandle: source
+      target: '17556033888310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: assigner
+      id: 1754885857710-source-1758610449804-target
+      source: '1754885857710'
+      sourceHandle: source
+      target: '1758610449804'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 17556033888310-source-1758610469726-target
+      source: '17556033888310'
+      sourceHandle: source
+      target: '1758610469726'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1758610469726-source-answer-target
+      source: '1758610469726'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1758610449804-source-1758610865362-target
+      source: '1758610449804'
+      sourceHandle: source
+      target: '1758610865362'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1758610865362-source-1755603339629-target
+      source: '1758610865362'
+      sourceHandle: source
+      target: '1755603339629'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1758610865362-source-1756445442821-target
+      source: '1758610865362'
+      sourceHandle: source
+      target: '1756445442821'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 52
+      id: '1754885857710'
+      position:
+        x: 30
+        y: 251.5
+      positionAbsolute:
+        x: 30
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#17556033888310.text#}}
+
+          '
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 2144
+        y: 251.5
+      positionAbsolute:
+        x: 2144
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - KcL6vjlTZ6VdOYrzkoXLTTjhwbsI0meDpjXm4n3ITYNLKUsx/S6DE4KWlBxPKXr5
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: BAAI/bge-reranker-v2-m3
+            provider: langgenius/siliconflow/siliconflow
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.9
+            vector_setting:
+              embedding_model_name: BAAI/bge-m3
+              embedding_provider_name: langgenius/siliconflow/siliconflow
+              vector_weight: 0.1
+        query_variable_selector:
+        - '1758610865362'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索 （api）
+        type: knowledge-retrieval
+      height: 90
+      id: '1755603339629'
+      position:
+        x: 936
+        y: 381.5
+      positionAbsolute:
+        x: 936
+        y: 381.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1756550647583'
+          - result
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 10
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen3-30B-A3B
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 6e41c3e2-cc33-44fb-b1ad-ec13f3d91a98
+          role: system
+          text: ''
+        - id: 6bebf7f5-089f-46c7-a9be-90642efd5012
+          role: user
+          text: "======================= 知识库内容 =======================\n{{#context#}}\n\
+            \n======================= 用户输入（已根据上下文改写） =======================\n用户原始query：\n\
+            {{#sys.query#}}\n你是一个顶级的 MindSpore 技术专家，你的核心任务是基于上方提供的知识库内容，尽最大努力为用户生成精准、纯粹的技术答案。\n\
+            \n【核心回答原则】\n*   **知识库是第一信息源**：你的回答必须绝对优先、并尽可能全面地基于上方提供的“知识库内容”。\n*   **谨慎补充自有知识**：仅当知识库内容不足以回答问题时，才可动用你自身的\
+            \ MindSpore 知识储备进行补充。\n\n【QA 绝对优先】\n*   如果知识库中存在**直接回答用户问题的标准答案**（如FAQ），则**必须且只能**输出该答案原文，严禁任何形式的改写或融合。\n\
+            \n【代码处理规则】\n*   若知识库中包含代码示例，**必须完全按原文输出**，不得修改、简化或扩展。\n*   若知识库中无相关代码，可以提供基于\
+            \ MindSpore 通用实践回答。\n\n【回答风格与结构】\n*   语言为中文，语气专业客观，结构清晰，可分点阐述。\n*   回答结构应包含清晰的**问题分析**和**解决方案**。\n\
+            *   重点关注对象/模块/API名称、关键参数、错误码、版本/设备/后端（Ascend/GPU/CPU）、训练/推理场景等技术细节。\n\
+            *   **必须**在回答的末尾附上从知识库中提取的**环境信息**。**若知识库未提供，则不包含此部分内容。** 格式严格如下：\n  \
+            \  *   **系统环境**: [例如: EulerOS 2.8]\n    *   **硬件环境(Ascend/GPU/CPU)**:\
+            \ [例如: Ascend]\n    *   **MindSpore版本**: [例如: 2.2.0]\n    *   **执行模式（PyNative/\
+            \ Graph）**: [例如: Graph, 或“不限”]\n\n【绝对禁止项】\n*   **绝对禁止**在回答中以任何形式提及或暗示答案的信息来源。例如，不得出现“根据知识库”、“文档显示”、“基于通用知识”等词语。\n\
+            *   **绝对禁止**建议用户查阅官方文档或任何外部链接。\n*   **绝对禁止**出现任何内部流程用语，如“经过检索”、“我选择”、“模型评估”等。用户只应看到直接的技术答案。\n\
+            \n【回答生成策略】\n你必须按以下优先级顺序来决定如何回答：\n\n1.  **基于知识库回答**：如果知识库内容**直接且充分**地回答了用户问题，请严格依据知识库内容进行回答。\n\
+            2.  **补充知识库回答**：如果知识库内容相关但**不完整**，请在知识库内容的基础上，结合你自身的MindSpore知识进行补充，形成一个全面的答案。\n\
+            3.  **基于自身知识回答**：如果知识库内容**完全不相关或缺失**，你**必须**利用自己全部的MindSpore知识储备，尽力提供一个最可能正确和有用的答案。**即使没有外部知识，也绝不放弃回答。**\n"
+        selected: false
+        title: 对比 并选择最好的回答回答
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '17556033888310'
+      position:
+        x: 1540
+        y: 251.5
+      positionAbsolute:
+        x: 1540
+        y: 251.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - x2p3YuHVo5Bt/FIRDUMC0ptPqApU6LFZuXL5ojDzZsRiJSLaTN4LD2FlW+8SEf/c
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: BAAI/bge-reranker-v2-m3
+            provider: langgenius/siliconflow/siliconflow
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.9
+            vector_setting:
+              embedding_model_name: BAAI/bge-m3
+              embedding_provider_name: langgenius/siliconflow/siliconflow
+              vector_weight: 0.1
+        query_variable_selector:
+        - '1758610865362'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索 （除API）
+        type: knowledge-retrieval
+      height: 90
+      id: '1756445442821'
+      position:
+        x: 936
+        y: 251.5
+      positionAbsolute:
+        x: 936
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(api_result=None, non_api_result=None):\n    \"\"\"\n    合并两个检索结果（不去重）\n\
+          \    - 不改动每个 item 的键名与内容\n    - 顺序保持：先 API，后 non-API\n    - 返回结构固定为 {\"\
+          result\": [...]}\n    \"\"\"\n\n    def extract(payload):\n        # 允许多种形态：list\
+          \ / {\"result\": list} / {\"documents\"/\"data\"/\"output\": list}\n   \
+          \     if payload is None:\n            return []\n        if isinstance(payload,\
+          \ list):\n            return payload\n        if isinstance(payload, dict):\n\
+          \            for k in (\"result\", \"documents\", \"data\", \"output\"):\n\
+          \                v = payload.get(k)\n                if isinstance(v, list):\n\
+          \                    return v\n        return []\n\n    a = extract(api_result)\n\
+          \    b = extract(non_api_result)\n\n    # 仅保留 dict item，避免把字符串/数字混入导致下游渲染异常\n\
+          \    merged = [x for x in a if isinstance(x, dict)] + [x for x in b if isinstance(x,\
+          \ dict)]\n\n    return {\"result\": merged}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1756445442821'
+          - result
+          value_type: array[object]
+          variable: non_api_result
+        - value_selector:
+          - '1755603339629'
+          - result
+          value_type: array[object]
+          variable: api_result
+      height: 52
+      id: '1756550647583'
+      position:
+        x: 1238
+        y: 251.5
+      positionAbsolute:
+        x: 1238
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - sys
+          - query
+          variable_selector:
+          - conversation
+          - Conversation_History
+          write_mode: over-write
+        selected: false
+        title: 变量赋值
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1758610449804'
+      position:
+        x: 332
+        y: 251.5
+      positionAbsolute:
+        x: 332
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - '17556033888310'
+          - text
+          variable_selector:
+          - conversation
+          - Conversation_History
+          write_mode: over-write
+        selected: false
+        title: 变量赋值 2
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1758610469726'
+      position:
+        x: 1842
+        y: 251.5
+      positionAbsolute:
+        x: 1842
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen3-30B-A3B
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: a080930e-1c01-41d4-8744-d9fc69eeee07
+          role: system
+          text: "# 角色\n你是一个专为 MindSpore 报错诊断场景设计的【AI查询优化专家】。\n\n# 核心任务\n你的唯一任务是：智能分析【用户当前消息】的类型，并结合【历史对话记录】，生成一句最适合在知识库中进行检索的、独立完整的查询语句。\n\
+            \n# 思考与执行步骤\n1.  **分析当前输入**: 判断【当前用户消息】是“报错日志”还是“追问短句”？\n    *   **报错日志**:\
+            \ 通常是多行的、包含代码路径和 `Error`, `Exception` 等关键词的文本。\n    *   **追问短句**: 通常是简短的自然语言问题，如“为什么”、“详细说下”、“还有别的方法吗”。\n\
+            \n2.  **根据类型选择策略**:\n    *   **情况 A：如果输入是【报错日志】 -> 执行【关键词提取】**\n     \
+            \   a.  **忽略历史对话**，完全聚焦于当前这条日志。\n        b.  **定位核心错误**: 找到 `XxxError:\
+            \ [message]` 这样的标志性错误行。\n        c.  **提取技术实体**: 从日志中找出与MindSpore相关的API、算子或参数，如\
+            \ `enable_compile_cache`。\n        d.  **组合查询**: 将错误与技术实体组合成一行由空格分隔的关键词。\n\
+            \n    *   **情况 B：如果输入是【追问短句】 -> 执行【对话改写】**\n        a.  **分析追问意图**: 理解当前短句的核心意图（是问原因？要更多细节？还是其他方案？）。\n\
+            \        b.  **回顾历史上下文**: 查看【历史消息对话记录】，找到上一轮对话的核心主题（比如是哪个具体的报错，哪个解决方案）。\n\
+            \        c.  **融合生成新查询**: 将“追问意图”和“历史主题”结合，生成一个完整、无需依赖上下文就能被理解的新查询。\n\n\
+            # 输出准则 (必须遵守)\n*   **错误信息原文保留**: 提取日志时，`Error` 的原文必须保持不变。\n*   **去芜存菁**:\
+            \ 无论是提取还是改写，都要删除无关的客套话、路径和行号。\n*   **输出纯净**: 最终只输出一行改写/提取后的查询语句，不含任何解释。\n\
+            \n# 示例\n---\n**【场景1: 首次输入是日志】**\n*   历史消息: `[]`\n*   当前用户消息: `(一个包含 BrokenPipeError\
+            \ 和 enable_compile_cache 的长日志)`\n*   **你的决策 -> 情况 A: 关键词提取**\n*   **输出**:\
+            \ `MindSpore BrokenPipeError: [Errno 32] Broken pipe enable_compile_cache`\n\
+            ---\n**【场景2: 用户在得到答案后追问原因】**\n*   历史消息: `用户: (日志...)`, `机器人: ...该问题是由于开启编译缓存，但写入路径不存在导致。解决方案是删除\
+            \ enable_compile_cache...`\n*   当前用户消息: `为什么会这样？`\n*   **你的决策 -> 情况 B:\
+            \ 对话改写**\n*   **输出**: `MindSpore enable_compile_cache 导致 BrokenPipeError\
+            \ 的原因`\n---\n\n# 你的任务\n请处理以下输入。\n\n\n"
+        - id: 68a1cd63-8359-467b-bbdd-0f926a18a66a
+          role: user
+          text: '历史消息对话记录：【{{#conversation.Conversation_History#}}】
+
+            当前用户消息：{{#sys.query#}}'
+        selected: false
+        title: 对话重写
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '1758610865362'
+      position:
+        x: 634
+        y: 251.5
+      positionAbsolute:
+        x: 634
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -1316.741515046745
+      y: 99.38823199623835
+      zoom: 1.259921085429978
+  rag_pipeline_variables: []

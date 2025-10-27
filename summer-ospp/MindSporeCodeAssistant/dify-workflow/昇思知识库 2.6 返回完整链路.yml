@@ -1,0 +1,661 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 昇思知识库 2.6 返回完整链路
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/openai_api_compatible:0.0.22@88c295aff1ea52ea6ab56e3869ee37702d91f7b678c547254cf2b48271c8e81f
+    version: null
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/siliconflow:0.0.33@6792acf632f24f1c41a3192a78ef181f7149811a8dfd9a16ade984978613f79c
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables:
+  - description: ''
+    id: e1a8ed4b-bdc3-4064-a934-680e354bed03
+    name: conversation_history
+    selector:
+    - conversation
+    - conversation_history
+    value: []
+    value_type: array[string]
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 500
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1755605354684-source-1756445442821-target
+      selected: false
+      source: '1755605354684'
+      sourceHandle: source
+      target: '1756445442821'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1756445442821-source-1756550647583-target
+      source: '1756445442821'
+      sourceHandle: source
+      target: '1756550647583'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1756550647583-source-17556033888310-target
+      source: '1756550647583'
+      sourceHandle: source
+      target: '17556033888310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1755605354684-source-1758512785779-target
+      source: '1755605354684'
+      sourceHandle: source
+      target: '1758512785779'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1758512785779-source-1755603339629-target
+      source: '1758512785779'
+      sourceHandle: source
+      target: '1755603339629'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1755603339629-source-1756550647583-target
+      source: '1755603339629'
+      sourceHandle: source
+      target: '1756550647583'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: assigner
+      id: 1754885857710-source-1758608752866-target
+      source: '1754885857710'
+      sourceHandle: source
+      target: '1758608752866'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1758608752866-source-1755605354684-target
+      source: '1758608752866'
+      sourceHandle: source
+      target: '1755605354684'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 17556033888310-source-1758608781300-target
+      source: '17556033888310'
+      sourceHandle: source
+      target: '1758608781300'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1758608781300-source-answer-target
+      source: '1758608781300'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 52
+      id: '1754885857710'
+      position:
+        x: 30
+        y: 251.5
+      positionAbsolute:
+        x: 30
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#17556033888310.text#}}
+
+          '
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 2446
+        y: 251.5
+      positionAbsolute:
+        x: 2446
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - 1iSmfQr7QXyhK5Oa8pdbF8DAilbcgFHC7Qs8G1696/z+HSI3WuVAV7PKYNVtXLO0
+        desc: ''
+        metadata_filtering_mode: automatic
+        metadata_model_config:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen3-235B-A22B
+          provider: langgenius/siliconflow/siliconflow
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: BAAI/bge-reranker-v2-m3
+            provider: langgenius/siliconflow/siliconflow
+          score_threshold: null
+          top_k: 15
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: BAAI/bge-m3
+              embedding_provider_name: langgenius/siliconflow/siliconflow
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1758512785779'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索 （api）
+        type: knowledge-retrieval
+      height: 90
+      id: '1755603339629'
+      position:
+        x: 1238
+        y: 381.5
+      positionAbsolute:
+        x: 1238
+        y: 381.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1756550647583'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0
+          mode: chat
+          name: Qwen/Qwen3-30B-A3B
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 6e41c3e2-cc33-44fb-b1ad-ec13f3d91a98
+          role: system
+          text: ''
+        - id: 6bebf7f5-089f-46c7-a9be-90642efd5012
+          role: user
+          text: '======================= 知识库内容（A：非 API） ==============================================
+
+            知识库内容（B：API） =======================
+
+            {{#context#}}
+
+
+            ======================= 用户输入（已根据上下文改写） =======================
+
+            用户原始query：
+
+            {{#sys.query#}}
+
+            基于多轮对话优化的用户query：
+
+            {{#1755605354684.text#}}
+
+            你是一个顶级的 MindSpore 技术专家，你的核心任务是基于上方提供的知识库内容，尽最大努力为用户生成精准、纯粹的技术答案。
+
+            【核心回答原则】
+
+            * **知识库是第一信息源**：你的回答必须绝对优先、并尽可能全面地基于上方提供的“知识库内容”。
+
+            * **谨慎补充自有知识**：仅当知识库内容不足以回答问题时，才可动用你自身的 MindSpore 知识储备进行补充。
+
+            【QA 绝对优先】
+
+            * 如果知识库中存在**直接回答用户问题的标准答案**（如FAQ），则**必须且只能**输出该答案原文，严禁任何形式的改写或融合。
+
+            【代码处理规则】
+
+            * 若知识库中包含代码示例，**必须完全按原文输出**，不得修改、简化或扩展。
+
+            * 若知识库中无相关代码，可以提供基于 MindSpore 通用实践的简单代码示例。
+
+            【回答风格与结构】
+
+            * 语言为中文，语气专业客观，结构清晰，可分点阐述。
+
+            * 重点关注对象/模块/API名称、关键参数、错误码、版本/设备/后端（Ascend/GPU/CPU）、训练/推理场景等技术细节。
+
+            ======================= 绝对禁止项 =======================
+
+            * **绝对禁止**在回答中以任何形式提及或暗示答案的信息来源。例如，不得出现“根据知识库”、“文档显示”、“基于通用知识”等词语。
+
+            * **绝对禁止**建议用户查阅官方文档或任何外部链接。
+
+            * **绝对禁止**出现任何内部流程用语，如“经过检索”、“我选择”、“模型评估”等。用户只应看到直接的技术答案。
+
+            ======================= 回答生成策略 =======================
+
+            你必须按以下优先级顺序来决定如何回答：
+
+            1.  **基于知识库回答**：如果知识库内容**直接且充分**地回答了用户问题，请严格依据知识库内容进行回答。
+
+            2.  **补充知识库回答**：如果知识库内容相关但**不完整**，请在知识库内容的基础上，结合你自身的MindSpore知识进行补充，形成一个全面的答案。
+
+            3.  **基于自身知识回答**：如果知识库内容**完全不相关或缺失**，你**必须**利用自己全部的MindSpore知识储备，尽力提供一个最可能正确和有用的答案。**即使没有外部知识，也绝不放弃回答。**'
+        reasoning_format: separated
+        selected: false
+        title: 对比 并选择最好的回答回答
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '17556033888310'
+      position:
+        x: 1842
+        y: 251.5
+      positionAbsolute:
+        x: 1842
+        y: 251.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen3-30B-A3B
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 46877d39-5b42-4d53-9bb8-a02762d492c3
+          role: system
+          text: "# 角色\n你是一个专为 MindSpore 知识库设计的 AI 查询优化专家。\n# 核心任务\n你的唯一任务是：分析用户当前问题和历史对话，将其改写成一句【独立、完整、包含所有必要技术关键词、且高度利于知识库检索】的中文查询语句。\n\
+            # 思考步骤 (Chain-of-Thought)\n1.  **识别核心意图**: 首先，分析【当前用户消息】，明确用户想要了解的核心技术点是什么（例如某个API、某个概念、某个错误）。\n\
+            2.  **扫描历史上下文**: 其次，回顾【历史消息对话记录】，从中提取与核心意图相关的、但当前消息中缺失的关键信息，如：MindSpore框架名、具体API/算子名称、版本号、硬件环境（Ascend/GPU/CPU）、报错信息等。\n\
+            3.  **综合生成新查询**: 最后，将核心意图与补充的上下文信息结合，遵循以下准则，生成一句最终的查询语句。\n# 改写准则 (必须遵守)\n\
+            1.  **补全关键信息 (上下文补充)**: 必须将对话中已提及的、对理解问题至关重要的实体（如 `MindSpore`, `nn.Conv2d`,\
+            \ `Ascend 910`, `RuntimeError`）补全到新查询中，使其无需依赖历史记录即可被理解。\n2.  **提升检索意图\
+            \ (动词优化)**: 主动将口语化的动词替换为更明确的检索意图词。\n    - \"介绍下\" / \"是啥\" → \"的作用和用法\"\
+            \ / \"的定义和应用场景\"\n    - \"怎么用\" / \"咋弄\" → \"的使用方法\" / \"的操作步骤\"\n   \
+            \ - \"报错了\" / \"出错了\" → \"错误的原因和解决方法\"\n    - \"有啥区别\" / \"和...比呢\" →\
+            \ \"与...的区别和联系\"\n    - \"支持吗\" / \"可以吗\" → \"的支持情况\" / \"是否支持\"\n3. \
+            \ **精简与保留 (去芜存菁)**:\n    - **删除**: \"请问\"、\"你好\"、\"这个\"、\"它\"、\"上面那个\"\
+            、\"呢/吗/啊\" 等所有客套话、指代词和语气助词。\n    - **保留**: 所有英文技术术语（API名、参数名、库名）、版本号、错误代码等必须原样保留，不得翻译或修改。\n\
+            4.  **保持原样 (当查询已足够好时)**: 如果用户输入本身已经是一句清晰、完整的技术问题（例如 \"MindSpore中如何实现YOLOv5的动态学习率\"\
+            ），则无需改写，直接输出原句。\n5.  **处理歧义 (聚焦最新)**: 如果历史对话中存在多个主题，优先使用与【当前用户消息】最直接相关的最新上下文进行补全。\n\
+            # 增强示例\n---\n**【简单查询】**\n- 用户输入: `介绍下add算子`\n- 输出: `MindSpore add算子的作用和用法`\n\
+            ---\n**【上下文依赖】**\n- 历史: `用户: MindSpore的Conv2d有哪些参数？`, `机器人: ...`\n- 用户输入:\
+            \ `它在昇腾上支持吗？`\n- 输出: `MindSpore Conv2d算子在昇腾(Ascend)上的支持情况`\n---\n**【报错场景】**\n\
+            - 历史: `用户: 我用Reshape报错了，这是日志：RuntimeError: shape inconsistent...`\n- 用户输入:\
+            \ `这个怎么解决？`\n- 输出: `MindSpore Reshape算子出现RuntimeError: shape inconsistent错误的原因和解决方法`\n\
+            ---\n**【查询已优化，无需改写】**\n- 用户输入: `MindSpore 2.2版本中nn.GroupNorm的使用方法`\n-\
+            \ 输出: `MindSpore 2.2版本中nn.GroupNorm的使用方法`\n---\n**【比较类查询】**\n- 历史: `用户:\
+            \ 讲讲MindSpore的LayerNorm`\n- 用户输入: `它和BatchNorm有什么区别`\n- 输出: `MindSpore中LayerNorm与BatchNorm的区别`\n\
+            ---\n# 输出格式\n【严格要求】: 仅输出改写后的一句中文查询，不要包含任何解释、标签、前缀或多余的文字。"
+        - id: f4e466b9-3b5c-419d-b42f-6c65006d973e
+          role: user
+          text: '# 输入
+
+            历史消息对话记录：【{{#conversation.conversation_history#}}】
+
+            当前对话轮数：{{#sys.dialogue_count#}}
+
+            当前用户消息：{{#sys.query#}}'
+        selected: false
+        title: 对话重写（支持多轮对话）
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '1755605354684'
+      position:
+        x: 634
+        y: 251.5
+      positionAbsolute:
+        x: 634
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - xTyYcDxLwXjd5bHpPV8qTUN+2EENqORtjsaIbJOYdPd1ZJDe3A2Vs7e4xfcu86pW
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: BAAI/bge-reranker-v2-m3
+            provider: langgenius/siliconflow/siliconflow
+          score_threshold: null
+          top_k: 15
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: BAAI/bge-m3
+              embedding_provider_name: langgenius/siliconflow/siliconflow
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1755605354684'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索 （除API）
+        type: knowledge-retrieval
+      height: 90
+      id: '1756445442821'
+      position:
+        x: 1238
+        y: 251.5
+      positionAbsolute:
+        x: 1238
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef main(api_result=None, non_api_result=None):\n  \
+          \  \"\"\"\n    合并、统一排序并重写Position索引\n    - 将API和non-API的结果合并\n    - 根据每个条目的\
+          \ 'metadata.score' 字段进行全局降序排序\n    - 重写 'metadata.position' 字段，使其从1开始连续递增\n\
+          \    - 返回结构固定为 {\"result\": [...]}\n    \"\"\"\n\n    def extract(payload):\n\
+          \        # 辅助函数，用于从不同格式的输入中提取文档列表\n        if payload is None:\n       \
+          \     return []\n        if isinstance(payload, list):\n            return\
+          \ payload\n        if isinstance(payload, dict):\n            for k in (\"\
+          result\", \"documents\", \"data\", \"output\"):\n                v = payload.get(k)\n\
+          \                if isinstance(v, list):\n                    return v\n\
+          \        return []\n\n    # 步骤 1: 合并两个列表\n    a = extract(api_result)\n\
+          \    b = extract(non_api_result)\n    merged = [x for x in a if isinstance(x,\
+          \ dict)] + [x for x in b if isinstance(x, dict)]\n\n    # 步骤 2: 根据 score\
+          \ 进行全局降序排序\n    # 使用 .get() 增加代码健壮性，防止因缺少键而报错\n    sorted_merged = sorted(\n\
+          \        merged,\n        key=lambda item: item.get('metadata', {}).get('score',\
+          \ 0),\n        reverse=True\n    )\n\n    # 步骤 3: 遍历排序后的列表，重写 'position'\
+          \ 字段\n    # 使用 enumerate(..., 1) 直接生成从1开始的索引\n    for index, item in enumerate(sorted_merged,\
+          \ 1):\n        # 确保 'metadata' 键存在且为字典类型\n        if 'metadata' in item\
+          \ and isinstance(item['metadata'], dict):\n            item['metadata']['position']\
+          \ = index\n\n    # 返回最终处理好的结果\n    return {\"result\": sorted_merged}\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1756445442821'
+          - result
+          value_type: array[object]
+          variable: non_api_result
+        - value_selector:
+          - '1755603339629'
+          - result
+          value_type: array[object]
+          variable: api_result
+      height: 52
+      id: '1756550647583'
+      position:
+        x: 1540
+        y: 251.5
+      positionAbsolute:
+        x: 1540
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen3-30B-A3B
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - edition_type: basic
+          id: b6e26204-622b-4314-8618-71951c2e069d
+          role: system
+          text: ''
+        - id: 4418a39e-9cd0-4bd4-be42-7b123f82c4da
+          role: user
+          text: '你是在MindSpore RAG流程中HyDE的假想文档生成器。为下面的问题生成一个假想性的答案。这个答案应当是详尽、清晰的，它将被用在一个专业知识库中搜索相关信息的查询依据。
+
+            问题：{{#1755605354684.text#}}
+
+            你的回复应当包含问题（不要修改）和你的回答。
+
+
+            示例：
+
+            输入：MindSpore add算子的使用方法和API说明
+
+            输出：问题：MindSpore add算子的使用方法和API说明
+
+            回答：add 算子是 MindSpore 中最基本、最常用的算子之一，用于对两个输入的 Tensor 进行逐元素的加法运算。'
+        selected: false
+        title: HyDE
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '1758512785779'
+      position:
+        x: 936
+        y: 381.5
+      positionAbsolute:
+        x: 936
+        y: 381.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - sys
+          - query
+          variable_selector:
+          - conversation
+          - conversation_history
+          write_mode: over-write
+        selected: false
+        title: 变量赋值
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1758608752866'
+      position:
+        x: 332
+        y: 251.5
+      positionAbsolute:
+        x: 332
+        y: 251.5
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - '17556033888310'
+          - text
+          variable_selector:
+          - conversation
+          - conversation_history
+          write_mode: over-write
+        selected: false
+        title: 变量赋值 2
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1758608781300'
+      position:
+        x: 2144
+        y: 251.5
+      positionAbsolute:
+        x: 2144
+        y: 251.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -3144.6946023645914
+      y: 61.84735114608986
+      zoom: 1.399999940771116
+  rag_pipeline_variables: []
