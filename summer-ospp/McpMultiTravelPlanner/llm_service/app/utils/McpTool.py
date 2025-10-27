@@ -5,10 +5,9 @@ from typing import List, Dict
 import pandas as pd
 import requests
 from mcp.server.fastmcp import FastMCP
-import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from datetime import datetime, timedelta
-from app import model, tokenizer, torch_device
+from app import model, tokenizer
 import time
 from .TourismDataSimplifier import TourismDataSimplifier
 
@@ -487,7 +486,7 @@ def generate_with_tools(user_query: str, max_iterations: int = 100):
         )
         
         # 准备模型输入
-        model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True).to(torch_device)
+        model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True)
         
         # 生成响应
         generated_ids = model.generate(

@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="248d2326-0c02-4d07-a34f-0acf3e244180" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/utils/TourismDataSimplifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/ppo/touristAttractions.py" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/ppo/touristAttractions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/utils/McpTool.py" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/app/utils/McpTool.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/llm_service/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/ppo/touristAttractions.py" beforeDir="false" afterPath="$PROJECT_DIR$/summer-ospp/McpMultiTravelPlanner/ppo/touristAttractions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

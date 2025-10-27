@@ -5,7 +5,7 @@ from flask import Blueprint, Response, stream_with_context
 from flask import request
 from flask import jsonify, make_response
 import numpy as np
-from . import model, tokenizer, torch_device, model_ppo, env
+from . import model, tokenizer, model_ppo, env
 from app.utils.McpTool import generate_with_tools, get_tool_ans, get_small_transport
 from app.utils.sample_tool import generate_unique_str
 from app.ppo.get_ans import get_path
@@ -107,7 +107,7 @@ def getRespone():
             )
             
             # 准备模型输入
-            model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True).to(torch_device)
+            model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True)
             
             # 生成响应
             generated_ids = model.generate(
@@ -388,7 +388,7 @@ def moreChat():
         )
         
         # 准备模型输入
-        model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True).to(torch_device)
+        model_inputs = tokenizer([text], return_tensors="ms", padding=True, truncation=True)
         
         # 生成响应
         generated_ids = model.generate(
