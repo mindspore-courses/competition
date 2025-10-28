@@ -60,7 +60,7 @@ def getRespone():
             end_date = datetime.strptime(end_str, "%Y-%m-%d").date()
             days = (end_date - start_date).days
             ppo_data = {
-                'attractions': poi_names[:2],
+                'attractions': poi_names,
                 'distance_matrix': np.array(distances),
                 'attraction_scores': np.array(poi_rating),
                 'attraction_costs': np.array(poi_spend),

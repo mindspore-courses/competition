@@ -27,21 +27,25 @@ McpMultiTravelPlanner 以 Qwen2-7B 大语言模型为核心推理引擎，通过
 - **image**：mindspore_2.4.10-cann_8.0.0-py_3.10-euler_2.10.11-aarch64-snt9
 - **mindspore**：2.6.0
 - **mindnlp**：0.4.1
+- **node.js**：22.19.0
 
 ### 安装步骤
 
 1. **克隆项目**
 ```bash
 git clone https://github.com/mindspore-courses/competition.git
-cd summer-ospp/McpMultiTravelPlanner
+cd competition/summer-ospp/McpMultiTravelPlanner
 ```
 
 2. **准备模型文件**
 ```bash
 pip install huggingface-hub
+export HF_ENDPOINT=https://hf-mirror.com
 huggingface-cli login
 
-cd llm_service/app/models
+cd llm_service/app
+mkdir models
+cd models
 huggingface-cli download \
   Qwen/Qwen2-7B-Instruct \
   --local-dir ./Qwen2-7B-Instruct \
@@ -51,9 +55,13 @@ huggingface-cli download \
 3. **配置环境**
 ```bash
 cd ../../
-pip install -r requestment.txt
+pip install -r requirements.txt
 
 cd ../TravelVue
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+source ~/.bashrc
+nvm install v22.19.0
+nvm use v22.19.0
 npm install
 ```
 
