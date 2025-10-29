@@ -101,7 +101,6 @@ def homo_warping(src_fea, src_proj, ref_proj, depth_values):
         warped_src_fea: [B, C, Ndepth, H, W]
     """
     # === disable gradients (equiv. to torch.no_grad) ===
-    src_fea = ops.stop_gradient(src_fea)
     src_proj = ops.stop_gradient(src_proj)
     ref_proj = ops.stop_gradient(ref_proj)
     depth_values = ops.stop_gradient(depth_values)
