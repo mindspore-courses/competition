@@ -27,7 +27,6 @@ class MVSDataset():
 
         # scans
         for scan in scans:
-            # pair_file = "Cameras/pair.txt"
             # read the pair file
             with open(os.path.join(self.datapath, 'Cameras', 'pair.txt')) as f:
                 num_viewpoint = int(f.readline())
@@ -107,7 +106,6 @@ class MVSDataset():
 
             # multiply intrinsics and extrinsics to get projection matrix
             proj_mat = extrinsics.copy()
-            # 这里逻辑不太对
             proj_mat[:3, :4] = np.matmul(intrinsics, proj_mat[:3, :4])
             proj_matrices.append(proj_mat)
 
@@ -123,11 +121,6 @@ class MVSDataset():
         def encode_scanid(scanid_str):
             """将 'scan88' 转为 88"""
             return int(scanid_str.replace("scan", ""))
-        # return {"imgs": imgs,
-        #         "proj_matrices": proj_matrices,
-        #         "depth": depth,
-        #         "depth_values": depth_values,
-        #         "mask": mask}
         return (
             imgs,                   # "imgs" (nviews, 3, H, W)
             proj_matrices,        # "proj_matrices" (多尺度投影矩阵)
@@ -144,12 +137,13 @@ if __name__ == "__main__":
         """将 88 转为 'scan88'"""
         return f"scan{scanid_int}"
     DTU_TRAINING="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu_training/mvs_training/dtu_training"
+    DTU_TRAINING="/share/datasets/DTU/mvs_training/dtu/"
     dataset = MVSDataset(
         datapath=DTU_TRAINING,
         listfile="lists/dtu/train.txt",
         mode="train",
         nviews=5,
-        ndepths=384,
+        ndepths=192,
         interval_scale=1.06
     )
     # 测试1: 检查数据集长度
@@ -177,12 +171,13 @@ if __name__ == "__main__":
         """将 88 转为 'scan88'"""
         return f"scan{scanid_int}"
     DTU_TRAINING="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu_training/mvs_training/dtu_training"
+    DTU_TRAINING="/share/datasets/DTU/mvs_training/dtu/"
     dataset = MVSDataset(
         datapath=DTU_TRAINING,
         listfile="lists/dtu/train.txt",
         mode="train",
         nviews=5,
-        ndepths=384,
+        ndepths=192,
         interval_scale=1.06
     )
     # 测试4: 通过GeneratorDataset加载
@@ -202,6 +197,7 @@ if __name__ == "__main__":
         print("proj_matrices:", type(item['proj_matrices']))
         print("depth:", item['depth'][0].shape)
         print("depth_values:", item['depth_values'].shape)
+        print("depth_values:", item['depth_values'][0])
         print("mask:", item['mask'][0].shape)
         
         print("viewid:", item['viewid'])

@@ -20,7 +20,6 @@ class FeatureNet(nn.Cell):
 
         self.conv5 = ConvBnReLU(16, 32, 5, 2, 2)
         self.conv6 = ConvBnReLU(32, 32, 3, 1, 1)
-        # self.feature = nn.Conv2d(32, 32, 3, 1, 1)
         self.feature = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, stride=1, padding=1, pad_mode='pad', has_bias=True)
 
     def construct(self, x):
@@ -45,7 +44,7 @@ class CostRegNet(nn.Cell):
         self.conv6 = ConvBnReLU3D(64, 64)
 
         self.conv7 = nn.SequentialCell(
-            nn.Conv3dTranspose(64, 32, kernel_size=3, padding=1, output_padding=1,pad_mode="pad",  stride=2,has_bias=False),
+            nn.Conv3dTranspose(64, 32, kernel_size=3, padding=1, output_padding=1, pad_mode="pad",  stride=2,has_bias=False),
             nn.BatchNorm3d(32),
             nn.ReLU())
 

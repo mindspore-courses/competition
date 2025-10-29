@@ -11,10 +11,16 @@ import mindspore.nn as nn
 import mindspore.ops as ops
 from mindspore import context, Tensor
 from mindspore.train.callback import LossMonitor, TimeMonitor
-from mindspore.train.serialization import save_checkpoint, load_checkpoint
+from mindspore.train.serialization import save_checkpoint, load_checkpoint, load_param_into_net
 from mindspore.train.model import Model
 from mindspore.dataset import GeneratorDataset
 from mindspore import dtype as mstype
+from mindspore.ops import composite as C
+# 导入自定义模块
+from datasets.dtu_yao import MVSDataset
+from models import MVSNet, mvsnet_loss
+from utils import *
+
 
 # 设置 MindSpore 运行环境
 # context.set_context(mode=context.PYNATIVE_MODE, device_target="Ascend", device_id=0)
@@ -22,10 +28,6 @@ from mindspore import dtype as mstype
 print(mindspore.__version__)
 print(mindspore.get_context("device_target"))  # 默认 "GPU"
 mindspore.context.set_context(mode=context.PYNATIVE_MODE, device_target="GPU")
-# 导入自定义模块
-from datasets.dtu_yao import MVSDataset
-from models import MVSNet, mvsnet_loss
-from utils import *
 
 parser = argparse.ArgumentParser(description='A MindSpore Implementation of MVSNet')
 parser.add_argument('--mode', default='train', help='train or test', choices=['train', 'test'])
@@ -38,7 +40,7 @@ parser.add_argument('--trainlist', help='train list')
 parser.add_argument('--testlist', help='test list')
 
 parser.add_argument('--epochs', type=int, default=16, help='number of epochs to train')
-parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
+parser.add_argument('--lr', type=float, default=0.0003, help='learning rate')
 parser.add_argument('--lrepochs', type=str, default="10,12,14:2", help='epoch ids to downscale lr and the downscale rate')
 parser.add_argument('--wd', type=float, default=0.0, help='weight decay')
 
@@ -90,8 +92,7 @@ test_loader = GeneratorDataset(test_dataset,
 model = MVSNet(refine=False)
 loss_fn = mvsnet_loss
 # optimizer
-optimizer = nn.Adam(model.trainable_params(), learning_rate=args.lr,
-                    beta1=0.9, beta2=0.999, weight_decay=args.wd)
+optimizer = nn.Adam(model.trainable_params(), learning_rate=args.lr, beta1=0.9, beta2=0.999, weight_decay=args.wd)
 
 # loss cell
 class WithLossCell(nn.Cell):
@@ -99,6 +100,7 @@ class WithLossCell(nn.Cell):
         super(WithLossCell, self).__init__(auto_prefix=False)
         self.backbone = backbone
         self.loss_fn = loss_fn
+
     def construct(self, imgs, proj_matrices, depth_values, depth_gt, mask):
         outputs = self.backbone(imgs, proj_matrices, depth_values)
         depth_est = outputs["depth"]
@@ -106,9 +108,9 @@ class WithLossCell(nn.Cell):
         return loss
 
 train_network = WithLossCell(model, loss_fn)
-train_model = nn.TrainOneStepCell(train_network, optimizer=optimizer)
+train_model = nn.TrainOneStepCell(train_network, optimizer)
+train_model.set_train()
 
-# checkpoint load
 start_epoch = 0
 if (args.mode == "train" and args.resume) or (args.mode == "test" and not args.loadckpt):
     ckpts = [fn for fn in os.listdir(args.logdir) if fn.endswith(".ckpt")]
@@ -116,22 +118,41 @@ if (args.mode == "train" and args.resume) or (args.mode == "test" and not args.l
         ckpts = sorted(ckpts, key=lambda x: int(x.split('_')[-1].split('.')[0]))
         loadckpt = os.path.join(args.logdir, ckpts[-1])
         print("resuming", loadckpt)
-        load_checkpoint(loadckpt, net=model)
+        param_dict = load_checkpoint(loadckpt)
+        try:
+            load_param_into_net(model, param_dict)
+            print("Loaded params into model from", loadckpt)
+        except Exception as e:
+            print("Warning: load_param_into_net failed for model:", e)
+        try:
+            load_param_into_net(train_model, param_dict)
+            print("Attempted to load params into train_model (may include optimizer state).")
+        except Exception:
+            pass
         start_epoch = int(ckpts[-1].split('_')[-1].split('.')[0]) + 1
 elif args.loadckpt:
     print("loading model {}".format(args.loadckpt))
-    load_checkpoint(args.loadckpt, net=model)
+    param_dict = load_checkpoint(args.loadckpt)
+    try:
+        load_param_into_net(model, param_dict)
+        print("Loaded params into model from", args.loadckpt)
+    except Exception as e:
+        print("Warning: load_param_into_net failed for model:", e)
 
 print("start at epoch {}".format(start_epoch))
-print('Number of model parameters: {}'.format(len(model.trainable_params())))
 
 # 学习率调度器
 def adjust_learning_rate(epoch):
     parts = args.lrepochs.split(':')
     milestones = [int(x) for x in parts[0].split(',') if x != '']
     decay = float(parts[1])
-    factor = (1.0 / decay) ** sum(e <= epoch for e in milestones)
+    n_decays = sum(epoch >= m for m in milestones)
+    factor = (1.0 / decay) ** n_decays
     return args.lr * factor
+
+# 在 train() 外部一次性创建 grad operator（节省开销）
+_grad_op = C.GradOperation(get_by_list=True, sens_param=False)
+_params = model.trainable_params()  # list of Parameter
 
 # 训练
 def train():
@@ -142,22 +163,39 @@ def train():
         print(f"\nEpoch {epoch}, lr = {current_lr:.6f}")
 
         train_losses = []
+        iter_idx = 0
         for batch_idx, sample in enumerate(train_loader.create_dict_iterator()):
+            iter_idx += 1
             imgs = Tensor(sample['imgs'], mstype.float32)
             proj_matrices = Tensor(sample['proj_matrices'], mstype.float32)
             depth_values = Tensor(sample['depth_values'], mstype.float32)
             depth_gt = Tensor(sample['depth'], mstype.float32)
             mask = Tensor(sample['mask'], mstype.float32)
-
             loss = train_model(imgs, proj_matrices, depth_values, depth_gt, mask)
-            train_losses.append(loss.asnumpy())
-            if batch_idx % args.summary_freq == 0:
-                print(f"Iter {batch_idx}/{len(train_loader)}, train loss = {loss.asnumpy():.4f}")
-                save_checkpoint(model, f"{args.logdir}/model_{epoch:06d}.ckpt")
+            # 注意：loss 是 Tensor 标量
+            loss_val = float(loss.asnumpy()) if hasattr(loss, 'asnumpy') else float(loss)
+            train_losses.append(loss_val)
 
+            if batch_idx % args.summary_freq == 0:
+                print(f"Epoch {epoch}/{args.epochs}, Iter {batch_idx}/{len(train_loader)}, train loss = {loss_val:.4f}")
+            if batch_idx % 100 == 0:
+                ckpt_path = os.path.join(args.logdir, f"model_{epoch:06d}.ckpt")
+                save_checkpoint(model, ckpt_path)
+                # ---- 该部分检查是否正常训练，梯度下降 ----
+                print("=== Grad summary ===")
+                grads = _grad_op(train_network, _params)(imgs, proj_matrices, depth_values, depth_gt, mask)
+                show_idx = list(range(3)) + list(range(len(_params) - 2, len(_params)))  # 前3层+后2层
+                for idx, (p, g) in enumerate(zip(_params, grads)):
+                    if g is None or idx not in show_idx:
+                        continue
+                    g_np = g.asnumpy()
+                    print(f"{idx:03d} | {p.name:45s} | mean={g_np.mean():+.3e}, std={g_np.std():.3e}")
+                print("=== End grad summary ===")
+        # 每个 epoch 保存一次 checkpoint（避免频繁 IO）
         if (epoch + 1) % args.save_freq == 0:
-            save_checkpoint(model, f"{args.logdir}/model_{epoch:06d}.ckpt")
-        # eval(epoch, np.mean(train_losses))
+            ckpt_path = os.path.join(args.logdir, f"model_{epoch:06d}.ckpt")
+            save_checkpoint(model, ckpt_path)
+            print("Saved checkpoint:", ckpt_path)
 
 # 测试/验证
 def eval(epoch=0, train_loss=None):
