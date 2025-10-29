@@ -200,8 +200,6 @@ Mindspore 作为一款全场景深度学习框架，其官方文档是开发者�
 
 ![mermaid-1759047754405](https://image-hosting-service.obs.cn-north-4.myhuaweicloud.com/202510271559206.svg)
 
-好的，遵照您的要求，这里是更新后的 `节点功能详解` 部分，其中包含了关键 LLM 节点的完整提示词（Prompt）。
-
 ---
 
 #### **4. 节点功能详解**
