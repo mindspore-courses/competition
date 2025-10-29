@@ -1,0 +1,322 @@
+[
+  {
+    "user_id": "10001",
+    "username": "customer1",
+    "password": "8af81c3b9d9f5d902561a779e6d37decb9fc5858e004e32a6eb514a92f2d0bfb",
+    "phone": "13800138107",
+    "account_type": "personal",
+    "account_balance": 234217.46,
+    "last_login": "2025-07-02T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn6124",
+        "date": "2025-05-09",
+        "amount": 9249.67,
+        "type": "transfer"
+      },
+      {
+        "id": "txn6358",
+        "date": "2025-07-10",
+        "amount": 4263.38,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn3689",
+        "date": "2025-04-29",
+        "amount": 8558.66,
+        "type": "withdrawal"
+      }
+    ]
+  },
+  {
+    "user_id": "10002",
+    "username": "customer2",
+    "password": "1d3f3605f8b5373d88e5e92593f990e2d23c336250b8cdc420f0ca7cbfa8c20d",
+    "phone": "13800138721",
+    "account_type": "business",
+    "account_balance": 829808.13,
+    "last_login": "2025-07-09T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn6753",
+        "date": "2025-06-14",
+        "amount": 3309.07,
+        "type": "transfer"
+      },
+      {
+        "id": "txn4797",
+        "date": "2025-04-21",
+        "amount": 652.15,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn6183",
+        "date": "2025-04-24",
+        "amount": 6334.77,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn5757",
+        "date": "2025-06-23",
+        "amount": 5702.16,
+        "type": "deposit"
+      }
+    ]
+  },
+  {
+    "user_id": "10003",
+    "username": "customer3",
+    "password": "597c9ccb46ebe29a6f8eb7f55f90533bd5943a87d50926fb3850667ad19dc3c2",
+    "phone": "13800138729",
+    "account_type": "personal",
+    "account_balance": 937734.06,
+    "last_login": "2025-07-05T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn7990",
+        "date": "2025-06-08",
+        "amount": 7627.04,
+        "type": "transfer"
+      },
+      {
+        "id": "txn4376",
+        "date": "2025-07-13",
+        "amount": 8529.0,
+        "type": "transfer"
+      },
+      {
+        "id": "txn1179",
+        "date": "2025-05-17",
+        "amount": 3738.13,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn2730",
+        "date": "2025-05-14",
+        "amount": 1663.73,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn1066",
+        "date": "2025-06-15",
+        "amount": 1387.96,
+        "type": "withdrawal"
+      }
+    ]
+  },
+  {
+    "user_id": "10004",
+    "username": "customer4",
+    "password": "9ff49c3319cfe44e32ce0e45f2ac03e844ca0018752743b2d6aa787a96bce7c2",
+    "phone": "13800138525",
+    "account_type": "personal",
+    "account_balance": 945917.47,
+    "last_login": "2025-07-09T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn7714",
+        "date": "2025-06-13",
+        "amount": 4575.7,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn8948",
+        "date": "2025-07-09",
+        "amount": 5732.32,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn4681",
+        "date": "2025-05-01",
+        "amount": 438.3,
+        "type": "transfer"
+      }
+    ]
+  },
+  {
+    "user_id": "10005",
+    "username": "customer5",
+    "password": "a4dd171ed8d6cd1a9cf49b7e1a6a950aafd3dd2dfc367bd9732ee1373d0045f3",
+    "phone": "13800138315",
+    "account_type": "business",
+    "account_balance": 103551.38,
+    "last_login": "2025-06-24T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn3169",
+        "date": "2025-05-05",
+        "amount": 762.05,
+        "type": "deposit"
+      },
+      {
+        "id": "txn8725",
+        "date": "2025-06-10",
+        "amount": 538.61,
+        "type": "deposit"
+      },
+      {
+        "id": "txn2751",
+        "date": "2025-05-09",
+        "amount": 7424.85,
+        "type": "transfer"
+      },
+      {
+        "id": "txn5671",
+        "date": "2025-05-26",
+        "amount": 7941.67,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn4290",
+        "date": "2025-07-06",
+        "amount": 6917.5,
+        "type": "deposit"
+      }
+    ]
+  },
+  {
+    "user_id": "10006",
+    "username": "customer6",
+    "password": "450a792bdbc9296a1573ff332fe8cc3d5f99468322452208435f6a95669bf4a8",
+    "phone": "13800138616",
+    "account_type": "business",
+    "account_balance": 648550.25,
+    "last_login": "2025-06-22T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn2637",
+        "date": "2025-07-03",
+        "amount": 6977.04,
+        "type": "transfer"
+      },
+      {
+        "id": "txn4553",
+        "date": "2025-05-16",
+        "amount": 6347.8,
+        "type": "deposit"
+      }
+    ]
+  },
+  {
+    "user_id": "10007",
+    "username": "customer7",
+    "password": "2aa88297d3536a340855b0422df832b43b0a450f7cefe23a097e896199805894",
+    "phone": "13800138469",
+    "account_type": "personal",
+    "account_balance": 40888.19,
+    "last_login": "2025-06-18T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn6706",
+        "date": "2025-05-24",
+        "amount": 5094.16,
+        "type": "transfer"
+      },
+      {
+        "id": "txn2052",
+        "date": "2025-04-29",
+        "amount": 996.17,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn9779",
+        "date": "2025-04-29",
+        "amount": 4584.1,
+        "type": "deposit"
+      },
+      {
+        "id": "txn9492",
+        "date": "2025-06-19",
+        "amount": 3696.52,
+        "type": "transfer"
+      },
+      {
+        "id": "txn7805",
+        "date": "2025-04-27",
+        "amount": 7653.58,
+        "type": "deposit"
+      }
+    ]
+  },
+  {
+    "user_id": "10008",
+    "username": "customer8",
+    "password": "835ffb581a477770a5d0fea900c54af3d55ef6d3cc972860cd1e16f70854d748",
+    "phone": "13800138750",
+    "account_type": "personal",
+    "account_balance": 877665.97,
+    "last_login": "2025-07-06T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn3723",
+        "date": "2025-05-14",
+        "amount": 9481.56,
+        "type": "withdrawal"
+      },
+      {
+        "id": "txn7582",
+        "date": "2025-07-07",
+        "amount": 39.02,
+        "type": "deposit"
+      },
+      {
+        "id": "txn5261",
+        "date": "2025-05-25",
+        "amount": 7928.78,
+        "type": "transfer"
+      }
+    ]
+  },
+  {
+    "user_id": "10009",
+    "username": "customer9",
+    "password": "5070d27306c2b2e94641b05ed5ebb7f1d8f3f9f873647db64f002a54517ba6fe",
+    "phone": "13800138914",
+    "account_type": "personal",
+    "account_balance": 140305.3,
+    "last_login": "2025-07-13T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn9467",
+        "date": "2025-05-21",
+        "amount": 9388.58,
+        "type": "transfer"
+      },
+      {
+        "id": "txn3819",
+        "date": "2025-07-10",
+        "amount": 6530.43,
+        "type": "deposit"
+      },
+      {
+        "id": "txn4359",
+        "date": "2025-06-18",
+        "amount": 2497.94,
+        "type": "withdrawal"
+      }
+    ]
+  },
+  {
+    "user_id": "10010",
+    "username": "customer10",
+    "password": "7aad492fabb3d0becf84256b5755573e69ad0ff48d02d1d1a08a1f8380e0d43f",
+    "phone": "13800138335",
+    "account_type": "business",
+    "account_balance": 531803.65,
+    "last_login": "2025-06-28T07:41:43.780175Z",
+    "transactions": [
+      {
+        "id": "txn4425",
+        "date": "2025-05-22",
+        "amount": 5138.09,
+        "type": "deposit"
+      },
+      {
+        "id": "txn4427",
+        "date": "2025-06-12",
+        "amount": 555.06,
+        "type": "transfer"
+      }
+    ]
+  }
+]
