@@ -149,7 +149,6 @@ def save_pfm(filename, image, scale=1):
         scale = -scale
 
     file.write(('%f\n' % scale).encode('utf-8'))
-    # print(image[1494015:1494017])
     image.tofile(file)
     file.close()
 
@@ -170,23 +169,4 @@ class RandomCrop(object):
 
         image_crop = image[4*y1:4*y2, 4*x1:4*x2]
         image_resize = cv2.resize(image_crop, (img_w, img_h), interpolation=cv2.INTER_LINEAR)
-
-        # import matplotlib.pyplot as plt
-        # plt.subplot(2, 3, 1)
-        # plt.imshow(image)
-        # plt.subplot(2, 3, 2)
-        # plt.imshow(image_crop)
-        # plt.subplot(2, 3, 3)
-        # plt.imshow(image_resize)
-        #
-        # plt.subplot(2, 3, 4)
-        # plt.imshow((normal + 1.0) / 2, cmap="rainbow")
-        # plt.subplot(2, 3, 5)
-        # plt.imshow((normal_crop + 1.0) / 2, cmap="rainbow")
-        # plt.subplot(2, 3, 6)
-        # plt.imshow((normal_resize + 1.0) / 2, cmap="rainbow")
-        # plt.show()
-        # plt.pause(1)
-        # plt.close()
-
         return image_resize, normal_resize

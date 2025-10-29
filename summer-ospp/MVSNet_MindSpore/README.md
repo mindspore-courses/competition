@@ -24,11 +24,11 @@
   * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/Depths_raw.zip
   * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/dtu.zip
   * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/dtu_training.rar
-* 还有测试的DTU结果：
- * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/MVSNetMindSpore_outputs.zip
+* 测试的DTU输出结果参考：
+	* https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/MVSNetMindSpore_outputs.zip
 
 * 在 ``train.sh``脚本中设置 ``MVS_TRAINING`` 为上一个训练文件夹路径。并创建一个 ``checkpoints``文件夹。
-* 运行 ``./train.sh``
+* 运行 ``./train.sh``，在GPU3090上训练16个epoch，batchsize为2，大概需要7天。
 
 ### eval&Fusion
 

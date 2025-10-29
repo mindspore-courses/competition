@@ -15,12 +15,7 @@ from datasets.data_io import read_pfm, save_pfm
 import cv2
 from plyfile import PlyData, PlyElement
 from PIL import Image
-
-# NOTE: 修改为你实际的 tanks MVSDataset 路径/模块
-# 如果你的项目里有 datasets.tankandtemples 或类似模块，请修改下面这行的导入路径
-# from datasets.tankandtemples import MVSDataset
-# 为了兼容不同实现，这里不直接导入 MVSDataset，而是在 save_depth 中使用 find_dataset_def 或按需直接引用。
-from datasets.tank import MVSDataset as tank_MVSDataset  # 备用，不会在 tanks 路径下使用
+from datasets.tank import MVSDataset as tank_MVSDataset
 
 parser = argparse.ArgumentParser(description='Predict depth, filter, and fuse for Tanks & Temples style dataset')
 parser.add_argument('--model', default='mvsnet', help='select model')
@@ -43,10 +38,6 @@ print_args(args)
 
 
 def read_camera_parameters(filename):
-    """读取 camera 文件：
-    假设文件格式和 DTU 类似（extrinsics 在 lines[1:5], intrinsics 在 lines[7:10]）。
-    保持 intrinsics[:2,:] /= 4 的操作（如果你的训练不是 1/4 特征尺度，请修改）。
-    """
     with open(filename) as f:
         lines = f.readlines()
         lines = [line.rstrip() for line in lines]
@@ -85,12 +76,6 @@ def read_pair_file(filename):
 
 
 def save_depth():
-    """
-    这里强制使用你在示例里给出的 Tanks MVSDataset 调用签名：
-    MVSDataset(datapath=..., n_views=11, ndepths=..., img_wh=(1600,1184), scan=[scene])
-    你也可以把 args.testlist 设置为 scenes 的逗号分隔字符串或文件路径。
-    """
-
     if args.testlist is None:
         scenes = ['Family','Francis','Horse','Lighthouse','M60', 'Panther', 'Playground', 'Train',
                   'Auditorium', 'Ballroom', 'Courtroom','Museum', 'Palace', 'Temple']
@@ -101,12 +86,10 @@ def save_depth():
                 scenes = [line.rstrip() for line in content]
         else:
             scenes = [s.strip() for s in args.testlist.split(',') if s.strip()]
-
-    # 逐场景推理并保存 depth/confidence
     for scene in scenes:
         print(f"=== Processing scene: {scene} ===")
   
-        dataset = tank_MVSDataset(  # 如果你的项目中 MVSDataset 已指向 Tanks 版本则直接使用
+        dataset = tank_MVSDataset(
             datapath=args.testpath,
             n_views=11,
             ndepths=args.numdepth,
@@ -116,18 +99,13 @@ def save_depth():
         possible_columns =["imgs", "proj_matrices", "depth_values", "filename_np", "viewid"]
         ds = GeneratorDataset(dataset, column_names=possible_columns, shuffle=False)
         ds = ds.batch(args.batch_size, drop_remainder=False)
-
-        # model load
         model = MVSNet(refine=False)
         if args.loadckpt is None:
             raise ValueError("请通过 --loadckpt 指定要加载的 checkpoint")
         param_dict = ms.load_checkpoint(args.loadckpt)
         ms.load_param_into_net(model, param_dict)
         model.set_train(False)
-
         print(f"Dataset size (batches): {ds.get_dataset_size()}")
-
-        # 逐 batch 推理
         for batch_idx, data in enumerate(ds.create_dict_iterator()):
             imgs = Tensor(data["imgs"], ms.float32)
             proj_matrices = Tensor(data["proj_matrices"], ms.float32)
@@ -141,10 +119,7 @@ def save_depth():
             if isinstance(conf_maps, ms.Tensor):
                 conf_maps = conf_maps.asnumpy()
             print(f"Iter {batch_idx+1}/{ds.get_dataset_size()} (scene {scene})")
-
-            # 根据数据集提供的字段选择 filename 和 viewid
             if "filename_np" in data:
-                # filename_np 可能是 bytes 或 numpy string array
                 filename_np = data["filename_np"][0].asnumpy() if isinstance(data["filename_np"][0], ms.Tensor) else data["filename_np"][0]
                 if isinstance(filename_np, bytes):
                     filename_str = filename_np.decode()
@@ -156,9 +131,6 @@ def save_depth():
                     depth_filename = os.path.join(args.outdir, base_folder, 'depth_est', '{:0>8}.pfm'.format(int(viewid_int)))
                     conf_filename = os.path.join(args.outdir, base_folder, 'confidence', '{:0>8}.pfm'.format(int(viewid_int)))
                     return depth_filename, conf_filename
-
-            # depth_maps 可能是 (B, H, W) 或 (B, 1, H, W) 或 (B, D, H, W) 等
-            # 这里假设是 (B, H, W)
             for i in range(depth_maps.shape[0]):
                 depth_est = depth_maps[i]
                 photometric_confidence = conf_maps[i]
@@ -168,11 +140,8 @@ def save_depth():
                 save_pfm(depth_filename, depth_est)
                 save_pfm(confidence_filename, photometric_confidence)
                 print("Saved:", depth_filename, confidence_filename)
-
         print(f"Finished scene: {scene}")
 
-
-# 以下 reproject / geometric consistency / filter_depth 和你原脚本保持一致
 def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, intrinsics_src, extrinsics_src):
     width, height = depth_ref.shape[1], depth_ref.shape[0]
     x_ref, y_ref = np.meshgrid(np.arange(0, width), np.arange(0, height))
@@ -264,7 +233,7 @@ def filter_depth(scan_folder, out_folder, plyfilename):
         valid_points = final_mask
         print("valid_points", valid_points.mean())
         x, y, depth = x[valid_points], y[valid_points], depth_est_averaged[valid_points]
-        color = ref_img[1:-16:4, 1::4, :][valid_points]  # 注意：DTU 风格的硬编码，Tanks 可能不适用
+        color = ref_img[1:-16:4, 1::4, :][valid_points]
         xyz_ref = np.matmul(np.linalg.inv(ref_intrinsics),
                             np.vstack((x, y, np.ones_like(x))) * depth)
         xyz_world = np.matmul(np.linalg.inv(ref_extrinsics),
@@ -291,13 +260,11 @@ def filter_depth(scan_folder, out_folder, plyfilename):
 if __name__ == '__main__':
     # step1: save depth maps
     save_depth()
-
-    # step2: filter and fuse (示例，按需开启)
-    # 下面的循环按你的 data layout 修改
-    # with open(args.testlist) as f:
-    #     scans = f.readlines()
-    #     scans = [line.rstrip() for line in scans]
-    # for scan in scans:
-    #     scan_folder = os.path.join(args.testpath, scan)
-    #     out_folder = os.path.join(args.outdir, scan)
-    #     filter_depth(scan_folder, out_folder, os.path.join(args.outdir, f'{scan}.ply'))
+    # step2: filter and fuse
+    with open(args.testlist) as f:
+        scans = f.readlines()
+        scans = [line.rstrip() for line in scans]
+    for scan in scans:
+        scan_folder = os.path.join(args.testpath, scan)
+        out_folder = os.path.join(args.outdir, scan)
+        filter_depth(scan_folder, out_folder, os.path.join(args.outdir, f'{scan}.ply'))

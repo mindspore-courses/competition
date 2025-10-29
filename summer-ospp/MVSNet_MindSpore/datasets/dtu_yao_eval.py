@@ -4,11 +4,10 @@ from mindspore.dataset import GeneratorDataset
 import numpy as np
 import os, cv2, time
 from PIL import Image
-# from datasets.data_io import *
-from data_io import *# 如果要运行最底部的main，同级运行则解
+from datasets.data_io import *
+# from data_io import *# if needed run main
 
 s_h, s_w = 0, 0
-# the DTU dataset preprocessed by Yao Yao (only for training)
 class MVSDataset():
     def __init__(self, datapath, listfile, mode, nviews, ndepths=192, interval_scale=1.06, **kwargs):
         super(MVSDataset, self).__init__()
@@ -65,7 +64,7 @@ class MVSDataset():
         np_img = np.array(img, dtype=np.float32) / 255.
         assert np_img.shape[:2] == (1200, 1600)
         # crop to (1184, 1600)
-        np_img = np_img[:-16, :]  # do not need to modify intrinsics if cropping the bottom part
+        np_img = np_img[:-16, :]
         return np_img
 
     def read_depth(self, filename):
@@ -75,7 +74,6 @@ class MVSDataset():
     def __getitem__(self, idx):
         meta = self.metas[idx]
         scan, ref_view, src_views = meta
-        # use only the reference view and first nviews-1 source views
         view_ids = [ref_view] + src_views[:self.nviews - 1]
 
         imgs = []
@@ -87,46 +85,24 @@ class MVSDataset():
         for i, vid in enumerate(view_ids):
             img_filename = os.path.join(self.datapath, scan, "images", "{:0>8}.jpg".format(vid))
             proj_mat_filename = os.path.join(self.datapath, scan, "cams", "{:0>8}_cam.txt".format(vid))
-            # img_filename = os.path.join(self.datapath, '{}/images/{:0>8}.jpg'.format(scan, vid))
-            # proj_mat_filename = os.path.join(self.datapath, '{}/cams/{:0>8}_cam.txt'.format(scan, vid))
-
             imgs.append(self.read_img(img_filename))
             intrinsics, extrinsics, depth_min, depth_interval = self.read_cam_file(proj_mat_filename)
-
             # multiply intrinsics and extrinsics to get projection matrix
             proj_mat = extrinsics.copy()
             proj_mat[:3, :4] = np.matmul(intrinsics, proj_mat[:3, :4])
             proj_matrices.append(proj_mat)
-
             if i == 0:  # reference view
                 depth_values = np.arange(depth_min, depth_interval * (self.ndepths - 0.5) + depth_min, depth_interval,
                                          dtype=np.float32)
-
         imgs = np.stack(imgs).transpose([0, 3, 1, 2])
         proj_matrices = np.stack(proj_matrices)
 
-        # return {"imgs": imgs,
-        #         "proj_matrices": proj_matrices,
-        #         "depth_values": depth_values,
-        #         "filename": scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}"}
         def encode_scanid(scanid_str):
-            """将 'scan88' 转为 88"""
             return int(scanid_str.replace("scan", ""))
-        # print("scan",scan)
-        # print("encode_scanid(scan)",encode_scanid(scan))
         return (
-            imgs,                   # "imgs" (nviews, 3, H, W)
+            imgs,                   
             proj_matrices,
-            depth_values,            # "depth_values" (ndepths,)
+            depth_values,           
             encode_scanid(scan),
             view_ids[0],
         )
-
-
-if __name__ == "__main__":
-    # some testing code, just IGNORE it
-    dataset = MVSDataset("/home/xyguo/dataset/dtu_mvs/processed/mvs_testing/dtu/", '../lists/dtu/test.txt', 'test', 5,
-                         128)
-    item = dataset[50]
-    for key, value in item.items():
-        print(key, type(value))

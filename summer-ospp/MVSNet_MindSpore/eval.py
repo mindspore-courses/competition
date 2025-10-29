@@ -14,20 +14,16 @@ from datasets.data_io import read_pfm, save_pfm
 import cv2
 from plyfile import PlyData, PlyElement
 from PIL import Image
-
 from datasets.dtu_yao_eval import MVSDataset
 
 parser = argparse.ArgumentParser(description='Predict depth, filter, and fuse. May be different from the original implementation')
 parser.add_argument('--model', default='mvsnet', help='select model')
-
 parser.add_argument('--dataset', default='dtu_yao_eval', help='select dataset')
 parser.add_argument('--testpath', help='testing data path')
 parser.add_argument('--testlist', help='testing scan list')
-
 parser.add_argument('--batch_size', type=int, default=1, help='testing batch size')
 parser.add_argument('--numdepth', type=int, default=64, help='the number of depth values')
 parser.add_argument('--interval_scale', type=float, default=1.06, help='the depth interval scale')
-
 parser.add_argument('--loadckpt', default=None, help='load a specific checkpoint')
 parser.add_argument('--outdir', default='./outputs', help='output dir')
 parser.add_argument('--display', action='store_true', help='display depth images and masks')
@@ -102,28 +98,18 @@ def save_depth():
         imgs = Tensor(data["imgs"], ms.float32)
         proj_matrices = Tensor(data["proj_matrices"], ms.float32)
         depth_values = Tensor(data["depth_values"], ms.float32)
-        
-        # 推理
+    
         outputs = model(imgs, proj_matrices, depth_values)
-        # 假设 outputs 是 dict，转 numpy
         depth_maps = outputs["depth"].asnumpy()
         conf_maps = outputs["photometric_confidence"].asnumpy()
         print(f"Iter {batch_idx}/{test_ds.get_dataset_size()}")
         def decode_scanid(scanid_int):
-            """将 88 转为 'scan88'"""
             return f"scan{scanid_int}"
         scan_id = data["scan"][0].asnumpy()
-        # print("scanid:",scan_id)
         scan = decode_scanid(scan_id)
-        # print("scan:",scan)
         view_id = data["view_id"][0].asnumpy()
-        # print("view_id:",view_id)
-        # 构造文件名模板
         filenames = [scan + '/{}/' + '{:0>8}'.format(int(view_id)) + '{}']
-        # filenames = scan + '/{}/' + '{:0>8}'.format(view_id) + "{}"
-        # print("filename:",filenames[0])
         for filename, depth_est, photometric_confidence in zip(filenames, depth_maps, conf_maps):
-            # print("filename:",filename)
             depth_filename = os.path.join(args.outdir, filename.format('depth_est', '.pfm'))
             print("depth_filename:",depth_filename)
             confidence_filename = os.path.join(args.outdir, filename.format('confidence', '.pfm'))
@@ -148,14 +134,12 @@ def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, i
     # source view x, y
     K_xyz_src = np.matmul(intrinsics_src, xyz_src)
     xy_src = K_xyz_src[:2] / K_xyz_src[2:3]
-
     ## step2. reproject the source view points with source view depth estimation
     # find the depth estimation of the source view
     x_src = xy_src[0].reshape([height, width]).astype(np.float32)
     y_src = xy_src[1].reshape([height, width]).astype(np.float32)
     sampled_depth_src = cv2.remap(depth_src, x_src, y_src, interpolation=cv2.INTER_LINEAR)
     # mask = sampled_depth_src > 0
-
     # source 3D space
     # NOTE that we should use sampled source-view depth_here to project back
     xyz_src = np.matmul(np.linalg.inv(intrinsics_src),
@@ -169,7 +153,6 @@ def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, i
     xy_reprojected = K_xyz_reprojected[:2] / K_xyz_reprojected[2:3]
     x_reprojected = xy_reprojected[0].reshape([height, width]).astype(np.float32)
     y_reprojected = xy_reprojected[1].reshape([height, width]).astype(np.float32)
-
     return depth_reprojected, x_reprojected, y_reprojected, x_src, y_src
 
 
@@ -180,14 +163,11 @@ def check_geometric_consistency(depth_ref, intrinsics_ref, extrinsics_ref, depth
                                                      depth_src, intrinsics_src, extrinsics_src)
     # check |p_reproj-p_1| < 1
     dist = np.sqrt((x2d_reprojected - x_ref) ** 2 + (y2d_reprojected - y_ref) ** 2)
-
     # check |d_reproj-d_1| / d_1 < 0.01
     depth_diff = np.abs(depth_reprojected - depth_ref)
     relative_depth_diff = depth_diff / depth_ref
-
     mask = np.logical_and(dist < 1, relative_depth_diff < 0.01)
     depth_reprojected[~mask] = 0
-
     return mask, depth_reprojected, x2d_src, y2d_src
 
 
@@ -273,15 +253,6 @@ def filter_depth(scan_folder, out_folder, plyfilename):
                               np.vstack((xyz_ref, np.ones_like(x))))[:3]
         vertexs.append(xyz_world.transpose((1, 0)))
         vertex_colors.append((color * 255).astype(np.uint8))
-
-        # # set used_mask[ref_view]
-        # used_mask[ref_view][...] = True
-        # for idx, src_view in enumerate(src_views):
-        #     src_mask = np.logical_and(final_mask, all_srcview_geomask[idx])
-        #     src_y = all_srcview_y[idx].astype(np.int)
-        #     src_x = all_srcview_x[idx].astype(np.int)
-        #     used_mask[src_view][src_y[src_mask], src_x[src_mask]] = True
-
     vertexs = np.concatenate(vertexs, axis=0)
     vertex_colors = np.concatenate(vertex_colors, axis=0)
     vertexs = np.array([tuple(v) for v in vertexs], dtype=[('x', 'f4'), ('y', 'f4'), ('z', 'f4')])
@@ -301,14 +272,14 @@ def filter_depth(scan_folder, out_folder, plyfilename):
 if __name__ == '__main__':
     # step1. save all the depth maps and the masks in outputs directory
     save_depth()
+    # step2. filter and fuse
+    with open(args.testlist) as f:
+        scans = f.readlines()
+        scans = [line.rstrip() for line in scans]
 
-    # with open(args.testlist) as f:
-    #     scans = f.readlines()
-    #     scans = [line.rstrip() for line in scans]
-
-    # for scan in scans:
-    #     scan_id = int(scan[4:])
-    #     scan_folder = os.path.join(args.testpath, scan)
-    #     out_folder = os.path.join(args.outdir, scan)
-    #     # step2. filter saved depth maps with photometric confidence maps and geometric constraints
-    #     filter_depth(scan_folder, out_folder, os.path.join(args.outdir, 'mvsnet{:0>3}_l3.ply'.format(scan_id)))
+    for scan in scans:
+        scan_id = int(scan[4:])
+        scan_folder = os.path.join(args.testpath, scan)
+        out_folder = os.path.join(args.outdir, scan)
+        # step2. filter saved depth maps with photometric confidence maps and geometric constraints
+        filter_depth(scan_folder, out_folder, os.path.join(args.outdir, 'mvsnet{:0>3}_l3.ply'.format(scan_id)))

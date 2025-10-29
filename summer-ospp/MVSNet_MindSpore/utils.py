@@ -2,10 +2,9 @@ import numpy as np
 import mindspore 
 import mindspore.ops as ops
 import mindspore.nn as nn
-
 from mindspore.train.summary import SummaryRecord
 import mindspore.numpy as mnp
-# print arguments
+
 def print_args(args):
     print("################################  args  ################################")
     for k, v in args.__dict__.items():
@@ -20,7 +19,6 @@ def make_nograd_func(func):
     return wrapper
 
 
-# convert a function into recursive style to handle nested dict/list/tuple variables
 def make_recursive_func(func):
     def wrapper(vars):
         if isinstance(vars, list):
@@ -31,7 +29,6 @@ def make_recursive_func(func):
             return {k: wrapper(v) for k, v in vars.items()}
         else:
             return func(vars)
-
     return wrapper
 
 
@@ -57,7 +54,6 @@ def tensor2numpy(vars):
 
 @make_recursive_func
 def tocuda(vars):
-    # MindSpore自动管理设备，无需手动to(cuda)
     return vars
 
 def save_scalars(logger, mode, scalar_dict, global_step):
@@ -72,7 +68,6 @@ def save_scalars(logger, mode, scalar_dict, global_step):
                 logger.add_scalar(name, value[idx], global_step)
 
 
-
 def make_grid_ms(img_tensor, nrow=1, padding=0, normalize=True):
     """
     img_tensor: shape [N, C, H, W]
@@ -81,16 +76,13 @@ def make_grid_ms(img_tensor, nrow=1, padding=0, normalize=True):
         min_v = mnp.min(img_tensor)
         max_v = mnp.max(img_tensor)
         img_tensor = (img_tensor - min_v) / (max_v - min_v + 1e-5)
-
     N, C, H, W = img_tensor.shape
     ncol = (N + nrow - 1) // nrow
     grid = mnp.zeros((C, ncol * H, nrow * W))
-
     for idx in range(N):
         row = idx // nrow
         col = idx % nrow
         grid[:, row * H:(row + 1) * H, col * W:(col + 1) * W] = img_tensor[idx]
-
     return grid
 
 def save_images(logger: SummaryRecord, mode, images_dict, global_step):
@@ -101,10 +93,9 @@ def save_images(logger: SummaryRecord, mode, images_dict, global_step):
         if len(img.shape) == 3:  # [C,H,W]
             img = img[np.newaxis, ...]   # [1,C,H,W]
 
-        img = mindspore.Tensor(img[:1])  # 取 batch 中的第一张
+        img = mindspore.Tensor(img[:1])
         grid = make_grid_ms(img, nrow=1, padding=0, normalize=True)
-        return grid.asnumpy()  # SummaryRecord 需要 numpy
-
+        return grid.asnumpy()
     for key, value in images_dict.items():
         if not isinstance(value, (list, tuple)):
             name = f'{mode}/{key}'
@@ -137,7 +128,6 @@ class DictAverageMeter(object):
 
     def mean(self):
         return {k: v / self.count for k, v in self.data.items()}
-
 
 
 # a wrapper to compute metrics for each image individually

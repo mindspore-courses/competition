@@ -1,7 +1,7 @@
 import torch
 import mindspore as ms
 def print_torch_ckpt(ckpt_path):
-    print(f"===== PyTorch ckpt ??¢Ä«Ô ({ckpt_path}) =====")
+    print(f"===== PyTorch ckpt ({ckpt_path}) =====")
     torch_ckpt = torch.load(ckpt_path, map_location="cpu")
 
     if "model" in torch_ckpt:
@@ -17,7 +17,7 @@ def print_torch_ckpt(ckpt_path):
 
 
 def print_ms_ckpt(ckpt_path):
-    print(f"===== MindSpore ckpt ??¢Ä«Ô ({ckpt_path}) =====")
+    print(f"===== MindSpore ckpt ({ckpt_path}) =====")
     ms_ckpt = ms.load_checkpoint(ckpt_path)
 
     for name, param in ms_ckpt.items():
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # torch_ckpt_path = "model_000014.ckpt"
     ms_ckpt_path = "/home/outbreak/mindspore/MVSNet_pytorch/model_000014ms.ckpt"
     print(ms.__version__)
-    print(ms.get_context("device_target"))  # «¢ªÔ? "GPU"
+    print(ms.get_context("device_target"))
     # print_torch_ckpt(torch_ckpt_path)
     # print()
     print_ms_ckpt(ms_ckpt_path)

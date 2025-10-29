@@ -3,9 +3,8 @@ import numpy as np
 import os
 from PIL import Image
 from datasets.data_io import *
-# from data_io import *# 如果要运行最底部的main，同级运行则解
+# from data_io import *# if needed run main
 
-# the DTU dataset preprocessed by Yao Yao (only for training)
 class MVSDataset():
     def __init__(self, datapath, listfile, mode, nviews, ndepths=192, interval_scale=1.06, **kwargs):
         super(MVSDataset, self).__init__()
@@ -24,17 +23,12 @@ class MVSDataset():
         with open(self.listfile) as f:
             scans = f.readlines()
             scans = [line.rstrip() for line in scans]
-
-        # scans
         for scan in scans:
-            # read the pair file
             with open(os.path.join(self.datapath, 'Cameras', 'pair.txt')) as f:
                 num_viewpoint = int(f.readline())
-                # viewpoints (49)
                 for view_idx in range(num_viewpoint):
                     ref_view = int(f.readline().rstrip())
                     src_views = [int(x) for x in f.readline().rstrip().split()[1::2]]
-                    # light conditions 0-6
                     for light_idx in range(7):
                         metas.append((scan, light_idx, ref_view, src_views))
         print("dataset", self.mode, "metas:", len(metas))
@@ -79,11 +73,6 @@ class MVSDataset():
         proj_matrices = []
 
         for i, vid in enumerate(view_ids):
-            # NOTE that the id in image file names is from 1 to 49 (not 0~48)
-            # img_filename = os.path.join(self.datapath,'Rectified/{}_train/rect_{:0>3}_{}_r5000.png'.format(scan, vid + 1, light_idx))
-            # mask_filename = os.path.join(self.datapath, 'Depths/{}_train/depth_visual_{:0>4}.png'.format(scan, vid))
-            # depth_filename = os.path.join(self.datapath, 'Depths/{}_train/depth_map_{:0>4}.pfm'.format(scan, vid))
-            # proj_mat_filename = os.path.join(self.datapath, 'Cameras/train/{:0>8}_cam.txt').format(vid)
             img_filename = os.path.join(
             self.datapath,
                 "Rectified", f"{scan}_train", f"rect_{vid + 1:0>3}_{light_idx}_r5000.png"
@@ -103,13 +92,11 @@ class MVSDataset():
 
             imgs.append(self.read_img(img_filename))
             intrinsics, extrinsics, depth_min, depth_interval = self.read_cam_file(proj_mat_filename)
-
-            # multiply intrinsics and extrinsics to get projection matrix
             proj_mat = extrinsics.copy()
             proj_mat[:3, :4] = np.matmul(intrinsics, proj_mat[:3, :4])
             proj_matrices.append(proj_mat)
 
-            if i == 0:  # reference view
+            if i == 0:
                 depth_values = np.arange(depth_min, depth_interval * self.ndepths + depth_min, depth_interval,
                                          dtype=np.float32)
                 mask = self.read_img(mask_filename)
@@ -119,14 +106,13 @@ class MVSDataset():
         proj_matrices = np.stack(proj_matrices)
         
         def encode_scanid(scanid_str):
-            """将 'scan88' 转为 88"""
             return int(scanid_str.replace("scan", ""))
         return (
-            imgs,                   # "imgs" (nviews, 3, H, W)
-            proj_matrices,        # "proj_matrices" (多尺度投影矩阵)
-            depth,                # "depth" (H, W)
-            depth_values,            # "depth_values" (ndepths,)
-            mask,                    # "mask" (H, W)
+            imgs,
+            proj_matrices,
+            depth,
+            depth_values,            
+            mask,                    
             encode_scanid(scan),
             view_ids[0]
         )
@@ -134,7 +120,6 @@ class MVSDataset():
 
 if __name__ == "__main__":
     def decode_scanid(scanid_int):
-        """将 88 转为 'scan88'"""
         return f"scan{scanid_int}"
     DTU_TRAINING="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu_training/mvs_training/dtu_training"
     DTU_TRAINING="/share/datasets/DTU/mvs_training/dtu/"
@@ -146,14 +131,10 @@ if __name__ == "__main__":
         ndepths=192,
         interval_scale=1.06
     )
-    # 测试1: 检查数据集长度
     print(f"数据集长度: {len(dataset)}")
     assert len(dataset) > 0, "数据集为空"
-    
-    # 测试2: 获取第一个样本并检查结构
     sample = dataset[0]
     print("样本结构类型:", type(sample))
-    # imgs, proj_matrices, depth, depth_values, mask, filename = sample
     imgs, proj_matrices, depth, depth_values, mask, scanid, viewid = sample
     print(f"图像形状: {imgs.shape}")          # (5, 3, H, W)
     print(f"投影矩阵类型: {type(proj_matrices)}") # dict
@@ -180,7 +161,6 @@ if __name__ == "__main__":
         ndepths=192,
         interval_scale=1.06
     )
-    # 测试4: 通过GeneratorDataset加载
     minds_dataset = GeneratorDataset(
         dataset,
         column_names=["imgs", "proj_matrices","depth","depth_values","mask","viewid","scanid"], 
@@ -188,8 +168,6 @@ if __name__ == "__main__":
         )
     batched_dataset = minds_dataset.batch(batch_size=4)
     iterator = batched_dataset.create_dict_iterator()
-    # create_dict_iterator返回字典
-    # create_tuple_iterator返回列表
     for item in iterator:
         print(type(item))
         print(item.keys())

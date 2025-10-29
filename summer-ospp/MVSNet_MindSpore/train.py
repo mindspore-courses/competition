@@ -16,18 +16,17 @@ from mindspore.train.model import Model
 from mindspore.dataset import GeneratorDataset
 from mindspore import dtype as mstype
 from mindspore.ops import composite as C
-# 导入自定义模块
 from datasets.dtu_yao import MVSDataset
 from models import MVSNet, mvsnet_loss
 from utils import *
 
 
+
 # 设置 MindSpore 运行环境
 # context.set_context(mode=context.PYNATIVE_MODE, device_target="Ascend", device_id=0)
-
+mindspore.context.set_context(mode=context.PYNATIVE_MODE, device_target="GPU")
 print(mindspore.__version__)
 print(mindspore.get_context("device_target"))  # 默认 "GPU"
-mindspore.context.set_context(mode=context.PYNATIVE_MODE, device_target="GPU")
 
 parser = argparse.ArgumentParser(description='A MindSpore Implementation of MVSNet')
 parser.add_argument('--mode', default='train', help='train or test', choices=['train', 'test'])
@@ -62,12 +61,11 @@ if args.resume:
     assert args.loadckpt is None
 if args.testpath is None:
     args.testpath = args.trainpath
-
-# 设置随机种子
+    
 np.random.seed(args.seed)
 mindspore.set_seed(args.seed)
 
-# log
+
 if args.mode == "train":
     os.makedirs(args.logdir, exist_ok=True)
     print("current time", datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
@@ -141,7 +139,7 @@ elif args.loadckpt:
 
 print("start at epoch {}".format(start_epoch))
 
-# 学习率调度器
+# lr adjust
 def adjust_learning_rate(epoch):
     parts = args.lrepochs.split(':')
     milestones = [int(x) for x in parts[0].split(',') if x != '']
@@ -150,11 +148,9 @@ def adjust_learning_rate(epoch):
     factor = (1.0 / decay) ** n_decays
     return args.lr * factor
 
-# 在 train() 外部一次性创建 grad operator（节省开销）
 _grad_op = C.GradOperation(get_by_list=True, sens_param=False)
 _params = model.trainable_params()  # list of Parameter
 
-# 训练
 def train():
     global optimizer
     for epoch in range(start_epoch, args.epochs):
@@ -172,7 +168,6 @@ def train():
             depth_gt = Tensor(sample['depth'], mstype.float32)
             mask = Tensor(sample['mask'], mstype.float32)
             loss = train_model(imgs, proj_matrices, depth_values, depth_gt, mask)
-            # 注意：loss 是 Tensor 标量
             loss_val = float(loss.asnumpy()) if hasattr(loss, 'asnumpy') else float(loss)
             train_losses.append(loss_val)
 
@@ -181,39 +176,34 @@ def train():
             if batch_idx % 100 == 0:
                 ckpt_path = os.path.join(args.logdir, f"model_{epoch:06d}.ckpt")
                 save_checkpoint(model, ckpt_path)
-                # ---- 该部分检查是否正常训练，梯度下降 ----
                 print("=== Grad summary ===")
                 grads = _grad_op(train_network, _params)(imgs, proj_matrices, depth_values, depth_gt, mask)
-                show_idx = list(range(3)) + list(range(len(_params) - 2, len(_params)))  # 前3层+后2层
+                show_idx = list(range(3)) + list(range(len(_params) - 2, len(_params)))
                 for idx, (p, g) in enumerate(zip(_params, grads)):
                     if g is None or idx not in show_idx:
                         continue
                     g_np = g.asnumpy()
                     print(f"{idx:03d} | {p.name:45s} | mean={g_np.mean():+.3e}, std={g_np.std():.3e}")
                 print("=== End grad summary ===")
-        # 每个 epoch 保存一次 checkpoint（避免频繁 IO）
         if (epoch + 1) % args.save_freq == 0:
             ckpt_path = os.path.join(args.logdir, f"model_{epoch:06d}.ckpt")
             save_checkpoint(model, ckpt_path)
             print("Saved checkpoint:", ckpt_path)
 
-# 测试/验证
+
 def eval(epoch=0, train_loss=None):
     avg_test_scalars = DictAverageMeter()
     test_losses = []
     model.set_train(False)
-
     for batch_idx, sample in enumerate(test_loader.create_dict_iterator()):
         imgs = Tensor(sample['imgs'], mstype.float32)
         proj_matrices = Tensor(sample['proj_matrices'], mstype.float32)
         depth_values = Tensor(sample['depth_values'], mstype.float32)
         depth_gt = Tensor(sample['depth'], mstype.float32)
         mask = Tensor(sample['mask'], mstype.float32)
-
         outputs = model(imgs, proj_matrices, depth_values)
         depth_est = outputs["depth"]
         loss = loss_fn(depth_est, depth_gt, mask)
-
         test_losses.append(loss.asnumpy())
         scalar_outputs = {"loss": loss}
         scalar_outputs["abs_depth_error"] = AbsDepthError_metrics(depth_est, depth_gt, mask > 0.5)
@@ -221,7 +211,6 @@ def eval(epoch=0, train_loss=None):
         scalar_outputs["thres4mm_error"] = Thres_metrics(depth_est, depth_gt, mask > 0.5, 4)
         scalar_outputs["thres8mm_error"] = Thres_metrics(depth_est, depth_gt, mask > 0.5, 8)
         avg_test_scalars.update(scalar_outputs)
-
     print(f"Epoch {epoch} eval: avg test loss={np.mean(test_losses):.4f}, train loss={train_loss}")
     print("metrics:", avg_test_scalars.mean())
     model.set_train(True)

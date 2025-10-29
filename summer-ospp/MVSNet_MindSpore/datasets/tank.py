@@ -128,9 +128,7 @@ class MVSDataset():
                 proj_mat_filename = os.path.join(self.datapath, split, scan, f'cams/{vid:08d}_cam.txt')
             else:
                 proj_mat_filename = os.path.join(self.datapath, split, scan, f'cams_1/{vid:08d}_cam.txt')
-
             img = self.read_img(img_filename, (1600, 1184))
-            # img = cv2.resize(img, (1920,1024), interpolation=cv2.INTER_LINEAR)
             intrinsics, extrinsics, depth_min_, depth_max_ = self.read_cam_file(proj_mat_filename)
             intrinsics[0] *= self.img_wh[0] / img_w
             intrinsics[1] *= self.img_wh[1] / img_h
@@ -140,58 +138,24 @@ class MVSDataset():
             proj_mat[0, :4, :4] = extrinsics
             proj_mat[1, :3, :3] = intrinsics
             proj_matrices.append(proj_mat)
-
-
-            # depth_max_ = 1
-            # depth_min_ = 0.5
-
-            # if i == 0:  # reference view
-            #     disp_min = 1 / depth_max_
-            #     disp_max = 1 / depth_min_
-            #     depth_values = np.linspace(disp_min, disp_max, self.ndepths, dtype=np.float32)
             if i == 0:  # reference view
                 depth_values = np.linspace(depth_min_, depth_max_, self.ndepths, dtype=np.float32)
-
-        # imgs: N*3*H0*W0, N is number of images
         imgs = np.stack(imgs).transpose([0, 3, 1, 2])
         proj_matrices = np.stack(proj_matrices)
-        # stage0_pjmats = proj_matrices.copy()
-        # stage0_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 0.0625
-        # stage1_pjmats = proj_matrices.copy()
-        # stage1_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 0.125
-        # stage2_pjmats = proj_matrices.copy()
-        # stage2_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 0.25
-        # stage3_pjmats = proj_matrices.copy()
-        # stage3_pjmats[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 0.5
-        # proj_matrices_ms = {
-        #     "stage0":stage0_pjmats,
-        #     "stage1":stage1_pjmats,
-        #     "stage2":stage2_pjmats,
-        #     "stage3":stage3_pjmats,
-        #     "stage4":proj_matrices,
-        # }
 
         imgs = mindspore.Tensor.from_numpy(imgs.copy()).contiguous().float()
         depth_values = mindspore.Tensor.from_numpy(depth_values.copy()).contiguous().float()
-        # return {"imgs": imgs,
-        #         "proj_matrices": proj_matrices_ms,
-        #         "depth_values": depth_values,
-        #         "filename": scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}"}
         filename = scan + '/{}/' + '{:0>8}'.format(view_ids[0]) + "{}"
         filename_np = np.array(filename.encode('utf-8'), dtype=np.bytes_)
         return (
-            imgs,                   # "imgs" (nviews, 3, H, W)
-            proj_matrices,        # "proj_matrices" (多尺度投影矩阵)
-            depth_values,            # "depth_values" (ndepths,)
+            imgs,
+            proj_matrices,
+            depth_values,
             filename_np,
             view_ids[0]
         )
 if __name__ == "__main__":
     TANK_TESTING='/media/outbreak/68E1-B517/Dataset/TankandTemples/test_offline/'
-    # testlist_path = "lists/dtu/test.txt"
-    # with open(testlist_path) as f:
-    #     content = f.readlines()
-    #     testlist = [line.rstrip() for line in content]
     testlist = ['Family','Francis','Horse','Lighthouse','M60', 'Panther', 'Playground', 'Train', 'Auditorium', 'Ballroom', 'Courtroom','Museum', 'Palace', 'Temple']
     for scene in testlist:
         print(f"正在测试场景: {scene}")
@@ -202,11 +166,8 @@ if __name__ == "__main__":
             img_wh=(1600,1184),
             scan=[scene],
         )
-        # 测试1: 检查数据集长度
         print(f"数据集长度: {len(dataset)}")
         assert len(dataset) > 0, "数据集为空"
-        
-        # 测试2: 获取第一个样本并检查结构
         sample = dataset[0]
         print("样本结构类型:", type(sample))
         imgs, proj_matrices, depth_values,filename_np,viewid = sample
@@ -217,16 +178,12 @@ if __name__ == "__main__":
         print(f"深度值: {depth_values}")
         print(f"scanid: {filename_np}")
         print(f"viewid: {viewid}")
-        
-        # 测试4: 通过GeneratorDataset加载
         minds_dataset = GeneratorDataset(
             dataset, 
             column_names=["imgs", "proj_matrices","depth_values","filename_np","viewid"], 
             shuffle=True
             )
         batched_dataset = minds_dataset.batch(batch_size=4)
-        # create_tuple_iterator返回列表
-        # create_dict_iterator返回字典
         iterator = batched_dataset.create_dict_iterator()
         for item in iterator:
             print(type(item))
