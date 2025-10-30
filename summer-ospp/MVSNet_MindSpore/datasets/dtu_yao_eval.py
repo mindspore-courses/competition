@@ -1,0 +1,108 @@
+import mindspore
+from mindspore import dataset as Dataset
+from mindspore.dataset import GeneratorDataset
+import numpy as np
+import os, cv2, time
+from PIL import Image
+from datasets.data_io import *
+# from data_io import *# if needed run main
+
+s_h, s_w = 0, 0
+class MVSDataset():
+    def __init__(self, datapath, listfile, mode, nviews, ndepths=192, interval_scale=1.06, **kwargs):
+        super(MVSDataset, self).__init__()
+        self.datapath = datapath
+        self.listfile = listfile
+        self.mode = mode
+        self.nviews = nviews
+        self.ndepths = ndepths
+        self.interval_scale = interval_scale
+
+        assert self.mode == "test"
+        self.metas = self.build_list()
+
+    def build_list(self):
+        metas = []
+        with open(self.listfile) as f:
+            scans = f.readlines()
+            scans = [line.rstrip() for line in scans]
+
+        # scans
+        for scan in scans:
+            pair_file = os.path.join(scan, "pair.txt")
+            # read the pair file
+            with open(os.path.join(self.datapath, pair_file)) as f:
+                num_viewpoint = int(f.readline())
+                # viewpoints (49)
+                for view_idx in range(num_viewpoint):
+                    ref_view = int(f.readline().rstrip())
+                    src_views = [int(x) for x in f.readline().rstrip().split()[1::2]]
+                    metas.append((scan, ref_view, src_views))
+        print("dataset", self.mode, "metas:", len(metas))
+        return metas
+
+    def __len__(self):
+        return len(self.metas)
+
+    def read_cam_file(self, filename):
+        with open(filename) as f:
+            lines = f.readlines()
+            lines = [line.rstrip() for line in lines]
+        # extrinsics: line [1,5), 4x4 matrix
+        extrinsics = np.fromstring(' '.join(lines[1:5]), dtype=np.float32, sep=' ').reshape((4, 4))
+        # intrinsics: line [7-10), 3x3 matrix
+        intrinsics = np.fromstring(' '.join(lines[7:10]), dtype=np.float32, sep=' ').reshape((3, 3))
+        intrinsics[:2, :] /= 4
+        # depth_min & depth_interval: line 11
+        depth_min = float(lines[11].split()[0])
+        depth_interval = float(lines[11].split()[1]) * self.interval_scale
+        return intrinsics, extrinsics, depth_min, depth_interval
+
+    def read_img(self, filename):
+        img = Image.open(filename)
+        # scale 0~255 to 0~1
+        np_img = np.array(img, dtype=np.float32) / 255.
+        assert np_img.shape[:2] == (1200, 1600)
+        # crop to (1184, 1600)
+        np_img = np_img[:-16, :]
+        return np_img
+
+    def read_depth(self, filename):
+        # read pfm depth file
+        return np.array(read_pfm(filename)[0], dtype=np.float32)
+
+    def __getitem__(self, idx):
+        meta = self.metas[idx]
+        scan, ref_view, src_views = meta
+        view_ids = [ref_view] + src_views[:self.nviews - 1]
+
+        imgs = []
+        mask = None
+        depth = None
+        depth_values = None
+        proj_matrices = []
+
+        for i, vid in enumerate(view_ids):
+            img_filename = os.path.join(self.datapath, scan, "images", "{:0>8}.jpg".format(vid))
+            proj_mat_filename = os.path.join(self.datapath, scan, "cams", "{:0>8}_cam.txt".format(vid))
+            imgs.append(self.read_img(img_filename))
+            intrinsics, extrinsics, depth_min, depth_interval = self.read_cam_file(proj_mat_filename)
+            # multiply intrinsics and extrinsics to get projection matrix
+            proj_mat = extrinsics.copy()
+            proj_mat[:3, :4] = np.matmul(intrinsics, proj_mat[:3, :4])
+            proj_matrices.append(proj_mat)
+            if i == 0:  # reference view
+                depth_values = np.arange(depth_min, depth_interval * (self.ndepths - 0.5) + depth_min, depth_interval,
+                                         dtype=np.float32)
+        imgs = np.stack(imgs).transpose([0, 3, 1, 2])
+        proj_matrices = np.stack(proj_matrices)
+
+        def encode_scanid(scanid_str):
+            return int(scanid_str.replace("scan", ""))
+        return (
+            imgs,                   
+            proj_matrices,
+            depth_values,           
+            encode_scanid(scan),
+            view_ids[0],
+        )
