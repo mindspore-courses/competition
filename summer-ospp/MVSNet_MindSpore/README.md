@@ -17,8 +17,6 @@
 * plyfile
 
 ### Training
-
-* 可转化pytorch权重为mindspore权重，
 * 下载处理好的DTU训练数据集 [DTU training data](https://drive.google.com/file/d/1eDjh-_bxKKnEuz5h-HXS7EDJn59clx6V/view) (来自 [Original MVSNet](https://github.com/YoYo000/MVSNet))，解压为 ``MVS_TRANING`` 文件夹。在云端可使用OBS脚本`installDTUTraining.py`获得该训练数据集。
 * 同时也可以使用华为云OBS获得训练数据集：
   * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/Depths_raw.zip
@@ -28,7 +26,7 @@
 	* https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/MVSNetMindSpore_outputs.zip
 
 * 在 ``train.sh``脚本中设置 ``MVS_TRAINING`` 为上一个训练文件夹路径。并创建一个 ``checkpoints``文件夹。
-* 运行 ``./train.sh``，在GPU3090上训练16个epoch，batchsize为2，大概需要7天。
+* 运行 ``./train.sh``，在GPU3090上训练16个epoch，batchsize为2。
 
 ### eval&Fusion
 
@@ -82,6 +80,7 @@ mean overall:  0.4279
 
 
 ~~~ shell
+# tanksandtemples评估结果
 # Barn
 accuracy_mean: 18.491276
 completeness_mean: 18.171222
