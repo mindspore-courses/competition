@@ -14,16 +14,21 @@ from datasets.data_io import read_pfm, save_pfm
 import cv2
 from plyfile import PlyData, PlyElement
 from PIL import Image
+
 from datasets.dtu_yao_eval import MVSDataset
 
 parser = argparse.ArgumentParser(description='Predict depth, filter, and fuse. May be different from the original implementation')
 parser.add_argument('--model', default='mvsnet', help='select model')
+
 parser.add_argument('--dataset', default='dtu_yao_eval', help='select dataset')
 parser.add_argument('--testpath', help='testing data path')
 parser.add_argument('--testlist', help='testing scan list')
+
 parser.add_argument('--batch_size', type=int, default=1, help='testing batch size')
-parser.add_argument('--numdepth', type=int, default=64, help='the number of depth values')
+parser.add_argument('--numdepth', type=int, default=120, help='the number of depth values,the torch mvsnet use 192')
 parser.add_argument('--interval_scale', type=float, default=1.06, help='the depth interval scale')
+parser.add_argument('--numview', type=int, default=10, help='the number of src+ref view')
+
 parser.add_argument('--loadckpt', default=None, help='load a specific checkpoint')
 parser.add_argument('--outdir', default='./outputs', help='output dir')
 parser.add_argument('--display', action='store_true', help='display depth images and masks')
@@ -39,9 +44,7 @@ def read_camera_parameters(filename):
     with open(filename) as f:
         lines = f.readlines()
         lines = [line.rstrip() for line in lines]
-    # extrinsics: line [1,5), 4x4 matrix
     extrinsics = np.fromstring(' '.join(lines[1:5]), dtype=np.float32, sep=' ').reshape((4, 4))
-    # intrinsics: line [7-10), 3x3 matrix
     intrinsics = np.fromstring(' '.join(lines[7:10]), dtype=np.float32, sep=' ').reshape((3, 3))
     # TODO: assume the feature is 1/4 of the original image size
     intrinsics[:2, :] /= 4
@@ -84,21 +87,18 @@ def read_pair_file(filename):
 # run MVS model to save depth maps and confidence maps
 def save_depth():
     # dataset
-    test_dataset = MVSDataset(args.testpath, args.testlist, "test", 5, args.numdepth, args.interval_scale)
+    test_dataset = MVSDataset(args.testpath, args.testlist, "test", args.numview, args.numdepth, args.interval_scale)
     test_ds = GeneratorDataset(test_dataset, ["imgs", "proj_matrices", "depth_values", "scan","view_id"])
     test_ds = test_ds.batch(args.batch_size, drop_remainder=False)
-
     # model
     model = MVSNet(refine=False)
     param_dict = ms.load_checkpoint(args.loadckpt)
     ms.load_param_into_net(model, param_dict)
     model.set_train(False)  # eval mode
-
     for batch_idx, data in enumerate(test_ds.create_dict_iterator()):
         imgs = Tensor(data["imgs"], ms.float32)
         proj_matrices = Tensor(data["proj_matrices"], ms.float32)
         depth_values = Tensor(data["depth_values"], ms.float32)
-    
         outputs = model(imgs, proj_matrices, depth_values)
         depth_maps = outputs["depth"].asnumpy()
         conf_maps = outputs["photometric_confidence"].asnumpy()
@@ -110,6 +110,7 @@ def save_depth():
         view_id = data["view_id"][0].asnumpy()
         filenames = [scan + '/{}/' + '{:0>8}'.format(int(view_id)) + '{}']
         for filename, depth_est, photometric_confidence in zip(filenames, depth_maps, conf_maps):
+            # print("filename:",filename)
             depth_filename = os.path.join(args.outdir, filename.format('depth_est', '.pfm'))
             print("depth_filename:",depth_filename)
             confidence_filename = os.path.join(args.outdir, filename.format('confidence', '.pfm'))
@@ -134,12 +135,14 @@ def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, i
     # source view x, y
     K_xyz_src = np.matmul(intrinsics_src, xyz_src)
     xy_src = K_xyz_src[:2] / K_xyz_src[2:3]
+
     ## step2. reproject the source view points with source view depth estimation
     # find the depth estimation of the source view
     x_src = xy_src[0].reshape([height, width]).astype(np.float32)
     y_src = xy_src[1].reshape([height, width]).astype(np.float32)
     sampled_depth_src = cv2.remap(depth_src, x_src, y_src, interpolation=cv2.INTER_LINEAR)
     # mask = sampled_depth_src > 0
+
     # source 3D space
     # NOTE that we should use sampled source-view depth_here to project back
     xyz_src = np.matmul(np.linalg.inv(intrinsics_src),
@@ -153,6 +156,7 @@ def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, i
     xy_reprojected = K_xyz_reprojected[:2] / K_xyz_reprojected[2:3]
     x_reprojected = xy_reprojected[0].reshape([height, width]).astype(np.float32)
     y_reprojected = xy_reprojected[1].reshape([height, width]).astype(np.float32)
+
     return depth_reprojected, x_reprojected, y_reprojected, x_src, y_src
 
 
@@ -163,11 +167,14 @@ def check_geometric_consistency(depth_ref, intrinsics_ref, extrinsics_ref, depth
                                                      depth_src, intrinsics_src, extrinsics_src)
     # check |p_reproj-p_1| < 1
     dist = np.sqrt((x2d_reprojected - x_ref) ** 2 + (y2d_reprojected - y_ref) ** 2)
+
     # check |d_reproj-d_1| / d_1 < 0.01
     depth_diff = np.abs(depth_reprojected - depth_ref)
     relative_depth_diff = depth_diff / depth_ref
+
     mask = np.logical_and(dist < 1, relative_depth_diff < 0.01)
     depth_reprojected[~mask] = 0
+
     return mask, depth_reprojected, x2d_src, y2d_src
 
 
@@ -185,7 +192,7 @@ def filter_depth(scan_folder, out_folder, plyfilename):
     for ref_view, src_views in pair_data:
         # load the camera parameters
         ref_intrinsics, ref_extrinsics = read_camera_parameters(
-            os.path.join(scan_folder, 'cams/{:0>8}_cam.txt'.format(ref_view)))
+            os.path.join(scan_folder, 'cams_1/{:0>8}_cam.txt'.format(ref_view)))
         # load the reference image
         ref_img = read_img(os.path.join(scan_folder, 'images/{:0>8}.jpg'.format(ref_view)))
         # load the estimated depth of the reference view
@@ -204,7 +211,7 @@ def filter_depth(scan_folder, out_folder, plyfilename):
         for src_view in src_views:
             # camera parameters of the source view
             src_intrinsics, src_extrinsics = read_camera_parameters(
-                os.path.join(scan_folder, 'cams/{:0>8}_cam.txt'.format(src_view)))
+                os.path.join(scan_folder, 'cams_1/{:0>8}_cam.txt'.format(src_view)))
             # the estimated depth of the source view
             src_depth_est = read_pfm(os.path.join(out_folder, 'depth_est/{:0>8}.pfm'.format(src_view)))[0]
 
@@ -253,6 +260,7 @@ def filter_depth(scan_folder, out_folder, plyfilename):
                               np.vstack((xyz_ref, np.ones_like(x))))[:3]
         vertexs.append(xyz_world.transpose((1, 0)))
         vertex_colors.append((color * 255).astype(np.uint8))
+
     vertexs = np.concatenate(vertexs, axis=0)
     vertex_colors = np.concatenate(vertex_colors, axis=0)
     vertexs = np.array([tuple(v) for v in vertexs], dtype=[('x', 'f4'), ('y', 'f4'), ('z', 'f4')])
@@ -272,7 +280,7 @@ def filter_depth(scan_folder, out_folder, plyfilename):
 if __name__ == '__main__':
     # step1. save all the depth maps and the masks in outputs directory
     save_depth()
-    # step2. filter and fuse
+
     with open(args.testlist) as f:
         scans = f.readlines()
         scans = [line.rstrip() for line in scans]

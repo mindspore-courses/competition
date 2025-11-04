@@ -150,19 +150,19 @@ class MVSNet(nn.Cell):
             return {"depth": depth, "refined_depth": refined_depth, "photometric_confidence": photometric_confidence}
 
 
-def mvsnet_loss(depth_est, depth_gt, mask):
-    # mask: [B, H, W]  (0/1 或 float)
-    mask = mask > 0.5  # BoolTensor
+class mvsnet_loss(nn.Cell):
+    def __init__(self):
+        super(mvsnet_loss, self).__init__()
+        self.smooth_l1 = nn.SmoothL1Loss(reduction="mean")
 
-    # 取出 mask 位置的元素
-    depth_est_valid = ops.masked_select(depth_est, mask)
-    depth_gt_valid = ops.masked_select(depth_gt, mask)
+    def construct(self, depth_est, depth_gt, mask):
+        # mask: [B, H, W]
+        mask = mask > 0.5  # bool mask
+        depth_est_valid = ops.masked_select(depth_est, mask)
+        depth_gt_valid = ops.masked_select(depth_gt, mask)
+        if depth_est_valid.size == 0:
+            return ms.Tensor(0.0, ms.float32)
 
-    # 防止空 mask
-    if depth_est_valid.size == 0:
-        return ms.Tensor(0.0, ms.float32)
-
-    # Smooth L1 Loss
-    loss_fn = nn.SmoothL1Loss(reduction="mean")
-    loss = loss_fn(depth_est_valid, depth_gt_valid)
-    return loss
+        loss = self.smooth_l1(depth_est_valid, depth_gt_valid)
+        return loss
+    

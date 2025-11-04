@@ -31,61 +31,6 @@ class Compose:
         format_string += '\n)'
         return format_string
 
-
-def get_transform():
-    mean = [0.485, 0.456, 0.406]
-    std = [0.229, 0.224, 0.225]
-
-    return Compose([
-        vision.ToTensor(),
-        vision.Normalize(mean=mean, std=std),
-    ])
-
-
-# read all lines in a file
-def read_all_lines(filename):
-    with open(filename) as f:
-        lines = [line.rstrip() for line in f.readlines()]
-    return lines
-
-
-# read an .pfm file into numpy array, used to load SceneFlow disparity files
-def pfm_imread(filename):
-    file = open(filename, 'rb')
-    color = None
-    width = None
-    height = None
-    scale = None
-    endian = None
-
-    header = file.readline().decode('utf-8').rstrip()
-    if header == 'PF':
-        color = True
-    elif header == 'Pf':
-        color = False
-    else:
-        raise Exception('Not a PFM file.')
-
-    dim_match = re.match(r'^(\d+)\s(\d+)\s$', file.readline().decode('utf-8'))
-    if dim_match:
-        width, height = map(int, dim_match.groups())
-    else:
-        raise Exception('Malformed PFM header.')
-
-    scale = float(file.readline().rstrip())
-    if scale < 0:  # little-endian
-        endian = '<'
-        scale = -scale
-    else:
-        endian = '>'  # big-endian
-
-    data = np.fromfile(file, endian + 'f')
-    shape = (height, width, 3) if color else (height, width)
-
-    data = np.reshape(data, shape)
-    data = np.flipud(data)
-    return data, scale
-
 def read_pfm(filename):
     file = open(filename, 'rb')
     color = None
@@ -149,7 +94,7 @@ def save_pfm(filename, image, scale=1):
         scale = -scale
 
     file.write(('%f\n' % scale).encode('utf-8'))
-    
+
     image.tofile(file)
     file.close()
 
@@ -170,4 +115,23 @@ class RandomCrop(object):
 
         image_crop = image[4*y1:4*y2, 4*x1:4*x2]
         image_resize = cv2.resize(image_crop, (img_w, img_h), interpolation=cv2.INTER_LINEAR)
+
+        # import matplotlib.pyplot as plt
+        # plt.subplot(2, 3, 1)
+        # plt.imshow(image)
+        # plt.subplot(2, 3, 2)
+        # plt.imshow(image_crop)
+        # plt.subplot(2, 3, 3)
+        # plt.imshow(image_resize)
+        #
+        # plt.subplot(2, 3, 4)
+        # plt.imshow((normal + 1.0) / 2, cmap="rainbow")
+        # plt.subplot(2, 3, 5)
+        # plt.imshow((normal_crop + 1.0) / 2, cmap="rainbow")
+        # plt.subplot(2, 3, 6)
+        # plt.imshow((normal_resize + 1.0) / 2, cmap="rainbow")
+        # plt.show()
+        # plt.pause(1)
+        # plt.close()
+
         return image_resize, normal_resize

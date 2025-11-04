@@ -26,10 +26,10 @@ def print_ms_ckpt(ckpt_path):
 
 
 if __name__ == "__main__":
-    # torch_ckpt_path = "model_000014.ckpt"
-    ms_ckpt_path = "/home/outbreak/mindspore/MVSNet_pytorch/model_000014ms.ckpt"
+    torch_ckpt_path = "model_000014.ckpt"
+    ms_ckpt_path = "model_000014ms.ckpt"
     print(ms.__version__)
     print(ms.get_context("device_target"))
-    # print_torch_ckpt(torch_ckpt_path)
+    print_torch_ckpt(torch_ckpt_path)
     # print()
     print_ms_ckpt(ms_ckpt_path)

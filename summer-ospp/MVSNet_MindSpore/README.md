@@ -17,8 +17,6 @@
 * plyfile
 
 ### Training
-
-* 可转化pytorch权重为mindspore权重，
 * 下载处理好的DTU训练数据集 [DTU training data](https://drive.google.com/file/d/1eDjh-_bxKKnEuz5h-HXS7EDJn59clx6V/view) (来自 [Original MVSNet](https://github.com/YoYo000/MVSNet))，解压为 ``MVS_TRANING`` 文件夹。在云端可使用OBS脚本`installDTUTraining.py`获得该训练数据集。
 * 同时也可以使用华为云OBS获得训练数据集：
   * https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/Depths_raw.zip
@@ -28,7 +26,7 @@
 	* https://dtu-train-mvsnet.obs.cn-north-4.myhuaweicloud.com/MVSNetMindSpore_outputs.zip
 
 * 在 ``train.sh``脚本中设置 ``MVS_TRAINING`` 为上一个训练文件夹路径。并创建一个 ``checkpoints``文件夹。
-* 运行 ``./train.sh``，在GPU3090上训练16个epoch，batchsize为2，大概需要7天。
+* 运行 ``./train.sh``，在GPU3090上训练16个epoch，batchsize为2。
 
 ### eval&Fusion
 
@@ -40,6 +38,7 @@
 ## DTU数据集定量评估结果
 
 按照[Fast DTU Evaluation Using GPU with Python](https://github.com/Gwencong/Fast-DTU-Evaluation)仓库中描述，下载真实点云数据，然后将预测点云和真实点云路径修改到评估脚本。
+D为深度采样数，采样约密集，评估指标表现越好，需根据显存设置。
 
 |                         | Acc.   | Comp.  | Overall. |
 | ----------------------- | ------ | ------ | -------- |
@@ -81,6 +80,7 @@ mean overall:  0.4279
 
 
 ~~~ shell
+# tanksandtemples评估结果
 # Barn
 accuracy_mean: 18.491276
 completeness_mean: 18.171222
@@ -105,12 +105,12 @@ completeness_mean: 2.217363
 ~~~
 ## DTU重建效果展示
 
-![image-20250920235547777](README/image-20250920235547777.png)
+![image-20250920235547777](README/dtuscan1.png)
 
-![image-20250920235622015](README/image-20250920235622015.png)
+![image-20250920235622015](README/dtuscan2.png)
 
-![image-20250920235649194](README/image-20250920235649194.png)
+![image-20250920235649194](README/dtuscan3.png)
 
 ## TanksAndTemples
 
-![image-20250921000729066](README/image-20250921000729066.png)
+![image-20250921000729066](README/tank1.png)
