@@ -30,16 +30,16 @@ class ConvBnReLU(nn.Cell):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, pad=1):
         super(ConvBnReLU, self).__init__()
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride, padding=pad, pad_mode='pad', has_bias=False)
-        self.bn = nn.BatchNorm2d(out_channels)
-        # self.relu = nn.ReLU()
+        self.bn = nn.BatchNorm2d(out_channels, momentum=0.1, eps=1e-5)
     def construct(self, x):
         return ops.relu(self.bn(self.conv(x)))
-    
+
+
 class ConvBn(nn.Cell):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, pad=1):
         super(ConvBn, self).__init__()
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride, padding=pad, pad_mode='pad', has_bias=False)
-        self.bn = nn.BatchNorm2d(out_channels)
+        self.bn = nn.BatchNorm2d(out_channels, momentum=0.1, eps=1e-5)
 
     def construct(self, x):
         return self.bn(self.conv(x))
@@ -49,8 +49,8 @@ class ConvBnReLU3D(nn.Cell):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, pad=1):
         super(ConvBnReLU3D, self).__init__()
         self.conv = nn.Conv3d(in_channels, out_channels, kernel_size, stride=stride, padding=pad, pad_mode='pad', has_bias=False)
-        self.bn = nn.BatchNorm3d(out_channels)
-        # self.relu = nn.ReLU()
+        self.bn = nn.BatchNorm3d(out_channels, momentum=0.1, eps=1e-5)
+        
     def construct(self, x):
         return ops.relu(self.bn(self.conv(x)))
 
@@ -59,14 +59,15 @@ class ConvBn3D(nn.Cell):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, pad=1):
         super(ConvBn3D, self).__init__()
         self.conv = nn.Conv3d(in_channels, out_channels, kernel_size, stride=stride, padding=pad, pad_mode='pad', has_bias=False)
-        self.bn = nn.BatchNorm3d(out_channels)
-
+        self.bn = nn.BatchNorm3d(out_channels, momentum=0.1, eps=1e-5)
+        
     def construct(self, x):
         return self.bn(self.conv(x))
+
+
 class BasicBlock(nn.Cell):
     def __init__(self, in_channels, out_channels, stride, downsample=None):
         super(BasicBlock, self).__init__()
-
         self.conv1 = ConvBnReLU(in_channels, out_channels, kernel_size=3, stride=stride, pad=1)
         self.conv2 = ConvBn(out_channels, out_channels, kernel_size=3, stride=1, pad=1)
         self.downsample = downsample
@@ -82,34 +83,27 @@ class BasicBlock(nn.Cell):
 class Hourglass3d(nn.Cell):
     def __init__(self, channels):
         super(Hourglass3d, self).__init__()
-
         self.conv1a = ConvBnReLU3D(channels, channels * 2, kernel_size=3, stride=2, pad=1)
         self.conv1b = ConvBnReLU3D(channels * 2, channels * 2, kernel_size=3, stride=1, pad=1)
-
         self.conv2a = ConvBnReLU3D(channels * 2, channels * 4, kernel_size=3, stride=2, pad=1)
         self.conv2b = ConvBnReLU3D(channels * 4, channels * 4, kernel_size=3, stride=1, pad=1)
-
         self.dconv2 = nn.SequentialCell(
             nn.Conv3dTranspose(channels * 4, channels * 2, kernel_size=3, padding=1, output_padding=1, stride=2,
                                has_bias=False, dtype=ms.float16),
             nn.BatchNorm3d(channels * 2))
-
         self.dconv1 = nn.SequentialCell(
             nn.Conv3dTranspose(channels * 2, channels, kernel_size=3, padding=1, output_padding=1, stride=2,
                                has_bias=False, dtype=ms.float16),
             nn.BatchNorm3d(channels))
-
         self.redir1 = ConvBn3D(channels, channels, kernel_size=1, stride=1, pad=0)
         self.redir2 = ConvBn3D(channels * 2, channels * 2, kernel_size=1, stride=1, pad=0)
+        
     def construct(self, x):
-        x = ops.cast(x, ms.float16)
         conv1 = self.conv1b(self.conv1a(x))
         conv2 = self.conv2b(self.conv2a(conv1))
         dconv2 = ops.relu(self.dconv2(conv2) + self.redir2(conv1))
         dconv1 = ops.relu(self.dconv1(dconv2) + self.redir1(x))
-        dconv1 = ops.cast(dconv1, ms.float32)
         return dconv1
-
 
 def homo_warping(src_fea, src_proj, ref_proj, depth_values):
     """
@@ -135,7 +129,8 @@ def homo_warping(src_fea, src_proj, ref_proj, depth_values):
     trans = proj[:, :3, 3:4]  # [B,3,1]
     # === image grid ===
     y, x = ops.meshgrid(mnp.arange(0, height, dtype=ms.float32),
-                        mnp.arange(0, width, dtype=ms.float32))
+                        mnp.arange(0, width, dtype=ms.float32),
+                        indexing='ij')
     y, x = y.reshape(-1), x.reshape(-1)
     xyz = ops.stack((x, y, ops.ones_like(x)), 0)  # [3, H*W]
     xyz = ops.expand_dims(xyz, 0).tile((batch, 1, 1))  # [B, 3, H*W]
@@ -195,10 +190,6 @@ class Conv2d(nn.Cell):
         elif norm_type == 'BN':
             self.bn = nn.BatchNorm2d(out_channels, momentum=bn_momentum) if bn else None
         self.ifrelu = relu
-
-        # assert init_method in ["kaiming", "xavier"]
-        # self.init_weights(init_method)
-
     def construct(self, x):
         x = self.conv(x)
         if self.bn is not None:
@@ -235,15 +226,11 @@ class Deconv2d(nn.Cell):
         self.out_channels = out_channels
         assert stride in [1, 2]
         self.stride = stride
-        # self.conv = nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride=stride,
-        #                                bias=(not bn), **kwargs)
         self.conv = nn.Conv2dTranspose(in_channels, out_channels, kernel_size, stride=stride,
                                        has_bias=(not bn), **kwargs)
         self.bn = nn.BatchNorm2d(out_channels, momentum=bn_momentum) if bn else None
         self.ifrelu = relu
         self.relu = nn.ReLU()
-        # assert init_method in ["kaiming", "xavier"]
-        # self.init_weights(init_method)
 
     def construct(self, x):
         y = self.conv(x)
@@ -288,6 +275,7 @@ class Conv3d(nn.Cell):
         self.bn = nn.BatchNorm3d(out_channels, momentum=bn_momentum) if bn else None
         self.ifrelu = relu
         self.relu = nn.ReLU()
+
     def construct(self, x):
         x = self.conv(x)
         if self.bn is not None:
@@ -326,7 +314,6 @@ class Deconv3d(nn.Cell):
         self.bn = nn.BatchNorm3d(out_channels, momentum=bn_momentum) if bn else None
         self.ifrelu = relu
         self.relu = nn.ReLU()
-        
     def construct(self, x):
         y = self.conv(x)
         if self.bn is not None:
@@ -355,7 +342,6 @@ class DeConv2dFuse(nn.Cell):
         x = self.concat((x, x_pre))
         x = self.conv(x)
         return x
-
 
 class FeatureNet(nn.Cell):
     def __init__(self, base_channels, num_stage=3, stride=4, arch_mode="unet"):
@@ -453,6 +439,7 @@ class FeatureNet(nn.Cell):
                 outputs["stage2"] = self.out2(intra_feat)
         return outputs
 
+
 class CostRegNet(nn.Cell):
     def __init__(self, in_channels, base_channels):
         super().__init__()
@@ -494,6 +481,7 @@ class RefineNet(nn.Cell):
         depth_refined = depth_init + depth_residual
         return depth_refined
 
+
 def depth_regression(p, depth_values):
     """
     p: [B, D, H, W]
@@ -505,7 +493,6 @@ def depth_regression(p, depth_values):
     elif depth_values.ndim == 1:  # [D] -> [1, D, 1, 1]
         D = depth_values.shape[0]
         depth_values = ops.reshape(depth_values, (1, D, 1, 1))
-    # 如果已经是 [B, D, H, W] 或 [B, D, 1, 1]，不变
     
     depth = ops.reduce_sum(p * depth_values, axis=1)
     return depth
@@ -531,8 +518,6 @@ def cas_mvsnet_loss(inputs, depth_gt_ms, mask_ms, **kwargs):
             total_loss = total_loss + loss
 
     return total_loss
-
-
 
 def get_cur_depth_range_samples(cur_depth, ndepth, depth_inteval_pixel, shape,
                                 max_depth=192.0, min_depth=0.0):

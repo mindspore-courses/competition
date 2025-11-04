@@ -175,12 +175,15 @@ class MVSDataset():
             depth_values, 
             encode_scanid(scan), 
             view_ids[0], 
+            # filename
         )
 
 def decode_scanid(scanid_int):
+    """将 88 转为 'scan88'"""
     return f"scan{scanid_int}"
-
+# ================== 测试代码 =====================
 if __name__ == "__main__":
+    # 假设listfile是一个scan列表
     listfile = ["scan1", "scan4"]
     TESTPATH="/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu"
     dataset = MVSDataset(
@@ -213,6 +216,7 @@ if __name__ == "__main__":
     print(f"filename: {filename}")
     minds_dataset = GeneratorDataset(
         dataset,
+        # column_names=["imgs", "stage1_proj", "stage2_proj", "stage3_proj", "depth_values", "scanid", "viewid", "filename"],
         column_names=["imgs", "stage1_proj", "stage2_proj", "stage3_proj", "depth_values", "scanid", "viewid"],
         shuffle=True
     )

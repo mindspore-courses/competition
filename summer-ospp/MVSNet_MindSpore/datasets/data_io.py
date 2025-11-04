@@ -149,6 +149,7 @@ def save_pfm(filename, image, scale=1):
         scale = -scale
 
     file.write(('%f\n' % scale).encode('utf-8'))
+    
     image.tofile(file)
     file.close()
 

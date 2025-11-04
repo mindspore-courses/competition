@@ -58,7 +58,19 @@ parser.add_argument('--save_freq', type=int, default=1, help='save checkpoint fr
 parser.add_argument('--eval_freq', type=int, default=1, help='eval freq')
 parser.add_argument('--share_cr', action='store_true', help='whether share the cost volume regularization')
 
+parser.add_argument('--pin_m', action='store_true', help='data loader pin memory')
+parser.add_argument("--local_rank", type=int, default=0)
+parser.add_argument('--grad_method', type=str, default="detach", choices=["detach", "undetach"], help='grad method')
+parser.add_argument('--using_apex', action='store_true', help='using apex, need to install apex')
+parser.add_argument('--sync_bn', action='store_true',help='enabling apex sync BN.')
+parser.add_argument('--opt-level', type=str, default="O0")
+parser.add_argument('--keep-batchnorm-fp32', type=str, default=None)
+parser.add_argument('--loss-scale', type=str, default=None)
 
+
+# ---------------------------
+# Helper: LR schedule (warmup + multistep)
+# ---------------------------
 def build_warmup_multistep_lr(base_lr: float,
                               steps_per_epoch: int,
                               total_epochs: int,
@@ -84,7 +96,9 @@ def build_warmup_multistep_lr(base_lr: float,
         lr_each_step[step] = lr
     return ms.Tensor(lr_each_step)
 
-
+# ---------------------------
+# NetWithLossCell: wrapper for training
+# ---------------------------
 class NetWithLossCell(nn.Cell):
     def __init__(self, backbone: nn.Cell, loss_fn, dlossw_list: List[float]):
         super(NetWithLossCell, self).__init__()
@@ -98,10 +112,13 @@ class NetWithLossCell(nn.Cell):
                   stage1_depth, stage2_depth, stage3_depth,
                   stage1_mask, stage2_mask, stage3_mask,
                   depth_values):
+        # assemble dicts to pass into loss, consistent with your cas_mvsnet_loss
         depth_gt_ms = {"stage1": stage1_depth, "stage2": stage2_depth, "stage3": stage3_depth}
         mask_ms = {"stage1": stage1_mask, "stage2": stage2_mask, "stage3": stage3_mask}
 
         outputs = self.backbone(imgs, stage1_proj, stage2_proj, stage3_proj, depth_values)
+
+        # loss_fn may return single Tensor or tuple (total_loss, depth_loss)
         out = self.loss_fn(outputs, depth_gt_ms, mask_ms, dlossw=self.dlossw)
         if isinstance(out, tuple) or isinstance(out, list):
             loss = out[0]
@@ -110,6 +127,9 @@ class NetWithLossCell(nn.Cell):
         # ensure scalar Tensor
         return loss
 
+# ---------------------------
+# Train & Eval loops (simplified)
+# ---------------------------
 def evaluate(model_eval: nn.Cell, test_loader: GeneratorDataset, args):
     model_eval.set_train(False)
     total_loss = 0.0

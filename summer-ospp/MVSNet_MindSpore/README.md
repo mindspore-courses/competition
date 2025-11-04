@@ -40,6 +40,7 @@
 ## DTU数据集定量评估结果
 
 按照[Fast DTU Evaluation Using GPU with Python](https://github.com/Gwencong/Fast-DTU-Evaluation)仓库中描述，下载真实点云数据，然后将预测点云和真实点云路径修改到评估脚本。
+D为深度采样数，采样约密集，评估指标表现越好，需根据显存设置。
 
 |                         | Acc.   | Comp.  | Overall. |
 | ----------------------- | ------ | ------ | -------- |
@@ -105,12 +106,12 @@ completeness_mean: 2.217363
 ~~~
 ## DTU重建效果展示
 
-![image-20250920235547777](README/image-20250920235547777.png)
+![image-20250920235547777](README/dtuscan1.png)
 
-![image-20250920235622015](README/image-20250920235622015.png)
+![image-20250920235622015](README/dtuscan2.png)
 
-![image-20250920235649194](README/image-20250920235649194.png)
+![image-20250920235649194](README/dtuscan3.png)
 
 ## TanksAndTemples
 
-![image-20250921000729066](README/image-20250921000729066.png)
+![image-20250921000729066](README/tank1.png)

@@ -43,7 +43,6 @@ def read_camera_parameters(filename):
         lines = [line.rstrip() for line in lines]
     extrinsics = np.fromstring(' '.join(lines[1:5]), dtype=np.float32, sep=' ').reshape((4, 4))
     intrinsics = np.fromstring(' '.join(lines[7:10]), dtype=np.float32, sep=' ').reshape((3, 3))
-    # 假设网络 feature 是原图 1/4，保持与训练一致
     intrinsics[:2, :] /= 4
     return intrinsics, extrinsics
 
@@ -99,13 +98,16 @@ def save_depth():
         possible_columns =["imgs", "proj_matrices", "depth_values", "filename_np", "viewid"]
         ds = GeneratorDataset(dataset, column_names=possible_columns, shuffle=False)
         ds = ds.batch(args.batch_size, drop_remainder=False)
+
         model = MVSNet(refine=False)
         if args.loadckpt is None:
-            raise ValueError("请通过 --loadckpt 指定要加载的 checkpoint")
+            raise ValueError("please use --loadckpt  checkpoint")
         param_dict = ms.load_checkpoint(args.loadckpt)
         ms.load_param_into_net(model, param_dict)
         model.set_train(False)
+
         print(f"Dataset size (batches): {ds.get_dataset_size()}")
+
         for batch_idx, data in enumerate(ds.create_dict_iterator()):
             imgs = Tensor(data["imgs"], ms.float32)
             proj_matrices = Tensor(data["proj_matrices"], ms.float32)
@@ -119,6 +121,7 @@ def save_depth():
             if isinstance(conf_maps, ms.Tensor):
                 conf_maps = conf_maps.asnumpy()
             print(f"Iter {batch_idx+1}/{ds.get_dataset_size()} (scene {scene})")
+
             if "filename_np" in data:
                 filename_np = data["filename_np"][0].asnumpy() if isinstance(data["filename_np"][0], ms.Tensor) else data["filename_np"][0]
                 if isinstance(filename_np, bytes):
@@ -140,6 +143,7 @@ def save_depth():
                 save_pfm(depth_filename, depth_est)
                 save_pfm(confidence_filename, photometric_confidence)
                 print("Saved:", depth_filename, confidence_filename)
+
         print(f"Finished scene: {scene}")
 
 def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, intrinsics_src, extrinsics_src):
@@ -260,6 +264,7 @@ def filter_depth(scan_folder, out_folder, plyfilename):
 if __name__ == '__main__':
     # step1: save depth maps
     save_depth()
+
     # step2: filter and fuse
     with open(args.testlist) as f:
         scans = f.readlines()

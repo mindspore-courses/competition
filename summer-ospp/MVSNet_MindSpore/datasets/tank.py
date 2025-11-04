@@ -81,6 +81,7 @@ class MVSDataset():
         # intrinsics: line [7-10), 3x3 matrix
         intrinsics = np.fromstring(' '.join(lines[7:10]), dtype=np.float32, sep=' ')
         intrinsics = intrinsics.reshape((3, 3))
+        intrinsics[:2, :] /= 4
 
         depth_values = lines[11].split()
         if len(depth_values) < 4:
@@ -88,7 +89,7 @@ class MVSDataset():
             depth_max = float(lines[11].split()[1])
         else:
             depth_min = float(lines[11].split()[0])
-            depth_max = float(lines[11].split()[3])
+            depth_max = float(lines[11].split()[-1])
 
         return intrinsics, extrinsics, depth_min, depth_max
 
@@ -110,10 +111,7 @@ class MVSDataset():
         return len(self.metas)
 
     def __getitem__(self, idx):
-        # cv2.setNumThreads(0)
-        # cv2.ocl.setUseOpenCL(False)
         scan, _, ref_view, src_views, split = self.metas[idx]
-        # use only the reference view and first nviews-1 source views
         view_ids = [ref_view] + src_views[:self.n_views - 1]
         img_w, img_h = self.image_sizes[scan]
 
@@ -128,6 +126,7 @@ class MVSDataset():
                 proj_mat_filename = os.path.join(self.datapath, split, scan, f'cams/{vid:08d}_cam.txt')
             else:
                 proj_mat_filename = os.path.join(self.datapath, split, scan, f'cams_1/{vid:08d}_cam.txt')
+
             img = self.read_img(img_filename, (1600, 1184))
             intrinsics, extrinsics, depth_min_, depth_max_ = self.read_cam_file(proj_mat_filename)
             intrinsics[0] *= self.img_wh[0] / img_w
@@ -138,8 +137,10 @@ class MVSDataset():
             proj_mat[0, :4, :4] = extrinsics
             proj_mat[1, :3, :3] = intrinsics
             proj_matrices.append(proj_mat)
+
             if i == 0:  # reference view
                 depth_values = np.linspace(depth_min_, depth_max_, self.ndepths, dtype=np.float32)
+
         imgs = np.stack(imgs).transpose([0, 3, 1, 2])
         proj_matrices = np.stack(proj_matrices)
 
@@ -166,8 +167,11 @@ if __name__ == "__main__":
             img_wh=(1600,1184),
             scan=[scene],
         )
+        # 测试1: 检查数据集长度
         print(f"数据集长度: {len(dataset)}")
         assert len(dataset) > 0, "数据集为空"
+        
+        # 测试2: 获取第一个样本并检查结构
         sample = dataset[0]
         print("样本结构类型:", type(sample))
         imgs, proj_matrices, depth_values,filename_np,viewid = sample
@@ -178,6 +182,8 @@ if __name__ == "__main__":
         print(f"深度值: {depth_values}")
         print(f"scanid: {filename_np}")
         print(f"viewid: {viewid}")
+        
+        # 测试4: 通过GeneratorDataset加载
         minds_dataset = GeneratorDataset(
             dataset, 
             column_names=["imgs", "proj_matrices","depth_values","filename_np","viewid"], 

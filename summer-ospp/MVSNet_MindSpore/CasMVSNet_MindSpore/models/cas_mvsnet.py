@@ -30,10 +30,14 @@ class DepthNet(nn.Cell):
             src_proj_rot = src_proj[:, 1, :3, :3]
             src_proj_trans = src_proj[:, 0, :3, :4]
             src_proj_new[:, :3, :4] = ops.matmul(src_proj_rot, src_proj_trans)
+
+            # src_proj_new = ops.tensor_scatter_elements(src_proj_new, ops.arange(0, 3), ops.matmul(src_proj[:, 1, :3, :3], src_proj[:, 0, :3, :4]))
             ref_proj_new = ref_proj[:, 0]
             ref_proj_rot = ref_proj[:, 1, :3, :3]
             ref_proj_trans = ref_proj[:, 0, :3, :4]
+            
             ref_proj_new[:, :3, :4] = ops.matmul(ref_proj_rot, ref_proj_trans)
+            # ref_proj_new = ops.tensor_scatter_elements(ref_proj_new, ops.arange(0, 3),ops.matmul(ref_proj[:, 1, :3, :3], ref_proj[:, 0, :3, :4]))
             warped_volume = homo_warping(src_fea, src_proj_new, ref_proj_new, depth_values)
 
             volume_sum = volume_sum + warped_volume
@@ -41,6 +45,7 @@ class DepthNet(nn.Cell):
 
         volume_variance = volume_sq_sum / num_views - (volume_sum / num_views) ** 2
 
+        # step 3. cost volume regularization
         cost_reg = cost_regularization(volume_variance)
         prob_volume_pre = ops.squeeze(cost_reg, 1)
 
@@ -49,11 +54,26 @@ class DepthNet(nn.Cell):
 
         prob_volume = self.softmax(prob_volume_pre)
         depth = depth_regression(prob_volume, depth_values=depth_values)
+
+        # photometric confidence
+        prob_volume_sum4 = 4 * ops.avg_pool3d(ops.pad(ops.expand_dims(prob_volume, 1), ((0, 0), (0, 0), (1, 2), (0, 0), (0, 0))),
+                                              kernel_size=(4, 1, 1), stride=1).squeeze(1)
+        
+
+        # step 1: unsqueeze → [B,1,D,H,W]
         x = ops.expand_dims(prob_volume, 1)
+        # print("after unsqueeze:", x.shape)
+        # step 2: pad depth 维 → paddings 是 [ndims, 2] Tensor
         pad_op = ops.Pad(((0,0),  (0,0), (1,2),  (0,0),  (0,0)))
         x = pad_op(x)
+        # print("after pad:", x.shape)   # [B, 1, D+3, H, W]
+        # step 3: avg_pool3d
         x = ops.avg_pool3d(x, kernel_size=(4,1,1), stride=1, padding=0)
+        # print("after avg_pool3d:", x.shape)  # [B, 1, D, H, W]
+        # step 4: squeeze
         prob_volume_sum4 = 4 * ops.squeeze(x, 1)
+        # print("after squeeze:", prob_volume_sum4.shape) # [B, D, H, W]
+
         depth_index = depth_regression(prob_volume,
                                        depth_values=ops.arange(num_depth, dtype=mindspore.float32)).astype(mindspore.int32)
         depth_index = ops.clamp(depth_index, 0, num_depth - 1)
@@ -157,7 +177,9 @@ if __name__ == "__main__":
     import mindspore
     from mindspore import context
     from mindspore.dataset import GeneratorDataset
+
     context.set_context(mode=context.PYNATIVE_MODE, device_target="GPU")  # 或 "Ascend"/"CPU"
+    # ==== 构造数据集 ====
     from datasets import MVSDataset
     DTU_TRAINING = "/media/outbreak/68E1-B517/Dataset/DTU_ZIP/dtu_training/mvs_training/dtu_training"
     dataset = MVSDataset(
@@ -179,6 +201,8 @@ if __name__ == "__main__":
         ],
         shuffle=True
     ).batch(batch_size=1)
+
+    # ==== 取一个 batch ====
     iterator = minds_dataset.create_dict_iterator()
     item = next(iterator)
 
@@ -189,8 +213,10 @@ if __name__ == "__main__":
         else:
             print(f"{k}: {v}")
 
+    # ==== 建立模型 ====
     model = CascadeMVSNet(refine=False, ndepths=[48, 32, 8], depth_interals_ratio=[4, 2, 1])
 
+    # ==== 前向推理 ====
     outputs = model(item["imgs"],
                     item["stage1_proj"],
                     item["stage2_proj"],

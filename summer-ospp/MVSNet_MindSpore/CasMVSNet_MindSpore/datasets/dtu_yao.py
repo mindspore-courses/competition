@@ -5,15 +5,14 @@ from PIL import Image
 from datasets.data_io import *
 # from data_io import *# 如果要运行最底部的main，同级运行则解
 
+def encode_scanid(scan):
+    if isinstance(scan, str) and scan.startswith('scan'):
+        return int(scan.replace('scan', ''))
+    try:
+        return int(scan)
+    except Exception:
+        return scan
 class MVSDataset():
-    def encode_scanid(self, scan):
-        # 假设scan为字符串如 'scan88'，返回88
-        if isinstance(scan, str) and scan.startswith('scan'):
-            return int(scan.replace('scan', ''))
-        try:
-            return int(scan)
-        except Exception:
-            return scan
     def __init__(self, datapath, listfile, mode, nviews, ndepths=192, interval_scale=1.06, **kwargs):
         super(MVSDataset, self).__init__()
         self.datapath = datapath
@@ -55,11 +54,8 @@ class MVSDataset():
         with open(filename) as f:
             lines = f.readlines()
             lines = [line.rstrip() for line in lines]
-        # extrinsics: line [1,5), 4x4 matrix
         extrinsics = np.fromstring(' '.join(lines[1:5]), dtype=np.float32, sep=' ').reshape((4, 4))
-        # intrinsics: line [7-10), 3x3 matrix
         intrinsics = np.fromstring(' '.join(lines[7:10]), dtype=np.float32, sep=' ').reshape((3, 3))
-        # depth_min & depth_interval: line 11
         depth_min = float(lines[11].split()[0])
         depth_interval = float(lines[11].split()[1]) * self.interval_scale
         return intrinsics, extrinsics, depth_min, depth_interval
@@ -76,7 +72,6 @@ class MVSDataset():
 
     def prepare_img(self, hr_img):
         #w1600-h1200-> 800-600 ; crop -> 640, 512; downsample 1/4 -> 160, 128
-
         #downsample
         h, w = hr_img.shape
         hr_img_ds = cv2.resize(hr_img, (w//2, h//2), interpolation=cv2.INTER_NEAREST)
@@ -85,7 +80,6 @@ class MVSDataset():
         target_h, target_w = 512, 640
         start_h, start_w = (h - target_h)//2, (w - target_w)//2
         hr_img_crop = hr_img_ds[start_h: start_h + target_h, start_w: start_w + target_w]
-
         # #downsample
         # lr_img = cv2.resize(hr_img_crop, (target_w//4, target_h//4), interpolation=cv2.INTER_NEAREST)
 
@@ -131,11 +125,22 @@ class MVSDataset():
         proj_matrices = []
 
         for i, vid in enumerate(view_ids):
-            img_filename = os.path.join(self.datapath,
-                                        'Rectified/{}_train/rect_{:0>3}_{}_r5000.png'.format(scan, vid + 1, light_idx))
-            mask_filename_hr = os.path.join(self.datapath, 'Depths_raw/{}/depth_visual_{:0>4}.png'.format(scan, vid))
-            depth_filename_hr = os.path.join(self.datapath, 'Depths_raw/{}/depth_map_{:0>4}.pfm'.format(scan, vid))
-            proj_mat_filename = os.path.join(self.datapath, 'Cameras/train/{:0>8}_cam.txt'.format(vid))
+            img_filename = os.path.join(
+                self.datapath,
+                "Rectified", f"{scan}_train", f"rect_{vid + 1:0>3}_{light_idx}_r5000.png"
+            )
+            mask_filename_hr = os.path.join(
+                self.datapath,
+                "Depths", f"{scan}_train", f"depth_visual_{vid:0>4}.png"
+            )
+            depth_filename_hr = os.path.join(
+                self.datapath,
+                "Depths", f"{scan}_train", f"depth_map_{vid:0>4}.pfm"
+            )
+            proj_mat_filename = os.path.join(
+                self.datapath,
+                "Cameras", "train", f"{vid:0>8}_cam.txt"
+            )
 
             img = self.read_img(img_filename)
             intrinsics, extrinsics, depth_min, depth_interval = self.read_cam_file(proj_mat_filename)
@@ -158,7 +163,6 @@ class MVSDataset():
         stage2_proj[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 2
         stage3_proj = proj_matrices.copy()
         stage3_proj[:, 1, :2, :] = proj_matrices[:, 1, :2, :] * 4
-
         stage1_mask = mask["stage1"] if mask is not None else None
         stage2_mask = mask["stage2"] if mask is not None else None
         stage3_mask = mask["stage3"] if mask is not None else None
@@ -182,6 +186,7 @@ class MVSDataset():
             view_ids[0]             # ref_view id
         )
         
+# ================== 测试代码 =====================
 if __name__ == "__main__":
     def decode_scanid(scanid_int):
         """将 88 转为 'scan88'"""
@@ -196,8 +201,11 @@ if __name__ == "__main__":
         ndepths=384,
         interval_scale=1.06
     )
+    # 测试1: 检查数据集长度
     print(f"数据集长度: {len(dataset)}")
     assert len(dataset) > 0, "数据集为空"
+
+    # 测试2: 获取第一个样本并检查结构
     sample = dataset.__getitem__(0)
     print("样本结构类型:", type(sample))
     (
@@ -224,6 +232,8 @@ if __name__ == "__main__":
     print(f"参考视角id: {viewid}")
     filename = decode_scanid(scanid) + '/{}/' + '{:0>8}'.format(viewid) + "{}"
     print("filename:", filename)
+
+    # 测试4: 通过GeneratorDataset加载
     from mindspore.dataset import GeneratorDataset
     minds_dataset = GeneratorDataset(
         dataset,

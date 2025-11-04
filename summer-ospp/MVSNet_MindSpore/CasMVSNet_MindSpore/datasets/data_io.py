@@ -84,12 +84,17 @@ def save_pfm(filename, image, scale=1):
         color = False
     else:
         raise Exception('Image must have H x W x 3, H x W x 1 or H x W dimensions.')
+
     file.write('PF\n'.encode('utf-8') if color else 'Pf\n'.encode('utf-8'))
     file.write('{} {}\n'.format(image.shape[1], image.shape[0]).encode('utf-8'))
+
     endian = image.dtype.byteorder
+
     if endian == '<' or endian == '=' and sys.byteorder == 'little':
         scale = -scale
+
     file.write(('%f\n' % scale).encode('utf-8'))
+
     image.tofile(file)
     file.close()
 
@@ -104,8 +109,29 @@ class RandomCrop(object):
         CropSize_w, CropSize_h = max(1, int(w * self.CropSize)), max(1, int(h * self.CropSize))
         x1, y1 = random.randint(0, CropSize_w), random.randint(0, CropSize_h)
         x2, y2 = random.randint(w - CropSize_w, w), random.randint(h - CropSize_h, h)
+
         normal_crop = normal[y1:y2, x1:x2]
         normal_resize = cv2.resize(normal_crop, (w, h), interpolation=cv2.INTER_NEAREST)
+
         image_crop = image[4*y1:4*y2, 4*x1:4*x2]
         image_resize = cv2.resize(image_crop, (img_w, img_h), interpolation=cv2.INTER_LINEAR)
+
+        # import matplotlib.pyplot as plt
+        # plt.subplot(2, 3, 1)
+        # plt.imshow(image)
+        # plt.subplot(2, 3, 2)
+        # plt.imshow(image_crop)
+        # plt.subplot(2, 3, 3)
+        # plt.imshow(image_resize)
+        #
+        # plt.subplot(2, 3, 4)
+        # plt.imshow((normal + 1.0) / 2, cmap="rainbow")
+        # plt.subplot(2, 3, 5)
+        # plt.imshow((normal_crop + 1.0) / 2, cmap="rainbow")
+        # plt.subplot(2, 3, 6)
+        # plt.imshow((normal_resize + 1.0) / 2, cmap="rainbow")
+        # plt.show()
+        # plt.pause(1)
+        # plt.close()
+
         return image_resize, normal_resize
