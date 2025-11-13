@@ -85,13 +85,13 @@
       <img src="pictures/jupyter.png" alt="模型训练" width="400"/>
     </p>  
 
-    训练结束后，调用 mindyolo 开发套件的 export 接口进行模型转换，将训练好的 ckpt 文件转为 onnx 模型文件。然后针对 OrangePi AIpro 板卡，在 ATC 转换模型完成后，即可得到适用于模型推理的 om      模型文件。ckpt模型转为air模型，此步骤需要在Ascend910上操作
+    训练结束后，调用 mindyolo 开发套件的 export 接口进行模型转换，将训练好的 ckpt 文件转为 onnx 模型文件。然后针对 OrangePi AIpro 板卡，在 ATC 转换模型完成后，即可得到适用于模型推理的 om      模型文件。ckpt模型转为air模型，此步骤需要在Ascend910上操作：
 
     python ./deploy/export.py --config ./path_to_config/model.yaml --weight ./path_to_ckpt/weight.ckpt --per_batch_size 1 --file_format AIR
 
     python ./deploy/export.py --config ./configs/yolov5/yolov5n.yaml --weight yolov5n_300e_mAP273-9b16bd7b.ckpt --per_batch_size 1 --file_format AIR
 
-    yolov7需要在2.0版本以上的Ascend910机器运行export
+    yolov7需要在2.0版本以上的Ascend910机器运行export：
 
     air模型转为om模型，使用atc转换工具，此步骤需安装MindX环境，在Ascend310上运行
 
