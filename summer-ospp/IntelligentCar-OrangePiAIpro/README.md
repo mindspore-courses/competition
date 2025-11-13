@@ -151,12 +151,13 @@
   <img src="pictures/流程.png" alt="推理流程图" width="400"/>
 </p>
 
-  模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
+  模型转换过程：MindYOLO ckpt → AIR → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
 <p align="center">
   <img src="pictures/流程图.png" alt="推理流程" width="400"/>
 </p>
 
-- **工作成果**  
+- **工作成果**
+- 在智能网联车OrangePi AIpro代码目录中运行主函数，执行python main.py，
   成功在OrangePi AIpro上运行YOLO模型，实现行人、小汽车等目标检测，并通过UDP发送检测结果，实现实时反馈。
 <p align="center">
   <img src="pictures/目标识别.jpg" alt="目标识别图" width="400"/>
