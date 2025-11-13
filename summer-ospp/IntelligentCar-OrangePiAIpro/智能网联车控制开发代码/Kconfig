@@ -1,0 +1,21 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+#===============================================================================
+
+config BLINKY_PIN
+    int
+    prompt "Choose BLINKY_PIN pin."
+    depends on SAMPLE_SUPPORT_BLINKY
+    default 2
+
+config BLINKY_DURATION_MS
+    int
+    prompt "Duration of blinky in MS."
+    default 500
+    
+config PWM_PIN
+int
+    prompt "Choose PWM pin."
+    depends on SAMPLE_SUPPORT_PWM
+    default 2
