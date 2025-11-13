@@ -73,7 +73,16 @@
       <img src="pictures/obs.png" alt="数据集创建" width="400"/>
     </p>  
 
-    在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。  
+    在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。
+    在单卡NPU/CPU上训练模型：
+
+python train.py --config ./configs/yolov7/yolov7.yaml 
+
+在多卡NPU上进行分布式模型训练，以8卡为例:
+
+msrun --worker_num=8 --local_worker_num=8 --bind_core=True --log_dir=./yolov7_log python train.py --config ./configs/yolov7/yolov7.yaml  --is_parallel True
+
+
     <p align="center">
       <img src="pictures/jupyter.png" alt="模型训练" width="400"/>
     </p>  
