@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../../../../"
+		}
+	],
+	"settings": {
+		"debug.onTaskErrors": "debugAnyway",
+		"workspace.samplePath": "./samples/wifi/udp_client"
+	}
+}

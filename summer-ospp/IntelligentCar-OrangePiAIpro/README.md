@@ -73,14 +73,30 @@
       <img src="pictures/obs.png" alt="数据集创建" width="400"/>
     </p>  
 
-    在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。  
+    在NoteBook中打开JupyterLab，将数据集和代码文件解压，执行训练文件。
+    在单卡NPU/CPU上训练模型：
+    python train.py --config ./configs/yolov5/yolov5.yaml
+  
+    在多卡NPU上进行分布式模型训练，以8卡为例:
+    msrun --worker_num=8 --local_worker_num=8 --bind_core=True --log_dir=./yolov5_log python train.py --config ./configs/yolov5/yolov5.yaml  --is_parallel True
+ 
+
     <p align="center">
       <img src="pictures/jupyter.png" alt="模型训练" width="400"/>
     </p>  
 
-    训练结束后，调用 mindyolo 开发套件的 export 接口进行模型转换，将训练好的 ckpt 文件转为 onnx 模型文件。然后针对 OrangePi AIpro 板卡，在 ATC 转换模型完成后，即可得到适用于模型推理的 om      模型文件。
+    训练结束后，调用 mindyolo 开发套件的 export 接口进行模型转换，将训练好的 ckpt 文件转为 onnx 模型文件。然后针对 OrangePi AIpro 板卡，在 ATC 转换模型完成后，即可得到适用于模型推理的 om      模型文件。ckpt模型转为air模型，此步骤需要在Ascend910上操作：
 
+    python ./deploy/export.py --config ./path_to_config/model.yaml --weight ./path_to_ckpt/weight.ckpt --per_batch_size 1 --file_format AIR
 
+    python ./deploy/export.py --config ./configs/yolov5/yolov5n.yaml --weight yolov5n_300e_mAP273-9b16bd7b.ckpt --per_batch_size 1 --file_format AIR
+
+    yolov7需要在2.0版本以上的Ascend910机器运行export：
+
+    air模型转为om模型，使用atc转换工具，此步骤需安装MindX环境，在Ascend310上运行
+
+    atc --model=./path_to_air/weight.air --framework=1 --output=yolo  --soc_versio
+    
 ### 2️⃣ 车道线检测
 - **技术方案**  
   边缘检测算法是图像处理中用于识别图像中物体边界的关键技术，主要包括Canny、Sobel、Prewitt、Laplacian等经典方法。‌其中，因为‌Canny算子低错误率、高定位精度和双阈值处理等特点，‌Canny算子被认为是最优且最常用的边缘检测算。因此，在本次项目中的车道线检测使用‌Canny边缘检测算法，它能够通过提取每一帧图像的边缘信息，准确地检测到图像中的边缘，以突出最可能的车道线轮廓，同时过滤掉边缘检测图像中非车道部分的边缘信息，从而集中检测车辆前方的车道线。  
@@ -135,12 +151,13 @@
   <img src="pictures/流程.png" alt="推理流程图" width="400"/>
 </p>
 
-  模型转换过程：MindYOLO ckpt → ONNX → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
+  模型转换过程：MindYOLO ckpt → AIR → ATC → OM。YoloV5类继承基础Model类，实现前处理、推理、后处理等方法。NPU运行低延迟，适合边缘计算。  
 <p align="center">
   <img src="pictures/流程图.png" alt="推理流程" width="400"/>
 </p>
 
-- **工作成果**  
+- **工作成果**
+- 在智能网联车OrangePi AIpro代码目录中运行主函数，执行python main.py，
   成功在OrangePi AIpro上运行YOLO模型，实现行人、小汽车等目标检测，并通过UDP发送检测结果，实现实时反馈。
 <p align="center">
   <img src="pictures/目标识别.jpg" alt="目标识别图" width="400"/>
