@@ -65,6 +65,15 @@ PROMPT_DICT = {
   },
 ```
 
+使用如下命令处理原始数据集
+```bash
+cd /home/ma-user/work/
+python data_converter.py --data_path /home/ma-user/work/train.json --output_pat
+h /home/ma-user/work/train-data-conversation.json
+```
+而后按照文档生成mindrecord格式的数据。
+
+seq_length=256
 
 ## 2.超参配置介绍说明
 
