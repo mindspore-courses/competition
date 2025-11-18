@@ -1,0 +1,13 @@
+[{
+    "graph_fusion": {
+        "RandomDsaFusionPass": {
+            "effect_times": "1",
+            "match_times": "1"
+        },
+        "RefreshInt64ToInt32FusionPass": {
+            "effect_times": "1",
+            "match_times": "1"
+        }
+    },
+    "session_and_graph_id": "1_0"
+}]

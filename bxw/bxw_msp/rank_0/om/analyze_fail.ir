@@ -1,0 +1,1635 @@
+# ===============================================================================================
+# The following shows the last analyze fail log message.
+# ===============================================================================================
+
+----------------------------------------------------
+- Caught exception:
+----------------------------------------------------
+When creating an instance of 'GammaPoisson', all arguments are required to be constants, but input 0 is a variable, which is AbstractKeywordArg(key: concentration, value: AbstractTensor(shape: (1187), element: AbstractScalar(Type: Float32, Value: ValueAny, Shape: NoShape), is adapter: False, value_ptr: 0xaaaaf7aa73f0, value: ValueAny)).
+
+----------------------------------------------------
+- C++ Call Stack: (For framework developers)
+----------------------------------------------------
+mindspore/ccsrc/pipeline/jit/ps/static_analysis/prim.cc:4076 GetParameters
+
+----------------------------------------------------
+- The Traceback of Net Construct Code:
+----------------------------------------------------
+# 0 In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67
+                    return grad_(fn, weights, grad_position)(*args)
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 1 In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37
+        if condition_values is None:
+# 2 In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 33~35
+                    return grad_(fn, weights, grad_position)(*args)
+                                 ^~
+# 3 In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35
+        for k, v in guide_samples.items():
+        ^
+# 4 In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9
+        model_dists, model_samples = self.model(
+# 5 In file /home/ma-user/work/bxw_msp/origin_demo.py:190~191, 8~37
+        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典
+        ^
+# 6 In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47
+        model_dists, model_samples = self.model(
+                                     ^~~~~~~~~~
+# 7 In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83
+        for k in self.get_var_keys():
+# 8 In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47
+        model_dists, model_samples = self.model(
+                                     ^~~~~~~~~~
+# 9 In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83
+        for k in self.get_var_keys():
+# 10 In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47
+        model_dists, model_samples = self.model(
+                                     ^~~~~~~~~~
+# 11 In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83
+        for k in self.get_var_keys():
+# 12 In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47
+        model_dists, model_samples = self.model(
+                                     ^~~~~~~~~~
+# 13 In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83
+        for k in self.get_var_keys():
+# 14 In file /home/ma-user/work/bxw_msp/origin_demo.py:205~208, 8~92
+        if self.likelihood_key != "library_nb":
+# 15 In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 12~92
+            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 16 In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~92
+            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])
+                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 17 In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55
+            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])
+                                           ^~~~~~~~~~~~
+# 18 In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9
+        dist = GammaPoisson(
+
+# ===============================================================================================
+# The following shows the IR when the function graphs evaluation fails to help locate the problem.
+# You can search the last ------------------------> to the node which is evaluated failure.
+# Refer to https://www.mindspore.cn/search?inputValue=analyze_fail.ir to get more instructions.
+# ===============================================================================================
+
+# IR entry: @after_grad_53
+# Total subgraphs: 0
+
+# Total params: 21
+# Params:
+%para1_args0: <null>
+%para2_args1: <null>
+%para3_args2: <null>
+%para4_args3: <null>
+%para5_args4: <null>
+%para6_model.decoder.log_concentration: <Ref[Tensor[Float32]], (1187), ref_key=model.decoder.log_concentration>  :  has_default
+%para7_model.decoder.mlp.layers.0.0.weight: <Ref[Tensor[Float32]], (350, 100), ref_key=model.decoder.mlp.layers.0.0.weight>  :  has_default
+%para8_model.decoder.mlp.layers.0.0.bias: <Ref[Tensor[Float32]], (350), ref_key=model.decoder.mlp.layers.0.0.bias>  :  has_default
+%para9_model.decoder.normalized_mean_decoder.0.weight: <Ref[Tensor[Float32]], (1187, 350), ref_key=model.decoder.normalized_mean_decoder.0.weight>  :  has_default
+%para10_model.decoder.normalized_mean_decoder.0.bias: <Ref[Tensor[Float32]], (1187), ref_key=model.decoder.normalized_mean_decoder.0.bias>  :  has_default
+%para11_guide.q_mask_logits: <Ref[Tensor[Float32]], (722, 100), ref_key=guide.q_mask_logits>  :  has_default
+%para12_guide.q_E_loc: <Ref[Tensor[Float32]], (722, 100), ref_key=guide.q_E_loc>  :  has_default
+%para13_guide.q_E_log_scale: <Ref[Tensor[Float32]], (722, 100), ref_key=guide.q_E_log_scale>  :  has_default
+%para14_guide.z_basal_encoder.mlp.layers.0.0.weight: <Ref[Tensor[Float32]], (350, 1287), ref_key=guide.z_basal_encoder.mlp.layers.0.0.weight>  :  has_default
+%para15_guide.z_basal_encoder.mlp.layers.0.0.bias: <Ref[Tensor[Float32]], (350), ref_key=guide.z_basal_encoder.mlp.layers.0.0.bias>  :  has_default
+%para16_guide.z_basal_encoder.mean_encoder.weight: <Ref[Tensor[Float32]], (100, 350), ref_key=guide.z_basal_encoder.mean_encoder.weight>  :  has_default
+%para17_guide.z_basal_encoder.mean_encoder.bias: <Ref[Tensor[Float32]], (100), ref_key=guide.z_basal_encoder.mean_encoder.bias>  :  has_default
+%para18_guide.z_basal_encoder.log_var_encoder.weight: <Ref[Tensor[Float32]], (100, 350), ref_key=guide.z_basal_encoder.log_var_encoder.weight>  :  has_default
+%para19_guide.z_basal_encoder.log_var_encoder.bias: <Ref[Tensor[Float32]], (100), ref_key=guide.z_basal_encoder.log_var_encoder.bias>  :  has_default
+%para20_guide.normalization_module.log_mean: <Ref[Tensor[Float32]], (1187), ref_key=guide.normalization_module.log_mean>  :  has_default
+%para21_guide.normalization_module.log_scale: <Ref[Tensor[Float32]], (1187), ref_key=guide.normalization_module.log_scale>  :  has_default
+
+subgraph attr:
+subgraph instance: after_grad_53 : 0xaaab1e8c7de0
+# In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:582~584, 16~67/                @jit(input_signature=dynamic_shape_inputs)/
+subgraph @after_grad_53() {
+  %0(CNode_85) = resolve(NameSpace[Entry: 'after_grad'], after_grad)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+  %1(CNode_86) = MakeTuple(%para1_args0, %para2_args1, %para3_args2, %para4_args3, %para5_args4)
+      : (<Tensor[Float32], (128, 1187)>, <Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Tensor[Int64], (722)>, <Int64, NoShape>) -> (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>)
+      #scope: (Default)
+
+#------------------------> 0
+  %2(CNode_87) = UnpackCall_unpack_call(%0, %1)
+      : (<Func, NoShape>, <Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>) -> (<null>)
+      #scope: (Default)
+  Return(%2) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 20~67/                    return grad_(fn, weights, grad_position)(*args)/
+}
+# Order:
+#   1: @after_grad_53:CNode_85{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Entry: 'after_grad', [2]: ValueNode<Symbol> after_grad}
+#   2: @after_grad_53:CNode_87{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.88, [1]: CNode_85, [2]: CNode_86}
+#   3: @after_grad_53:CNode_89{[0]: ValueNode<Primitive> Return, [1]: CNode_87}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_54 : 0xaaab1e9c6290
+
+subgraph @UnpackCall_54(%para0_Parameter_55, %para0_Parameter_56) {
+  %0(CNode_90) = TupleGetItem(%para0_Parameter_56, I64(0))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Tensor[Float32], (128, 1187)>)
+      #scope: (Default)
+  %1(CNode_91) = TupleGetItem(%para0_Parameter_56, I64(1))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Tensor[Float32], (128, 722)>)
+      #scope: (Default)
+  %2(CNode_92) = TupleGetItem(%para0_Parameter_56, I64(2))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>)
+      #scope: (Default)
+  %3(CNode_93) = TupleGetItem(%para0_Parameter_56, I64(3))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Tensor[Int64], (722)>)
+      #scope: (Default)
+  %4(CNode_94) = TupleGetItem(%para0_Parameter_56, I64(4))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+
+#------------------------> 1
+  %5(CNode_95) = Parameter_55(%0, %1, %2, %3, %4)
+      : (<Tensor[Float32], (128, 1187)>, <Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Tensor[Int64], (722)>, <Int64, NoShape>) -> (<null>)
+      #scope: (Default)
+  Return(%5) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+}
+# Order:
+#   1: @UnpackCall_54:CNode_95{[0]: param_Parameter_55, [1]: CNode_90, [2]: CNode_91, [3]: CNode_92, [4]: CNode_93, [5]: CNode_94}
+#   2: @UnpackCall_54:CNode_96{[0]: ValueNode<Primitive> Return, [1]: CNode_95}
+
+
+subgraph attr:
+subgraph instance: after_grad_57 : 0xaaab1e9ccfc0
+# In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:582~584, 16~67/                @jit(input_signature=dynamic_shape_inputs)/
+subgraph @after_grad_57(%para0_args0, %para0_args1, %para0_args2, %para0_args3, %para0_args4) {
+  %0(CNode_97) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>'], grad_)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~32/                    return grad_(fn, weights, grad_position)(*args)/
+  %1(CNode_98) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>'], fn)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 33~35/                    return grad_(fn, weights, grad_position)(*args)/
+  %2(CNode_99) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>'], weights)
+      : (<External, NoShape>, <External, NoShape>) -> (<Tuple[Ref[Tensor[Float32]]*14], TupleShape((1187), (350, 100), (350), (1187, 350), (1187), (722, 100), (722, 100), (722, 100), (350, 1287), (350), (100, 350), (100), (100, 350), (100))>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 37~44/                    return grad_(fn, weights, grad_position)(*args)/
+  %3(CNode_100) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>'], grad_position)
+      : (<External, NoShape>, <External, NoShape>) -> (<Tuple[Int64], TupleShape(NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 46~59/                    return grad_(fn, weights, grad_position)(*args)/
+  %4(CNode_101) = %0(%1, %2, %3)
+      : (<Func, NoShape>, <Tuple[Ref[Tensor[Float32]]*14], TupleShape((1187), (350, 100), (350), (1187, 350), (1187), (722, 100), (722, 100), (722, 100), (350, 1287), (350), (100, 350), (100), (100, 350), (100))>, <Tuple[Int64], TupleShape(NoShape)>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~60/                    return grad_(fn, weights, grad_position)(*args)/
+  %5(CNode_102) = MakeTuple(%para0_args0, %para0_args1, %para0_args2, %para0_args3, %para0_args4)
+      : (<Tensor[Float32], (128, 1187)>, <Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Tensor[Int64], (722)>, <Int64, NoShape>) -> (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:583, 32~36/                def after_grad(*args):/
+
+#------------------------> 2
+  %6(CNode_103) = UnpackCall_unpack_call(%4, %5)
+      : (<Func, NoShape>, <Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+  Return(%6) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 20~67/                    return grad_(fn, weights, grad_position)(*args)/
+}
+# Order:
+#   1: @after_grad_57:CNode_97{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>', [2]: ValueNode<Symbol> grad_}
+#   2: @after_grad_57:CNode_98{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>', [2]: ValueNode<Symbol> fn}
+#   3: @after_grad_57:CNode_99{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>', [2]: ValueNode<Symbol> weights}
+#   4: @after_grad_57:CNode_100{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.base..<after_grad>', [2]: ValueNode<Symbol> grad_position}
+#   5: @after_grad_53:CNode_104{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   6: @after_grad_57:CNode_101{[0]: CNode_97, [1]: CNode_98, [2]: CNode_99, [3]: CNode_100}
+#   7: @after_grad_57:CNode_105{[0]: ValueNode<UnpackGraphPrimitive> UnpackGraph, [1]: CNode_98, [2]: CNode_102}
+#   8: @after_grad_57:CNode_103{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.106, [1]: CNode_101, [2]: CNode_102}
+#   9: @after_grad_57:CNode_107{[0]: ValueNode<Primitive> Return, [1]: CNode_103}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_58 : 0xaaab1ea535f0
+# In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+subgraph @UnpackCall_58(%para0_Parameter_59, %para0_Parameter_60) {
+  %0(CNode_108) = TupleGetItem(%para0_Parameter_60, I64(0))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Tensor[Float32], (128, 1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+  %1(CNode_109) = TupleGetItem(%para0_Parameter_60, I64(1))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Tensor[Float32], (128, 722)>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+  %2(CNode_110) = TupleGetItem(%para0_Parameter_60, I64(2))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+  %3(CNode_111) = TupleGetItem(%para0_Parameter_60, I64(3))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Tensor[Int64], (722)>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+  %4(CNode_112) = TupleGetItem(%para0_Parameter_60, I64(4))
+      : (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Tensor[Int64],Int64], TupleShape((128, 1187), (128, 722), NoShape, (722), NoShape)>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+
+#------------------------> 3
+  %5(CNode_113) = Parameter_59(%0, %1, %2, %3, %4)
+      : (<Tensor[Float32], (128, 1187)>, <Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Tensor[Int64], (722)>, <Int64, NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+  Return(%5) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 27~67/                    return grad_(fn, weights, grad_position)(*args)/
+}
+# Order:
+#   1: @UnpackCall_58:CNode_113{[0]: param_Parameter_59, [1]: CNode_108, [2]: CNode_109, [3]: CNode_110, [4]: CNode_111, [5]: CNode_112}
+#   2: @UnpackCall_58:CNode_114{[0]: ValueNode<Primitive> Return, [1]: CNode_113}
+
+
+subgraph attr:
+k_graph: 1
+core: 1
+args_no_expand: 1
+subgraph instance: grad___main___SAMSVAE_ELBOLossModule_construct_61 : 0xaaab1ea6c870
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+subgraph @grad___main___SAMSVAE_ELBOLossModule_construct_61 parent: [subgraph @grad___main___SAMSVAE_ELBOLossModule_construct_115](%para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct) {
+  %0(CNode_116) = J(%para_Parameter_117) primitive_attrs: {side_effect_propagate: I64(1)}
+      : (<Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+
+#------------------------> 4
+  %1(CNode_118) = %0(%para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct, %para0_grad___main___SAMSVAE_ELBOLossModule_construct)
+      : (<Tensor[Float32], (128, 1187)>, <Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Tensor[Int64], (722)>, <Int64, NoShape>) -> (<null>)
+      #scope: (Default)
+  %2(CNode_119) = TupleGetItem(%1, I64(0))
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  %3(CNode_120) = TupleGetItem(%1, I64(1))
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  %4(CNode_121) = HyperMapPy_hyper_map[ones_like]{fn_leaf: MultitypeFuncGraph_ones_like{(NoneType), (TypeType), (Number), (Func), (Tensor), (COOTensor), (CSRTensor)}}(%2)
+      : (<null>) -> (<null>)
+      #scope: (Default)
+  %5(CNode_122) = %3(%4)
+      : (<null>) -> (<null>)
+      #scope: (Default)
+  %6(CNode_123) = Tail_tail_grad_by_position(%5, $(@grad___main___SAMSVAE_ELBOLossModule_construct_115:para_Parameter_124))
+      : (<null>, <Tuple[Int64], TupleShape(NoShape)>) -> (<null>)
+      #scope: (Default)
+  %7(CNode_125) = TupleGetItem(%5, I64(0))
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  %8(CNode_126) = Partial(MultitypeFuncGraph_env_get{(EnvType, MapTensor), (EnvType, Tensor)}, %7) primitive_attrs: {side_effect_propagate: I64(1)}
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  %9(CNode_127) = HyperMap_hyper_map(%8, $(@grad___main___SAMSVAE_ELBOLossModule_construct_115:para_Parameter_128))
+      : (<null>, <Tuple[Ref[Tensor[Float32]]*14], TupleShape((1187), (350, 100), (350), (1187, 350), (1187), (722, 100), (722, 100), (722, 100), (350, 1287), (350), (100, 350), (100), (100, 350), (100))>) -> (<null>)
+      #scope: (Default)
+  %10(CNode_129) = MakeTuple(%6, %9)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  %11(CNode_130) = MakeTuple(%2, %10)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  Return(%11) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+}
+# Order:
+#   1: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_118{[0]: CNode_116, [1]: param_grad___main___SAMSVAE_ELBOLossModule_construct, [2]: param_grad___main___SAMSVAE_ELBOLossModule_construct, [3]: param_grad___main___SAMSVAE_ELBOLossModule_construct, [4]: param_grad___main___SAMSVAE_ELBOLossModule_construct, [5]: param_grad___main___SAMSVAE_ELBOLossModule_construct}
+#   2: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_119{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_118, [2]: ValueNode<Int64Imm> 0}
+#   3: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_120{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_118, [2]: ValueNode<Int64Imm> 1}
+#   4: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_121{[0]: ValueNode<HyperMapPy> MetaFuncGraph-hyper_map[ones_like].131, [1]: CNode_119}
+#   5: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_122{[0]: CNode_120, [1]: CNode_121}
+#   6: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_125{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_122, [2]: ValueNode<Int64Imm> 0}
+#   7: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_126{[0]: ValueNode<Primitive> Partial, [1]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-env_get.132, [2]: CNode_125}
+#   8: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_127{[0]: ValueNode<HyperMap> MetaFuncGraph-hyper_map.133, [1]: CNode_126, [2]: param_Parameter_128}
+#   9: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_123{[0]: ValueNode<Tail> MetaFuncGraph-tail_grad_by_position.134, [1]: CNode_122, [2]: param_Parameter_124}
+#  10: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_129{[0]: ValueNode<Primitive> MakeTuple, [1]: CNode_123, [2]: CNode_127}
+#  11: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_130{[0]: ValueNode<Primitive> MakeTuple, [1]: CNode_119, [2]: CNode_129}
+#  12: @grad___main___SAMSVAE_ELBOLossModule_construct_61:CNode_135{[0]: ValueNode<Primitive> Return, [1]: CNode_130}
+
+
+subgraph attr:
+defer_inline: 1
+subgraph instance: __main___SAMSVAE_ELBOLossModule_construct_3 : 0xaaab1e9e1d10
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+subgraph @__main___SAMSVAE_ELBOLossModule_construct_3(%para0_X, %para0_D, %para0_condition_values, %para0_D_obs_counts, %para0_n_particles) {
+  %0(CNode_136) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], print)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:249, 8~13/        print("进入LossModule")/
+  %1(CNode_137) = %0("进入LossModule")
+      : (<String, NoShape>) -> (<Tensor[Int32], (1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:249, 8~29/        print("进入LossModule")/
+  %2(CNode_138) = StopGradient(%1)
+      : (<Tensor[Int32], (1)>) -> (<Tensor[Int32], (1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+  %3(CNode_139) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], is_)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250, 11~35/        if condition_values is None:/
+  %4(CNode_140) = %3(%para0_condition_values, None)
+      : (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <None, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250, 11~35/        if condition_values is None:/
+  %5(CNode_141) = Cond(%4, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37/        if condition_values is None:/
+  %6(CNode_142) = Switch(%5, @✓__main___SAMSVAE_ELBOLossModule_construct_143, @✗__main___SAMSVAE_ELBOLossModule_construct_62)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37/        if condition_values is None:/
+
+#------------------------> 5
+  %7(CNode_144) = %6()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37/        if condition_values is None:/
+  %8(CNode_145) = Depend(%7, %2) primitive_attrs: {side_effect_propagate: I64(1)} cnode_attrs: {topo_sort_rhs_first: Bool(1)}
+      : (<null>, <Tensor[Int32], (1)>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37/        if condition_values is None:/
+  %9(CNode_146) = GradAux_aux_fn(%8, Bool(1))
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+  Return(%9) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37/        if condition_values is None:/
+}
+# Order:
+#   1: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_136{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> print}
+#   2: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_147{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_137{[0]: CNode_136, [1]: ValueNode<StringImm> 进入LossModule}
+#   5: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_139{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> is_}
+#   6: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_140{[0]: CNode_139, [1]: param_condition_values, [2]: ValueNode<None> None}
+#   7: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_141{[0]: ValueNode<Primitive> Cond, [1]: CNode_140, [2]: ValueNode<BoolImm> false}
+#   8: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_148{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> dict}
+#   9: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_142{[0]: ValueNode<Primitive> Switch, [1]: CNode_141, [2]: ValueNode<FuncGraph> ✓__main___SAMSVAE_ELBOLossModule_construct_143, [3]: ValueNode<FuncGraph> ✗__main___SAMSVAE_ELBOLossModule_construct_62}
+#  10: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_144{[0]: CNode_142}
+#  12: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_149{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> _log_prob}
+#  13: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_150{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAE_ELBOLossModule::281471801153152>', [2]: ValueNode<Symbol> perturbation_plated_variables}
+#  14: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_151{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAE_ELBOLossModule::281471801153152>', [2]: ValueNode<Symbol> _compute_reweighted_perturbation_plated_loss_term}
+#  15: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_152{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> sum}
+#  16: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_153{[0]: ValueNode<Primitive> Return, [1]: CNode_146}
+#  17: @__main___SAMSVAE_ELBOLossModule_construct_3:CNode_146{[0]: ValueNode<GradAux> MetaFuncGraph-aux_fn.154, [1]: CNode_145, [2]: ValueNode<BoolImm> true}
+
+
+subgraph attr:
+subgraph instance: ✗__main___SAMSVAE_ELBOLossModule_construct_62 : 0xaaab1e9da9f0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+subgraph @✗__main___SAMSVAE_ELBOLossModule_construct_62 parent: [subgraph @__main___SAMSVAE_ELBOLossModule_construct_3]() {
+
+#------------------------> 6
+  %0(CNode_155) = call @↓__main___SAMSVAE_ELBOLossModule_construct_63($(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_condition_values))
+      : (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 33~35/                    return grad_(fn, weights, grad_position)(*args)/
+  Return(%0) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:250~251, 8~37/        if condition_values is None:/
+}
+# Order:
+#   1: @✗__main___SAMSVAE_ELBOLossModule_construct_62:CNode_156{[0]: ValueNode<Primitive> Return, [1]: CNode_155}
+#   2: @✗__main___SAMSVAE_ELBOLossModule_construct_62:CNode_155{[0]: ValueNode<FuncGraph> ↓__main___SAMSVAE_ELBOLossModule_construct_63, [1]: param_condition_values}
+
+
+subgraph attr:
+subgraph instance: ↓__main___SAMSVAE_ELBOLossModule_construct_63 : 0xaaab1e9db1c0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+subgraph @↓__main___SAMSVAE_ELBOLossModule_construct_63 parent: [subgraph @__main___SAMSVAE_ELBOLossModule_construct_3](%para0_фcondition_values) {
+  %0(CNode_136) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], print)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:249, 8~13/        print("进入LossModule")/
+  %1(CNode_157) = %0("进入Guide")
+      : (<String, NoShape>) -> (<Tensor[Int32], (1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:252, 8~24/        print("进入Guide")/
+  %2(CNode_158) = %0("完成Guide")
+      : (<String, NoShape>) -> (<Tensor[Int32], (1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:259, 8~24/        print("完成Guide")/
+  %3(CNode_159) = MakeTuple(%1, %2)
+      : (<Tensor[Int32], (1)>, <Tensor[Int32], (1)>) -> (<Tuple[Tensor[Int32]*2], TupleShape((1), (1))>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+  %4(CNode_160) = StopGradient(%3)
+      : (<Tuple[Tensor[Int32]*2], TupleShape((1), (1))>) -> (<Tuple[Tensor[Int32]*2], TupleShape((1), (1))>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+
+#------------------------> 7
+  %5(CNode_161) = call @↵↓__main___SAMSVAE_ELBOLossModule_construct_64(I64(0), %para0_фcondition_values)
+      : (<Int64, NoShape>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 33~35/                    return grad_(fn, weights, grad_position)(*args)/
+  %6(CNode_162) = Depend(%5, %4) primitive_attrs: {side_effect_propagate: I64(1)} cnode_attrs: {topo_sort_rhs_first: Bool(1)}
+      : (<null>, <Tuple[Tensor[Int32]*2], TupleShape((1), (1))>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  Return(%6) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+}
+# Order:
+#   2: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_163{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_157{[0]: CNode_136, [1]: ValueNode<StringImm> 进入Guide}
+#   5: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_164{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAE_ELBOLossModule::281471801153152>', [2]: ValueNode<Symbol> guide}
+#   6: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_165{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   7: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_166{[0]: CNode_165, [1]: ValueNode<StringImm> X, [2]: ValueNode<StringImm> D, [3]: ValueNode<StringImm> condition_values, [4]: ValueNode<StringImm> n_particles}
+#   8: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_167{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   9: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_168{[0]: CNode_167, [1]: param_X, [2]: param_D, [3]: param_фcondition_values, [4]: param_n_particles}
+#  10: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_169{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> make_dict}
+#  11: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_170{[0]: CNode_169, [1]: CNode_166, [2]: CNode_168}
+#  12: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_171{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.172, [1]: CNode_164, [2]: CNode_170}
+#  13: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_173{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#  14: @↓__main___SAMSVAE_ELBOLossModule_construct_63:guide_dists{[0]: CNode_173, [1]: CNode_171, [2]: ValueNode<Int64Imm> 0}
+#  15: @↓__main___SAMSVAE_ELBOLossModule_construct_63:guide_samples{[0]: CNode_173, [1]: CNode_171, [2]: ValueNode<Int64Imm> 1}
+#  16: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_174{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  18: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_158{[0]: CNode_136, [1]: ValueNode<StringImm> 完成Guide}
+#  19: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_175{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> len}
+#  20: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_176{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#  21: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_177{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> iter}
+#  22: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_178{[0]: ValueNode<Primitive> getattr, [1]: guide_samples, [2]: ValueNode<StringImm> items}
+#  23: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_179{[0]: CNode_178}
+#  24: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_180{[0]: CNode_177, [1]: CNode_179}
+#  25: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_181{[0]: CNode_175, [1]: CNode_180}
+#  31: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_182{[0]: ValueNode<Primitive> Return, [1]: CNode_162}
+#  32: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_161{[0]: ValueNode<FuncGraph> ↵↓__main___SAMSVAE_ELBOLossModule_construct_64, [1]: ValueNode<Int64Imm> 0, [2]: param_фcondition_values}
+#  33: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_183{[0]: ValueNode<Primitive> MakeTuple, [1]: ValueNode<StringImm> __py_exec_index1_getattr__, [2]: ValueNode<StringImm> __py_exec_index2_getattr__}
+#  34: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_184{[0]: ValueNode<Primitive> MakeTuple, [1]: guide_samples, [2]: ValueNode<StringImm> items}
+#  35: @↓__main___SAMSVAE_ELBOLossModule_construct_63:CNode_185{[0]: ValueNode<Primitive> make_dict, [1]: CNode_183, [2]: CNode_184}
+
+
+subgraph attr:
+ignore_value: 1
+subgraph instance: ↵↓__main___SAMSVAE_ELBOLossModule_construct_64 : 0xaaab1ea02810
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+subgraph @↵↓__main___SAMSVAE_ELBOLossModule_construct_64 parent: [subgraph @↓__main___SAMSVAE_ELBOLossModule_construct_63](%para0_@CNode_65, %para0_фcondition_values) {
+  %0(CNode_175) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], len)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  %1(CNode_177) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], iter)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  %2(CNode_173) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 8~9/        guide_dists, guide_samples = self.guide(/
+  %3(CNode_164) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<SAMSVAE_ELBOLossModule::281471801153152>'], guide)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253, 37~47/        guide_dists, guide_samples = self.guide(/
+  %4(CNode_169) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], make_dict)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %5(CNode_165) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %6(CNode_166) = %5("X", "D", "condition_values", "n_particles")
+      : (<String, NoShape>, <String, NoShape>, <String, NoShape>, <String, NoShape>) -> (<Tuple[String*4], TupleShape(NoShape, NoShape, NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %7(CNode_167) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %8(CNode_168) = %7($(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_X), $(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_D), %para0_фcondition_values, $(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_n_particles))
+      : (<Tensor[Float32], (128, 1187)>, <Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Int64, NoShape>) -> (<Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64], TupleShape((128, 1187), (128, 722), NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %9(CNode_170) = %4(%6, %8)
+      : (<Tuple[String*4], TupleShape(NoShape, NoShape, NoShape, NoShape)>, <Tuple[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64], TupleShape((128, 1187), (128, 722), NoShape, NoShape)>) -> (<Dictionary[[X,D,condition_values,n_particles,],[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %10(CNode_171) = UnpackCall_unpack_call(%3, %9)
+      : (<Func, NoShape>, <Dictionary[[X,D,condition_values,n_particles,],[Tensor[Float32]*2,Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>) -> (<Tuple[Any(Tensor)[Float64]*2], TupleShape((-2), (-2))>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 37~9/        guide_dists, guide_samples = self.guide(/
+  %11(guide_samples) = %2(%10, I64(1))
+      : (<Tuple[Any(Tensor)[Float64]*2], TupleShape((-2), (-2))>, <Int64, NoShape>) -> (<Any(Tensor)[Float64], (-2)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:253~258, 8~9/        guide_dists, guide_samples = self.guide(/
+  %12(CNode_178) = getattr(%11, "items")
+      : (<Any(Tensor)[Float64], (-2)>, <String, NoShape>) -> (<Any(Tensor)[Float64], (-2)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260, 20~39/        for k, v in guide_samples.items():/
+  %13(CNode_179) = %12()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260, 20~41/        for k, v in guide_samples.items():/
+  %14(CNode_180) = %1(%13)
+      : (<Any(Tensor)[Float64], (-2)>) -> (<Any(Tensor)[Float64], (-2)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  %15(CNode_181) = %0(%14)
+      : (<Any(Tensor)[Float64], (-2)>) -> (<Any(Tensor)[Float64], (-2)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  %16(CNode_186) = MultitypeFuncGraph_less{(List, List), (Tensor, Number), (Number, Number), (String, String), (Number, Tensor), (Tensor, Tensor), (Tuple, Tuple)}(%para0_@CNode_65, %15)
+      : (<Int64, NoShape>, <Any(Tensor)[Float64], (-2)>) -> (<Any(Tensor)[Float64], (-2)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  %17(CNode_187) = Switch(%16, @↻↓__main___SAMSVAE_ELBOLossModule_construct_38, @2↓__main___SAMSVAE_ELBOLossModule_construct_39)
+      : (<Any(Tensor)[Float64], (-2)>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+
+#------------------------> 8
+  %18(CNode_188) = %17()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+  Return(%18) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:260~261, 8~35/        for k, v in guide_samples.items():/
+}
+# Order:
+#   1: @↵↓__main___SAMSVAE_ELBOLossModule_construct_64:CNode_186{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-less.46, [1]: param_@CNode_65, [2]: CNode_181}
+#   2: @↵↓__main___SAMSVAE_ELBOLossModule_construct_64:CNode_187{[0]: ValueNode<Primitive> Switch, [1]: CNode_186, [2]: ValueNode<FuncGraph> ↻↓__main___SAMSVAE_ELBOLossModule_construct_38, [3]: ValueNode<FuncGraph> 2↓__main___SAMSVAE_ELBOLossModule_construct_39}
+#   3: @↵↓__main___SAMSVAE_ELBOLossModule_construct_64:CNode_188{[0]: CNode_187}
+#   4: @↵↓__main___SAMSVAE_ELBOLossModule_construct_64:CNode_189{[0]: ValueNode<Primitive> Return, [1]: CNode_188}
+
+
+subgraph attr:
+subgraph instance: 2↓__main___SAMSVAE_ELBOLossModule_construct_39 : 0xaaab1ea06920
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+subgraph @2↓__main___SAMSVAE_ELBOLossModule_construct_39 parent: [subgraph @↵↓__main___SAMSVAE_ELBOLossModule_construct_64]() {
+  %0(CNode_136) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], print)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:249, 8~13/        print("进入LossModule")/
+  %1(CNode_190) = %0("进入Model")
+      : (<String, NoShape>) -> (<Tensor[Int32], (1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:262, 8~24/        print("进入Model")/
+  %2(CNode_191) = %0("完成Model")
+      : (<String, NoShape>) -> (<Tensor[Int32], (1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:268, 8~24/        print("完成Model")/
+  %3(CNode_192) = MakeTuple(%1, %2)
+      : (<Tensor[Int32], (1)>, <Tensor[Int32], (1)>) -> (<Tuple[Tensor[Int32]*2], TupleShape((1), (1))>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+  %4(CNode_193) = StopGradient(%3)
+      : (<Tuple[Tensor[Int32]*2], TupleShape((1), (1))>) -> (<Tuple[Tensor[Int32]*2], TupleShape((1), (1))>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:241~296, 4~28/    def construct(/
+  %5(CNode_194) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], setitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 8~77/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %6(CNode_195) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], make_dict)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:271, 21~23/        loss_terms = {}/
+  %7(CNode_196) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:271, 21~23/        loss_terms = {}/
+  %8(CNode_197) = %7()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:271, 21~23/        loss_terms = {}/
+  %9(CNode_198) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:271, 21~23/        loss_terms = {}/
+  %10(CNode_199) = %9()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:271, 21~23/        loss_terms = {}/
+  %11(loss_terms) = %6(%8, %10)
+      : (<Tuple[], TupleShape()>, <Tuple[], TupleShape()>) -> (<Dictionary[[],[]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:271, 21~23/        loss_terms = {}/
+  %12(CNode_200) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 39~57/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %13(CNode_201) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 8~9/        model_dists, model_samples = self.model(/
+  %14(CNode_202) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<SAMSVAE_ELBOLossModule::281471801153152>'], model)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47/        model_dists, model_samples = self.model(/
+  %15(CNode_203) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], make_dict)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %16(CNode_204) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %17(CNode_205) = %16("D", "condition_values", "n_particles")
+      : (<String, NoShape>, <String, NoShape>, <String, NoShape>) -> (<Tuple[String*3], TupleShape(NoShape, NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %18(CNode_206) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %19(CNode_207) = %18($(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_D), $(@↵↓__main___SAMSVAE_ELBOLossModule_construct_64:para0_фcondition_values), $(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_n_particles))
+      : (<Tensor[Float32], (128, 722)>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <Int64, NoShape>) -> (<Tuple[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64], TupleShape((128, 722), NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %20(CNode_208) = %15(%17, %19)
+      : (<Tuple[String*3], TupleShape(NoShape, NoShape, NoShape)>, <Tuple[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64], TupleShape((128, 722), NoShape, NoShape)>) -> (<Dictionary[[D,condition_values,n_particles,],[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+
+#------------------------> 9
+  %21(CNode_209) = UnpackCall_unpack_call(%14, %20)
+      : (<Func, NoShape>, <Dictionary[[D,condition_values,n_particles,],[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %22(model_dists) = %13(%21, I64(0))
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 8~9/        model_dists, model_samples = self.model(/
+  %23(CNode_210) = %12(%22, "p_x")
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 39~57/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %24(CNode_211) = getattr(%23, "log_prob")
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 39~66/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %25(CNode_212) = %24($(@__main___SAMSVAE_ELBOLossModule_construct_3:para0_X))
+      : (<Tensor[Float32], (128, 1187)>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 39~69/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %26(CNode_213) = getattr(%25, "sum")
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 39~73/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %27(CNode_214) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], neg)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 74~76/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %28(CNode_215) = %27(I64(1))
+      : (<null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 74~76/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %29(CNode_216) = %26(%28)
+      : (<null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 39~77/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %30(CNode_217) = %5(%11, "reconstruction", %29)
+      : (<Dictionary[[],[]], NoShape>, <null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:272, 8~77/        loss_terms["reconstruction"] = model_dists["p_x"].log_prob(X).sum(-1)/
+  %31(CNode_218) = call @↵2↓__main___SAMSVAE_ELBOLossModule_construct_219(I64(0), %30)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:584, 33~35/                    return grad_(fn, weights, grad_position)(*args)/
+  %32(CNode_220) = Depend(%31, %4) primitive_attrs: {side_effect_propagate: I64(1)} cnode_attrs: {topo_sort_rhs_first: Bool(1)}
+      : (<null>, <Tuple[Tensor[Int32]*2], TupleShape((1), (1))>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:273~290, 8~43/        for k in guide_dists.keys():/
+  Return(%32) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:273~290, 8~43/        for k in guide_dists.keys():/
+}
+# Order:
+#   1: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_221{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   3: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_190{[0]: CNode_136, [1]: ValueNode<StringImm> 进入Model}
+#   4: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_202{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAE_ELBOLossModule::281471801153152>', [2]: ValueNode<Symbol> model}
+#   5: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_204{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   6: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_205{[0]: CNode_204, [1]: ValueNode<StringImm> D, [2]: ValueNode<StringImm> condition_values, [3]: ValueNode<StringImm> n_particles}
+#   7: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_206{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_207{[0]: CNode_206, [1]: param_D, [2]: param_фcondition_values, [3]: param_n_particles}
+#   9: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_203{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> make_dict}
+#  10: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_208{[0]: CNode_203, [1]: CNode_205, [2]: CNode_207}
+#  11: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_209{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.222, [1]: CNode_202, [2]: CNode_208}
+#  12: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_201{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#  13: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:model_dists{[0]: CNode_201, [1]: CNode_209, [2]: ValueNode<Int64Imm> 0}
+#  14: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:model_samples{[0]: CNode_201, [1]: CNode_209, [2]: ValueNode<Int64Imm> 1}
+#  15: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_223{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  17: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_191{[0]: CNode_136, [1]: ValueNode<StringImm> 完成Model}
+#  18: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_196{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  19: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_197{[0]: CNode_196}
+#  20: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_198{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  21: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_199{[0]: CNode_198}
+#  22: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_195{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> make_dict}
+#  23: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:loss_terms{[0]: CNode_195, [1]: CNode_197, [2]: CNode_199}
+#  24: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_200{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#  25: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_210{[0]: CNode_200, [1]: model_dists, [2]: ValueNode<StringImm> p_x}
+#  26: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_211{[0]: ValueNode<Primitive> getattr, [1]: CNode_210, [2]: ValueNode<StringImm> log_prob}
+#  27: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_224{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  29: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_212{[0]: CNode_211, [1]: param_X}
+#  30: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_213{[0]: ValueNode<Primitive> getattr, [1]: CNode_212, [2]: ValueNode<StringImm> sum}
+#  31: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_214{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> neg}
+#  32: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_215{[0]: CNode_214, [1]: ValueNode<Int64Imm> 1}
+#  33: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_225{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  35: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_216{[0]: CNode_213, [1]: CNode_215}
+#  36: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_194{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> setitem}
+#  37: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_217{[0]: CNode_194, [1]: loss_terms, [2]: ValueNode<StringImm> reconstruction, [3]: CNode_216}
+#  38: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_226{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> len}
+#  39: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_227{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#  40: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_228{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> iter}
+#  41: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_229{[0]: ValueNode<Primitive> getattr, [1]: guide_dists, [2]: ValueNode<StringImm> keys}
+#  42: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_230{[0]: CNode_229}
+#  43: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_231{[0]: CNode_228, [1]: CNode_230}
+#  44: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_232{[0]: CNode_226, [1]: CNode_231}
+#  46: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_233{[0]: ValueNode<Primitive> Return, [1]: CNode_220}
+#  47: @2↓__main___SAMSVAE_ELBOLossModule_construct_39:CNode_218{[0]: ValueNode<FuncGraph> ↵2↓__main___SAMSVAE_ELBOLossModule_construct_219, [1]: ValueNode<Int64Imm> 0, [2]: CNode_217}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_66 : 0xfffbb4673cb0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+subgraph @UnpackCall_66(%para0_Parameter_67, %para0_Parameter_68) {
+  %0(CNode_234) = dict_getitem(%para0_Parameter_68, "D")
+      : (<Dictionary[[D,condition_values,n_particles,],[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>, <String, NoShape>) -> (<Tensor[Float32], (128, 722)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %1(CNode_235) = make_keyword_arg("D", %0)
+      : (<String, NoShape>, <Tensor[Float32], (128, 722)>) -> (<Keyword[key : D, value : Tensor[Float32]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %2(CNode_236) = dict_getitem(%para0_Parameter_68, "condition_values")
+      : (<Dictionary[[D,condition_values,n_particles,],[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>, <String, NoShape>) -> (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %3(CNode_237) = make_keyword_arg("condition_values", %2)
+      : (<String, NoShape>, <Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>) -> (<Keyword[key : condition_values, value : Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %4(CNode_238) = dict_getitem(%para0_Parameter_68, "n_particles")
+      : (<Dictionary[[D,condition_values,n_particles,],[Tensor[Float32],Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]],Int64]], NoShape>, <String, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  %5(CNode_239) = make_keyword_arg("n_particles", %4)
+      : (<String, NoShape>, <Int64, NoShape>) -> (<Keyword[key : n_particles, value : Int64], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+
+#------------------------> 10
+  %6(CNode_240) = Parameter_67(%1, %3, %5)
+      : (<Keyword[key : D, value : Tensor[Float32]], NoShape>, <Keyword[key : condition_values, value : Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]]], NoShape>, <Keyword[key : n_particles, value : Int64], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+  Return(%6) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263~267, 37~9/        model_dists, model_samples = self.model(/
+}
+# Order:
+#   1: @UnpackCall_66:CNode_240{[0]: param_Parameter_67, [1]: CNode_235, [2]: CNode_237, [3]: CNode_239}
+#   2: @UnpackCall_66:CNode_241{[0]: ValueNode<Primitive> Return, [1]: CNode_240}
+
+
+subgraph attr:
+training: 1
+subgraph instance: __main___SAMSVAEModel_construct_69 : 0xfffbb4672e20
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @__main___SAMSVAEModel_construct_69(%para0_D, %para0_condition_values, %para0_n_particles) {
+  %0(CNode_242) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], is_)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190, 11~35/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+  %1(CNode_243) = extract_keyword_arg("condition_values", %para0_condition_values)
+      : (<String, NoShape>, <Keyword[key : condition_values, value : Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]]], NoShape>) -> (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>)
+      #scope: (Default)
+  %2(CNode_244) = %0(%1, None)
+      : (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <None, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190, 11~35/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+  %3(CNode_245) = Cond(%2, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190~191, 8~37/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+  %4(CNode_246) = Switch(%3, @✓__main___SAMSVAEModel_construct_247, @✗__main___SAMSVAEModel_construct_70)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190~191, 8~37/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+
+#------------------------> 11
+  %5(CNode_248) = %4()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190~191, 8~37/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+  Return(%5) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190~191, 8~37/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+}
+# Order:
+#   1: @__main___SAMSVAEModel_construct_69:CNode_242{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> is_}
+#   2: @__main___SAMSVAEModel_construct_69:CNode_244{[0]: CNode_242, [1]: CNode_243, [2]: ValueNode<None> None}
+#   3: @__main___SAMSVAEModel_construct_69:CNode_245{[0]: ValueNode<Primitive> Cond, [1]: CNode_244, [2]: ValueNode<BoolImm> false}
+#   4: @__main___SAMSVAEModel_construct_249:CNode_250{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> dict}
+#   5: @__main___SAMSVAEModel_construct_69:CNode_246{[0]: ValueNode<Primitive> Switch, [1]: CNode_245, [2]: ValueNode<FuncGraph> ✓__main___SAMSVAEModel_construct_247, [3]: ValueNode<FuncGraph> ✗__main___SAMSVAEModel_construct_70}
+#   6: @__main___SAMSVAEModel_construct_69:CNode_248{[0]: CNode_246}
+#   7: @__main___SAMSVAEModel_construct_69:CNode_251{[0]: ValueNode<Primitive> Return, [1]: CNode_248}
+#   8: @__main___SAMSVAEModel_construct_69:CNode_252{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>', [2]: ValueNode<Symbol> get_var_keys}
+#   9: @__main___SAMSVAEModel_construct_69:CNode_253{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> len}
+#  10: @__main___SAMSVAEModel_construct_69:CNode_254{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> ops}
+#  11: @__main___SAMSVAEModel_construct_69:CNode_255{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>', [2]: ValueNode<Symbol> generative_dists}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ✗__main___SAMSVAEModel_construct_70 : 0xfffbb467c130
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @✗__main___SAMSVAEModel_construct_70 parent: [subgraph @__main___SAMSVAEModel_construct_69]() {
+  %0(CNode_243) = extract_keyword_arg("condition_values", %para0_condition_values)
+      : (<String, NoShape>, <Keyword[key : condition_values, value : Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]]], NoShape>) -> (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>)
+      #scope: (Default)
+
+#------------------------> 12
+  %1(CNode_256) = call @↓__main___SAMSVAEModel_construct_71(%0)
+      : (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47/        model_dists, model_samples = self.model(/
+  Return(%1) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:190~191, 8~37/        if condition_values is None:                        # 如果没有提供condition_value，则初始化为空字典/
+}
+# Order:
+#   1: @✗__main___SAMSVAEModel_construct_70:CNode_257{[0]: ValueNode<Primitive> Return, [1]: CNode_256}
+#   2: @✗__main___SAMSVAEModel_construct_70:CNode_256{[0]: ValueNode<FuncGraph> ↓__main___SAMSVAEModel_construct_71, [1]: CNode_243}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ↓__main___SAMSVAEModel_construct_71 : 0xfffbb467c640
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @↓__main___SAMSVAEModel_construct_71 parent: [subgraph @__main___SAMSVAEModel_construct_69](%para0_фcondition_values) {
+  %0(CNode_258) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], make_dict)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:193, 18~20/        samples = {}/
+  %1(CNode_259) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:193, 18~20/        samples = {}/
+  %2(CNode_260) = %1()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:193, 18~20/        samples = {}/
+  %3(CNode_261) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:193, 18~20/        samples = {}/
+  %4(CNode_262) = %3()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:193, 18~20/        samples = {}/
+  %5(samples) = %0(%2, %4)
+      : (<Tuple[], TupleShape()>, <Tuple[], TupleShape()>) -> (<Dictionary[[],[]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:193, 18~20/        samples = {}/
+
+#------------------------> 13
+  %6(CNode_263) = call @↵↓__main___SAMSVAEModel_construct_72(I64(0), %5)
+      : (<Int64, NoShape>, <Dictionary[[],[]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47/        model_dists, model_samples = self.model(/
+  Return(%6) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+}
+# Order:
+#   1: @↓__main___SAMSVAEModel_construct_71:CNode_259{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   2: @↓__main___SAMSVAEModel_construct_71:CNode_260{[0]: CNode_259}
+#   3: @↓__main___SAMSVAEModel_construct_71:CNode_261{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @↓__main___SAMSVAEModel_construct_71:CNode_262{[0]: CNode_261}
+#   5: @↓__main___SAMSVAEModel_construct_71:CNode_258{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> make_dict}
+#   6: @↓__main___SAMSVAEModel_construct_71:samples{[0]: CNode_258, [1]: CNode_260, [2]: CNode_262}
+#   7: @↓__main___SAMSVAEModel_construct_71:CNode_264{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> len}
+#   8: @↓__main___SAMSVAEModel_construct_71:CNode_265{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#   9: @↓__main___SAMSVAEModel_construct_71:CNode_266{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> iter}
+#  10: @↓__main___SAMSVAEModel_construct_71:CNode_267{[0]: CNode_252}
+#  11: @↓__main___SAMSVAEModel_construct_71:CNode_268{[0]: CNode_266, [1]: CNode_267}
+#  12: @↓__main___SAMSVAEModel_construct_71:CNode_269{[0]: CNode_264, [1]: CNode_268}
+#  13: @↓__main___SAMSVAEModel_construct_71:CNode_270{[0]: ValueNode<Primitive> Return, [1]: CNode_263}
+#  14: @↓__main___SAMSVAEModel_construct_71:CNode_263{[0]: ValueNode<FuncGraph> ↵↓__main___SAMSVAEModel_construct_72, [1]: ValueNode<Int64Imm> 0, [2]: samples}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ↵↓__main___SAMSVAEModel_construct_72 : 0xfffbb4680180
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @↵↓__main___SAMSVAEModel_construct_72 parent: [subgraph @↓__main___SAMSVAEModel_construct_71](%para0_@CNode_73, %para0_фsamples) {
+  %0(CNode_264) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], len)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %1(CNode_266) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], iter)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %2(CNode_252) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>'], get_var_keys)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194, 17~34/        for k in self.get_var_keys():/
+  %3(CNode_267) = %2()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194, 17~36/        for k in self.get_var_keys():/
+  %4(CNode_268) = %1(%3)
+      : (<List[String*3], ListShape[NoShape, NoShape, NoShape]>) -> (<List[String*3], ListShape[NoShape, NoShape, NoShape]>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %5(CNode_269) = %0(%4)
+      : (<List[String*3], ListShape[NoShape, NoShape, NoShape]>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %6(CNode_271) = MultitypeFuncGraph_less{(List, List), (Tensor, Number), (Number, Number), (String, String), (Number, Tensor), (Tensor, Tensor), (Tuple, Tuple)}(%para0_@CNode_73, %5)
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %7(CNode_272) = Switch(%6, @↻↓__main___SAMSVAEModel_construct_74, @2↓__main___SAMSVAEModel_construct_76)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+
+#------------------------> 23
+  %8(CNode_273) = %7()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  Return(%8) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+}
+# Order:
+#   1: @↵↓__main___SAMSVAEModel_construct_72:CNode_271{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-less.46, [1]: param_@CNode_73, [2]: CNode_269}
+#   2: @↵↓__main___SAMSVAEModel_construct_72:CNode_272{[0]: ValueNode<Primitive> Switch, [1]: CNode_271, [2]: ValueNode<FuncGraph> ↻↓__main___SAMSVAEModel_construct_74, [3]: ValueNode<FuncGraph> 2↓__main___SAMSVAEModel_construct_76}
+#   3: @↵↓__main___SAMSVAEModel_construct_72:CNode_273{[0]: CNode_272}
+#   4: @↵↓__main___SAMSVAEModel_construct_72:CNode_274{[0]: ValueNode<Primitive> Return, [1]: CNode_273}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ↻↓__main___SAMSVAEModel_construct_74 : 0xfffbb4693c60
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @↻↓__main___SAMSVAEModel_construct_74 parent: [subgraph @↵↓__main___SAMSVAEModel_construct_72]() {
+  %0(CNode_275) = MultitypeFuncGraph_add{(Tensor, COOTensor), (Dictionary, Dictionary), (Tensor, Tuple), (Tuple, Tensor), (Number, Tensor), (String, String), (RowTensor, Tensor), (List, Tensor), (CSRTensor, CSRTensor), (Tensor, List), (List, List), (NoneType, NoneType), (Tensor, Tensor), (Number, Number), (Tensor, Number), (Tuple, Tuple), (COOTensor, Tensor), (COOTensor, COOTensor)}($(@↵↓__main___SAMSVAEModel_construct_72:para0_@CNode_73), I64(1))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %1(CNode_276) = StopGradient(%0)
+      : (<Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+  %2(CNode_277) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], is_not)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195, 15~50/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+  %3(CNode_278) = getattr($(@↓__main___SAMSVAEModel_construct_71:para0_фcondition_values), "get")
+      : (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <String, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195, 15~35/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+  %4(CNode_265) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %5(CNode_266) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], iter)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %6(CNode_252) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>'], get_var_keys)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194, 17~34/        for k in self.get_var_keys():/
+  %7(CNode_267) = %6()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194, 17~36/        for k in self.get_var_keys():/
+  %8(CNode_268) = %5(%7)
+      : (<List[String*3], ListShape[NoShape, NoShape, NoShape]>) -> (<List[String*3], ListShape[NoShape, NoShape, NoShape]>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %9(k) = %4(%8, $(@↵↓__main___SAMSVAEModel_construct_72:para0_@CNode_73))
+      : (<List[String*3], ListShape[NoShape, NoShape, NoShape]>, <Int64, NoShape>) -> (<String, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+  %10(CNode_279) = %3(%9)
+      : (<String, NoShape>) -> (<None, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195, 15~38/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+  %11(CNode_280) = %2(%10, None)
+      : (<None, NoShape>, <None, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195, 15~50/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+  %12(CNode_281) = Cond(%11, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195~203, 12~83/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+  %13(CNode_282) = Switch(%12, @✓↻↓__main___SAMSVAEModel_construct_283, @✗↻↓__main___SAMSVAEModel_construct_284)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195~203, 12~83/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+  %14(CNode_285) = %13()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195~203, 12~83/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+
+#------------------------> 21
+  %15(CNode_286) = call @↓↻↓__main___SAMSVAEModel_construct_75(%14)
+      : (<Dictionary[[z_basal,],[Tensor[Float32]]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47/        model_dists, model_samples = self.model(/
+  %16(CNode_287) = Depend(%15, %1) primitive_attrs: {side_effect_propagate: I64(1)} cnode_attrs: {topo_sort_rhs_first: Bool(1)}
+      : (<null>, <Int64, NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47/        model_dists, model_samples = self.model(/
+  Return(%16) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:195~203, 12~83/            if condition_values.get(k) is not None:       # 检查是否存在条件值/
+}
+# Order:
+#   1: @↻↓__main___SAMSVAEModel_construct_74:k{[0]: CNode_265, [1]: CNode_268, [2]: param_@CNode_73}
+#   2: @↻↓__main___SAMSVAEModel_construct_74:CNode_275{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-add.9, [1]: param_@CNode_73, [2]: ValueNode<Int64Imm> 1}
+#   3: @↻↓__main___SAMSVAEModel_construct_74:CNode_278{[0]: ValueNode<Primitive> getattr, [1]: param_фcondition_values, [2]: ValueNode<StringImm> get}
+#   4: @↻↓__main___SAMSVAEModel_construct_288:CNode_289{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: @↻↓__main___SAMSVAEModel_construct_74:CNode_279{[0]: CNode_278, [1]: k}
+#   6: @↻↓__main___SAMSVAEModel_construct_74:CNode_277{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> is_not}
+#   7: @↻↓__main___SAMSVAEModel_construct_74:CNode_280{[0]: CNode_277, [1]: CNode_279, [2]: ValueNode<None> None}
+#   8: @↻↓__main___SAMSVAEModel_construct_74:CNode_281{[0]: ValueNode<Primitive> Cond, [1]: CNode_280, [2]: ValueNode<BoolImm> false}
+#   9: @↻↓__main___SAMSVAEModel_construct_74:CNode_282{[0]: ValueNode<Primitive> Switch, [1]: CNode_281, [2]: ValueNode<FuncGraph> ✓↻↓__main___SAMSVAEModel_construct_283, [3]: ValueNode<FuncGraph> ✗↻↓__main___SAMSVAEModel_construct_284}
+#  10: @↻↓__main___SAMSVAEModel_construct_74:CNode_285{[0]: CNode_282}
+#  11: @↻↓__main___SAMSVAEModel_construct_74:CNode_286{[0]: ValueNode<FuncGraph> ↓↻↓__main___SAMSVAEModel_construct_75, [1]: CNode_285}
+#  12: @↻↓__main___SAMSVAEModel_construct_74:CNode_287{[0]: ValueNode<Primitive> Depend, [1]: CNode_286, [2]: CNode_276}
+#  13: @↻↓__main___SAMSVAEModel_construct_74:CNode_290{[0]: ValueNode<Primitive> Return, [1]: CNode_287}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ↓↻↓__main___SAMSVAEModel_construct_75 : 0xfffbb46a7ce0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @↓↻↓__main___SAMSVAEModel_construct_75 parent: [subgraph @↻↓__main___SAMSVAEModel_construct_74](%para0_фsamples) {
+  %0(CNode_275) = MultitypeFuncGraph_add{(Tensor, COOTensor), (Dictionary, Dictionary), (Tensor, Tuple), (Tuple, Tensor), (Number, Tensor), (String, String), (RowTensor, Tensor), (List, Tensor), (CSRTensor, CSRTensor), (Tensor, List), (List, List), (NoneType, NoneType), (Tensor, Tensor), (Number, Number), (Tensor, Number), (Tuple, Tuple), (COOTensor, Tensor), (COOTensor, COOTensor)}($(@↵↓__main___SAMSVAEModel_construct_72:para0_@CNode_73), I64(1))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+
+#------------------------> 22
+  %1(CNode_291) = call @↵↓__main___SAMSVAEModel_construct_72(%0, %para0_фsamples)
+      : (<Int64, NoShape>, <Dictionary[[z_basal,],[Tensor[Float32]]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:263, 37~47/        model_dists, model_samples = self.model(/
+  Return(%1) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:194~203, 8~83/        for k in self.get_var_keys():/
+}
+# Order:
+#   1: @↓↻↓__main___SAMSVAEModel_construct_75:CNode_292{[0]: ValueNode<Primitive> Return, [1]: CNode_291}
+#   2: @↓↻↓__main___SAMSVAEModel_construct_75:CNode_291{[0]: ValueNode<FuncGraph> ↵↓__main___SAMSVAEModel_construct_72, [1]: CNode_275, [2]: param_фsamples}
+
+
+subgraph attr:
+training: 1
+subgraph instance: 2↓__main___SAMSVAEModel_construct_76 : 0xfffbb4682370
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @2↓__main___SAMSVAEModel_construct_76 parent: [subgraph @↵↓__main___SAMSVAEModel_construct_72]() {
+
+#------------------------> 24
+  %0(CNode_293) = call @✗2↓__main___SAMSVAEModel_construct_77()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:205~208, 8~92/        if self.likelihood_key != "library_nb":/
+  Return(%0) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:205~208, 8~92/        if self.likelihood_key != "library_nb":/
+}
+# Order:
+#   1: @2↓__main___SAMSVAEModel_construct_76:CNode_294{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#   2: @2↓__main___SAMSVAEModel_construct_76:CNode_295{[0]: CNode_294, [1]: param_фsamples, [2]: ValueNode<StringImm> z_basal}
+#   3: @2↓__main___SAMSVAEModel_construct_76:CNode_296{[0]: ValueNode<Primitive> getattr, [1]: CNode_254, [2]: ValueNode<StringImm> matmul}
+#   4: @2↓__main___SAMSVAEModel_construct_76:CNode_297{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#   5: @2↓__main___SAMSVAEModel_construct_76:CNode_298{[0]: CNode_297, [1]: param_фsamples, [2]: ValueNode<StringImm> E}
+#   6: @2↓__main___SAMSVAEModel_construct_76:CNode_299{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#   7: @2↓__main___SAMSVAEModel_construct_76:CNode_300{[0]: CNode_299, [1]: param_фsamples, [2]: ValueNode<StringImm> mask}
+#   8: @2↓__main___SAMSVAEModel_construct_76:CNode_301{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> mul}
+#   9: @2↓__main___SAMSVAEModel_construct_76:CNode_302{[0]: CNode_301, [1]: CNode_298, [2]: CNode_300}
+#  10: @2↓__main___SAMSVAEModel_construct_303:CNode_304{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  11: @2↓__main___SAMSVAEModel_construct_76:CNode_305{[0]: CNode_296, [1]: CNode_306, [2]: CNode_302}
+#  12: @2↓__main___SAMSVAEModel_construct_76:CNode_307{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> add}
+#  13: @2↓__main___SAMSVAEModel_construct_76:z{[0]: CNode_307, [1]: CNode_295, [2]: CNode_305}
+#  14: @2↓__main___SAMSVAEModel_construct_76:CNode_293{[0]: ValueNode<FuncGraph> ✗2↓__main___SAMSVAEModel_construct_77}
+#  15: @2↓__main___SAMSVAEModel_construct_76:CNode_308{[0]: ValueNode<Primitive> Return, [1]: CNode_293}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ✗2↓__main___SAMSVAEModel_construct_77 : 0xfffbb468f2f0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @✗2↓__main___SAMSVAEModel_construct_77 parent: [subgraph @2↓__main___SAMSVAEModel_construct_76]() {
+
+#------------------------> 25
+  %0(CNode_309) = call @3↓__main___SAMSVAEModel_construct_78()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 12~92/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  Return(%0) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 12~92/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+}
+# Order:
+#   1: @✗2↓__main___SAMSVAEModel_construct_77:CNode_310{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>', [2]: ValueNode<Symbol> decoder}
+#   2: @✗2↓__main___SAMSVAEModel_construct_77:CNode_311{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#   3: @✗2↓__main___SAMSVAEModel_construct_77:CNode_312{[0]: CNode_311, [1]: param_фcondition_values, [2]: ValueNode<StringImm> library_size}
+#   4: @✗2↓__main___SAMSVAEModel_construct_313:CNode_314{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: @✗2↓__main___SAMSVAEModel_construct_77:CNode_315{[0]: CNode_310, [1]: z, [2]: CNode_312}
+#   6: @✗2↓__main___SAMSVAEModel_construct_77:CNode_316{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> setitem}
+#   7: @✗2↓__main___SAMSVAEModel_construct_77:CNode_317{[0]: CNode_316, [1]: CNode_255, [2]: ValueNode<StringImm> p_x, [3]: CNode_315}
+#   8: @✗2↓__main___SAMSVAEModel_construct_77:CNode_309{[0]: ValueNode<FuncGraph> 3↓__main___SAMSVAEModel_construct_78}
+#   9: @✗2↓__main___SAMSVAEModel_construct_77:CNode_318{[0]: ValueNode<Primitive> Return, [1]: CNode_309}
+
+
+subgraph attr:
+training: 1
+subgraph instance: 3↓__main___SAMSVAEModel_construct_78 : 0xfffbb4690ff0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:184~210, 4~45/    def construct(/
+subgraph @3↓__main___SAMSVAEModel_construct_78 parent: [subgraph @✗2↓__main___SAMSVAEModel_construct_77]() {
+  %0(CNode_319) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:210, 15~45/        return self.generative_dists, samples/
+  %1(CNode_316) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], setitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 12~92/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %2(CNode_255) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>'], generative_dists)
+      : (<External, NoShape>, <External, NoShape>) -> (<Dictionary[[p_z_basal,p_E,p_mask,],[Func*3]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:203, 29~50/                samples[k] = self.generative_dists[f"p_{k}"].sample((n_particles,))/
+  %3(CNode_310) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<SAMSVAEModel::281470128022848>'], decoder)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %4(CNode_307) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], add)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 12~78/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %5(CNode_294) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 12~30/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %6(CNode_295) = %5($(@↵↓__main___SAMSVAEModel_construct_72:para0_фsamples), "z_basal")
+      : (<Dictionary[[z_basal,E,mask,],[Tensor[Float32]*2,Tensor[Int32]]], NoShape>, <String, NoShape>) -> (<Tensor[Float32], (5, 128, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 12~30/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %7(CNode_254) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], ops)
+      : (<External, NoShape>, <External, NoShape>) -> (<External, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:199, 28~31/                    value = ops.expand_dims(value, 0).expand((n_particles, -1, -1))/
+  %8(CNode_296) = getattr(%7, "matmul")
+      : (<External, NoShape>, <String, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 33~43/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %9(CNode_306) = extract_keyword_arg("D", %para0_D)
+      : (<String, NoShape>, <Keyword[key : D, value : Tensor[Float32]], NoShape>) -> (<Tensor[Float32], (128, 722)>)
+      #scope: (Default)
+  %10(CNode_301) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], mul)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 47~77/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %11(CNode_297) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 47~59/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %12(CNode_298) = %11($(@↵↓__main___SAMSVAEModel_construct_72:para0_фsamples), "E")
+      : (<Dictionary[[z_basal,E,mask,],[Tensor[Float32]*2,Tensor[Int32]]], NoShape>, <String, NoShape>) -> (<Tensor[Float32], (5, 722, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 47~59/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %13(CNode_299) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 62~77/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %14(CNode_300) = %13($(@↵↓__main___SAMSVAEModel_construct_72:para0_фsamples), "mask")
+      : (<Dictionary[[z_basal,E,mask,],[Tensor[Float32]*2,Tensor[Int32]]], NoShape>, <String, NoShape>) -> (<Tensor[Int32], (5, 722, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 62~77/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %15(CNode_302) = %10(%12, %14)
+      : (<Tensor[Float32], (5, 722, 100)>, <Tensor[Int32], (5, 722, 100)>) -> (<Tensor[Float32], (5, 722, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 47~77/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %16(CNode_305) = %8(%9, %15)
+      : (<Tensor[Float32], (128, 722)>, <Tensor[Float32], (5, 722, 100)>) -> (<Tensor[Float32], (5, 128, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 33~78/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %17(z) = %4(%6, %16)
+      : (<Tensor[Float32], (5, 128, 100)>, <Tensor[Float32], (5, 128, 100)>) -> (<Tensor[Float32], (5, 128, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:204, 12~78/        z = samples["z_basal"] + ops.matmul(D, samples["E"] * samples["mask"])/
+  %18(CNode_311) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 59~91/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %19(CNode_312) = %18($(@↓__main___SAMSVAEModel_construct_71:para0_фcondition_values), "library_size")
+      : (<Dictionary[[idx,library_size,],[Tensor[Int64],Tensor[Float32]]], NoShape>, <String, NoShape>) -> (<Tensor[Float32], (128)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 59~91/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+
+#------------------------> 26
+  %20(CNode_315) = %3(%17, %19)
+      : (<Tensor[Float32], (5, 128, 100)>, <Tensor[Float32], (128)>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~92/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %21(CNode_317) = %1(%2, "p_x", %20)
+      : (<Dictionary[[p_z_basal,p_E,p_mask,],[Func*3]], NoShape>, <null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 12~92/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %22(CNode_320) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], setitem)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:209, 8~60/        samples["x"] = self.generative_dists["p_x"].sample()/
+  %23(CNode_321) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:209, 23~51/        samples["x"] = self.generative_dists["p_x"].sample()/
+  %24(CNode_322) = %23(%21, "p_x")
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:209, 23~51/        samples["x"] = self.generative_dists["p_x"].sample()/
+  %25(CNode_323) = getattr(%24, "sample")
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:209, 23~58/        samples["x"] = self.generative_dists["p_x"].sample()/
+  %26(CNode_324) = %25()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:209, 23~60/        samples["x"] = self.generative_dists["p_x"].sample()/
+  %27(CNode_325) = %22($(@↵↓__main___SAMSVAEModel_construct_72:para0_фsamples), "x", %26)
+      : (<Dictionary[[z_basal,E,mask,],[Tensor[Float32]*2,Tensor[Int32]]], NoShape>, <null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:209, 8~60/        samples["x"] = self.generative_dists["p_x"].sample()/
+  %28(CNode_326) = %0(%21, %27)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:210, 15~45/        return self.generative_dists, samples/
+  Return(%28) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:210, 8~45/        return self.generative_dists, samples/
+}
+# Order:
+#   1: @3↓__main___SAMSVAEModel_construct_78:CNode_321{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#   2: @3↓__main___SAMSVAEModel_construct_78:CNode_322{[0]: CNode_321, [1]: CNode_317, [2]: ValueNode<StringImm> p_x}
+#   3: @3↓__main___SAMSVAEModel_construct_78:CNode_323{[0]: ValueNode<Primitive> getattr, [1]: CNode_322, [2]: ValueNode<StringImm> sample}
+#   4: @3↓__main___SAMSVAEModel_construct_78:CNode_324{[0]: CNode_323}
+#   5: @3↓__main___SAMSVAEModel_construct_78:CNode_320{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> setitem}
+#   6: @3↓__main___SAMSVAEModel_construct_78:CNode_325{[0]: CNode_320, [1]: param_фsamples, [2]: ValueNode<StringImm> x, [3]: CNode_324}
+#   7: @3↓__main___SAMSVAEModel_construct_78:CNode_319{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: @3↓__main___SAMSVAEModel_construct_78:CNode_326{[0]: CNode_319, [1]: CNode_317, [2]: CNode_325}
+#   9: @3↓__main___SAMSVAEModel_construct_78:CNode_327{[0]: ValueNode<Primitive> Return, [1]: CNode_326}
+
+
+subgraph attr:
+training: 1
+subgraph instance: __main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79 : 0xfffbb49cff20
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:847~870, 4~19/    def construct(self, x: mindspore.Tensor, library_size: mindspore.Tensor):/
+subgraph @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79(%para0_x, %para0_library_size) {
+  %0(CNode_328) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], getitem)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:849, 8~39/        n_particles, n, x_dim = (0,0,0)/
+  %1(CNode_329) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:849, 32~39/        n_particles, n, x_dim = (0,0,0)/
+  %2(CNode_330) = %1(I64(0), I64(0), I64(0))
+      : (<Int64, NoShape>, <Int64, NoShape>, <Int64, NoShape>) -> (<Tuple[Int64*3], TupleShape(NoShape, NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:849, 32~39/        n_particles, n, x_dim = (0,0,0)/
+  %3(x_dim) = %0(%2, I64(2))
+      : (<Tuple[Int64*3], TupleShape(NoShape, NoShape, NoShape)>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:849, 8~39/        n_particles, n, x_dim = (0,0,0)/
+  %4(CNode_331) = StopGradient(%3)
+      : (<Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:847~870, 4~19/    def construct(self, x: mindspore.Tensor, library_size: mindspore.Tensor):/
+  %5(CNode_332) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], eq)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~46/        multiple_particles = len(x.shape) == 3/
+  %6(CNode_333) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], len)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~32/        multiple_particles = len(x.shape) == 3/
+  %7(CNode_334) = getattr(%para0_x, "shape")
+      : (<Tensor[Float32], (5, 128, 100)>, <String, NoShape>) -> (<Tuple[Int64*3], TupleShape(NoShape, NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 33~40/        multiple_particles = len(x.shape) == 3/
+  %8(CNode_335) = %6(%7)
+      : (<Tuple[Int64*3], TupleShape(NoShape, NoShape, NoShape)>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~41/        multiple_particles = len(x.shape) == 3/
+  %9(multiple_particles) = %5(%8, I64(3))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~46/        multiple_particles = len(x.shape) == 3/
+  %10(CNode_336) = Cond(%9, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:850~854, 8~84/        if multiple_particles:/
+  %11(CNode_337) = Switch(%10, @✓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_338, @✗__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_339)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:850~854, 8~84/        if multiple_particles:/
+  %12(CNode_340) = %11()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:850~854, 8~84/        if multiple_particles:/
+  %13(CNode_341) = TupleGetItem(%12, I64(0))
+      : (<Tuple[Tensor[Float32]*2,Int64*2], TupleShape((640, 100), (640, 1), NoShape, NoShape)>, <Int64, NoShape>) -> (<Tensor[Float32], (640, 100)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %14(CNode_342) = TupleGetItem(%12, I64(1))
+      : (<Tuple[Tensor[Float32]*2,Int64*2], TupleShape((640, 100), (640, 1), NoShape, NoShape)>, <Int64, NoShape>) -> (<Tensor[Float32], (640, 1)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %15(CNode_343) = TupleGetItem(%12, I64(2))
+      : (<Tuple[Tensor[Float32]*2,Int64*2], TupleShape((640, 100), (640, 1), NoShape, NoShape)>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %16(CNode_344) = TupleGetItem(%12, I64(3))
+      : (<Tuple[Tensor[Float32]*2,Int64*2], TupleShape((640, 100), (640, 1), NoShape, NoShape)>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+
+#------------------------> 27
+  %17(CNode_345) = call @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80(%13, %14, %15, %16)
+      : (<Tensor[Float32], (640, 100)>, <Tensor[Float32], (640, 1)>, <Int64, NoShape>, <Int64, NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  %18(CNode_346) = Depend(%17, %4) primitive_attrs: {side_effect_propagate: I64(1)} cnode_attrs: {topo_sort_rhs_first: Bool(1)}
+      : (<null>, <Int64, NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  Return(%18) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:850~854, 8~84/        if multiple_particles:/
+}
+# Order:
+#   1: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_333{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> len}
+#   2: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_334{[0]: ValueNode<Primitive> getattr, [1]: param_x, [2]: ValueNode<StringImm> shape}
+#   3: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_347{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_335{[0]: CNode_333, [1]: CNode_334}
+#   6: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_332{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> eq}
+#   7: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:multiple_particles{[0]: CNode_332, [1]: CNode_335, [2]: ValueNode<Int64Imm> 3}
+#   8: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_329{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   9: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_330{[0]: CNode_329, [1]: ValueNode<Int64Imm> 0, [2]: ValueNode<Int64Imm> 0, [3]: ValueNode<Int64Imm> 0}
+#  10: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_328{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> getitem}
+#  11: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:n_particles{[0]: CNode_328, [1]: CNode_330, [2]: ValueNode<Int64Imm> 0}
+#  12: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:n{[0]: CNode_328, [1]: CNode_330, [2]: ValueNode<Int64Imm> 1}
+#  13: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:x_dim{[0]: CNode_328, [1]: CNode_330, [2]: ValueNode<Int64Imm> 2}
+#  14: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_336{[0]: ValueNode<Primitive> Cond, [1]: multiple_particles, [2]: ValueNode<BoolImm> false}
+#  15: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_337{[0]: ValueNode<Primitive> Switch, [1]: CNode_336, [2]: ValueNode<FuncGraph> ✓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_338, [3]: ValueNode<FuncGraph> ✗__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_339}
+#  16: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_340{[0]: CNode_337}
+#  18: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_348{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> ops}
+#  19: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_349{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<LibraryGammaPoissonSharedConcentrationResidualMLP::281468810454816>', [2]: ValueNode<Symbol> log_concentration}
+#  20: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_350{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:__main__', [2]: ValueNode<Symbol> GammaPoisson}
+#  21: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_345{[0]: ValueNode<FuncGraph> ↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80, [1]: CNode_341, [2]: CNode_342, [3]: CNode_343, [4]: CNode_344}
+#  22: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_346{[0]: ValueNode<Primitive> Depend, [1]: CNode_345, [2]: CNode_331}
+#  23: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_351{[0]: ValueNode<Primitive> Return, [1]: CNode_346}
+#  24: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_341{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_340, [2]: ValueNode<Int64Imm> 0}
+#  25: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_342{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_340, [2]: ValueNode<Int64Imm> 1}
+#  26: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_343{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_340, [2]: ValueNode<Int64Imm> 2}
+#  27: @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79:CNode_344{[0]: ValueNode<Primitive> TupleGetItem, [1]: CNode_340, [2]: ValueNode<Int64Imm> 3}
+
+
+subgraph attr:
+training: 1
+subgraph instance: ↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80 : 0xfffbb49db070
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:847~870, 4~19/    def construct(self, x: mindspore.Tensor, library_size: mindspore.Tensor):/
+subgraph @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80 parent: [subgraph @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79](%para0_фx, %para0_фlibrary_size, %para0_фn_particles, %para0_фn) {
+  %0(CNode_332) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], eq)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~46/        multiple_particles = len(x.shape) == 3/
+  %1(CNode_333) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], len)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~32/        multiple_particles = len(x.shape) == 3/
+  %2(CNode_334) = getattr(%para0_x, "shape")
+      : (<Tensor[Float32], (5, 128, 100)>, <String, NoShape>) -> (<Tuple[Int64*3], TupleShape(NoShape, NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 33~40/        multiple_particles = len(x.shape) == 3/
+  %3(CNode_335) = %1(%2)
+      : (<Tuple[Int64*3], TupleShape(NoShape, NoShape, NoShape)>) -> (<Int64, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~41/        multiple_particles = len(x.shape) == 3/
+  %4(multiple_particles) = %0(%3, I64(3))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:848, 29~46/        multiple_particles = len(x.shape) == 3/
+  %5(CNode_352) = Cond(%4, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:859~860, 8~47/        if multiple_particles:/
+  %6(CNode_353) = Switch(%5, @✓↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_354, @✗↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_355)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:859~860, 8~47/        if multiple_particles:/
+  %7(CNode_356) = %6()
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:859~860, 8~47/        if multiple_particles:/
+
+#------------------------> 28
+  %8(CNode_357) = call @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81(%7)
+      : (<Tensor[Float32], (5, 128, 1187)>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:208, 43~55/            self.generative_dists["p_x"] = self.decoder(z, condition_values["library_size"])/
+  Return(%8) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:859~860, 8~47/        if multiple_particles:/
+}
+# Order:
+#   1: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_358{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<LibraryGammaPoissonSharedConcentrationResidualMLP::281468810454816>', [2]: ValueNode<Symbol> mlp}
+#   2: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_359{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:z{[0]: CNode_358, [1]: param_фx}
+#   5: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_360{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<LibraryGammaPoissonSharedConcentrationResidualMLP::281468810454816>', [2]: ValueNode<Symbol> normalized_mean_decoder}
+#   6: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_361{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:normalized_mu{[0]: CNode_360, [1]: z}
+#   9: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_362{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> mul}
+#  10: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:mu{[0]: CNode_362, [1]: param_фlibrary_size, [2]: normalized_mu}
+#  11: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_352{[0]: ValueNode<Primitive> Cond, [1]: multiple_particles, [2]: ValueNode<BoolImm> false}
+#  12: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_353{[0]: ValueNode<Primitive> Switch, [1]: CNode_352, [2]: ValueNode<FuncGraph> ✓↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_354, [3]: ValueNode<FuncGraph> ✗↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_355}
+#  13: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_356{[0]: CNode_353}
+#  14: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_357{[0]: ValueNode<FuncGraph> 2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81, [1]: CNode_356}
+#  15: @↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_80:CNode_363{[0]: ValueNode<Primitive> Return, [1]: CNode_357}
+
+
+subgraph attr:
+training: 1
+subgraph instance: 2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81 : 0xfffbb49f4680
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:847~870, 4~19/    def construct(self, x: mindspore.Tensor, library_size: mindspore.Tensor):/
+subgraph @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81 parent: [subgraph @__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_79](%para0_фmu) {
+  %0(CNode_350) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], GammaPoisson)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867, 15~27/        dist = GammaPoisson(/
+  %1(CNode_364) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], make_dict)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %2(CNode_365) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %3(CNode_366) = %2("concentration", "rate")
+      : (<String, NoShape>, <String, NoShape>) -> (<Tuple[String*2], TupleShape(NoShape, NoShape)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %4(CNode_367) = resolve(NameSpace[CommonOPS: 'Namespace:mindspore._extends.parse.trope'], MakeTuple)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %5(CNode_348) = resolve(NameSpace[SymbolStr: 'Namespace:__main__'], ops)
+      : (<External, NoShape>, <External, NoShape>) -> (<External, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:862, 24~27/        concentration = ops.exp(self.log_concentration)/
+  %6(CNode_368) = getattr(%5, "stop_gradient")
+      : (<External, NoShape>, <String, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:865, 24~41/        concentration = ops.stop_gradient(concentration) /
+  %7(CNode_369) = getattr(%5, "exp")
+      : (<External, NoShape>, <String, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:862, 24~31/        concentration = ops.exp(self.log_concentration)/
+  %8(CNode_349) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<LibraryGammaPoissonSharedConcentrationResidualMLP::281468810454816>'], log_concentration)
+      : (<External, NoShape>, <External, NoShape>) -> (<Ref[Tensor[Float32]], (1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:862, 32~54/        concentration = ops.exp(self.log_concentration)/
+  %9(concentration) = %7(%8)
+      : (<Ref[Tensor[Float32]], (1187)>) -> (<Tensor[Float32], (1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:862, 24~55/        concentration = ops.exp(self.log_concentration)/
+  %10(concentration) = %6(%9)
+      : (<Tensor[Float32], (1187)>) -> (<Tensor[Float32], (1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:865, 24~56/        concentration = ops.stop_gradient(concentration) /
+  %11(CNode_370) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], truediv)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:868, 46~75/            concentration=concentration, rate=concentration / (mu + mu_eps)/
+  %12(CNode_371) = resolve(NameSpace[Ast: 'Namespace:mindspore._extends.parse.trope'], add)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:868, 63~74/            concentration=concentration, rate=concentration / (mu + mu_eps)/
+  %13(CNode_372) = getattr(%5, "stop_gradient")
+      : (<External, NoShape>, <String, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:866, 13~30/        mu = ops.stop_gradient(mu)/
+  %14(mu) = %13(%para0_фmu)
+      : (<Tensor[Float32], (5, 128, 1187)>) -> (<Tensor[Float32], (5, 128, 1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:866, 13~34/        mu = ops.stop_gradient(mu)/
+  %15(CNode_373) = %12(%14, F32(0.0001))
+      : (<Tensor[Float32], (5, 128, 1187)>, <Float32, NoShape>) -> (<Tensor[Float32], (5, 128, 1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:868, 63~74/            concentration=concentration, rate=concentration / (mu + mu_eps)/
+  %16(CNode_374) = %11(%10, %15)
+      : (<Tensor[Float32], (1187)>, <Tensor[Float32], (5, 128, 1187)>) -> (<Tensor[Float32], (5, 128, 1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:868, 46~75/            concentration=concentration, rate=concentration / (mu + mu_eps)/
+  %17(CNode_375) = %4(%10, %16)
+      : (<Tensor[Float32], (1187)>, <Tensor[Float32], (5, 128, 1187)>) -> (<Tuple[Tensor[Float32]*2], TupleShape((1187), (5, 128, 1187))>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %18(CNode_376) = %1(%3, %17)
+      : (<Tuple[String*2], TupleShape(NoShape, NoShape)>, <Tuple[Tensor[Float32]*2], TupleShape((1187), (5, 128, 1187))>) -> (<Dictionary[[concentration,rate,],[Tensor[Float32]*2]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+
+#------------------------> 29
+  %19(dist) = UnpackCall_unpack_call(%0, %18)
+      : (<Func, NoShape>, <Dictionary[[concentration,rate,],[Tensor[Float32]*2]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  Return(%19) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:870, 8~19/        return dist/
+}
+# Order:
+#   2: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_369{[0]: ValueNode<Primitive> getattr, [1]: CNode_348, [2]: ValueNode<StringImm> exp}
+#   4: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_377{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   6: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:concentration{[0]: CNode_369, [1]: CNode_349}
+#   7: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_368{[0]: ValueNode<Primitive> getattr, [1]: CNode_348, [2]: ValueNode<StringImm> stop_gradient}
+#   8: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_378{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  10: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:concentration{[0]: CNode_368, [1]: concentration}
+#  11: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_372{[0]: ValueNode<Primitive> getattr, [1]: CNode_348, [2]: ValueNode<StringImm> stop_gradient}
+#  12: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_379{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  14: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:mu{[0]: CNode_372, [1]: param_фmu}
+#  16: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_371{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> add}
+#  17: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_373{[0]: CNode_371, [1]: mu, [2]: ValueNode<FP32Imm> 0.0001}
+#  18: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_370{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> truediv}
+#  19: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_374{[0]: CNode_370, [1]: concentration, [2]: CNode_373}
+#  20: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_365{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  21: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_366{[0]: CNode_365, [1]: ValueNode<StringImm> concentration, [2]: ValueNode<StringImm> rate}
+#  22: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_367{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  23: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_375{[0]: CNode_367, [1]: concentration, [2]: CNode_374}
+#  24: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_364{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> make_dict}
+#  25: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_376{[0]: CNode_364, [1]: CNode_366, [2]: CNode_375}
+#  26: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:dist{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.380, [1]: CNode_350, [2]: CNode_376}
+#  27: @2↓__main___LibraryGammaPoissonSharedConcentrationResidualMLP_construct_81:CNode_381{[0]: ValueNode<Primitive> Return, [1]: dist}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_82 : 0xfffbb6456eb0
+# In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+subgraph @UnpackCall_82(%para0_Parameter_83, %para0_Parameter_84) {
+  %0(dist) = dict_getitem(%para0_Parameter_84, "concentration")
+      : (<Dictionary[[concentration,rate,],[Tensor[Float32]*2]], NoShape>, <String, NoShape>) -> (<Tensor[Float32], (1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %1(dist) = make_keyword_arg("concentration", %0)
+      : (<String, NoShape>, <Tensor[Float32], (1187)>) -> (<Keyword[key : concentration, value : Tensor[Float32]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %2(dist) = dict_getitem(%para0_Parameter_84, "rate")
+      : (<Dictionary[[concentration,rate,],[Tensor[Float32]*2]], NoShape>, <String, NoShape>) -> (<Tensor[Float32], (5, 128, 1187)>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  %3(dist) = make_keyword_arg("rate", %2)
+      : (<String, NoShape>, <Tensor[Float32], (5, 128, 1187)>) -> (<Keyword[key : rate, value : Tensor[Float32]], NoShape>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+
+#------------------------> 30
+  %4(dist) = Parameter_83(%1, %3)
+      : (<Keyword[key : concentration, value : Tensor[Float32]], NoShape>, <Keyword[key : rate, value : Tensor[Float32]], NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+  Return(%4) primitive_attrs: {visited: Bool(1)}
+      : (<null>)
+      #scope: (Default)
+      # In file /home/ma-user/work/bxw_msp/origin_demo.py:867~869, 15~9/        dist = GammaPoisson(/
+}
+# Order:
+#   1: @UnpackCall_82:dist{[0]: param_Parameter_83, [1]: dist, [2]: dist}
+#   2: @UnpackCall_82:dist{[0]: ValueNode<Primitive> Return, [1]: dist}
+
+
+# ===============================================================================================
+# The total of function graphs in evaluation stack: 24/31 (Ignored 7 internal frames).
+# ===============================================================================================
+
+
+# ===============================================================================================
+# The rest function graphs are the following:
+# ===============================================================================================
+No more function graphs.
+
