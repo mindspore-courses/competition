@@ -1,0 +1,1311 @@
+nohup: ignoring input
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:499: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
+  setattr(self, word, getattr(machar, word).flat[0])
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float64'> type is zero.
+  return self._float_to_str(self.smallest_subnormal)
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:499: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
+  setattr(self, word, getattr(machar, word).flat[0])
+/home/ma-user/anaconda3/envs/MindSpore/lib/python3.9/site-packages/numpy/core/getlimits.py:89: UserWarning: The value of the smallest subnormal for <class 'numpy.float32'> type is zero.
+  return self._float_to_str(self.smallest_subnormal)
+{'data_dir': 'Train dataset directory.', 'per_batch_size': 'Batch size for Training.', 'pretrained_backbone': 'The ckpt file of CspDarkNet53.', 'resume_yolov5': 'The ckpt file of YOLOv5, which used to fine tune.', 'pretrained_checkpoint': 'The ckpt file of YOLOv5CspDarkNet53.', 'lr_scheduler': 'Learning rate scheduler, options: exponential, cosine_annealing.', 'lr': 'Learning rate.', 'lr_epochs': "Epoch of changing of lr changing, split with ','.", 'lr_gamma': 'Decrease lr by a factor of exponential lr_scheduler.', 'eta_min': 'Eta_min in cosine_annealing scheduler.', 'T_max': 'T-max in cosine_annealing scheduler.', 'max_epoch': 'Max epoch num to train the model.', 'warmup_epochs': 'Warmup epochs.', 'weight_decay': 'Weight decay factor.', 'momentum': 'Momentum.', 'loss_scale': 'Static loss scale.', 'label_smooth': 'Whether to use label smooth in CE.', 'label_smooth_factor': 'Smooth strength of original one-hot.', 'log_interval': 'Logging interval steps.', 'ckpt_path': 'Checkpoint save location.', 'ckpt_interval': 'Save checkpoint interval.', 'is_save_on_master': 'Save ckpt on master or all rank, 1 for master, 0 for all ranks.', 'is_distributed': 'Distribute train or not, 1 for yes, 0 for no.', 'bind_cpu': 'Whether bind cpu when distributed training.', 'device_num': 'Device numbers per server', 'rank': 'Local rank of distributed.', 'group_size': 'World size of device.', 'need_profiler': 'Whether use profiler. 0 for no, 1 for yes.', 'resize_rate': 'Resize rate for multi-scale training.', 'ann_file': 'path to annotation', 'each_multiscale': 'Apply multi-scale for each scale', 'labels': 'the label of train data', 'multi_label': 'use multi label to nms', 'multi_label_thresh': 'multi label thresh', 'train_img_dir': 'relative path of training image directory to data_dir', 'train_ann_file': 'relative path of training annotation file to data_dir', 'pretrained': 'model_path, local pretrained model to load', 'log_path': 'checkpoint save location', 'save_prefix': '../eval_parallel', 'run_eval': 'Whether enable validation after a training epoch', 'eval_epoch_interval': 'Epoch interval to do validation', 'eval_start_epoch': 'After which epoch, start to do validatation', 'eval_parallel': 'Whether enable parallel evaluation to accelerate the validataion process', 'val_img_dir': 'relative path of validation image directory to data_dir', 'val_ann_file': 'relative path of validataion annotation file to data_dir', 'device_id': 'Device id for export', 'batch_size': 'batch size for export', 'testing_shape': 'shape for test', 'ckpt_file': 'Checkpoint file path for export', 'file_name': 'output file name for export', 'file_format': 'file format for export', 'result_files': 'path to 310 infer result floder'}
+2024-09-20 20:38:15,263:INFO:Args:
+2024-09-20 20:38:15,263:INFO:--> enable_modelarts: False
+2024-09-20 20:38:15,263:INFO:--> data_url: 
+2024-09-20 20:38:15,263:INFO:--> train_url: 
+2024-09-20 20:38:15,263:INFO:--> checkpoint_url: 
+2024-09-20 20:38:15,263:INFO:--> outputs_url: 
+2024-09-20 20:38:15,263:INFO:--> data_path: /cache/data
+2024-09-20 20:38:15,263:INFO:--> output_path: /cache/train
+2024-09-20 20:38:15,263:INFO:--> load_path: /cache/checkpoint_path
+2024-09-20 20:38:15,264:INFO:--> device_target: Ascend
+2024-09-20 20:38:15,264:INFO:--> need_modelarts_dataset_unzip: True
+2024-09-20 20:38:15,264:INFO:--> modelarts_dataset_unzip_name: coco
+2024-09-20 20:38:15,264:INFO:--> data_dir: ../coco-mini
+2024-09-20 20:38:15,264:INFO:--> per_batch_size: 32
+2024-09-20 20:38:15,264:INFO:--> yolov5_version: yolov5s
+2024-09-20 20:38:15,264:INFO:--> pretrained_backbone: 
+2024-09-20 20:38:15,264:INFO:--> resume_yolov5: 
+2024-09-20 20:38:15,264:INFO:--> pretrained_checkpoint: 
+2024-09-20 20:38:15,264:INFO:--> output_dir: ./output
+2024-09-20 20:38:15,264:INFO:--> train_img_dir: ../coco-mini/train2017
+2024-09-20 20:38:15,264:INFO:--> train_ann_file: ../coco-mini/annotations/instances_train2017.json
+2024-09-20 20:38:15,264:INFO:--> lr_scheduler: cosine_annealing
+2024-09-20 20:38:15,264:INFO:--> lr: 0.001
+2024-09-20 20:38:15,265:INFO:--> lr_epochs: [220, 250]
+2024-09-20 20:38:15,265:INFO:--> lr_gamma: 0.1
+2024-09-20 20:38:15,265:INFO:--> eta_min: 0.0
+2024-09-20 20:38:15,265:INFO:--> T_max: 300
+2024-09-20 20:38:15,265:INFO:--> max_epoch: 300
+2024-09-20 20:38:15,265:INFO:--> warmup_epochs: 4
+2024-09-20 20:38:15,265:INFO:--> weight_decay: 0.0005
+2024-09-20 20:38:15,265:INFO:--> momentum: 0.9
+2024-09-20 20:38:15,265:INFO:--> loss_scale: 1024
+2024-09-20 20:38:15,265:INFO:--> label_smooth: 0
+2024-09-20 20:38:15,265:INFO:--> label_smooth_factor: 0.1
+2024-09-20 20:38:15,265:INFO:--> log_interval: 100
+2024-09-20 20:38:15,265:INFO:--> ckpt_path: ./best.ckpt
+2024-09-20 20:38:15,265:INFO:--> is_distributed: 0
+2024-09-20 20:38:15,266:INFO:--> bind_cpu: True
+2024-09-20 20:38:15,266:INFO:--> device_num: 8
+2024-09-20 20:38:15,266:INFO:--> rank: 0
+2024-09-20 20:38:15,266:INFO:--> group_size: 1
+2024-09-20 20:38:15,266:INFO:--> need_profiler: 0
+2024-09-20 20:38:15,266:INFO:--> resize_rate: 10
+2024-09-20 20:38:15,266:INFO:--> filter_weight: False
+2024-09-20 20:38:15,266:INFO:--> save_ckpt_interval: 1
+2024-09-20 20:38:15,266:INFO:--> save_ckpt_max_num: 10
+2024-09-20 20:38:15,266:INFO:--> pretrained: 
+2024-09-20 20:38:15,266:INFO:--> log_path: outputs/
+2024-09-20 20:38:15,266:INFO:--> ann_val_file: 
+2024-09-20 20:38:15,266:INFO:--> eval_nms_thresh: 0.6
+2024-09-20 20:38:15,266:INFO:--> ignore_threshold: 0.7
+2024-09-20 20:38:15,267:INFO:--> test_ignore_threshold: 0.001
+2024-09-20 20:38:15,267:INFO:--> multi_label: True
+2024-09-20 20:38:15,267:INFO:--> multi_label_thresh: 0.1
+2024-09-20 20:38:15,267:INFO:--> save_prefix: ../eval_parallel
+2024-09-20 20:38:15,267:INFO:--> run_eval: True
+2024-09-20 20:38:15,267:INFO:--> eval_epoch_interval: 10
+2024-09-20 20:38:15,267:INFO:--> eval_start_epoch: 100
+2024-09-20 20:38:15,267:INFO:--> eval_parallel: True
+2024-09-20 20:38:15,267:INFO:--> val_img_dir: val2017
+2024-09-20 20:38:15,267:INFO:--> val_ann_file: annotations/instances_val2017.json
+2024-09-20 20:38:15,267:INFO:--> device_id: 0
+2024-09-20 20:38:15,267:INFO:--> batch_size: 16
+2024-09-20 20:38:15,267:INFO:--> testing_shape: [640, 640]
+2024-09-20 20:38:15,267:INFO:--> ckpt_file: 
+2024-09-20 20:38:15,268:INFO:--> file_name: yolov5
+2024-09-20 20:38:15,268:INFO:--> file_format: MINDIR
+2024-09-20 20:38:15,268:INFO:--> dataset_path: 
+2024-09-20 20:38:15,268:INFO:--> ann_file: 
+2024-09-20 20:38:15,268:INFO:--> hue: 0.015
+2024-09-20 20:38:15,268:INFO:--> saturation: 1.5
+2024-09-20 20:38:15,268:INFO:--> value: 0.4
+2024-09-20 20:38:15,268:INFO:--> jitter: 0.3
+2024-09-20 20:38:15,268:INFO:--> num_classes: 80
+2024-09-20 20:38:15,268:INFO:--> max_box: 150
+2024-09-20 20:38:15,268:INFO:--> checkpoint_filter_list: ['feature_map.back_block1.conv.weight', 'feature_map.back_block1.conv.bias', 'feature_map.back_block2.conv.weight', 'feature_map.back_block2.conv.bias', 'feature_map.back_block3.conv.weight', 'feature_map.back_block3.conv.bias']
+2024-09-20 20:38:15,268:INFO:--> anchor_scales: [[12, 16], [19, 36], [40, 28], [36, 75], [76, 55], [72, 146], [142, 110], [192, 243], [459, 401]]
+2024-09-20 20:38:15,268:INFO:--> out_channel: 255
+2024-09-20 20:38:15,268:INFO:--> input_shape: [[3, 32, 64, 128, 256, 512, 1], [3, 48, 96, 192, 384, 768, 2], [3, 64, 128, 256, 512, 1024, 3], [3, 80, 160, 320, 640, 1280, 4]]
+2024-09-20 20:38:15,269:INFO:--> test_img_shape: [640, 640]
+2024-09-20 20:38:15,269:INFO:--> labels: ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+2024-09-20 20:38:15,269:INFO:--> coco_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 67, 70, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 84, 85, 86, 87, 88, 89, 90]
+2024-09-20 20:38:15,269:INFO:--> result_files: ./result_Files
+2024-09-20 20:38:15,269:INFO:--> config_path: /home/ma-user/work/YOLOv5/model_utils/../default_config.yaml
+2024-09-20 20:38:15,269:INFO:--> logger: <LOGGER YOLOV5 (NOTSET)>
+2024-09-20 20:38:15,269:INFO:
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-20:38:39.345.318 [mindspore/dataset/core/config.py:679] The shared memory is on, multiprocessing performance will be improved. Note: the required shared memory can't exceeds 80% of the available shared memory.
+************----------********************
+************----------********************
+************----------********************
+************----------********************
+loading annotations into memory...
+Done (t=2.27s)
+creating index...
+index created!
+2024-09-20 20:38:43,670:INFO:Finish loading train dataset
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-20:38:43.670.622 [mindspore/dataset/core/config.py:679] The shared memory is on, multiprocessing performance will be improved. Note: the required shared memory can't exceeds 80% of the available shared memory.
+loading annotations into memory...
+Done (t=0.15s)
+creating index...
+index created!
+2024-09-20 20:38:43,837:INFO:Finish loading val dataset!
+loading annotations into memory...
+Done (t=0.06s)
+creating index...
+index created!
+-\|/-\|/-\|/-\|/-\|2024-09-20 20:42:50,859:INFO:epoch[1], iter[1], loss:8232.443359, fps:0.13 imgs/sec, lr:1.3736263326791232e-06, per step time: 244646.13676071167ms
+2024-09-20 20:43:22,154:INFO:epoch[1], iter[101], loss:1635.491831, fps:102.26 imgs/sec, lr:0.00013873625721316785, per step time: 312.918221950531ms
+2024-09-20 20:43:54,457:INFO:epoch[2], iter[19], loss:379.567307, fps:99.06 imgs/sec, lr:2.609890179883223e-05, per step time: 323.02595138549805ms
+2024-09-20 20:44:31,415:INFO:epoch[2], iter[119], loss:284.538519, fps:86.59 imgs/sec, lr:0.0001634615327930078, per step time: 369.5520877838135ms
+2024-09-20 20:45:11,873:INFO:epoch[3], iter[37], loss:259.798242, fps:79.10 imgs/sec, lr:5.082417555968277e-05, per step time: 404.5535373687744ms
+2024-09-20 20:45:44,656:INFO:epoch[3], iter[137], loss:249.637430, fps:97.62 imgs/sec, lr:0.00018818680837284774, per step time: 327.8089237213135ms
+2024-09-20 20:46:19,821:INFO:epoch[4], iter[55], loss:242.391006, fps:91.01 imgs/sec, lr:7.554944750154391e-05, per step time: 351.6108751296997ms
+2024-09-20 20:46:54,010:INFO:epoch[4], iter[155], loss:241.564582, fps:93.61 imgs/sec, lr:0.00021291208395268768, per step time: 341.86078548431396ms
+2024-09-20 20:47:29,226:INFO:epoch[5], iter[73], loss:239.173665, fps:90.90 imgs/sec, lr:0.00010027472308138385, per step time: 352.0437812805176ms
+2024-09-20 20:48:02,185:INFO:epoch[5], iter[173], loss:231.036626, fps:97.09 imgs/sec, lr:0.00023763735953252763, per step time: 329.5803236961365ms
+2024-09-20 20:48:37,390:INFO:epoch[6], iter[91], loss:236.062115, fps:90.90 imgs/sec, lr:0.0001250000059371814, per step time: 352.0443081855774ms
+2024-09-20 20:49:11,790:INFO:epoch[7], iter[9], loss:227.038043, fps:93.04 imgs/sec, lr:1.2362637789919972e-05, per step time: 343.93641233444214ms
+2024-09-20 20:49:45,498:INFO:epoch[7], iter[109], loss:221.241216, fps:94.93 imgs/sec, lr:0.00014972528151702136, per step time: 337.0745921134949ms
+2024-09-20 20:50:21,675:INFO:epoch[8], iter[27], loss:218.565192, fps:88.49 imgs/sec, lr:3.708791336975992e-05, per step time: 361.63804292678833ms
+2024-09-20 20:50:56,182:INFO:epoch[8], iter[127], loss:217.056685, fps:92.74 imgs/sec, lr:0.00017445054254494607, per step time: 345.06128549575806ms
+2024-09-20 20:51:30,571:INFO:epoch[9], iter[45], loss:221.970747, fps:93.06 imgs/sec, lr:6.181318894959986e-05, per step time: 343.85826349258423ms
+2024-09-20 20:52:05,421:INFO:epoch[9], iter[145], loss:213.194906, fps:91.83 imgs/sec, lr:0.00019917581812478602, per step time: 348.4550881385803ms
+2024-09-20 20:52:40,516:INFO:epoch[10], iter[63], loss:210.969816, fps:91.19 imgs/sec, lr:8.653846452943981e-05, per step time: 350.9298014640808ms
+2024-09-20 20:53:14,762:INFO:epoch[10], iter[163], loss:213.390212, fps:93.46 imgs/sec, lr:0.00022390109370462596, per step time: 342.4058413505554ms
+2024-09-20 20:53:50,334:INFO:epoch[11], iter[81], loss:207.196398, fps:89.96 imgs/sec, lr:0.00011126373283332214, per step time: 355.7024383544922ms
+2024-09-20 20:54:24,989:INFO:epoch[11], iter[181], loss:208.877977, fps:92.34 imgs/sec, lr:0.0002486263692844659, per step time: 346.54064655303955ms
+2024-09-20 20:55:02,388:INFO:epoch[12], iter[99], loss:205.797969, fps:85.57 imgs/sec, lr:0.0001359890156891197, per step time: 373.9790344238281ms
+2024-09-20 20:55:39,971:INFO:epoch[13], iter[17], loss:207.403760, fps:85.15 imgs/sec, lr:2.3351647541858256e-05, per step time: 375.823712348938ms
+2024-09-20 20:56:13,835:INFO:epoch[13], iter[117], loss:206.428211, fps:94.51 imgs/sec, lr:0.00016071429126895964, per step time: 338.58036279678345ms
+2024-09-20 20:56:49,626:INFO:epoch[14], iter[35], loss:203.309553, fps:89.41 imgs/sec, lr:4.80769231216982e-05, per step time: 357.9053544998169ms
+2024-09-20 20:57:22,910:INFO:epoch[14], iter[135], loss:203.472365, fps:96.17 imgs/sec, lr:0.00018543956684879959, per step time: 332.7311396598816ms
+2024-09-20 20:57:57,530:INFO:epoch[15], iter[53], loss:201.225273, fps:92.44 imgs/sec, lr:7.280219870153815e-05, per step time: 346.1832022666931ms
+2024-09-20 20:58:31,925:INFO:epoch[15], iter[153], loss:198.550593, fps:93.04 imgs/sec, lr:0.00021016484242863953, per step time: 343.9479398727417ms
+2024-09-20 20:59:09,567:INFO:epoch[16], iter[71], loss:196.258699, fps:85.01 imgs/sec, lr:9.752747428137809e-05, per step time: 376.40615463256836ms
+2024-09-20 20:59:47,314:INFO:epoch[16], iter[171], loss:198.804929, fps:84.78 imgs/sec, lr:0.00023489010345656425, per step time: 377.43704319000244ms
+2024-09-20 21:00:23,438:INFO:epoch[17], iter[89], loss:196.063281, fps:88.59 imgs/sec, lr:0.00012225274986121804, per step time: 361.23491048812866ms
+2024-09-20 21:00:59,618:INFO:epoch[18], iter[7], loss:197.726127, fps:88.45 imgs/sec, lr:9.6153844424407e-06, per step time: 361.80007219314575ms
+2024-09-20 21:01:33,217:INFO:epoch[18], iter[107], loss:195.047802, fps:95.25 imgs/sec, lr:0.00014697802544105798, per step time: 335.9593439102173ms
+2024-09-20 21:02:08,043:INFO:epoch[19], iter[25], loss:192.136686, fps:91.89 imgs/sec, lr:3.4340660931775346e-05, per step time: 348.2558488845825ms
+2024-09-20 21:02:42,612:INFO:epoch[19], iter[125], loss:194.515766, fps:92.57 imgs/sec, lr:0.00017170330102089792, per step time: 345.6795287132263ms
+2024-09-20 21:03:17,710:INFO:epoch[20], iter[43], loss:190.357037, fps:91.18 imgs/sec, lr:5.9065932873636484e-05, per step time: 350.9641981124878ms
+2024-09-20 21:03:52,355:INFO:epoch[20], iter[143], loss:189.743661, fps:92.37 imgs/sec, lr:0.00019642857660073787, per step time: 346.43357038497925ms
+2024-09-20 21:04:26,175:INFO:epoch[21], iter[61], loss:188.974920, fps:94.64 imgs/sec, lr:8.379120845347643e-05, per step time: 338.11294078826904ms
+2024-09-20 21:04:59,985:INFO:epoch[21], iter[161], loss:185.768755, fps:94.65 imgs/sec, lr:0.00022115385218057781, per step time: 338.0937957763672ms
+2024-09-20 21:05:35,458:INFO:epoch[22], iter[79], loss:188.624068, fps:90.22 imgs/sec, lr:0.00010851648403331637, per step time: 354.6868300437927ms
+2024-09-20 21:06:09,801:INFO:epoch[22], iter[179], loss:186.376819, fps:93.19 imgs/sec, lr:0.00024587911320850253, per step time: 343.3828401565552ms
+2024-09-20 21:06:47,192:INFO:epoch[23], iter[97], loss:185.691389, fps:85.59 imgs/sec, lr:0.00013324175961315632, per step time: 373.8930606842041ms
+2024-09-20 21:07:24,574:INFO:epoch[24], iter[15], loss:186.194818, fps:85.60 imgs/sec, lr:2.0604395103873685e-05, per step time: 373.813259601593ms
+2024-09-20 21:08:00,815:INFO:epoch[24], iter[115], loss:185.067050, fps:88.31 imgs/sec, lr:0.00015796703519299626, per step time: 362.37717390060425ms
+2024-09-20 21:08:36,118:INFO:epoch[25], iter[33], loss:184.215949, fps:90.66 imgs/sec, lr:4.532967068371363e-05, per step time: 352.9836940765381ms
+2024-09-20 21:09:12,391:INFO:epoch[25], iter[133], loss:186.066897, fps:88.23 imgs/sec, lr:0.0001826923107728362, per step time: 362.69441843032837ms
+2024-09-20 21:09:49,354:INFO:epoch[26], iter[51], loss:183.716000, fps:86.60 imgs/sec, lr:7.005494262557477e-05, per step time: 369.527325630188ms
+2024-09-20 21:10:24,980:INFO:epoch[26], iter[151], loss:179.878236, fps:89.83 imgs/sec, lr:0.00020741758635267615, per step time: 356.2378215789795ms
+2024-09-20 21:10:59,956:INFO:epoch[27], iter[69], loss:174.863488, fps:91.49 imgs/sec, lr:9.478021820541471e-05, per step time: 349.7494840621948ms
+2024-09-20 21:11:37,159:INFO:epoch[27], iter[169], loss:182.142492, fps:86.02 imgs/sec, lr:0.0002321428619325161, per step time: 372.02134370803833ms
+2024-09-20 21:12:13,868:INFO:epoch[28], iter[87], loss:184.886755, fps:87.18 imgs/sec, lr:0.00011950549378525466, per step time: 367.0735836029053ms
+2024-09-20 21:12:48,706:INFO:epoch[29], iter[5], loss:179.664401, fps:91.86 imgs/sec, lr:6.868132004456129e-06, per step time: 348.36087465286255ms
+2024-09-20 21:13:23,672:INFO:epoch[29], iter[105], loss:184.392660, fps:91.53 imgs/sec, lr:0.0001442307693650946, per step time: 349.61004972457886ms
+2024-09-20 21:13:59,331:INFO:epoch[30], iter[23], loss:177.369892, fps:89.74 imgs/sec, lr:3.159340485581197e-05, per step time: 356.58050775527954ms
+2024-09-20 21:14:37,263:INFO:epoch[30], iter[123], loss:182.469617, fps:84.38 imgs/sec, lr:0.00016895604494493455, per step time: 379.2527651786804ms
+2024-09-20 21:15:13,304:INFO:epoch[31], iter[41], loss:180.184063, fps:88.79 imgs/sec, lr:5.631868043565191e-05, per step time: 360.40727853775024ms
+2024-09-20 21:15:46,666:INFO:epoch[31], iter[141], loss:178.512740, fps:95.94 imgs/sec, lr:0.0001936813205247745, per step time: 333.53742599487305ms
+2024-09-20 21:16:21,383:INFO:epoch[32], iter[59], loss:176.911033, fps:92.18 imgs/sec, lr:8.104395965347067e-05, per step time: 347.1579623222351ms
+2024-09-20 21:16:54,630:INFO:epoch[32], iter[159], loss:175.369219, fps:96.26 imgs/sec, lr:0.00021840659610461444, per step time: 332.43263006210327ms
+2024-09-20 21:17:29,833:INFO:epoch[33], iter[77], loss:173.749172, fps:90.91 imgs/sec, lr:0.000105769227957353, per step time: 351.98877334594727ms
+2024-09-20 21:18:03,504:INFO:epoch[33], iter[177], loss:174.079372, fps:95.04 imgs/sec, lr:0.00024313187168445438, per step time: 336.70371294021606ms
+2024-09-20 21:18:38,004:INFO:epoch[34], iter[95], loss:172.442899, fps:92.76 imgs/sec, lr:0.00013049450353719294, per step time: 344.9911308288574ms
+2024-09-20 21:19:12,563:INFO:epoch[35], iter[13], loss:176.389585, fps:92.60 imgs/sec, lr:1.7857142665889114e-05, per step time: 345.58303356170654ms
+2024-09-20 21:19:46,229:INFO:epoch[35], iter[113], loss:170.996665, fps:95.07 imgs/sec, lr:0.00015521977911703289, per step time: 336.59409284591675ms
+2024-09-20 21:20:21,019:INFO:epoch[36], iter[31], loss:173.318495, fps:91.99 imgs/sec, lr:4.258241824572906e-05, per step time: 347.86720991134644ms
+2024-09-20 21:20:54,733:INFO:epoch[36], iter[131], loss:175.465918, fps:94.92 imgs/sec, lr:0.00017994505469687283, per step time: 337.1288251876831ms
+2024-09-20 21:21:28,543:INFO:epoch[37], iter[49], loss:171.194805, fps:94.67 imgs/sec, lr:6.7307693825569e-05, per step time: 338.02669763565063ms
+2024-09-20 21:22:04,261:INFO:epoch[37], iter[149], loss:170.482717, fps:89.59 imgs/sec, lr:0.00020467033027671278, per step time: 357.1651244163513ms
+2024-09-20 21:22:38,218:INFO:epoch[38], iter[67], loss:173.549819, fps:94.25 imgs/sec, lr:9.203296940540895e-05, per step time: 339.51587677001953ms
+2024-09-20 21:23:12,620:INFO:epoch[38], iter[167], loss:173.177820, fps:93.02 imgs/sec, lr:0.00022939560585655272, per step time: 344.0142631530762ms
+2024-09-20 21:23:47,224:INFO:epoch[39], iter[85], loss:171.788161, fps:92.48 imgs/sec, lr:0.0001167582449852489, per step time: 346.0296845436096ms
+2024-09-20 21:24:21,266:INFO:epoch[40], iter[3], loss:169.060913, fps:94.01 imgs/sec, lr:4.120879111724207e-06, per step time: 340.3794002532959ms
+2024-09-20 21:24:56,519:INFO:epoch[40], iter[103], loss:171.852288, fps:90.78 imgs/sec, lr:0.00014148351328913122, per step time: 352.49982357025146ms
+2024-09-20 21:25:31,981:INFO:epoch[41], iter[21], loss:167.581189, fps:90.24 imgs/sec, lr:2.88461542368168e-05, per step time: 354.6098828315735ms
+2024-09-20 21:26:05,945:INFO:epoch[41], iter[121], loss:172.317983, fps:94.22 imgs/sec, lr:0.00016620878886897117, per step time: 339.6301460266113ms
+2024-09-20 21:26:42,277:INFO:epoch[42], iter[39], loss:169.277906, fps:88.08 imgs/sec, lr:5.357142799766734e-05, per step time: 363.31345081329346ms
+2024-09-20 21:27:15,189:INFO:epoch[42], iter[139], loss:167.309349, fps:97.23 imgs/sec, lr:0.00019093406444881111, per step time: 329.1130590438843ms
+2024-09-20 21:27:49,843:INFO:epoch[43], iter[57], loss:171.980741, fps:92.35 imgs/sec, lr:7.829670357750729e-05, per step time: 346.4952754974365ms
+2024-09-20 21:28:25,044:INFO:epoch[43], iter[157], loss:164.546216, fps:90.91 imgs/sec, lr:0.00021565934002865106, per step time: 351.977334022522ms
+2024-09-20 21:28:59,317:INFO:epoch[44], iter[75], loss:165.177979, fps:93.37 imgs/sec, lr:0.00010302197915734723, per step time: 342.7172875404358ms
+2024-09-20 21:29:32,621:INFO:epoch[44], iter[175], loss:165.744374, fps:96.09 imgs/sec, lr:0.000240384615608491, per step time: 333.03441762924194ms
+2024-09-20 21:30:06,863:INFO:epoch[45], iter[93], loss:166.381015, fps:93.45 imgs/sec, lr:0.00012774724746122956, per step time: 342.4121356010437ms
+2024-09-20 21:30:39,507:INFO:epoch[46], iter[11], loss:167.646526, fps:98.03 imgs/sec, lr:1.5109890227904543e-05, per step time: 326.4290523529053ms
+2024-09-20 21:31:11,851:INFO:epoch[46], iter[111], loss:165.937793, fps:98.94 imgs/sec, lr:0.0001524725230410695, per step time: 323.4223985671997ms
+2024-09-20 21:31:46,489:INFO:epoch[47], iter[29], loss:165.006547, fps:92.39 imgs/sec, lr:3.983516580774449e-05, per step time: 346.35788917541504ms
+2024-09-20 21:32:20,432:INFO:epoch[47], iter[129], loss:170.198429, fps:94.28 imgs/sec, lr:0.00017719779862090945, per step time: 339.41574573516846ms
+2024-09-20 21:32:55,539:INFO:epoch[48], iter[47], loss:161.166297, fps:91.16 imgs/sec, lr:6.456043774960563e-05, per step time: 351.04949951171875ms
+2024-09-20 21:33:27,475:INFO:epoch[48], iter[147], loss:165.667333, fps:100.20 imgs/sec, lr:0.0002019230742007494, per step time: 319.35426235198975ms
+2024-09-20 21:34:01,305:INFO:epoch[49], iter[65], loss:164.810640, fps:94.61 imgs/sec, lr:8.928571332944557e-05, per step time: 338.2222843170166ms
+2024-09-20 21:34:33,557:INFO:epoch[49], iter[165], loss:163.738724, fps:99.23 imgs/sec, lr:0.00022664834978058934, per step time: 322.485249042511ms
+2024-09-20 21:35:08,813:INFO:epoch[50], iter[83], loss:163.532195, fps:90.77 imgs/sec, lr:0.00011401098890928552, per step time: 352.5384521484375ms
+2024-09-20 21:35:42,513:INFO:epoch[51], iter[1], loss:162.805244, fps:94.96 imgs/sec, lr:1.3736263326791232e-06, per step time: 336.98166370391846ms
+2024-09-20 21:36:15,681:INFO:epoch[51], iter[101], loss:162.901613, fps:96.48 imgs/sec, lr:0.00013873625721316785, per step time: 331.66080713272095ms
+2024-09-20 21:36:48,568:INFO:epoch[52], iter[19], loss:157.572873, fps:97.32 imgs/sec, lr:2.609890179883223e-05, per step time: 328.8250923156738ms
+2024-09-20 21:37:19,924:INFO:epoch[52], iter[119], loss:162.347995, fps:102.05 imgs/sec, lr:0.0001634615327930078, per step time: 313.56247186660767ms
+2024-09-20 21:37:52,574:INFO:epoch[53], iter[37], loss:162.534500, fps:98.01 imgs/sec, lr:5.082417555968277e-05, per step time: 326.4931583404541ms
+2024-09-20 21:38:26,481:INFO:epoch[53], iter[137], loss:162.036097, fps:94.39 imgs/sec, lr:0.00018818680837284774, per step time: 339.0352153778076ms
+2024-09-20 21:38:59,143:INFO:epoch[54], iter[55], loss:158.908228, fps:97.98 imgs/sec, lr:7.554944750154391e-05, per step time: 326.5941333770752ms
+2024-09-20 21:39:30,907:INFO:epoch[54], iter[155], loss:162.760122, fps:100.75 imgs/sec, lr:0.00021291208395268768, per step time: 317.6235771179199ms
+2024-09-20 21:40:03,250:INFO:epoch[55], iter[73], loss:158.558570, fps:98.94 imgs/sec, lr:0.00010027472308138385, per step time: 323.42546701431274ms
+2024-09-20 21:40:37,750:INFO:epoch[55], iter[173], loss:160.993930, fps:92.78 imgs/sec, lr:0.00023763735953252763, per step time: 344.9108290672302ms
+2024-09-20 21:41:10,957:INFO:epoch[56], iter[91], loss:161.391681, fps:96.37 imgs/sec, lr:0.0001250000059371814, per step time: 332.06607818603516ms
+2024-09-20 21:41:43,665:INFO:epoch[57], iter[9], loss:155.147552, fps:97.84 imgs/sec, lr:1.2362637789919972e-05, per step time: 327.07436084747314ms
+2024-09-20 21:42:16,022:INFO:epoch[57], iter[109], loss:161.393431, fps:98.90 imgs/sec, lr:0.00014972528151702136, per step time: 323.5515260696411ms
+2024-09-20 21:42:49,116:INFO:epoch[58], iter[27], loss:156.464277, fps:96.70 imgs/sec, lr:3.708791336975992e-05, per step time: 330.9329032897949ms
+2024-09-20 21:43:23,999:INFO:epoch[58], iter[127], loss:159.262215, fps:91.75 imgs/sec, lr:0.00017445054254494607, per step time: 348.77492666244507ms
+2024-09-20 21:43:57,121:INFO:epoch[59], iter[45], loss:158.936300, fps:96.62 imgs/sec, lr:6.181318894959986e-05, per step time: 331.20915174484253ms
+2024-09-20 21:44:29,776:INFO:epoch[59], iter[145], loss:158.284368, fps:98.00 imgs/sec, lr:0.00019917581812478602, per step time: 326.52979612350464ms
+2024-09-20 21:45:01,548:INFO:epoch[60], iter[63], loss:157.811885, fps:100.73 imgs/sec, lr:8.653846452943981e-05, per step time: 317.6934504508972ms
+2024-09-20 21:45:34,391:INFO:epoch[60], iter[163], loss:155.766814, fps:97.44 imgs/sec, lr:0.00022390109370462596, per step time: 328.41283559799194ms
+2024-09-20 21:46:11,029:INFO:epoch[61], iter[81], loss:152.094056, fps:87.34 imgs/sec, lr:0.00011126373283332214, per step time: 366.36342763900757ms
+2024-09-20 21:46:44,832:INFO:epoch[61], iter[181], loss:158.110130, fps:94.67 imgs/sec, lr:0.0002486263692844659, per step time: 338.02892684936523ms
+2024-09-20 21:47:20,068:INFO:epoch[62], iter[99], loss:151.901756, fps:90.82 imgs/sec, lr:0.0001359890156891197, per step time: 352.3538041114807ms
+2024-09-20 21:47:52,701:INFO:epoch[63], iter[17], loss:158.217242, fps:98.07 imgs/sec, lr:2.3351647541858256e-05, per step time: 326.29603385925293ms
+2024-09-20 21:48:23,760:INFO:epoch[63], iter[117], loss:154.572700, fps:103.03 imgs/sec, lr:0.00016071429126895964, per step time: 310.58462619781494ms
+2024-09-20 21:48:57,263:INFO:epoch[64], iter[35], loss:154.398029, fps:95.53 imgs/sec, lr:4.80769231216982e-05, per step time: 334.96533393859863ms
+2024-09-20 21:49:27,851:INFO:epoch[64], iter[135], loss:158.328652, fps:104.62 imgs/sec, lr:0.00018543956684879959, per step time: 305.86830377578735ms
+2024-09-20 21:50:03,425:INFO:epoch[65], iter[53], loss:155.277468, fps:89.96 imgs/sec, lr:7.280219870153815e-05, per step time: 355.69942235946655ms
+2024-09-20 21:50:37,121:INFO:epoch[65], iter[153], loss:160.024713, fps:94.99 imgs/sec, lr:0.00021016484242863953, per step time: 336.8784785270691ms
+2024-09-20 21:51:14,459:INFO:epoch[66], iter[71], loss:152.461989, fps:85.71 imgs/sec, lr:9.752747428137809e-05, per step time: 373.3534789085388ms
+2024-09-20 21:51:49,843:INFO:epoch[66], iter[171], loss:157.592418, fps:90.44 imgs/sec, lr:0.00023489010345656425, per step time: 353.8389539718628ms
+2024-09-20 21:52:24,282:INFO:epoch[67], iter[89], loss:155.461052, fps:92.93 imgs/sec, lr:0.00012225274986121804, per step time: 344.34686183929443ms
+2024-09-20 21:52:57,200:INFO:epoch[68], iter[7], loss:155.832418, fps:97.21 imgs/sec, lr:9.6153844424407e-06, per step time: 329.17086362838745ms
+2024-09-20 21:53:30,291:INFO:epoch[68], iter[107], loss:155.650930, fps:96.71 imgs/sec, lr:0.00014697802544105798, per step time: 330.90046644210815ms
+2024-09-20 21:54:03,192:INFO:epoch[69], iter[25], loss:150.243763, fps:97.28 imgs/sec, lr:3.4340660931775346e-05, per step time: 328.95777702331543ms
+2024-09-20 21:54:35,957:INFO:epoch[69], iter[125], loss:153.429515, fps:97.69 imgs/sec, lr:0.00017170330102089792, per step time: 327.57076025009155ms
+2024-09-20 21:55:11,344:INFO:epoch[70], iter[43], loss:150.329384, fps:90.43 imgs/sec, lr:5.9065932873636484e-05, per step time: 353.86638879776ms
+2024-09-20 21:55:42,080:INFO:epoch[70], iter[143], loss:154.454830, fps:104.11 imgs/sec, lr:0.00019642857660073787, per step time: 307.35687017440796ms
+2024-09-20 21:56:14,727:INFO:epoch[71], iter[61], loss:152.532954, fps:98.03 imgs/sec, lr:8.379120845347643e-05, per step time: 326.445095539093ms
+2024-09-20 21:56:46,089:INFO:epoch[71], iter[161], loss:152.145872, fps:102.04 imgs/sec, lr:0.00022115385218057781, per step time: 313.610155582428ms
+2024-09-20 21:57:17,686:INFO:epoch[72], iter[79], loss:152.520683, fps:101.29 imgs/sec, lr:0.00010851648403331637, per step time: 315.91702938079834ms
+2024-09-20 21:57:48,582:INFO:epoch[72], iter[179], loss:150.744934, fps:103.57 imgs/sec, lr:0.00024587911320850253, per step time: 308.9599084854126ms
+2024-09-20 21:58:19,922:INFO:epoch[73], iter[97], loss:151.995328, fps:102.11 imgs/sec, lr:0.00013324175961315632, per step time: 313.39543104171753ms
+2024-09-20 21:58:52,009:INFO:epoch[74], iter[15], loss:150.920654, fps:99.73 imgs/sec, lr:2.0604395103873685e-05, per step time: 320.86198568344116ms
+2024-09-20 21:59:22,661:INFO:epoch[74], iter[115], loss:150.474606, fps:104.44 imgs/sec, lr:0.00015796703519299626, per step time: 306.40920877456665ms
+2024-09-20 21:59:53,990:INFO:epoch[75], iter[33], loss:149.201177, fps:102.15 imgs/sec, lr:4.532967068371363e-05, per step time: 313.2607626914978ms
+2024-09-20 22:00:25,218:INFO:epoch[75], iter[133], loss:148.884801, fps:102.48 imgs/sec, lr:0.0001826923107728362, per step time: 312.26702213287354ms
+2024-09-20 22:00:57,372:INFO:epoch[76], iter[51], loss:150.163727, fps:99.54 imgs/sec, lr:7.005494262557477e-05, per step time: 321.46626710891724ms
+2024-09-20 22:01:28,614:INFO:epoch[76], iter[151], loss:148.129418, fps:102.43 imgs/sec, lr:0.00020741758635267615, per step time: 312.41174936294556ms
+2024-09-20 22:02:00,823:INFO:epoch[77], iter[69], loss:148.318274, fps:99.35 imgs/sec, lr:9.478021820541471e-05, per step time: 322.083158493042ms
+2024-09-20 22:02:31,991:INFO:epoch[77], iter[169], loss:151.497935, fps:102.68 imgs/sec, lr:0.0002321428619325161, per step time: 311.64862632751465ms
+2024-09-20 22:03:03,620:INFO:epoch[78], iter[87], loss:151.563946, fps:101.18 imgs/sec, lr:0.00011950549378525466, per step time: 316.27243757247925ms
+2024-09-20 22:03:35,670:INFO:epoch[79], iter[5], loss:148.694604, fps:99.86 imgs/sec, lr:6.868132004456129e-06, per step time: 320.45562267303467ms
+2024-09-20 22:04:07,608:INFO:epoch[79], iter[105], loss:146.027500, fps:100.20 imgs/sec, lr:0.0001442307693650946, per step time: 319.3700122833252ms
+2024-09-20 22:04:40,371:INFO:epoch[80], iter[23], loss:150.672054, fps:97.69 imgs/sec, lr:3.159340485581197e-05, per step time: 327.57768392562866ms
+2024-09-20 22:05:11,090:INFO:epoch[80], iter[123], loss:147.066246, fps:104.17 imgs/sec, lr:0.00016895604494493455, per step time: 307.17960119247437ms
+2024-09-20 22:05:43,199:INFO:epoch[81], iter[41], loss:147.401557, fps:99.67 imgs/sec, lr:5.631868043565191e-05, per step time: 321.07030630111694ms
+2024-09-20 22:06:14,750:INFO:epoch[81], iter[141], loss:147.319270, fps:101.43 imgs/sec, lr:0.0001936813205247745, per step time: 315.50060987472534ms
+2024-09-20 22:06:46,195:INFO:epoch[82], iter[59], loss:146.813549, fps:101.79 imgs/sec, lr:8.104395965347067e-05, per step time: 314.37256813049316ms
+2024-09-20 22:07:16,656:INFO:epoch[82], iter[159], loss:145.159589, fps:105.06 imgs/sec, lr:0.00021840659610461444, per step time: 304.5960593223572ms
+2024-09-20 22:07:47,774:INFO:epoch[83], iter[77], loss:143.019820, fps:102.84 imgs/sec, lr:0.000105769227957353, per step time: 311.172239780426ms
+2024-09-20 22:08:19,974:INFO:epoch[83], iter[177], loss:148.320587, fps:99.39 imgs/sec, lr:0.00024313187168445438, per step time: 321.97513818740845ms
+2024-09-20 22:08:53,300:INFO:epoch[84], iter[95], loss:144.329873, fps:96.03 imgs/sec, lr:0.00013049450353719294, per step time: 333.236608505249ms
+2024-09-20 22:09:26,016:INFO:epoch[85], iter[13], loss:141.702216, fps:97.82 imgs/sec, lr:1.7857142665889114e-05, per step time: 327.13752031326294ms
+2024-09-20 22:09:59,076:INFO:epoch[85], iter[113], loss:146.870482, fps:96.80 imgs/sec, lr:0.00015521977911703289, per step time: 330.56878566741943ms
+2024-09-20 22:10:32,803:INFO:epoch[86], iter[31], loss:143.263632, fps:94.89 imgs/sec, lr:4.258241824572906e-05, per step time: 337.24496364593506ms
+2024-09-20 22:11:05,024:INFO:epoch[86], iter[131], loss:144.984645, fps:99.32 imgs/sec, lr:0.00017994505469687283, per step time: 322.2056746482849ms
+2024-09-20 22:11:41,391:INFO:epoch[87], iter[49], loss:141.346455, fps:88.00 imgs/sec, lr:6.7307693825569e-05, per step time: 363.63133668899536ms
+2024-09-20 22:12:13,657:INFO:epoch[87], iter[149], loss:142.917471, fps:99.21 imgs/sec, lr:0.00020467033027671278, per step time: 322.5620436668396ms
+2024-09-20 22:12:47,970:INFO:epoch[88], iter[67], loss:143.583124, fps:93.28 imgs/sec, lr:9.203296940540895e-05, per step time: 343.0643320083618ms
+2024-09-20 22:13:23,259:INFO:epoch[88], iter[167], loss:141.979642, fps:90.69 imgs/sec, lr:0.00022939560585655272, per step time: 352.85550594329834ms
+2024-09-20 22:13:58,403:INFO:epoch[89], iter[85], loss:139.215054, fps:91.05 imgs/sec, lr:0.0001167582449852489, per step time: 351.44089221954346ms
+2024-09-20 22:14:35,292:INFO:epoch[90], iter[3], loss:146.141584, fps:86.75 imgs/sec, lr:4.120879111724207e-06, per step time: 368.85833978652954ms
+2024-09-20 22:15:06,645:INFO:epoch[90], iter[103], loss:143.469516, fps:102.07 imgs/sec, lr:0.00014148351328913122, per step time: 313.5232186317444ms
+2024-09-20 22:15:44,042:INFO:epoch[91], iter[21], loss:145.293606, fps:85.62 imgs/sec, lr:2.88461542368168e-05, per step time: 373.7307071685791ms
+2024-09-20 22:16:20,105:INFO:epoch[91], iter[121], loss:144.661702, fps:88.74 imgs/sec, lr:0.00016620878886897117, per step time: 360.6104254722595ms
+2024-09-20 22:16:54,002:INFO:epoch[92], iter[39], loss:141.956459, fps:94.41 imgs/sec, lr:5.357142799766734e-05, per step time: 338.95548582077026ms
+2024-09-20 22:17:29,874:INFO:epoch[92], iter[139], loss:143.123322, fps:89.23 imgs/sec, lr:0.00019093406444881111, per step time: 358.6300492286682ms
+2024-09-20 22:18:06,965:INFO:epoch[93], iter[57], loss:142.552534, fps:86.28 imgs/sec, lr:7.829670357750729e-05, per step time: 370.9001851081848ms
+2024-09-20 22:18:40,129:INFO:epoch[93], iter[157], loss:145.616326, fps:96.49 imgs/sec, lr:0.00021565934002865106, per step time: 331.6291904449463ms
+2024-09-20 22:19:13,719:INFO:epoch[94], iter[75], loss:139.510727, fps:95.27 imgs/sec, lr:0.00010302197915734723, per step time: 335.89946031570435ms
+2024-09-20 22:19:49,412:INFO:epoch[94], iter[175], loss:143.996249, fps:89.66 imgs/sec, lr:0.000240384615608491, per step time: 356.91224336624146ms
+2024-09-20 22:20:24,178:INFO:epoch[95], iter[93], loss:141.205793, fps:92.08 imgs/sec, lr:0.00012774724746122956, per step time: 347.54215478897095ms
+2024-09-20 22:21:00,967:INFO:epoch[96], iter[11], loss:139.397462, fps:86.98 imgs/sec, lr:1.5109890227904543e-05, per step time: 367.8854036331177ms
+2024-09-20 22:21:37,076:INFO:epoch[96], iter[111], loss:141.283533, fps:88.63 imgs/sec, lr:0.0001524725230410695, per step time: 361.07147693634033ms
+2024-09-20 22:22:14,721:INFO:epoch[97], iter[29], loss:143.144139, fps:85.01 imgs/sec, lr:3.983516580774449e-05, per step time: 376.4404296875ms
+2024-09-20 22:22:49,614:INFO:epoch[97], iter[129], loss:141.568348, fps:91.72 imgs/sec, lr:0.00017719779862090945, per step time: 348.8882374763489ms
+2024-09-20 22:23:24,737:INFO:epoch[98], iter[47], loss:138.773077, fps:91.11 imgs/sec, lr:6.456043774960563e-05, per step time: 351.21087551116943ms
+2024-09-20 22:23:59,121:INFO:epoch[98], iter[147], loss:138.208182, fps:93.08 imgs/sec, lr:0.0002019230742007494, per step time: 343.80407333374023ms
+2024-09-20 22:24:34,986:INFO:epoch[99], iter[65], loss:136.405245, fps:89.23 imgs/sec, lr:8.928571332944557e-05, per step time: 358.63898038864136ms
+2024-09-20 22:25:09,571:INFO:epoch[99], iter[165], loss:140.206702, fps:92.53 imgs/sec, lr:0.00022664834978058934, per step time: 345.8346700668335ms
+2024-09-20 22:25:44,550:INFO:epoch[100], iter[83], loss:141.009416, fps:91.49 imgs/sec, lr:0.00011401098890928552, per step time: 349.78076934814453ms
+2024-09-20 22:26:19,115:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-22:26:19.690.498 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 22:26:19,700:INFO:Load train network success
+/-2024-09-20 22:26:52,760:INFO:Processing... 0.00% 
+2024-09-20 22:27:02,303:INFO:Calculating mAP...
+2024-09-20 22:27:24,360:INFO:Save bbox prediction result.
+2024-09-20 22:27:26,998:INFO:Result file path: ./output/predict_2024_09_20_22_27_24.json
+Loading and preparing results...
+DONE (t=1.64s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=9.17s).
+Accumulating evaluation results...
+DONE (t=4.13s).
+2024-09-20 22:27:42,625:INFO:Best result 0.1110619974854106 at 100 epoch
+2024-09-20 22:27:42,625:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.111
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.216
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.105
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.072
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.155
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.160
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.134
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.243
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.283
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.161
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.344
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.348
+
+2024-09-20 22:27:42,625:INFO:Ending inference...
+2024-09-20 22:27:42,932:INFO:epoch[101], iter[1], loss:141.600147, fps:27.03 imgs/sec, lr:1.3736263326791232e-06, per step time: 1183.8081192970276ms
+2024-09-20 22:28:16,385:INFO:epoch[101], iter[101], loss:138.457713, fps:95.66 imgs/sec, lr:0.00013873625721316785, per step time: 334.52548027038574ms
+2024-09-20 22:28:49,779:INFO:epoch[102], iter[19], loss:136.188911, fps:95.84 imgs/sec, lr:2.609890179883223e-05, per step time: 333.8826251029968ms
+2024-09-20 22:29:24,641:INFO:epoch[102], iter[119], loss:137.029183, fps:91.79 imgs/sec, lr:0.0001634615327930078, per step time: 348.6081051826477ms
+2024-09-20 22:30:02,675:INFO:epoch[103], iter[37], loss:138.784330, fps:84.14 imgs/sec, lr:5.082417555968277e-05, per step time: 380.3004026412964ms
+2024-09-20 22:30:39,112:INFO:epoch[103], iter[137], loss:137.646188, fps:87.84 imgs/sec, lr:0.00018818680837284774, per step time: 364.3139934539795ms
+2024-09-20 22:31:16,562:INFO:epoch[104], iter[55], loss:138.308470, fps:85.45 imgs/sec, lr:7.554944750154391e-05, per step time: 374.4712567329407ms
+2024-09-20 22:31:50,839:INFO:epoch[104], iter[155], loss:137.853747, fps:93.36 imgs/sec, lr:0.00021291208395268768, per step time: 342.7631378173828ms
+2024-09-20 22:32:26,081:INFO:epoch[105], iter[73], loss:138.198822, fps:90.81 imgs/sec, lr:0.00010027472308138385, per step time: 352.37709283828735ms
+2024-09-20 22:33:00,105:INFO:epoch[105], iter[173], loss:139.009576, fps:94.05 imgs/sec, lr:0.00023763735953252763, per step time: 340.234739780426ms
+2024-09-20 22:33:36,567:INFO:epoch[106], iter[91], loss:135.846067, fps:87.76 imgs/sec, lr:0.0001250000059371814, per step time: 364.6113181114197ms
+2024-09-20 22:34:11,172:INFO:epoch[107], iter[9], loss:137.811632, fps:92.48 imgs/sec, lr:1.2362637789919972e-05, per step time: 346.0334897041321ms
+2024-09-20 22:34:45,445:INFO:epoch[107], iter[109], loss:136.146617, fps:93.37 imgs/sec, lr:0.00014972528151702136, per step time: 342.71581172943115ms
+2024-09-20 22:35:22,137:INFO:epoch[108], iter[27], loss:135.352033, fps:87.23 imgs/sec, lr:3.708791336975992e-05, per step time: 366.8640923500061ms
+2024-09-20 22:35:57,814:INFO:epoch[108], iter[127], loss:135.529634, fps:89.70 imgs/sec, lr:0.00017445054254494607, per step time: 356.7450261116028ms
+2024-09-20 22:36:30,855:INFO:epoch[109], iter[45], loss:137.869560, fps:96.86 imgs/sec, lr:6.181318894959986e-05, per step time: 330.39077281951904ms
+2024-09-20 22:37:01,290:INFO:epoch[109], iter[145], loss:133.558005, fps:105.15 imgs/sec, lr:0.00019917581812478602, per step time: 304.3353271484375ms
+2024-09-20 22:37:36,117:INFO:epoch[110], iter[63], loss:133.134623, fps:91.89 imgs/sec, lr:8.653846452943981e-05, per step time: 348.2349157333374ms
+2024-09-20 22:38:10,938:INFO:epoch[110], iter[163], loss:137.515189, fps:91.90 imgs/sec, lr:0.00022390109370462596, per step time: 348.2085418701172ms
+2024-09-20 22:38:18,340:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-22:38:18.925.634 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 22:38:18,936:INFO:Load train network success
+2024-09-20 22:38:24,780:INFO:Processing... 0.00% 
+2024-09-20 22:38:37,278:INFO:Calculating mAP...
+2024-09-20 22:39:26,557:INFO:Save bbox prediction result.
+2024-09-20 22:39:30,775:INFO:Result file path: ./output/predict_2024_09_20_22_39_26.json
+Loading and preparing results...
+DONE (t=3.50s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=10.18s).
+Accumulating evaluation results...
+DONE (t=6.87s).
+2024-09-20 22:39:52,494:INFO:Best result 0.1231775223269493 at 110 epoch
+2024-09-20 22:39:52,494:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.123
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.244
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.113
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.077
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.178
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.170
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.149
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.265
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.321
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.184
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.394
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.397
+
+2024-09-20 22:39:52,495:INFO:Ending inference...
+2024-09-20 22:40:17,791:INFO:epoch[111], iter[81], loss:136.622819, fps:25.23 imgs/sec, lr:0.00011126373283332214, per step time: 1268.522024154663ms
+2024-09-20 22:40:49,079:INFO:epoch[111], iter[181], loss:134.872264, fps:102.31 imgs/sec, lr:0.0002486263692844659, per step time: 312.76689529418945ms
+2024-09-20 22:41:25,130:INFO:epoch[112], iter[99], loss:134.460122, fps:88.77 imgs/sec, lr:0.0001359890156891197, per step time: 360.50086975097656ms
+2024-09-20 22:42:00,390:INFO:epoch[113], iter[17], loss:135.340879, fps:90.76 imgs/sec, lr:2.3351647541858256e-05, per step time: 352.5795364379883ms
+2024-09-20 22:42:33,919:INFO:epoch[113], iter[117], loss:135.050139, fps:95.45 imgs/sec, lr:0.00016071429126895964, per step time: 335.2613925933838ms
+2024-09-20 22:43:08,734:INFO:epoch[114], iter[35], loss:138.282317, fps:91.92 imgs/sec, lr:4.80769231216982e-05, per step time: 348.1263303756714ms
+2024-09-20 22:43:43,763:INFO:epoch[114], iter[135], loss:133.098676, fps:91.36 imgs/sec, lr:0.00018543956684879959, per step time: 350.27921438217163ms
+2024-09-20 22:44:18,715:INFO:epoch[115], iter[53], loss:136.715493, fps:91.55 imgs/sec, lr:7.280219870153815e-05, per step time: 349.51882123947144ms
+2024-09-20 22:44:54,087:INFO:epoch[115], iter[153], loss:131.230342, fps:90.49 imgs/sec, lr:0.00021016484242863953, per step time: 353.6300587654114ms
+2024-09-20 22:45:26,684:INFO:epoch[116], iter[71], loss:130.659897, fps:98.18 imgs/sec, lr:9.752747428137809e-05, per step time: 325.9447693824768ms
+2024-09-20 22:46:02,105:INFO:epoch[116], iter[171], loss:132.432459, fps:90.34 imgs/sec, lr:0.00023489010345656425, per step time: 354.20682191848755ms
+2024-09-20 22:46:38,669:INFO:epoch[117], iter[89], loss:133.966663, fps:87.54 imgs/sec, lr:0.00012225274986121804, per step time: 365.549156665802ms
+2024-09-20 22:47:11,931:INFO:epoch[118], iter[7], loss:133.449753, fps:96.21 imgs/sec, lr:9.6153844424407e-06, per step time: 332.6113748550415ms
+2024-09-20 22:47:45,012:INFO:epoch[118], iter[107], loss:133.328710, fps:96.74 imgs/sec, lr:0.00014697802544105798, per step time: 330.7812166213989ms
+2024-09-20 22:48:21,632:INFO:epoch[119], iter[25], loss:133.396037, fps:87.39 imgs/sec, lr:3.4340660931775346e-05, per step time: 366.18098497390747ms
+2024-09-20 22:48:58,268:INFO:epoch[119], iter[125], loss:134.920489, fps:87.36 imgs/sec, lr:0.00017170330102089792, per step time: 366.30735874176025ms
+2024-09-20 22:49:34,195:INFO:epoch[120], iter[43], loss:133.619881, fps:89.08 imgs/sec, lr:5.9065932873636484e-05, per step time: 359.23635482788086ms
+2024-09-20 22:50:07,317:INFO:epoch[120], iter[143], loss:132.518920, fps:96.62 imgs/sec, lr:0.00019642857660073787, per step time: 331.1810636520386ms
+2024-09-20 22:50:20,168:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-22:50:20.756.705 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 22:50:20,770:INFO:Load train network success
+2024-09-20 22:50:26,434:INFO:Processing... 0.00% 
+2024-09-20 22:50:39,640:INFO:Calculating mAP...
+2024-09-20 22:52:02,616:INFO:Save bbox prediction result.
+2024-09-20 22:52:08,232:INFO:Result file path: ./output/predict_2024_09_20_22_52_02.json
+Loading and preparing results...
+DONE (t=4.52s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=12.15s).
+Accumulating evaluation results...
+DONE (t=5.59s).
+2024-09-20 22:52:31,229:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.122
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.243
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.111
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.068
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.178
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.179
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.151
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.291
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.346
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.190
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.418
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.426
+
+2024-09-20 22:52:31,237:INFO:Ending inference...
+2024-09-20 22:52:50,274:INFO:epoch[121], iter[61], loss:130.612318, fps:19.64 imgs/sec, lr:8.379120845347643e-05, per step time: 1629.53284740448ms
+2024-09-20 22:53:21,081:INFO:epoch[121], iter[161], loss:131.075849, fps:103.88 imgs/sec, lr:0.00022115385218057781, per step time: 308.0540657043457ms
+2024-09-20 22:53:53,887:INFO:epoch[122], iter[79], loss:129.474422, fps:97.55 imgs/sec, lr:0.00010851648403331637, per step time: 328.04887533187866ms
+2024-09-20 22:54:25,650:INFO:epoch[122], iter[179], loss:132.204048, fps:100.76 imgs/sec, lr:0.00024587911320850253, per step time: 317.58118629455566ms
+2024-09-20 22:55:01,378:INFO:epoch[123], iter[97], loss:130.524952, fps:89.57 imgs/sec, lr:0.00013324175961315632, per step time: 357.2697687149048ms
+2024-09-20 22:55:35,582:INFO:epoch[124], iter[15], loss:130.489772, fps:93.57 imgs/sec, lr:2.0604395103873685e-05, per step time: 341.9764828681946ms
+2024-09-20 22:56:08,769:INFO:epoch[124], iter[115], loss:133.005465, fps:96.42 imgs/sec, lr:0.00015796703519299626, per step time: 331.8655300140381ms
+2024-09-20 22:56:43,701:INFO:epoch[125], iter[33], loss:130.063612, fps:91.61 imgs/sec, lr:4.532967068371363e-05, per step time: 349.3101501464844ms
+2024-09-20 22:57:15,365:INFO:epoch[125], iter[133], loss:130.396058, fps:101.07 imgs/sec, lr:0.0001826923107728362, per step time: 316.5994453430176ms
+2024-09-20 22:57:51,815:INFO:epoch[126], iter[51], loss:132.246413, fps:87.81 imgs/sec, lr:7.005494262557477e-05, per step time: 364.4360399246216ms
+2024-09-20 22:58:24,583:INFO:epoch[126], iter[151], loss:130.512584, fps:97.66 imgs/sec, lr:0.00020741758635267615, per step time: 327.6693058013916ms
+2024-09-20 22:58:59,702:INFO:epoch[127], iter[69], loss:128.498721, fps:91.15 imgs/sec, lr:9.478021820541471e-05, per step time: 351.07710361480713ms
+2024-09-20 22:59:32,010:INFO:epoch[127], iter[169], loss:131.827710, fps:99.05 imgs/sec, lr:0.0002321428619325161, per step time: 323.07223320007324ms
+2024-09-20 23:00:09,650:INFO:epoch[128], iter[87], loss:129.822132, fps:85.02 imgs/sec, lr:0.00011950549378525466, per step time: 376.391818523407ms
+2024-09-20 23:00:44,641:INFO:epoch[129], iter[5], loss:129.149267, fps:91.47 imgs/sec, lr:6.868132004456129e-06, per step time: 349.82423305511475ms
+2024-09-20 23:01:17,753:INFO:epoch[129], iter[105], loss:128.333799, fps:96.68 imgs/sec, lr:0.0001442307693650946, per step time: 330.98079919815063ms
+2024-09-20 23:01:53,992:INFO:epoch[130], iter[23], loss:128.456444, fps:88.31 imgs/sec, lr:3.159340485581197e-05, per step time: 362.34421014785767ms
+2024-09-20 23:02:29,200:INFO:epoch[130], iter[123], loss:132.896715, fps:90.90 imgs/sec, lr:0.00016895604494493455, per step time: 352.05196619033813ms
+2024-09-20 23:02:49,034:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-23:02:49.505.754 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 23:02:49,524:INFO:Load train network success
+2024-09-20 23:02:55,574:INFO:Processing... 0.00% 
+2024-09-20 23:03:08,061:INFO:Calculating mAP...
+2024-09-20 23:04:42,963:INFO:Save bbox prediction result.
+2024-09-20 23:04:49,573:INFO:Result file path: ./output/predict_2024_09_20_23_04_42.json
+Loading and preparing results...
+DONE (t=5.31s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=12.72s).
+Accumulating evaluation results...
+DONE (t=6.35s).
+2024-09-20 23:05:15,108:INFO:Best result 0.12646614598067252 at 130 epoch
+2024-09-20 23:05:15,108:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.126
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.249
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.126
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.071
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.184
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.184
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.155
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.295
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.360
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.209
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.440
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.438
+
+2024-09-20 23:05:15,108:INFO:Ending inference...
+2024-09-20 23:05:28,410:INFO:epoch[131], iter[41], loss:128.724253, fps:17.86 imgs/sec, lr:5.631868043565191e-05, per step time: 1792.0935678482056ms
+2024-09-20 23:05:59,308:INFO:epoch[131], iter[141], loss:128.469667, fps:103.57 imgs/sec, lr:0.0001936813205247745, per step time: 308.9651083946228ms
+2024-09-20 23:06:34,634:INFO:epoch[132], iter[59], loss:128.619658, fps:90.59 imgs/sec, lr:8.104395965347067e-05, per step time: 353.24661016464233ms
+2024-09-20 23:07:07,343:INFO:epoch[132], iter[159], loss:130.061288, fps:97.85 imgs/sec, lr:0.00021840659610461444, per step time: 327.0430827140808ms
+2024-09-20 23:07:41,863:INFO:epoch[133], iter[77], loss:128.241758, fps:92.70 imgs/sec, lr:0.000105769227957353, per step time: 345.1941442489624ms
+2024-09-20 23:08:16,083:INFO:epoch[133], iter[177], loss:126.442736, fps:93.52 imgs/sec, lr:0.00024313187168445438, per step time: 342.18738555908203ms
+2024-09-20 23:08:50,779:INFO:epoch[134], iter[95], loss:129.999414, fps:92.23 imgs/sec, lr:0.00013049450353719294, per step time: 346.95367097854614ms
+2024-09-20 23:09:22,477:INFO:epoch[135], iter[13], loss:125.969845, fps:100.96 imgs/sec, lr:1.7857142665889114e-05, per step time: 316.9525361061096ms
+2024-09-20 23:09:56,699:INFO:epoch[135], iter[113], loss:126.938308, fps:93.51 imgs/sec, lr:0.00015521977911703289, per step time: 342.1990466117859ms
+2024-09-20 23:10:30,384:INFO:epoch[136], iter[31], loss:125.439331, fps:95.00 imgs/sec, lr:4.258241824572906e-05, per step time: 336.8393588066101ms
+2024-09-20 23:11:02,912:INFO:epoch[136], iter[131], loss:128.038167, fps:98.41 imgs/sec, lr:0.00017994505469687283, per step time: 325.15729665756226ms
+2024-09-20 23:11:38,187:INFO:epoch[137], iter[49], loss:128.029880, fps:90.72 imgs/sec, lr:6.7307693825569e-05, per step time: 352.72708892822266ms
+2024-09-20 23:12:10,860:INFO:epoch[137], iter[149], loss:127.116728, fps:97.94 imgs/sec, lr:0.00020467033027671278, per step time: 326.7266917228699ms
+2024-09-20 23:12:45,625:INFO:epoch[138], iter[67], loss:125.463853, fps:92.05 imgs/sec, lr:9.203296940540895e-05, per step time: 347.6414728164673ms
+2024-09-20 23:13:20,065:INFO:epoch[138], iter[167], loss:127.292950, fps:92.92 imgs/sec, lr:0.00022939560585655272, per step time: 344.37768936157227ms
+2024-09-20 23:13:53,970:INFO:epoch[139], iter[85], loss:126.317208, fps:94.39 imgs/sec, lr:0.0001167582449852489, per step time: 339.0366721153259ms
+2024-09-20 23:14:27,383:INFO:epoch[140], iter[3], loss:125.929605, fps:95.80 imgs/sec, lr:4.120879111724207e-06, per step time: 334.02865409851074ms
+2024-09-20 23:14:59,616:INFO:epoch[140], iter[103], loss:126.942285, fps:99.31 imgs/sec, lr:0.00014148351328913122, per step time: 322.2372889518738ms
+2024-09-20 23:15:26,253:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-23:15:26.809.422 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 23:15:26,830:INFO:Load train network success
+2024-09-20 23:15:32,926:INFO:Processing... 0.00% 
+2024-09-20 23:15:44,969:INFO:Calculating mAP...
+2024-09-20 23:17:26,767:INFO:Save bbox prediction result.
+2024-09-20 23:17:33,635:INFO:Result file path: ./output/predict_2024_09_20_23_17_26.json
+Loading and preparing results...
+DONE (t=5.09s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=12.89s).
+Accumulating evaluation results...
+DONE (t=6.81s).
+2024-09-20 23:17:59,555:INFO:Best result 0.1297615189628833 at 140 epoch
+2024-09-20 23:17:59,555:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.130
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.250
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.129
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.068
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.194
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.185
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.158
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.307
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.369
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.211
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.447
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.453
+
+2024-09-20 23:17:59,555:INFO:Ending inference...
+2024-09-20 23:18:09,144:INFO:epoch[141], iter[21], loss:125.165137, fps:16.88 imgs/sec, lr:2.88461542368168e-05, per step time: 1895.2597951889038ms
+2024-09-20 23:18:40,348:INFO:epoch[141], iter[121], loss:124.948088, fps:102.55 imgs/sec, lr:0.00016620878886897117, per step time: 312.0321750640869ms
+2024-09-20 23:19:12,251:INFO:epoch[142], iter[39], loss:125.667701, fps:100.31 imgs/sec, lr:5.357142799766734e-05, per step time: 318.9992880821228ms
+2024-09-20 23:19:45,790:INFO:epoch[142], iter[139], loss:125.683373, fps:95.42 imgs/sec, lr:0.00019093406444881111, per step time: 335.3760242462158ms
+2024-09-20 23:20:18,820:INFO:epoch[143], iter[57], loss:128.012079, fps:96.89 imgs/sec, lr:7.829670357750729e-05, per step time: 330.25548934936523ms
+2024-09-20 23:20:51,669:INFO:epoch[143], iter[157], loss:121.850427, fps:97.42 imgs/sec, lr:0.00021565934002865106, per step time: 328.4816575050354ms
+2024-09-20 23:21:25,066:INFO:epoch[144], iter[75], loss:123.128417, fps:95.83 imgs/sec, lr:0.00010302197915734723, per step time: 333.90763759613037ms
+2024-09-20 23:21:56,731:INFO:epoch[144], iter[175], loss:124.338549, fps:101.07 imgs/sec, lr:0.000240384615608491, per step time: 316.6258239746094ms
+2024-09-20 23:22:32,748:INFO:epoch[145], iter[93], loss:123.793945, fps:88.86 imgs/sec, lr:0.00012774724746122956, per step time: 360.1122212409973ms
+2024-09-20 23:23:05,772:INFO:epoch[146], iter[11], loss:123.769950, fps:96.91 imgs/sec, lr:1.5109890227904543e-05, per step time: 330.18821001052856ms
+2024-09-20 23:23:39,045:INFO:epoch[146], iter[111], loss:124.394664, fps:96.21 imgs/sec, lr:0.0001524725230410695, per step time: 332.60732889175415ms
+2024-09-20 23:24:12,116:INFO:epoch[147], iter[29], loss:121.802347, fps:96.76 imgs/sec, lr:3.983516580774449e-05, per step time: 330.705726146698ms
+2024-09-20 23:24:45,609:INFO:epoch[147], iter[129], loss:125.513135, fps:95.56 imgs/sec, lr:0.00017719779862090945, per step time: 334.86868619918823ms
+2024-09-20 23:25:20,801:INFO:epoch[148], iter[47], loss:121.482717, fps:90.93 imgs/sec, lr:6.456043774960563e-05, per step time: 351.91351890563965ms
+2024-09-20 23:25:52,800:INFO:epoch[148], iter[147], loss:123.419275, fps:100.03 imgs/sec, lr:0.0002019230742007494, per step time: 319.9073338508606ms
+2024-09-20 23:26:25,958:INFO:epoch[149], iter[65], loss:122.111397, fps:96.53 imgs/sec, lr:8.928571332944557e-05, per step time: 331.4860200881958ms
+2024-09-20 23:26:59,153:INFO:epoch[149], iter[165], loss:125.449110, fps:96.41 imgs/sec, lr:0.00022664834978058934, per step time: 331.92606687545776ms
+2024-09-20 23:27:32,582:INFO:epoch[150], iter[83], loss:120.971199, fps:95.74 imgs/sec, lr:0.00011401098890928552, per step time: 334.2355489730835ms
+2024-09-20 23:28:05,237:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-23:28:05.611.411 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 23:28:05,620:INFO:Load train network success
+2024-09-20 23:28:11,701:INFO:Processing... 0.00% 
+2024-09-20 23:28:24,078:INFO:Calculating mAP...
+2024-09-20 23:30:22,539:INFO:Save bbox prediction result.
+2024-09-20 23:30:29,716:INFO:Result file path: ./output/predict_2024_09_20_23_30_22.json
+Loading and preparing results...
+DONE (t=5.79s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=13.64s).
+Accumulating evaluation results...
+DONE (t=9.43s).
+2024-09-20 23:30:59,839:INFO:Best result 0.13634703904597942 at 150 epoch
+2024-09-20 23:30:59,840:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.136
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.256
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.140
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.077
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.204
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.189
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.163
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.315
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.377
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.219
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.456
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.462
+
+2024-09-20 23:30:59,840:INFO:Ending inference...
+2024-09-20 23:31:00,140:INFO:epoch[151], iter[1], loss:123.446616, fps:15.42 imgs/sec, lr:1.3736263326791232e-06, per step time: 2075.5417490005493ms
+2024-09-20 23:31:32,852:INFO:epoch[151], iter[101], loss:125.950405, fps:97.82 imgs/sec, lr:0.00013873625721316785, per step time: 327.1178150177002ms
+2024-09-20 23:32:05,101:INFO:epoch[152], iter[19], loss:120.440224, fps:99.23 imgs/sec, lr:2.609890179883223e-05, per step time: 322.4720025062561ms
+2024-09-20 23:32:37,563:INFO:epoch[152], iter[119], loss:122.634608, fps:98.59 imgs/sec, lr:0.0001634615327930078, per step time: 324.57486152648926ms
+2024-09-20 23:33:12,952:INFO:epoch[153], iter[37], loss:120.341624, fps:90.43 imgs/sec, lr:5.082417555968277e-05, per step time: 353.87375354766846ms
+2024-09-20 23:33:47,886:INFO:epoch[153], iter[137], loss:123.097799, fps:91.60 imgs/sec, lr:0.00018818680837284774, per step time: 349.33199405670166ms
+2024-09-20 23:34:21,119:INFO:epoch[154], iter[55], loss:122.685954, fps:96.29 imgs/sec, lr:7.554944750154391e-05, per step time: 332.32348442077637ms
+2024-09-20 23:34:55,011:INFO:epoch[154], iter[155], loss:123.991807, fps:94.42 imgs/sec, lr:0.00021291208395268768, per step time: 338.9163017272949ms
+2024-09-20 23:35:29,634:INFO:epoch[155], iter[73], loss:122.615857, fps:92.43 imgs/sec, lr:0.00010027472308138385, per step time: 346.2205743789673ms
+2024-09-20 23:36:04,808:INFO:epoch[155], iter[173], loss:121.483161, fps:91.00 imgs/sec, lr:0.00023763735953252763, per step time: 351.66131019592285ms
+2024-09-20 23:36:39,190:INFO:epoch[156], iter[91], loss:118.269241, fps:93.08 imgs/sec, lr:0.0001250000059371814, per step time: 343.78196954727173ms
+2024-09-20 23:37:14,780:INFO:epoch[157], iter[9], loss:124.154228, fps:89.93 imgs/sec, lr:1.2362637789919972e-05, per step time: 355.84038257598877ms
+2024-09-20 23:37:50,163:INFO:epoch[157], iter[109], loss:119.266597, fps:90.44 imgs/sec, lr:0.00014972528151702136, per step time: 353.8176465034485ms
+2024-09-20 23:38:26,139:INFO:epoch[158], iter[27], loss:120.144343, fps:88.95 imgs/sec, lr:3.708791336975992e-05, per step time: 359.7498083114624ms
+2024-09-20 23:38:59,198:INFO:epoch[158], iter[127], loss:121.026466, fps:96.80 imgs/sec, lr:0.00017445054254494607, per step time: 330.5803060531616ms
+2024-09-20 23:39:31,758:INFO:epoch[159], iter[45], loss:120.075502, fps:98.28 imgs/sec, lr:6.181318894959986e-05, per step time: 325.593843460083ms
+2024-09-20 23:40:05,542:INFO:epoch[159], iter[145], loss:120.720975, fps:94.73 imgs/sec, lr:0.00019917581812478602, per step time: 337.8160834312439ms
+2024-09-20 23:40:41,370:INFO:epoch[160], iter[63], loss:119.142794, fps:89.32 imgs/sec, lr:8.653846452943981e-05, per step time: 358.2783341407776ms
+2024-09-20 23:41:14,850:INFO:epoch[160], iter[163], loss:118.383065, fps:95.59 imgs/sec, lr:0.00022390109370462596, per step time: 334.76643562316895ms
+2024-09-20 23:41:22,025:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-23:41:22.522.351 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 23:41:22,542:INFO:Load train network success
+2024-09-20 23:41:27,747:INFO:Processing... 0.00% 
+2024-09-20 23:41:40,084:INFO:Calculating mAP...
+2024-09-20 23:43:39,357:INFO:Save bbox prediction result.
+2024-09-20 23:43:46,970:INFO:Result file path: ./output/predict_2024_09_20_23_43_39.json
+Loading and preparing results...
+DONE (t=6.43s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=13.98s).
+Accumulating evaluation results...
+DONE (t=8.60s).
+2024-09-20 23:44:17,215:INFO:Best result 0.1408401868998129 at 160 epoch
+2024-09-20 23:44:17,216:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.141
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.262
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.141
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.082
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.197
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.197
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.163
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.318
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.377
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.219
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.458
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.461
+
+2024-09-20 23:44:17,216:INFO:Ending inference...
+2024-09-20 23:44:42,504:INFO:epoch[161], iter[81], loss:119.034469, fps:15.41 imgs/sec, lr:0.00011126373283332214, per step time: 2076.493308544159ms
+2024-09-20 23:45:13,151:INFO:epoch[161], iter[181], loss:122.939383, fps:104.42 imgs/sec, lr:0.0002486263692844659, per step time: 306.46456718444824ms
+2024-09-20 23:45:46,432:INFO:epoch[162], iter[99], loss:119.536736, fps:96.16 imgs/sec, lr:0.0001359890156891197, per step time: 332.7889156341553ms
+2024-09-20 23:46:20,113:INFO:epoch[163], iter[17], loss:120.382381, fps:95.01 imgs/sec, lr:2.3351647541858256e-05, per step time: 336.7985200881958ms
+2024-09-20 23:46:52,713:INFO:epoch[163], iter[117], loss:121.309205, fps:98.17 imgs/sec, lr:0.00016071429126895964, per step time: 325.955011844635ms
+2024-09-20 23:47:26,772:INFO:epoch[164], iter[35], loss:116.924814, fps:93.96 imgs/sec, lr:4.80769231216982e-05, per step time: 340.56528091430664ms
+2024-09-20 23:47:59,137:INFO:epoch[164], iter[135], loss:118.611944, fps:98.87 imgs/sec, lr:0.00018543956684879959, per step time: 323.6450386047363ms
+2024-09-20 23:48:33,896:INFO:epoch[165], iter[53], loss:121.020307, fps:92.07 imgs/sec, lr:7.280219870153815e-05, per step time: 347.5626587867737ms
+2024-09-20 23:49:09,947:INFO:epoch[165], iter[153], loss:119.003034, fps:88.77 imgs/sec, lr:0.00021016484242863953, per step time: 360.497190952301ms
+2024-09-20 23:49:43,021:INFO:epoch[166], iter[71], loss:121.656607, fps:96.76 imgs/sec, lr:9.752747428137809e-05, per step time: 330.7194685935974ms
+2024-09-20 23:50:16,444:INFO:epoch[166], iter[171], loss:118.265737, fps:95.77 imgs/sec, lr:0.00023489010345656425, per step time: 334.14984464645386ms
+2024-09-20 23:50:51,873:INFO:epoch[167], iter[89], loss:119.264357, fps:90.32 imgs/sec, lr:0.00012225274986121804, per step time: 354.28125858306885ms
+2024-09-20 23:51:24,583:INFO:epoch[168], iter[7], loss:118.865781, fps:97.84 imgs/sec, lr:9.6153844424407e-06, per step time: 327.05182552337646ms
+2024-09-20 23:51:57,200:INFO:epoch[168], iter[107], loss:119.554023, fps:98.13 imgs/sec, lr:0.00014697802544105798, per step time: 326.08696460723877ms
+2024-09-20 23:52:31,295:INFO:epoch[169], iter[25], loss:117.754039, fps:93.86 imgs/sec, lr:3.4340660931775346e-05, per step time: 340.9225130081177ms
+2024-09-20 23:53:04,681:INFO:epoch[169], iter[125], loss:116.770246, fps:95.86 imgs/sec, lr:0.00017170330102089792, per step time: 333.8299226760864ms
+2024-09-20 23:53:39,118:INFO:epoch[170], iter[43], loss:119.711896, fps:92.96 imgs/sec, lr:5.9065932873636484e-05, per step time: 344.23110485076904ms
+2024-09-20 23:54:14,751:INFO:epoch[170], iter[143], loss:116.990155, fps:89.81 imgs/sec, lr:0.00019642857660073787, per step time: 356.29607677459717ms
+2024-09-20 23:54:27,375:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-20-23:54:27.900.687 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-20 23:54:27,912:INFO:Load train network success
+2024-09-20 23:54:33,472:INFO:Processing... 0.00% 
+2024-09-20 23:54:47,185:INFO:Calculating mAP...
+2024-09-20 23:56:57,325:INFO:Save bbox prediction result.
+2024-09-20 23:57:06,078:INFO:Result file path: ./output/predict_2024_09_20_23_56_57.json
+Loading and preparing results...
+DONE (t=4.19s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=16.17s).
+Accumulating evaluation results...
+DONE (t=7.63s).
+2024-09-20 23:57:35,494:INFO:Best result 0.14800970232176494 at 170 epoch
+2024-09-20 23:57:35,494:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.148
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.272
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.147
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.088
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.211
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.201
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.167
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.317
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.385
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.232
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.471
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.466
+
+2024-09-20 23:57:35,495:INFO:Ending inference...
+2024-09-20 23:57:56,670:INFO:epoch[171], iter[61], loss:118.260703, fps:14.42 imgs/sec, lr:8.379120845347643e-05, per step time: 2219.1401195526123ms
+2024-09-20 23:58:27,035:INFO:epoch[171], iter[161], loss:117.735702, fps:105.39 imgs/sec, lr:0.00022115385218057781, per step time: 303.64450216293335ms
+2024-09-20 23:58:59,715:INFO:epoch[172], iter[79], loss:113.439224, fps:97.92 imgs/sec, lr:0.00010851648403331637, per step time: 326.79879426956177ms
+2024-09-20 23:59:33,185:INFO:epoch[172], iter[179], loss:117.891864, fps:95.62 imgs/sec, lr:0.00024587911320850253, per step time: 334.6550989151001ms
+2024-09-21 00:00:08,022:INFO:epoch[173], iter[97], loss:113.850960, fps:91.86 imgs/sec, lr:0.00013324175961315632, per step time: 348.36323499679565ms
+2024-09-21 00:00:43,687:INFO:epoch[174], iter[15], loss:119.238884, fps:89.72 imgs/sec, lr:2.0604395103873685e-05, per step time: 356.6509938240051ms
+2024-09-21 00:01:16,992:INFO:epoch[174], iter[115], loss:115.311836, fps:96.08 imgs/sec, lr:0.00015796703519299626, per step time: 333.0439352989197ms
+2024-09-21 00:01:51,890:INFO:epoch[175], iter[33], loss:115.578916, fps:91.71 imgs/sec, lr:4.532967068371363e-05, per step time: 348.9119529724121ms
+2024-09-21 00:02:23,758:INFO:epoch[175], iter[133], loss:113.022321, fps:100.42 imgs/sec, lr:0.0001826923107728362, per step time: 318.67212772369385ms
+2024-09-21 00:02:57,049:INFO:epoch[176], iter[51], loss:115.366304, fps:96.13 imgs/sec, lr:7.005494262557477e-05, per step time: 332.89384603500366ms
+2024-09-21 00:03:30,228:INFO:epoch[176], iter[151], loss:115.544753, fps:96.45 imgs/sec, lr:0.00020741758635267615, per step time: 331.78191900253296ms
+2024-09-21 00:04:05,774:INFO:epoch[177], iter[69], loss:115.040966, fps:90.04 imgs/sec, lr:9.478021820541471e-05, per step time: 355.3860807418823ms
+2024-09-21 00:04:37,123:INFO:epoch[177], iter[169], loss:113.594740, fps:102.08 imgs/sec, lr:0.0002321428619325161, per step time: 313.4677982330322ms
+2024-09-21 00:05:10,962:INFO:epoch[178], iter[87], loss:115.535444, fps:94.57 imgs/sec, lr:0.00011950549378525466, per step time: 338.36917877197266ms
+2024-09-21 00:05:45,322:INFO:epoch[179], iter[5], loss:119.144962, fps:93.16 imgs/sec, lr:6.868132004456129e-06, per step time: 343.4821653366089ms
+2024-09-21 00:06:17,538:INFO:epoch[179], iter[105], loss:115.050396, fps:99.33 imgs/sec, lr:0.0001442307693650946, per step time: 322.14702129364014ms
+2024-09-21 00:06:50,490:INFO:epoch[180], iter[23], loss:116.403519, fps:97.14 imgs/sec, lr:3.159340485581197e-05, per step time: 329.4316816329956ms
+2024-09-21 00:07:22,679:INFO:epoch[180], iter[123], loss:113.556513, fps:99.41 imgs/sec, lr:0.00016895604494493455, per step time: 321.88705921173096ms
+2024-09-21 00:07:41,504:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-00:07:41.979.010 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 00:07:41,987:INFO:Load train network success
+2024-09-21 00:07:47,218:INFO:Processing... 0.00% 
+2024-09-21 00:07:59,755:INFO:Calculating mAP...
+2024-09-21 00:10:20,200:INFO:Save bbox prediction result.
+2024-09-21 00:10:28,387:INFO:Result file path: ./output/predict_2024_09_21_00_10_20.json
+Loading and preparing results...
+DONE (t=6.74s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.00s).
+Accumulating evaluation results...
+DONE (t=8.70s).
+2024-09-21 00:11:00,102:INFO:Best result 0.15060400063685253 at 180 epoch
+2024-09-21 00:11:00,103:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.151
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.273
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.150
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.085
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.206
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.206
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.168
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.322
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.392
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.239
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.474
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.470
+
+2024-09-21 00:11:00,103:INFO:Ending inference...
+2024-09-21 00:11:15,779:INFO:epoch[181], iter[41], loss:115.428275, fps:13.73 imgs/sec, lr:5.631868043565191e-05, per step time: 2330.987057685852ms
+2024-09-21 00:11:46,845:INFO:epoch[181], iter[141], loss:115.537684, fps:103.01 imgs/sec, lr:0.0001936813205247745, per step time: 310.66256761550903ms
+2024-09-21 00:12:20,440:INFO:epoch[182], iter[59], loss:112.614738, fps:95.28 imgs/sec, lr:8.104395965347067e-05, per step time: 335.8647131919861ms
+2024-09-21 00:12:52,910:INFO:epoch[182], iter[159], loss:114.101927, fps:98.56 imgs/sec, lr:0.00021840659610461444, per step time: 324.6911883354187ms
+2024-09-21 00:13:24,875:INFO:epoch[183], iter[77], loss:114.945649, fps:100.11 imgs/sec, lr:0.000105769227957353, per step time: 319.63618516921997ms
+2024-09-21 00:13:57,032:INFO:epoch[183], iter[177], loss:113.025270, fps:99.52 imgs/sec, lr:0.00024313187168445438, per step time: 321.55378103256226ms
+2024-09-21 00:14:31,038:INFO:epoch[184], iter[95], loss:114.319051, fps:94.11 imgs/sec, lr:0.00013049450353719294, per step time: 340.0417447090149ms
+2024-09-21 00:15:09,743:INFO:epoch[185], iter[13], loss:113.715316, fps:82.69 imgs/sec, lr:1.7857142665889114e-05, per step time: 386.9735527038574ms
+2024-09-21 00:15:42,864:INFO:epoch[185], iter[113], loss:113.252966, fps:96.65 imgs/sec, lr:0.00015521977911703289, per step time: 331.0768461227417ms
+2024-09-21 00:16:15,295:INFO:epoch[186], iter[31], loss:111.970683, fps:98.70 imgs/sec, lr:4.258241824572906e-05, per step time: 324.2266583442688ms
+2024-09-21 00:16:47,036:INFO:epoch[186], iter[131], loss:112.523618, fps:100.82 imgs/sec, lr:0.00017994505469687283, per step time: 317.40036249160767ms
+2024-09-21 00:17:19,245:INFO:epoch[187], iter[49], loss:112.097350, fps:99.36 imgs/sec, lr:6.7307693825569e-05, per step time: 322.0676517486572ms
+2024-09-21 00:17:51,565:INFO:epoch[187], iter[149], loss:114.005003, fps:99.02 imgs/sec, lr:0.00020467033027671278, per step time: 323.1631898880005ms
+2024-09-21 00:18:25,868:INFO:epoch[188], iter[67], loss:113.292285, fps:93.29 imgs/sec, lr:9.203296940540895e-05, per step time: 343.02366495132446ms
+2024-09-21 00:18:59,672:INFO:epoch[188], iter[167], loss:111.581020, fps:94.72 imgs/sec, lr:0.00022939560585655272, per step time: 337.8440546989441ms
+2024-09-21 00:19:32,815:INFO:epoch[189], iter[85], loss:111.043287, fps:96.56 imgs/sec, lr:0.0001167582449852489, per step time: 331.41053915023804ms
+2024-09-21 00:20:04,926:INFO:epoch[190], iter[3], loss:114.982169, fps:99.66 imgs/sec, lr:4.120879111724207e-06, per step time: 321.0889458656311ms
+2024-09-21 00:20:37,368:INFO:epoch[190], iter[103], loss:112.699812, fps:98.66 imgs/sec, lr:0.00014148351328913122, per step time: 324.3621802330017ms
+2024-09-21 00:21:03,177:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-00:21:03.768.890 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 00:21:03,780:INFO:Load train network success
+2024-09-21 00:21:10,284:INFO:Processing... 0.00% 
+2024-09-21 00:21:22,706:INFO:Calculating mAP...
+2024-09-21 00:24:16,880:INFO:Save bbox prediction result.
+2024-09-21 00:24:25,337:INFO:Result file path: ./output/predict_2024_09_21_00_24_16.json
+Loading and preparing results...
+DONE (t=4.71s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=17.95s).
+Accumulating evaluation results...
+DONE (t=10.48s).
+2024-09-21 00:24:59,870:INFO:Best result 0.15421206301338905 at 190 epoch
+2024-09-21 00:24:59,871:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.154
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.277
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.151
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.092
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.216
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.211
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.171
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.329
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.400
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.255
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.485
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.474
+
+2024-09-21 00:24:59,871:INFO:Ending inference...
+2024-09-21 00:25:09,213:INFO:epoch[191], iter[21], loss:110.804914, fps:11.77 imgs/sec, lr:2.88461542368168e-05, per step time: 2718.399441242218ms
+2024-09-21 00:25:40,371:INFO:epoch[191], iter[121], loss:110.722188, fps:102.71 imgs/sec, lr:0.00016620878886897117, per step time: 311.56973361968994ms
+2024-09-21 00:26:11,991:INFO:epoch[192], iter[39], loss:111.495396, fps:101.24 imgs/sec, lr:5.357142799766734e-05, per step time: 316.0904884338379ms
+2024-09-21 00:26:45,583:INFO:epoch[192], iter[139], loss:110.760905, fps:95.28 imgs/sec, lr:0.00019093406444881111, per step time: 335.8361577987671ms
+2024-09-21 00:27:19,441:INFO:epoch[193], iter[57], loss:110.585617, fps:94.53 imgs/sec, lr:7.829670357750729e-05, per step time: 338.52656841278076ms
+2024-09-21 00:27:53,664:INFO:epoch[193], iter[157], loss:111.564965, fps:93.52 imgs/sec, lr:0.00021565934002865106, per step time: 342.1712064743042ms
+2024-09-21 00:28:27,717:INFO:epoch[194], iter[75], loss:112.315055, fps:93.98 imgs/sec, lr:0.00010302197915734723, per step time: 340.5134987831116ms
+2024-09-21 00:29:01,514:INFO:epoch[194], iter[175], loss:113.397694, fps:94.68 imgs/sec, lr:0.000240384615608491, per step time: 337.96521186828613ms
+2024-09-21 00:29:35,976:INFO:epoch[195], iter[93], loss:113.045242, fps:92.87 imgs/sec, lr:0.00012774724746122956, per step time: 344.5646357536316ms
+2024-09-21 00:30:10,984:INFO:epoch[196], iter[11], loss:110.331654, fps:91.42 imgs/sec, lr:1.5109890227904543e-05, per step time: 350.0251531600952ms
+2024-09-21 00:30:43,807:INFO:epoch[196], iter[111], loss:110.620744, fps:97.50 imgs/sec, lr:0.0001524725230410695, per step time: 328.1929683685303ms
+2024-09-21 00:31:19,105:INFO:epoch[197], iter[29], loss:111.132546, fps:90.66 imgs/sec, lr:3.983516580774449e-05, per step time: 352.96184062957764ms
+2024-09-21 00:31:50,396:INFO:epoch[197], iter[129], loss:111.026616, fps:102.27 imgs/sec, lr:0.00017719779862090945, per step time: 312.8979206085205ms
+2024-09-21 00:32:22,605:INFO:epoch[198], iter[47], loss:112.588395, fps:99.36 imgs/sec, lr:6.456043774960563e-05, per step time: 322.06270456314087ms
+2024-09-21 00:32:56,085:INFO:epoch[198], iter[147], loss:111.955262, fps:95.59 imgs/sec, lr:0.0002019230742007494, per step time: 334.76970195770264ms
+2024-09-21 00:33:30,586:INFO:epoch[199], iter[65], loss:114.626836, fps:92.75 imgs/sec, lr:8.928571332944557e-05, per step time: 345.0027823448181ms
+2024-09-21 00:34:04,004:INFO:epoch[199], iter[165], loss:110.639565, fps:95.76 imgs/sec, lr:0.00022664834978058934, per step time: 334.17805910110474ms
+2024-09-21 00:34:36,088:INFO:epoch[200], iter[83], loss:110.743324, fps:99.74 imgs/sec, lr:0.00011401098890928552, per step time: 320.8319282531738ms
+2024-09-21 00:35:11,402:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-00:35:12.559.14 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 00:35:12,065:INFO:Load train network success
+2024-09-21 00:35:17,935:INFO:Processing... 0.00% 
+2024-09-21 00:35:30,214:INFO:Calculating mAP...
+2024-09-21 00:38:20,697:INFO:Save bbox prediction result.
+2024-09-21 00:38:29,196:INFO:Result file path: ./output/predict_2024_09_21_00_38_20.json
+Loading and preparing results...
+DONE (t=4.68s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=18.20s).
+Accumulating evaluation results...
+DONE (t=9.10s).
+2024-09-21 00:39:02,563:INFO:Best result 0.1574923839246626 at 200 epoch
+2024-09-21 00:39:02,564:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.157
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.280
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.159
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.096
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.216
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.219
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.171
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.332
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.400
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.260
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.482
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.471
+
+2024-09-21 00:39:02,565:INFO:Ending inference...
+2024-09-21 00:39:02,883:INFO:epoch[201], iter[1], loss:110.846965, fps:11.99 imgs/sec, lr:1.3736263326791232e-06, per step time: 2667.8743767738342ms
+2024-09-21 00:39:36,523:INFO:epoch[201], iter[101], loss:109.308204, fps:95.13 imgs/sec, lr:0.00013873625721316785, per step time: 336.39429807662964ms
+2024-09-21 00:40:08,905:INFO:epoch[202], iter[19], loss:109.350490, fps:98.86 imgs/sec, lr:2.609890179883223e-05, per step time: 323.69808435440063ms
+2024-09-21 00:40:42,717:INFO:epoch[202], iter[119], loss:109.096971, fps:94.65 imgs/sec, lr:0.0001634615327930078, per step time: 338.0984830856323ms
+2024-09-21 00:41:19,191:INFO:epoch[203], iter[37], loss:111.076856, fps:87.74 imgs/sec, lr:5.082417555968277e-05, per step time: 364.72336530685425ms
+2024-09-21 00:41:51,733:INFO:epoch[203], iter[137], loss:108.868444, fps:98.36 imgs/sec, lr:0.00018818680837284774, per step time: 325.3274869918823ms
+2024-09-21 00:42:26,095:INFO:epoch[204], iter[55], loss:108.611211, fps:93.16 imgs/sec, lr:7.554944750154391e-05, per step time: 343.49340200424194ms
+2024-09-21 00:42:59,861:INFO:epoch[204], iter[155], loss:110.332093, fps:94.77 imgs/sec, lr:0.00021291208395268768, per step time: 337.6479482650757ms
+2024-09-21 00:43:34,989:INFO:epoch[205], iter[73], loss:109.997431, fps:91.10 imgs/sec, lr:0.00010027472308138385, per step time: 351.2586188316345ms
+2024-09-21 00:44:07,059:INFO:epoch[205], iter[173], loss:108.475287, fps:99.81 imgs/sec, lr:0.00023763735953252763, per step time: 320.6119894981384ms
+2024-09-21 00:44:41,127:INFO:epoch[206], iter[91], loss:108.602098, fps:93.93 imgs/sec, lr:0.0001250000059371814, per step time: 340.66203594207764ms
+2024-09-21 00:45:15,334:INFO:epoch[207], iter[9], loss:108.641388, fps:93.56 imgs/sec, lr:1.2362637789919972e-05, per step time: 342.02704906463623ms
+2024-09-21 00:45:50,113:INFO:epoch[207], iter[109], loss:108.145791, fps:92.01 imgs/sec, lr:0.00014972528151702136, per step time: 347.7795100212097ms
+2024-09-21 00:46:24,887:INFO:epoch[208], iter[27], loss:109.536302, fps:92.05 imgs/sec, lr:3.708791336975992e-05, per step time: 347.6230525970459ms
+2024-09-21 00:46:59,663:INFO:epoch[208], iter[127], loss:108.619650, fps:92.04 imgs/sec, lr:0.00017445054254494607, per step time: 347.6665234565735ms
+2024-09-21 00:47:33,595:INFO:epoch[209], iter[45], loss:110.110516, fps:94.31 imgs/sec, lr:6.181318894959986e-05, per step time: 339.29962635040283ms
+2024-09-21 00:48:05,422:INFO:epoch[209], iter[145], loss:109.327173, fps:100.55 imgs/sec, lr:0.00019917581812478602, per step time: 318.2611894607544ms
+2024-09-21 00:48:40,695:INFO:epoch[210], iter[63], loss:106.435007, fps:90.73 imgs/sec, lr:8.653846452943981e-05, per step time: 352.7129030227661ms
+2024-09-21 00:49:16,406:INFO:epoch[210], iter[163], loss:106.152759, fps:89.62 imgs/sec, lr:0.00022390109370462596, per step time: 357.0780873298645ms
+2024-09-21 00:49:23,569:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-00:49:24.105.927 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 00:49:24,115:INFO:Load train network success
+2024-09-21 00:49:29,832:INFO:Processing... 0.00% 
+2024-09-21 00:49:41,809:INFO:Calculating mAP...
+2024-09-21 00:52:37,896:INFO:Save bbox prediction result.
+2024-09-21 00:52:46,948:INFO:Result file path: ./output/predict_2024_09_21_00_52_37.json
+Loading and preparing results...
+DONE (t=7.43s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.59s).
+Accumulating evaluation results...
+DONE (t=12.01s).
+2024-09-21 00:53:23,530:INFO:Best result 0.15828163654422248 at 210 epoch
+2024-09-21 00:53:23,530:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.158
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.283
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.159
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.095
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.216
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.221
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.174
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.332
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.403
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.255
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.484
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.478
+
+2024-09-21 00:53:23,531:INFO:Ending inference...
+2024-09-21 00:53:49,668:INFO:epoch[211], iter[81], loss:107.345529, fps:11.71 imgs/sec, lr:0.00011126373283332214, per step time: 2732.609555721283ms
+2024-09-21 00:54:20,564:INFO:epoch[211], iter[181], loss:106.935943, fps:103.58 imgs/sec, lr:0.0002486263692844659, per step time: 308.93269538879395ms
+2024-09-21 00:54:56,342:INFO:epoch[212], iter[99], loss:106.046121, fps:89.44 imgs/sec, lr:0.0001359890156891197, per step time: 357.76999950408936ms
+2024-09-21 00:55:31,579:INFO:epoch[213], iter[17], loss:105.710254, fps:90.83 imgs/sec, lr:2.3351647541858256e-05, per step time: 352.29787826538086ms
+2024-09-21 00:56:06,277:INFO:epoch[213], iter[117], loss:108.458076, fps:92.22 imgs/sec, lr:0.00016071429126895964, per step time: 346.9790267944336ms
+2024-09-21 00:56:39,609:INFO:epoch[214], iter[35], loss:108.163204, fps:96.05 imgs/sec, lr:4.80769231216982e-05, per step time: 333.15407037734985ms
+2024-09-21 00:57:13,589:INFO:epoch[214], iter[135], loss:105.456129, fps:94.18 imgs/sec, lr:0.00018543956684879959, per step time: 339.7778630256653ms
+2024-09-21 00:57:47,061:INFO:epoch[215], iter[53], loss:106.574297, fps:95.61 imgs/sec, lr:7.280219870153815e-05, per step time: 334.70808506011963ms
+2024-09-21 00:58:22,286:INFO:epoch[215], iter[153], loss:108.578318, fps:90.85 imgs/sec, lr:0.00021016484242863953, per step time: 352.2442364692688ms
+2024-09-21 00:58:58,708:INFO:epoch[216], iter[71], loss:103.133637, fps:87.86 imgs/sec, lr:9.752747428137809e-05, per step time: 364.21026706695557ms
+2024-09-21 00:59:34,653:INFO:epoch[216], iter[171], loss:105.798803, fps:89.03 imgs/sec, lr:0.00023489010345656425, per step time: 359.43918228149414ms
+2024-09-21 01:00:10,346:INFO:epoch[217], iter[89], loss:106.720617, fps:89.65 imgs/sec, lr:0.00012225274986121804, per step time: 356.9267249107361ms
+2024-09-21 01:00:48,575:INFO:epoch[218], iter[7], loss:106.656699, fps:83.71 imgs/sec, lr:9.6153844424407e-06, per step time: 382.2763919830322ms
+2024-09-21 01:01:27,342:INFO:epoch[218], iter[107], loss:105.030803, fps:82.56 imgs/sec, lr:0.00014697802544105798, per step time: 387.5902223587036ms
+2024-09-21 01:02:02,704:INFO:epoch[219], iter[25], loss:109.696712, fps:90.49 imgs/sec, lr:3.4340660931775346e-05, per step time: 353.6153793334961ms
+2024-09-21 01:02:38,551:INFO:epoch[219], iter[125], loss:103.583971, fps:89.28 imgs/sec, lr:0.00017170330102089792, per step time: 358.44090461730957ms
+2024-09-21 01:03:11,993:INFO:epoch[220], iter[43], loss:107.751505, fps:95.70 imgs/sec, lr:5.9065932873636484e-05, per step time: 334.3674945831299ms
+2024-09-21 01:03:44,731:INFO:epoch[220], iter[143], loss:105.318164, fps:97.77 imgs/sec, lr:0.00019642857660073787, per step time: 327.2945499420166ms
+2024-09-21 01:03:58,653:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-01:03:59.168.907 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 01:03:59,183:INFO:Load train network success
+2024-09-21 01:04:04,752:INFO:Processing... 0.00% 
+2024-09-21 01:04:16,979:INFO:Calculating mAP...
+2024-09-21 01:07:39,764:INFO:Save bbox prediction result.
+2024-09-21 01:07:48,784:INFO:Result file path: ./output/predict_2024_09_21_01_07_39.json
+Loading and preparing results...
+DONE (t=7.36s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.55s).
+Accumulating evaluation results...
+DONE (t=8.71s).
+2024-09-21 01:08:22,408:INFO:Best result 0.15929884195834573 at 220 epoch
+2024-09-21 01:08:22,409:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.159
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.286
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.164
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.095
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.214
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.224
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.172
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.337
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.407
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.254
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.487
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.482
+
+2024-09-21 01:08:22,409:INFO:Ending inference...
+2024-09-21 01:08:44,484:INFO:epoch[221], iter[61], loss:106.205163, fps:10.68 imgs/sec, lr:8.379120845347643e-05, per step time: 2997.520442008972ms
+2024-09-21 01:09:14,819:INFO:epoch[221], iter[161], loss:107.671929, fps:105.49 imgs/sec, lr:0.00022115385218057781, per step time: 303.33712100982666ms
+2024-09-21 01:09:56,031:INFO:epoch[222], iter[79], loss:105.758871, fps:77.65 imgs/sec, lr:0.00010851648403331637, per step time: 412.11477756500244ms
+2024-09-21 01:10:33,412:INFO:epoch[222], iter[179], loss:104.668535, fps:85.61 imgs/sec, lr:0.00024587911320850253, per step time: 373.7975311279297ms
+2024-09-21 01:11:09,931:INFO:epoch[223], iter[97], loss:108.189060, fps:87.64 imgs/sec, lr:0.00013324175961315632, per step time: 365.1454210281372ms
+2024-09-21 01:11:48,916:INFO:epoch[224], iter[15], loss:105.254298, fps:82.09 imgs/sec, lr:2.0604395103873685e-05, per step time: 389.83566999435425ms
+2024-09-21 01:12:22,408:INFO:epoch[224], iter[115], loss:105.202182, fps:95.55 imgs/sec, lr:0.00015796703519299626, per step time: 334.89675998687744ms
+2024-09-21 01:12:57,374:INFO:epoch[225], iter[33], loss:105.708615, fps:91.54 imgs/sec, lr:4.532967068371363e-05, per step time: 349.5786643028259ms
+2024-09-21 01:13:30,622:INFO:epoch[225], iter[133], loss:104.891730, fps:96.25 imgs/sec, lr:0.0001826923107728362, per step time: 332.4567747116089ms
+2024-09-21 01:14:03,589:INFO:epoch[226], iter[51], loss:104.031852, fps:97.07 imgs/sec, lr:7.005494262557477e-05, per step time: 329.6577763557434ms
+2024-09-21 01:14:39,582:INFO:epoch[226], iter[151], loss:106.583851, fps:88.92 imgs/sec, lr:0.00020741758635267615, per step time: 359.8873519897461ms
+2024-09-21 01:15:13,712:INFO:epoch[227], iter[69], loss:105.371586, fps:93.76 imgs/sec, lr:9.478021820541471e-05, per step time: 341.28636598587036ms
+2024-09-21 01:15:47,821:INFO:epoch[227], iter[169], loss:103.095665, fps:93.83 imgs/sec, lr:0.0002321428619325161, per step time: 341.0434937477112ms
+2024-09-21 01:16:22,148:INFO:epoch[228], iter[87], loss:102.885346, fps:93.26 imgs/sec, lr:0.00011950549378525466, per step time: 343.1217384338379ms
+2024-09-21 01:16:56,907:INFO:epoch[229], iter[5], loss:103.788390, fps:92.07 imgs/sec, lr:6.868132004456129e-06, per step time: 347.57811546325684ms
+2024-09-21 01:17:32,529:INFO:epoch[229], iter[105], loss:106.039294, fps:89.83 imgs/sec, lr:0.0001442307693650946, per step time: 356.2116837501526ms
+2024-09-21 01:18:09,257:INFO:epoch[230], iter[23], loss:102.637995, fps:87.13 imgs/sec, lr:3.159340485581197e-05, per step time: 367.2716236114502ms
+2024-09-21 01:18:41,701:INFO:epoch[230], iter[123], loss:103.370950, fps:98.65 imgs/sec, lr:0.00016895604494493455, per step time: 324.3719291687012ms
+2024-09-21 01:19:02,582:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-01:19:03.223.435 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 01:19:03,239:INFO:Load train network success
+2024-09-21 01:19:09,009:INFO:Processing... 0.00% 
+2024-09-21 01:19:22,081:INFO:Calculating mAP...
+2024-09-21 01:22:35,043:INFO:Save bbox prediction result.
+2024-09-21 01:22:44,055:INFO:Result file path: ./output/predict_2024_09_21_01_22_35.json
+Loading and preparing results...
+DONE (t=6.33s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.88s).
+Accumulating evaluation results...
+DONE (t=7.38s).
+2024-09-21 01:23:14,984:INFO:Best result 0.16179979410804873 at 230 epoch
+2024-09-21 01:23:14,984:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.162
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.289
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.164
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.100
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.217
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.225
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.175
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.337
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.405
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.247
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.486
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.482
+
+2024-09-21 01:23:14,985:INFO:Ending inference...
+2024-09-21 01:23:32,170:INFO:epoch[231], iter[41], loss:106.964702, fps:11.02 imgs/sec, lr:5.631868043565191e-05, per step time: 2904.6818017959595ms
+2024-09-21 01:24:02,605:INFO:epoch[231], iter[141], loss:103.546995, fps:105.15 imgs/sec, lr:0.0001936813205247745, per step time: 304.3398904800415ms
+2024-09-21 01:24:40,124:INFO:epoch[232], iter[59], loss:105.007529, fps:85.29 imgs/sec, lr:8.104395965347067e-05, per step time: 375.1826286315918ms
+2024-09-21 01:25:14,906:INFO:epoch[232], iter[159], loss:104.446439, fps:92.00 imgs/sec, lr:0.00021840659610461444, per step time: 347.8108334541321ms
+2024-09-21 01:25:50,769:INFO:epoch[233], iter[77], loss:104.257355, fps:89.23 imgs/sec, lr:0.000105769227957353, per step time: 358.6232352256775ms
+2024-09-21 01:26:26,741:INFO:epoch[233], iter[177], loss:103.802149, fps:88.96 imgs/sec, lr:0.00024313187168445438, per step time: 359.7097587585449ms
+2024-09-21 01:27:05,288:INFO:epoch[234], iter[95], loss:100.860221, fps:83.02 imgs/sec, lr:0.00013049450353719294, per step time: 385.47006607055664ms
+2024-09-21 01:27:40,724:INFO:epoch[235], iter[13], loss:101.302827, fps:90.32 imgs/sec, lr:1.7857142665889114e-05, per step time: 354.304940700531ms
+2024-09-21 01:28:16,501:INFO:epoch[235], iter[113], loss:103.039566, fps:89.45 imgs/sec, lr:0.00015521977911703289, per step time: 357.75513648986816ms
+2024-09-21 01:28:51,744:INFO:epoch[236], iter[31], loss:103.450643, fps:90.81 imgs/sec, lr:4.258241824572906e-05, per step time: 352.4001479148865ms
+2024-09-21 01:29:26,657:INFO:epoch[236], iter[131], loss:104.062603, fps:91.67 imgs/sec, lr:0.00017994505469687283, per step time: 349.09101963043213ms
+2024-09-21 01:30:00,331:INFO:epoch[237], iter[49], loss:102.766699, fps:95.03 imgs/sec, lr:6.7307693825569e-05, per step time: 336.73019647598267ms
+2024-09-21 01:30:36,878:INFO:epoch[237], iter[149], loss:103.612374, fps:87.56 imgs/sec, lr:0.00020467033027671278, per step time: 365.4478120803833ms
+2024-09-21 01:31:12,834:INFO:epoch[238], iter[67], loss:100.308233, fps:89.00 imgs/sec, lr:9.203296940540895e-05, per step time: 359.5512342453003ms
+2024-09-21 01:31:49,012:INFO:epoch[238], iter[167], loss:103.036277, fps:88.46 imgs/sec, lr:0.00022939560585655272, per step time: 361.72833919525146ms
+2024-09-21 01:32:23,995:INFO:epoch[239], iter[85], loss:104.501099, fps:91.50 imgs/sec, lr:0.0001167582449852489, per step time: 349.7322082519531ms
+2024-09-21 01:33:00,739:INFO:epoch[240], iter[3], loss:103.350141, fps:87.09 imgs/sec, lr:4.120879111724207e-06, per step time: 367.4223732948303ms
+2024-09-21 01:33:36,216:INFO:epoch[240], iter[103], loss:99.844349, fps:90.20 imgs/sec, lr:0.00014148351328913122, per step time: 354.77328062057495ms
+2024-09-21 01:34:04,746:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-01:34:05.318.521 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 01:34:05,340:INFO:Load train network success
+2024-09-21 01:34:10,448:INFO:Processing... 0.00% 
+2024-09-21 01:34:23,155:INFO:Calculating mAP...
+2024-09-21 01:37:43,155:INFO:Save bbox prediction result.
+2024-09-21 01:37:53,253:INFO:Result file path: ./output/predict_2024_09_21_01_37_43.json
+Loading and preparing results...
+DONE (t=5.77s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=16.10s).
+Accumulating evaluation results...
+DONE (t=8.78s).
+2024-09-21 01:38:25,348:INFO:Best result 0.16408360334447608 at 240 epoch
+2024-09-21 01:38:25,349:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.164
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.292
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.167
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.222
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.225
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.176
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.338
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.403
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.487
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.480
+
+2024-09-21 01:38:25,349:INFO:Ending inference...
+2024-09-21 01:38:33,375:INFO:epoch[241], iter[21], loss:104.931218, fps:10.77 imgs/sec, lr:2.88461542368168e-05, per step time: 2971.549229621887ms
+2024-09-21 01:39:04,158:INFO:epoch[241], iter[121], loss:103.869737, fps:103.95 imgs/sec, lr:0.00016620878886897117, per step time: 307.826030254364ms
+2024-09-21 01:39:36,715:INFO:epoch[242], iter[39], loss:100.463753, fps:98.29 imgs/sec, lr:5.357142799766734e-05, per step time: 325.5591917037964ms
+2024-09-21 01:40:13,907:INFO:epoch[242], iter[139], loss:103.241060, fps:86.04 imgs/sec, lr:0.00019093406444881111, per step time: 371.90855741500854ms
+2024-09-21 01:40:49,588:INFO:epoch[243], iter[57], loss:99.986859, fps:89.69 imgs/sec, lr:7.829670357750729e-05, per step time: 356.7718005180359ms
+2024-09-21 01:41:25,109:INFO:epoch[243], iter[157], loss:102.844812, fps:90.09 imgs/sec, lr:0.00021565934002865106, per step time: 355.2116632461548ms
+2024-09-21 01:42:01,158:INFO:epoch[244], iter[75], loss:101.428895, fps:88.77 imgs/sec, lr:0.00010302197915734723, per step time: 360.4797124862671ms
+2024-09-21 01:42:36,858:INFO:epoch[244], iter[175], loss:102.718701, fps:89.64 imgs/sec, lr:0.000240384615608491, per step time: 356.99182748794556ms
+2024-09-21 01:43:11,622:INFO:epoch[245], iter[93], loss:103.320339, fps:92.06 imgs/sec, lr:0.00012774724746122956, per step time: 347.61569023132324ms
+2024-09-21 01:43:49,849:INFO:epoch[246], iter[11], loss:101.772940, fps:83.72 imgs/sec, lr:1.5109890227904543e-05, per step time: 382.2208309173584ms
+2024-09-21 01:44:23,632:INFO:epoch[246], iter[111], loss:101.031256, fps:94.72 imgs/sec, lr:0.0001524725230410695, per step time: 337.8207230567932ms
+2024-09-21 01:45:02,911:INFO:epoch[247], iter[29], loss:101.483630, fps:81.48 imgs/sec, lr:3.983516580774449e-05, per step time: 392.7195906639099ms
+2024-09-21 01:45:36,104:INFO:epoch[247], iter[129], loss:102.069765, fps:96.41 imgs/sec, lr:0.00017719779862090945, per step time: 331.9024348258972ms
+2024-09-21 01:46:09,496:INFO:epoch[248], iter[47], loss:100.551149, fps:95.85 imgs/sec, lr:6.456043774960563e-05, per step time: 333.86699199676514ms
+2024-09-21 01:46:41,376:INFO:epoch[248], iter[147], loss:103.169801, fps:100.38 imgs/sec, lr:0.0002019230742007494, per step time: 318.7882709503174ms
+2024-09-21 01:47:15,925:INFO:epoch[249], iter[65], loss:104.868891, fps:92.63 imgs/sec, lr:8.928571332944557e-05, per step time: 345.44233560562134ms
+2024-09-21 01:47:50,608:INFO:epoch[249], iter[165], loss:99.652566, fps:92.28 imgs/sec, lr:0.00022664834978058934, per step time: 346.7794871330261ms
+2024-09-21 01:48:27,890:INFO:epoch[250], iter[83], loss:100.465626, fps:85.84 imgs/sec, lr:0.00011401098890928552, per step time: 372.7812695503235ms
+2024-09-21 01:49:00,846:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-01:49:01.288.000 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 01:49:01,299:INFO:Load train network success
+2024-09-21 01:49:07,344:INFO:Processing... 0.00% 
+2024-09-21 01:49:20,452:INFO:Calculating mAP...
+2024-09-21 01:52:48,458:INFO:Save bbox prediction result.
+2024-09-21 01:52:57,610:INFO:Result file path: ./output/predict_2024_09_21_01_52_48.json
+Loading and preparing results...
+DONE (t=8.46s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.88s).
+Accumulating evaluation results...
+DONE (t=8.07s).
+2024-09-21 01:53:31,384:INFO:Best result 0.16418845729079806 at 250 epoch
+2024-09-21 01:53:31,385:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.164
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.293
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.169
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.222
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.227
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.176
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.338
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.403
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.247
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.486
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.481
+
+2024-09-21 01:53:31,385:INFO:Ending inference...
+2024-09-21 01:53:31,690:INFO:epoch[251], iter[1], loss:101.727802, fps:10.53 imgs/sec, lr:1.3736263326791232e-06, per step time: 3037.923424243927ms
+2024-09-21 01:54:04,182:INFO:epoch[251], iter[101], loss:100.414302, fps:98.49 imgs/sec, lr:0.00013873625721316785, per step time: 324.9137878417969ms
+2024-09-21 01:54:37,037:INFO:epoch[252], iter[19], loss:100.676193, fps:97.40 imgs/sec, lr:2.609890179883223e-05, per step time: 328.54721784591675ms
+2024-09-21 01:55:11,045:INFO:epoch[252], iter[119], loss:98.680011, fps:94.10 imgs/sec, lr:0.0001634615327930078, per step time: 340.05770683288574ms
+2024-09-21 01:55:45,871:INFO:epoch[253], iter[37], loss:100.099604, fps:91.89 imgs/sec, lr:5.082417555968277e-05, per step time: 348.2437252998352ms
+2024-09-21 01:56:18,770:INFO:epoch[253], iter[137], loss:100.940127, fps:97.30 imgs/sec, lr:0.00018818680837284774, per step time: 328.8898992538452ms
+2024-09-21 01:56:54,434:INFO:epoch[254], iter[55], loss:98.980455, fps:89.74 imgs/sec, lr:7.554944750154391e-05, per step time: 356.6008758544922ms
+2024-09-21 01:57:26,864:INFO:epoch[254], iter[155], loss:96.909853, fps:98.69 imgs/sec, lr:0.00021291208395268768, per step time: 324.24798488616943ms
+2024-09-21 01:58:03,763:INFO:epoch[255], iter[73], loss:99.934509, fps:86.72 imgs/sec, lr:0.00010027472308138385, per step time: 368.9879012107849ms
+2024-09-21 01:58:40,467:INFO:epoch[255], iter[173], loss:99.605865, fps:87.19 imgs/sec, lr:0.00023763735953252763, per step time: 367.0340919494629ms
+2024-09-21 01:59:13,562:INFO:epoch[256], iter[91], loss:99.332318, fps:96.70 imgs/sec, lr:0.0001250000059371814, per step time: 330.9368300437927ms
+2024-09-21 01:59:47,043:INFO:epoch[257], iter[9], loss:99.973760, fps:95.59 imgs/sec, lr:1.2362637789919972e-05, per step time: 334.7782635688782ms
+2024-09-21 02:00:21,424:INFO:epoch[257], iter[109], loss:99.453517, fps:93.07 imgs/sec, lr:0.00014972528151702136, per step time: 343.8093829154968ms
+2024-09-21 02:00:56,169:INFO:epoch[258], iter[27], loss:100.230536, fps:92.11 imgs/sec, lr:3.708791336975992e-05, per step time: 347.40156173706055ms
+2024-09-21 02:01:29,606:INFO:epoch[258], iter[127], loss:100.919558, fps:95.70 imgs/sec, lr:0.00017445054254494607, per step time: 334.3640351295471ms
+2024-09-21 02:02:02,274:INFO:epoch[259], iter[45], loss:100.877679, fps:97.96 imgs/sec, lr:6.181318894959986e-05, per step time: 326.6474676132202ms
+2024-09-21 02:02:35,478:INFO:epoch[259], iter[145], loss:100.003663, fps:96.40 imgs/sec, lr:0.00019917581812478602, per step time: 331.9456195831299ms
+2024-09-21 02:03:07,560:INFO:epoch[260], iter[63], loss:99.853905, fps:99.75 imgs/sec, lr:8.653846452943981e-05, per step time: 320.7917618751526ms
+2024-09-21 02:03:40,012:INFO:epoch[260], iter[163], loss:98.166496, fps:98.63 imgs/sec, lr:0.00022390109370462596, per step time: 324.43671226501465ms
+2024-09-21 02:03:47,087:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-02:03:47.576.931 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 02:03:47,588:INFO:Load train network success
+2024-09-21 02:03:52,402:INFO:Processing... 0.00% 
+2024-09-21 02:04:05,362:INFO:Calculating mAP...
+2024-09-21 02:07:24,817:INFO:Save bbox prediction result.
+2024-09-21 02:07:33,927:INFO:Result file path: ./output/predict_2024_09_21_02_07_24.json
+Loading and preparing results...
+DONE (t=5.43s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=20.84s).
+Accumulating evaluation results...
+DONE (t=7.68s).
+2024-09-21 02:08:09,335:INFO:Best result 0.16679977711852476 at 260 epoch
+2024-09-21 02:08:09,336:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.167
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.293
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.169
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.225
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.232
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.178
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.341
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.406
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.489
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.484
+
+2024-09-21 02:08:09,336:INFO:Ending inference...
+2024-09-21 02:08:38,150:INFO:epoch[261], iter[81], loss:100.210162, fps:10.73 imgs/sec, lr:0.00011126373283332214, per step time: 2981.3609957695007ms
+2024-09-21 02:09:08,556:INFO:epoch[261], iter[181], loss:98.628066, fps:105.25 imgs/sec, lr:0.0002486263692844659, per step time: 304.0320372581482ms
+2024-09-21 02:09:44,564:INFO:epoch[262], iter[99], loss:98.719335, fps:88.87 imgs/sec, lr:0.0001359890156891197, per step time: 360.07885456085205ms
+2024-09-21 02:10:17,052:INFO:epoch[263], iter[17], loss:99.309418, fps:98.52 imgs/sec, lr:2.3351647541858256e-05, per step time: 324.81441259384155ms
+2024-09-21 02:10:50,554:INFO:epoch[263], iter[117], loss:99.339334, fps:95.53 imgs/sec, lr:0.00016071429126895964, per step time: 334.9618911743164ms
+2024-09-21 02:11:25,637:INFO:epoch[264], iter[35], loss:98.792808, fps:91.22 imgs/sec, lr:4.80769231216982e-05, per step time: 350.8132863044739ms
+2024-09-21 02:12:00,205:INFO:epoch[264], iter[135], loss:102.522406, fps:92.58 imgs/sec, lr:0.00018543956684879959, per step time: 345.6363534927368ms
+2024-09-21 02:12:33,913:INFO:epoch[265], iter[53], loss:101.486275, fps:94.94 imgs/sec, lr:7.280219870153815e-05, per step time: 337.0504927635193ms
+2024-09-21 02:13:07,037:INFO:epoch[265], iter[153], loss:100.031415, fps:96.61 imgs/sec, lr:0.00021016484242863953, per step time: 331.23554944992065ms
+2024-09-21 02:13:42,571:INFO:epoch[266], iter[71], loss:99.869630, fps:90.06 imgs/sec, lr:9.752747428137809e-05, per step time: 355.3026056289673ms
+2024-09-21 02:14:18,642:INFO:epoch[266], iter[171], loss:98.645450, fps:88.72 imgs/sec, lr:0.00023489010345656425, per step time: 360.6828188896179ms
+2024-09-21 02:14:52,289:INFO:epoch[267], iter[89], loss:99.677745, fps:95.11 imgs/sec, lr:0.00012225274986121804, per step time: 336.44834756851196ms
+2024-09-21 02:15:26,222:INFO:epoch[268], iter[7], loss:101.477592, fps:94.32 imgs/sec, lr:9.6153844424407e-06, per step time: 339.27759885787964ms
+2024-09-21 02:16:01,819:INFO:epoch[268], iter[107], loss:99.154685, fps:89.90 imgs/sec, lr:0.00014697802544105798, per step time: 355.93775272369385ms
+2024-09-21 02:16:37,706:INFO:epoch[269], iter[25], loss:97.778235, fps:89.17 imgs/sec, lr:3.4340660931775346e-05, per step time: 358.8568091392517ms
+2024-09-21 02:17:13,249:INFO:epoch[269], iter[125], loss:98.657375, fps:90.04 imgs/sec, lr:0.00017170330102089792, per step time: 355.41645765304565ms
+2024-09-21 02:17:49,520:INFO:epoch[270], iter[43], loss:100.197611, fps:88.23 imgs/sec, lr:5.9065932873636484e-05, per step time: 362.7056956291199ms
+2024-09-21 02:18:23,069:INFO:epoch[270], iter[143], loss:96.866933, fps:95.39 imgs/sec, lr:0.00019642857660073787, per step time: 335.4771018028259ms
+2024-09-21 02:18:37,632:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-02:18:38.784.15 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 02:18:38,086:INFO:Load train network success
+2024-09-21 02:18:43,961:INFO:Processing... 0.00% 
+2024-09-21 02:18:55,767:INFO:Calculating mAP...
+2024-09-21 02:22:28,682:INFO:Save bbox prediction result.
+2024-09-21 02:22:37,702:INFO:Result file path: ./output/predict_2024_09_21_02_22_28.json
+Loading and preparing results...
+DONE (t=5.86s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.91s).
+Accumulating evaluation results...
+DONE (t=9.45s).
+2024-09-21 02:23:10,605:INFO:Best result 0.16746052332564468 at 270 epoch
+2024-09-21 02:23:10,606:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.167
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.291
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.173
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.224
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.233
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.182
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.341
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.406
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.247
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.489
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.485
+
+2024-09-21 02:23:10,606:INFO:Ending inference...
+2024-09-21 02:23:29,255:INFO:epoch[271], iter[61], loss:100.101068, fps:10.45 imgs/sec, lr:8.379120845347643e-05, per step time: 3061.852023601532ms
+2024-09-21 02:23:59,756:INFO:epoch[271], iter[161], loss:99.247961, fps:104.92 imgs/sec, lr:0.00022115385218057781, per step time: 304.99377965927124ms
+2024-09-21 02:24:33,188:INFO:epoch[272], iter[79], loss:96.658621, fps:95.72 imgs/sec, lr:0.00010851648403331637, per step time: 334.3132734298706ms
+2024-09-21 02:25:06,032:INFO:epoch[272], iter[179], loss:98.204699, fps:97.43 imgs/sec, lr:0.00024587911320850253, per step time: 328.4265732765198ms
+2024-09-21 02:25:41,505:INFO:epoch[273], iter[97], loss:98.994626, fps:90.21 imgs/sec, lr:0.00013324175961315632, per step time: 354.72496509552ms
+2024-09-21 02:26:14,703:INFO:epoch[274], iter[15], loss:98.358375, fps:96.40 imgs/sec, lr:2.0604395103873685e-05, per step time: 331.9534993171692ms
+2024-09-21 02:26:48,510:INFO:epoch[274], iter[115], loss:97.940947, fps:94.66 imgs/sec, lr:0.00015796703519299626, per step time: 338.0462050437927ms
+2024-09-21 02:27:23,478:INFO:epoch[275], iter[33], loss:99.486855, fps:91.51 imgs/sec, lr:4.532967068371363e-05, per step time: 349.6713352203369ms
+2024-09-21 02:27:56,849:INFO:epoch[275], iter[133], loss:97.445463, fps:95.90 imgs/sec, lr:0.0001826923107728362, per step time: 333.66881132125854ms
+2024-09-21 02:28:31,983:INFO:epoch[276], iter[51], loss:98.427274, fps:91.08 imgs/sec, lr:7.005494262557477e-05, per step time: 351.3303518295288ms
+2024-09-21 02:29:07,731:INFO:epoch[276], iter[151], loss:99.068699, fps:89.52 imgs/sec, lr:0.00020741758635267615, per step time: 357.46906042099ms
+2024-09-21 02:29:41,675:INFO:epoch[277], iter[69], loss:97.209692, fps:94.28 imgs/sec, lr:9.478021820541471e-05, per step time: 339.4301199913025ms
+2024-09-21 02:30:16,066:INFO:epoch[277], iter[169], loss:99.305627, fps:93.05 imgs/sec, lr:0.0002321428619325161, per step time: 343.89946460723877ms
+2024-09-21 02:30:51,071:INFO:epoch[278], iter[87], loss:100.588543, fps:91.42 imgs/sec, lr:0.00011950549378525466, per step time: 350.046021938324ms
+2024-09-21 02:31:25,503:INFO:epoch[279], iter[5], loss:97.487091, fps:92.95 imgs/sec, lr:6.868132004456129e-06, per step time: 344.2851662635803ms
+2024-09-21 02:32:00,401:INFO:epoch[279], iter[105], loss:99.411735, fps:91.70 imgs/sec, lr:0.0001442307693650946, per step time: 348.9669108390808ms
+2024-09-21 02:32:34,917:INFO:epoch[280], iter[23], loss:98.099377, fps:92.72 imgs/sec, lr:3.159340485581197e-05, per step time: 345.12584924697876ms
+2024-09-21 02:33:08,623:INFO:epoch[280], iter[123], loss:98.186613, fps:94.94 imgs/sec, lr:0.00016895604494493455, per step time: 337.0433807373047ms
+2024-09-21 02:33:28,764:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-02:33:29.219.624 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 02:33:29,228:INFO:Load train network success
+2024-09-21 02:33:33,751:INFO:Processing... 0.00% 
+2024-09-21 02:33:47,739:INFO:Calculating mAP...
+2024-09-21 02:37:25,392:INFO:Save bbox prediction result.
+2024-09-21 02:37:34,963:INFO:Result file path: ./output/predict_2024_09_21_02_37_25.json
+Loading and preparing results...
+DONE (t=6.66s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.48s).
+Accumulating evaluation results...
+DONE (t=9.31s).
+2024-09-21 02:38:07,846:INFO:Best result 0.168560602099284 at 280 epoch
+2024-09-21 02:38:07,846:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.169
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.294
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.177
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.226
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.234
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.183
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.342
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.407
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.247
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.489
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.486
+
+2024-09-21 02:38:07,846:INFO:Ending inference...
+2024-09-21 02:38:24,390:INFO:epoch[281], iter[41], loss:97.167551, fps:10.13 imgs/sec, lr:5.631868043565191e-05, per step time: 3157.6283073425293ms
+2024-09-21 02:38:54,711:INFO:epoch[281], iter[141], loss:98.703898, fps:105.54 imgs/sec, lr:0.0001936813205247745, per step time: 303.20557594299316ms
+2024-09-21 02:39:29,127:INFO:epoch[282], iter[59], loss:99.626869, fps:92.98 imgs/sec, lr:8.104395965347067e-05, per step time: 344.1483473777771ms
+2024-09-21 02:40:03,759:INFO:epoch[282], iter[159], loss:100.838488, fps:92.45 imgs/sec, lr:0.00021840659610461444, per step time: 346.15044355392456ms
+2024-09-21 02:40:37,310:INFO:epoch[283], iter[77], loss:96.717542, fps:95.40 imgs/sec, lr:0.000105769227957353, per step time: 335.43871879577637ms
+2024-09-21 02:41:14,454:INFO:epoch[283], iter[177], loss:97.164522, fps:86.15 imgs/sec, lr:0.00024313187168445438, per step time: 371.4268183708191ms
+2024-09-21 02:41:48,935:INFO:epoch[284], iter[95], loss:98.487192, fps:92.81 imgs/sec, lr:0.00013049450353719294, per step time: 344.78867053985596ms
+2024-09-21 02:42:23,716:INFO:epoch[285], iter[13], loss:98.696825, fps:92.01 imgs/sec, lr:1.7857142665889114e-05, per step time: 347.7974200248718ms
+2024-09-21 02:42:57,923:INFO:epoch[285], iter[113], loss:98.623033, fps:93.56 imgs/sec, lr:0.00015521977911703289, per step time: 342.0439553260803ms
+2024-09-21 02:43:32,486:INFO:epoch[286], iter[31], loss:99.741983, fps:92.62 imgs/sec, lr:4.258241824572906e-05, per step time: 345.5075740814209ms
+2024-09-21 02:44:07,640:INFO:epoch[286], iter[131], loss:98.298402, fps:91.04 imgs/sec, lr:0.00017994505469687283, per step time: 351.4984917640686ms
+2024-09-21 02:44:41,214:INFO:epoch[287], iter[49], loss:96.255177, fps:95.33 imgs/sec, lr:6.7307693825569e-05, per step time: 335.6849408149719ms
+2024-09-21 02:45:13,845:INFO:epoch[287], iter[149], loss:99.268111, fps:98.07 imgs/sec, lr:0.00020467033027671278, per step time: 326.29367113113403ms
+2024-09-21 02:45:48,593:INFO:epoch[288], iter[67], loss:98.441852, fps:92.10 imgs/sec, lr:9.203296940540895e-05, per step time: 347.44492053985596ms
+2024-09-21 02:46:23,540:INFO:epoch[288], iter[167], loss:97.293067, fps:91.57 imgs/sec, lr:0.00022939560585655272, per step time: 349.46417331695557ms
+2024-09-21 02:46:57,543:INFO:epoch[289], iter[85], loss:97.943324, fps:94.12 imgs/sec, lr:0.0001167582449852489, per step time: 340.008544921875ms
+2024-09-21 02:47:32,075:INFO:epoch[290], iter[3], loss:97.967894, fps:92.67 imgs/sec, lr:4.120879111724207e-06, per step time: 345.2943158149719ms
+2024-09-21 02:48:07,677:INFO:epoch[290], iter[103], loss:97.368401, fps:89.89 imgs/sec, lr:0.00014148351328913122, per step time: 355.9759497642517ms
+2024-09-21 02:48:36,640:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-02:48:37.132.752 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 02:48:37,140:INFO:Load train network success
+2024-09-21 02:48:43,261:INFO:Processing... 0.00% 
+2024-09-21 02:48:56,034:INFO:Calculating mAP...
+2024-09-21 02:52:28,310:INFO:Save bbox prediction result.
+2024-09-21 02:52:37,529:INFO:Result file path: ./output/predict_2024_09_21_02_52_28.json
+Loading and preparing results...
+DONE (t=14.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=17.33s).
+Accumulating evaluation results...
+DONE (t=9.59s).
+2024-09-21 02:53:20,073:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.168
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.295
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.176
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.228
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.233
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.183
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.341
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.406
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.490
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.484
+
+2024-09-21 02:53:20,086:INFO:Ending inference...
+2024-09-21 02:53:30,550:INFO:epoch[291], iter[21], loss:99.068033, fps:9.91 imgs/sec, lr:2.88461542368168e-05, per step time: 3228.7298583984375ms
+2024-09-21 02:54:02,399:INFO:epoch[291], iter[121], loss:98.055027, fps:100.48 imgs/sec, lr:0.00016620878886897117, per step time: 318.48345041275024ms
+2024-09-21 02:54:35,673:INFO:epoch[292], iter[39], loss:101.962235, fps:96.17 imgs/sec, lr:5.357142799766734e-05, per step time: 332.7272367477417ms
+2024-09-21 02:55:10,022:INFO:epoch[292], iter[139], loss:98.012014, fps:93.17 imgs/sec, lr:0.00019093406444881111, per step time: 343.4580326080322ms
+2024-09-21 02:55:54,043:INFO:epoch[293], iter[57], loss:98.340951, fps:72.70 imgs/sec, lr:7.829670357750729e-05, per step time: 440.1771664619446ms
+2024-09-21 02:56:30,972:INFO:epoch[293], iter[157], loss:96.235552, fps:86.66 imgs/sec, lr:0.00021565934002865106, per step time: 369.277184009552ms
+2024-09-21 02:57:06,731:INFO:epoch[294], iter[75], loss:97.841894, fps:89.49 imgs/sec, lr:0.00010302197915734723, per step time: 357.57514476776123ms
+2024-09-21 02:57:41,903:INFO:epoch[294], iter[175], loss:99.685440, fps:90.99 imgs/sec, lr:0.000240384615608491, per step time: 351.67325019836426ms
+2024-09-21 02:58:18,292:INFO:epoch[295], iter[93], loss:98.285404, fps:87.94 imgs/sec, lr:0.00012774724746122956, per step time: 363.87001752853394ms
+2024-09-21 02:58:55,487:INFO:epoch[296], iter[11], loss:97.930838, fps:86.06 imgs/sec, lr:1.5109890227904543e-05, per step time: 371.8289279937744ms
+2024-09-21 02:59:29,507:INFO:epoch[296], iter[111], loss:97.529477, fps:94.08 imgs/sec, lr:0.0001524725230410695, per step time: 340.1310157775879ms
+2024-09-21 03:00:06,668:INFO:epoch[297], iter[29], loss:97.202245, fps:86.11 imgs/sec, lr:3.983516580774449e-05, per step time: 371.5985107421875ms
+2024-09-21 03:00:43,147:INFO:epoch[297], iter[129], loss:98.215842, fps:87.74 imgs/sec, lr:0.00017719779862090945, per step time: 364.6944761276245ms
+2024-09-21 03:01:19,700:INFO:epoch[298], iter[47], loss:99.090368, fps:87.55 imgs/sec, lr:6.456043774960563e-05, per step time: 365.5206370353699ms
+2024-09-21 03:01:52,212:INFO:epoch[298], iter[147], loss:93.161310, fps:98.43 imgs/sec, lr:0.0002019230742007494, per step time: 325.1123809814453ms
+2024-09-21 03:02:26,864:INFO:epoch[299], iter[65], loss:98.138431, fps:92.36 imgs/sec, lr:8.928571332944557e-05, per step time: 346.4606022834778ms
+2024-09-21 03:02:58,700:INFO:epoch[299], iter[165], loss:99.560005, fps:100.53 imgs/sec, lr:0.00022664834978058934, per step time: 318.3164119720459ms
+2024-09-21 03:03:33,966:INFO:epoch[300], iter[83], loss:96.483178, fps:90.74 imgs/sec, lr:0.00011401098890928552, per step time: 352.6567769050598ms
+2024-09-21 03:04:09,707:INFO:Load parameters of train network
+[WARNING] ME(1389:281473236787376,MainProcess):2024-09-21-03:04:10.209.422 [mindspore/train/serialization.py:1546] For 'load_param_into_net', remove parameter prefix name: network.yolo_network., continue to load.
+2024-09-21 03:04:10,217:INFO:Load train network success
+2024-09-21 03:04:15,523:INFO:Processing... 0.00% 
+2024-09-21 03:04:28,046:INFO:Calculating mAP...
+2024-09-21 03:07:59,445:INFO:Save bbox prediction result.
+2024-09-21 03:08:08,729:INFO:Result file path: ./output/predict_2024_09_21_03_07_59.json
+Loading and preparing results...
+DONE (t=6.03s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=16.56s).
+Accumulating evaluation results...
+DONE (t=9.15s).
+2024-09-21 03:08:41,689:INFO: Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.168
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.295
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.176
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.227
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.233
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.183
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.341
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.406
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.490
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.484
+
+2024-09-21 03:08:41,700:INFO:Ending inference...
+2024-09-21 03:08:41,704:INFO:==========end training===============
