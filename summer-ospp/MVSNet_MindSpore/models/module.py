@@ -8,7 +8,7 @@ import numpy as np
 class ConvBnReLU(nn.Cell):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, pad=1):
         super(ConvBnReLU, self).__init__()
-        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride, padding=pad, pad_mode='pad')
+        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride, padding=pad, pad_mode='pad', has_bias=False)
         self.bn = nn.BatchNorm2d(out_channels, momentum=0.1, eps=1e-5)
     def construct(self, x):
         return ops.relu(self.bn(self.conv(x)))
@@ -109,7 +109,8 @@ def homo_warping(src_fea, src_proj, ref_proj, depth_values):
     trans = proj[:, :3, 3:4]  # [B,3,1]
     # === image grid ===
     y, x = ops.meshgrid(mnp.arange(0, height, dtype=mindspore.float32),
-                        mnp.arange(0, width, dtype=mindspore.float32))
+                        mnp.arange(0, width, dtype=mindspore.float32),
+                        indexing='ij')
     y, x = y.reshape(-1), x.reshape(-1)
     xyz = ops.stack((x, y, ops.ones_like(x)), 0)  # [3, H*W]
     xyz = ops.expand_dims(xyz, 0).tile((batch, 1, 1))  # [B, 3, H*W]
@@ -146,5 +147,4 @@ def homo_warping(src_fea, src_proj, ref_proj, depth_values):
 def depth_regression(p, depth_values):
     depth_values = depth_values.view(*depth_values.shape, 1, 1)
     depth = ops.sum(p * depth_values, 1)
-
     return depth

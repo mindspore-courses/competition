@@ -5,9 +5,10 @@ import numpy as np
 import os, cv2, time
 from PIL import Image
 from datasets.data_io import *
-# from data_io import *# if needed run main
+# from data_io import *# 如果要运行最底部的main，同级运行则解
 
 s_h, s_w = 0, 0
+# the DTU dataset preprocessed by Yao Yao (only for training)
 class MVSDataset():
     def __init__(self, datapath, listfile, mode, nviews, ndepths=192, interval_scale=1.06, **kwargs):
         super(MVSDataset, self).__init__()
@@ -30,7 +31,6 @@ class MVSDataset():
         # scans
         for scan in scans:
             pair_file = os.path.join(scan, "pair.txt")
-            # read the pair file
             with open(os.path.join(self.datapath, pair_file)) as f:
                 num_viewpoint = int(f.readline())
                 # viewpoints (49)
@@ -53,7 +53,6 @@ class MVSDataset():
         # intrinsics: line [7-10), 3x3 matrix
         intrinsics = np.fromstring(' '.join(lines[7:10]), dtype=np.float32, sep=' ').reshape((3, 3))
         intrinsics[:2, :] /= 4
-        # depth_min & depth_interval: line 11
         depth_min = float(lines[11].split()[0])
         depth_interval = float(lines[11].split()[1]) * self.interval_scale
         return intrinsics, extrinsics, depth_min, depth_interval
@@ -64,7 +63,7 @@ class MVSDataset():
         np_img = np.array(img, dtype=np.float32) / 255.
         assert np_img.shape[:2] == (1200, 1600)
         # crop to (1184, 1600)
-        np_img = np_img[:-16, :]
+        np_img = np_img[:-16, :]  # do not need to modify intrinsics if cropping the bottom part
         return np_img
 
     def read_depth(self, filename):
@@ -74,6 +73,7 @@ class MVSDataset():
     def __getitem__(self, idx):
         meta = self.metas[idx]
         scan, ref_view, src_views = meta
+        # use only the reference view and first nviews-1 source views
         view_ids = [ref_view] + src_views[:self.nviews - 1]
 
         imgs = []
@@ -84,25 +84,27 @@ class MVSDataset():
 
         for i, vid in enumerate(view_ids):
             img_filename = os.path.join(self.datapath, scan, "images", "{:0>8}.jpg".format(vid))
-            proj_mat_filename = os.path.join(self.datapath, scan, "cams", "{:0>8}_cam.txt".format(vid))
+            proj_mat_filename = os.path.join(self.datapath, scan, "cams_1", "{:0>8}_cam.txt".format(vid))
             imgs.append(self.read_img(img_filename))
             intrinsics, extrinsics, depth_min, depth_interval = self.read_cam_file(proj_mat_filename)
+
             # multiply intrinsics and extrinsics to get projection matrix
             proj_mat = extrinsics.copy()
             proj_mat[:3, :4] = np.matmul(intrinsics, proj_mat[:3, :4])
             proj_matrices.append(proj_mat)
+
             if i == 0:  # reference view
-                depth_values = np.arange(depth_min, depth_interval * (self.ndepths - 0.5) + depth_min, depth_interval,
-                                         dtype=np.float32)
+                depth_values = np.linspace(425, 935, self.ndepths, dtype=np.float32)
+
+
         imgs = np.stack(imgs).transpose([0, 3, 1, 2])
         proj_matrices = np.stack(proj_matrices)
-
         def encode_scanid(scanid_str):
             return int(scanid_str.replace("scan", ""))
         return (
-            imgs,                   
+            imgs,                   # "imgs" (nviews, 3, H, W)
             proj_matrices,
-            depth_values,           
+            depth_values,            # "depth_values" (ndepths,)
             encode_scanid(scan),
             view_ids[0],
         )

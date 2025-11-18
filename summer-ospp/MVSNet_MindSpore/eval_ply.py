@@ -17,13 +17,15 @@ def evaluate_point_cloud(pred_path, gt_path, thresholds=[0.01, 0.02]):
     gt_points = np.asarray(gt_pcd.points)
     pred_tree = cKDTree(pred_points)
     gt_tree = cKDTree(gt_points)
-    dist_pred_to_gt, _ = gt_tree.query(pred_points)  # accuracy_mean
-    dist_gt_to_pred, _ = pred_tree.query(gt_points)  # completeness_mean
+    dist_pred_to_gt, _ = gt_tree.query(pred_points)
+    dist_gt_to_pred, _ = pred_tree.query(gt_points)
 
     results = {
         "accuracy_mean": float(np.mean(dist_pred_to_gt)),
         "completeness_mean": float(np.mean(dist_gt_to_pred))
     }
+
+    # 计算 F-score (基于阈值)
     for tau in thresholds:
         precision = np.mean(dist_pred_to_gt < tau)
         recall = np.mean(dist_gt_to_pred < tau)
@@ -39,9 +41,11 @@ def evaluate_point_cloud(pred_path, gt_path, thresholds=[0.01, 0.02]):
 
 
 if __name__ == "__main__":
+    
     pred_path = "/home/outbreak/mindspore/MVSNet_mindspore/tank_outputs/trainply/Barn.ply"
     gt_path = "/media/outbreak/68E1-B517/Dataset/TankandTemples/offical_training/Barn.ply"
     metrics = evaluate_point_cloud(pred_path, gt_path)
-    print("点云评估结果：")
+
+    print("用于直接输入两个ply点云的评估,点云评估结果：")
     for k, v in metrics.items():
         print(f"{k}: {v:.6f}")

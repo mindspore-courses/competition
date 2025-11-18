@@ -1,11 +1,7 @@
 ##!/usr/bin/env bash
-
 SAVE_DIR="tank_outputs"
-
 TANK_TESTING='/media/outbreak/68E1-B517/Dataset/TankandTemples/test_offline/'
-
-CKPT_FILE="checkpoints/model_000005.ckpt"
-
+CKPT_FILE="checkpoints/model_000007.ckpt"
 
 if [ ! -d $SAVE_DIR ]; then
     mkdir -p $SAVE_DIR
